@@ -244,8 +244,11 @@ CREATE TABLE `User` (
   `rating_seller` float DEFAULT NULL,
   `admin` tinyint(1) NOT NULL,
   `verified` tinyint(1) NOT NULL,
+  `idLocation` int(11) NOT NULL,
   PRIMARY KEY (`idUser`),
-  UNIQUE KEY `idUser_UNIQUE` (`idUser`)
+  UNIQUE KEY `idUser_UNIQUE` (`idUser`),
+  KEY `fk_User_Location1_idx` (`idLocation`),
+  CONSTRAINT `fk_User_Location1` FOREIGN KEY (`idLocation`) REFERENCES `Location` (`idLocation`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -267,4 +270,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-04 16:32:51
+-- Dump completed on 2016-06-04 21:57:10
