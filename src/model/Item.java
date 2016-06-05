@@ -2,8 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -16,49 +16,63 @@ public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idItem;
-	
-	private String name;
-	
+
 	@Column(name="buy_price")
 	private String buyPrice;
-	
+
+	@Lob
+	private String description;
+
+	private Timestamp ends;
+
 	@Column(name="first_bid")
 	private String firstBid;
-	
+
+	private String name;
+
 	@Column(name="number_of_bids")
-	private int numOfBids;
-	
+	private int numberOfBids;
+
 	private Timestamp started;
-	
-	private Timestamp ends;
-	
-	private String description;
-	
-	//bi-directional one-to-one association to Location
-	@OneToOne(mappedBy="item")
-	private Location location;
-	
-	//bi-directional one-to-one association to Bid
-	@OneToOne(mappedBy="itemMaxBid")
-	private Bid currently;
-	
+
 	//bi-directional many-to-one association to Bid
 	@OneToMany(mappedBy="item")
 	private List<Bid> bids;
-	
-	//bi-directional many-to-one association to Image
-	@OneToMany(mappedBy="item")
-	private List<Image> images;
-	
+
+	//bi-directional many-to-one association to Bid
+	@ManyToOne
+	@JoinColumn(name="currently")
+	private Bid bid;
+
 	//bi-directional many-to-many association to Category
-	@ManyToMany(mappedBy="items")
+	@ManyToMany
+	@JoinTable(
+		name="ItemCategory"
+		, joinColumns={
+			@JoinColumn(name="idItem")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="idCategory")
+			}
+		)
 	private List<Category> categories;
-	
+
+	//bi-directional many-to-one association to Image
+	@ManyToOne
+	@JoinColumn(name="idImage")
+	private Image image;
+
+	//bi-directional many-to-one association to Location
+	@ManyToOne
+	@JoinColumn(name="idLocation")
+	private Location location;
+
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="idSeller")
-	private User seller;
+	private User user;
 
 	public Item() {
 	}
@@ -71,14 +85,6 @@ public class Item implements Serializable {
 		this.idItem = idItem;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getBuyPrice() {
 		return this.buyPrice;
 	}
@@ -87,28 +93,12 @@ public class Item implements Serializable {
 		this.buyPrice = buyPrice;
 	}
 
-	public String getFirstBid() {
-		return this.firstBid;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setFirstBid(String firstBid) {
-		this.firstBid = firstBid;
-	}
-
-	public int getNumOfBids() {
-		return this.numOfBids;
-	}
-
-	public void setNumOfBids(int numOfBids) {
-		this.numOfBids = numOfBids;
-	}
-
-	public Timestamp getStarted() {
-		return this.started;
-	}
-
-	public void setStarted(Timestamp started) {
-		this.started = started;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Timestamp getEnds() {
@@ -119,30 +109,38 @@ public class Item implements Serializable {
 		this.ends = ends;
 	}
 
-	public String getDescription() {
-		return this.description;
+	public String getFirstBid() {
+		return this.firstBid;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public Location getLocation() {
-		return this.location;
+	public void setFirstBid(String firstBid) {
+		this.firstBid = firstBid;
 	}
 
-	public void setLocation(Location location) {
-		this.location = location;
+	public String getName() {
+		return this.name;
 	}
 
-	public Bid getCurrently() {
-		return this.currently;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setCurrently(Bid currently) {
-		this.currently = currently;
+	public int getNumberOfBids() {
+		return this.numberOfBids;
 	}
-	
+
+	public void setNumberOfBids(int numberOfBids) {
+		this.numberOfBids = numberOfBids;
+	}
+
+	public Timestamp getStarted() {
+		return this.started;
+	}
+
+	public void setStarted(Timestamp started) {
+		this.started = started;
+	}
+
 	public List<Bid> getBids() {
 		return this.bids;
 	}
@@ -164,29 +162,15 @@ public class Item implements Serializable {
 
 		return bid;
 	}
-	
-	public List<Image> getImages() {
-		return this.images;
+
+	public Bid getBid() {
+		return this.bid;
 	}
 
-	public void setImages(List<Image> images) {
-		this.images = images;
-	}
-	
-	public Image addImage(Image image) {
-		getImages().add(image);
-		image.setItem(this);
-
-		return image;
+	public void setBid(Bid bid) {
+		this.bid = bid;
 	}
 
-	public Image removeImage(Image image) {
-		getImages().remove(image);
-		image.setItem(null);
-
-		return image;
-	}
-	
 	public List<Category> getCategories() {
 		return this.categories;
 	}
@@ -194,13 +178,29 @@ public class Item implements Serializable {
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
-	
-	public User getSeller() {
-		return this.seller;
+
+	public Image getImage() {
+		return this.image;
 	}
 
-	public void setSeller(User seller) {
-		this.seller = seller;
+	public void setImage(Image image) {
+		this.image = image;
 	}
-	
+
+	public Location getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

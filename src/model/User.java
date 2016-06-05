@@ -15,21 +15,20 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idUser;
-	
-	private String username;
-	
-	private String password;
+
+	private byte admin;
+
+	private String afm;
+
+	private String email;
 
 	private String name;
 
-	private String surname;
-	
-	private String email;
+	private String password;
 
 	private int phone;
-	
-	private String afm;
 
 	@Column(name="rating_bidder")
 	private float ratingBidder;
@@ -37,28 +36,31 @@ public class User implements Serializable {
 	@Column(name="rating_seller")
 	private float ratingSeller;
 
-	private byte admin;
-	
+	private String surname;
+
+	private String username;
+
 	private byte verified;
 
 	//bi-directional many-to-one association to Bid
-	@OneToMany(mappedBy="bidder")
+	@OneToMany(mappedBy="user")
 	private List<Bid> bids;
 
+	//bi-directional many-to-one association to Item
+	@OneToMany(mappedBy="user")
+	private List<Item> items;
+
 	//bi-directional many-to-one association to Message
-	@OneToMany(mappedBy="sender")
+	@OneToMany(mappedBy="user1")
 	private List<Message> messages1;
 
 	//bi-directional many-to-one association to Message
-	@OneToMany(mappedBy="receiver")
+	@OneToMany(mappedBy="user2")
 	private List<Message> messages2;
 
-	//bi-directional many-to-one association to Item
-	@OneToMany(mappedBy="seller")
-	private List<Item> items;
-
-	//bi-directional one-to-one association to Location
-	@OneToOne(mappedBy="user")
+	//bi-directional many-to-one association to Location
+	@ManyToOne
+	@JoinColumn(name="idLocation")
 	private Location location;
 
 	public User() {
@@ -71,37 +73,21 @@ public class User implements Serializable {
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
-	
-	public String getUsername() {
-		return this.username;
+
+	public byte getAdmin() {
+		return this.admin;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public String getPassword() {
-		return this.password;
+	public void setAdmin(byte admin) {
+		this.admin = admin;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public String getAfm() {
+		return this.afm;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getSurname() {
-		return this.surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setAfm(String afm) {
+		this.afm = afm;
 	}
 
 	public String getEmail() {
@@ -112,20 +98,28 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public int getPhone() {
 		return this.phone;
 	}
 
 	public void setPhone(int phone) {
 		this.phone = phone;
-	}
-	
-	public String getAfm() {
-		return this.afm;
-	}
-
-	public void setAfm(String afm) {
-		this.afm = afm;
 	}
 
 	public float getRatingBidder() {
@@ -144,12 +138,20 @@ public class User implements Serializable {
 		this.ratingSeller = ratingSeller;
 	}
 
-	public byte getAdmin() {
-		return this.admin;
+	public String getSurname() {
+		return this.surname;
 	}
 
-	public void setAdmin(byte admin) {
-		this.admin = admin;
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public byte getVerified() {
@@ -159,7 +161,7 @@ public class User implements Serializable {
 	public void setVerified(byte verified) {
 		this.verified = verified;
 	}
-	
+
 	public List<Bid> getBids() {
 		return this.bids;
 	}
@@ -170,16 +172,38 @@ public class User implements Serializable {
 
 	public Bid addBid(Bid bid) {
 		getBids().add(bid);
-		bid.setBidder(this);
+		bid.setUser(this);
 
 		return bid;
 	}
 
 	public Bid removeBid(Bid bid) {
 		getBids().remove(bid);
-		bid.setBidder(null);
+		bid.setUser(null);
 
 		return bid;
+	}
+
+	public List<Item> getItems() {
+		return this.items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public Item addItem(Item item) {
+		getItems().add(item);
+		item.setUser(this);
+
+		return item;
+	}
+
+	public Item removeItem(Item item) {
+		getItems().remove(item);
+		item.setUser(null);
+
+		return item;
 	}
 
 	public List<Message> getMessages1() {
@@ -192,14 +216,14 @@ public class User implements Serializable {
 
 	public Message addMessages1(Message messages1) {
 		getMessages1().add(messages1);
-		messages1.setSender(this);
+		messages1.setUser1(this);
 
 		return messages1;
 	}
 
 	public Message removeMessages1(Message messages1) {
 		getMessages1().remove(messages1);
-		messages1.setSender(null);
+		messages1.setUser1(null);
 
 		return messages1;
 	}
@@ -214,38 +238,16 @@ public class User implements Serializable {
 
 	public Message addMessages2(Message messages2) {
 		getMessages2().add(messages2);
-		messages2.setReceiver(this);
+		messages2.setUser2(this);
 
 		return messages2;
 	}
 
 	public Message removeMessages2(Message messages2) {
 		getMessages2().remove(messages2);
-		messages2.setReceiver(null);
+		messages2.setUser2(null);
 
 		return messages2;
-	}
-
-	public List<Item> getItems() {
-		return this.items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-
-	public Item addItem(Item item) {
-		getItems().add(item);
-		item.setSeller(this);
-
-		return item;
-	}
-
-	public Item removeItem(Item item) {
-		getItems().remove(item);
-		item.setSeller(null);
-
-		return item;
 	}
 
 	public Location getLocation() {

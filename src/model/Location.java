@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -14,32 +15,31 @@ public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idLocation;
-	
-	private String country;
-
-	private String city;
 
 	private String address;
 
-	@Column(name="postal_code")
-	private int postalCode;
-	
+	private String city;
+
+	private String country;
+
 	private float latitude;
+
+	private String location;
 
 	private float longitude;
 
-	private String location;
-	
-	//bi-directional one-to-one association to Item
-	@OneToOne
-	@JoinColumn(name="idLocation", referencedColumnName="idLocation")
-	private Item item;
+	@Column(name="postal_code")
+	private int postalCode;
 
-	//bi-directional one-to-one association to User
-	@OneToOne
-	@JoinColumn(name="idLocation", referencedColumnName="idLocation")
-	private User user;
+	//bi-directional many-to-one association to Item
+	@OneToMany(mappedBy="location")
+	private List<Item> items;
+
+	//bi-directional many-to-one association to User
+	@OneToMany(mappedBy="location")
+	private List<User> users;
 
 	public Location() {
 	}
@@ -51,13 +51,13 @@ public class Location implements Serializable {
 	public void setIdLocation(int idLocation) {
 		this.idLocation = idLocation;
 	}
-	
-	public String getCountry() {
-		return this.country;
+
+	public String getAddress() {
+		return this.address;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getCity() {
@@ -68,20 +68,12 @@ public class Location implements Serializable {
 		this.city = city;
 	}
 
-	public String getAddress() {
-		return this.address;
+	public String getCountry() {
+		return this.country;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	public int getPostalCode() {
-		return this.postalCode;
-	}
-
-	public void setPostalCode(int postalCode) {
-		this.postalCode = postalCode;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public float getLatitude() {
@@ -92,14 +84,6 @@ public class Location implements Serializable {
 		this.latitude = latitude;
 	}
 
-	public float getLongitude() {
-		return this.longitude;
-	}
-
-	public void setLongitude(float longitude) {
-		this.longitude = longitude;
-	}
-
 	public String getLocation() {
 		return this.location;
 	}
@@ -108,20 +92,64 @@ public class Location implements Serializable {
 		this.location = location;
 	}
 
-	public Item getItem() {
-		return this.item;
+	public float getLongitude() {
+		return this.longitude;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
 	}
 
-	public User getUser() {
-		return this.user;
+	public int getPostalCode() {
+		return this.postalCode;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setPostalCode(int postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public List<Item> getItems() {
+		return this.items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public Item addItem(Item item) {
+		getItems().add(item);
+		item.setLocation(this);
+
+		return item;
+	}
+
+	public Item removeItem(Item item) {
+		getItems().remove(item);
+		item.setLocation(null);
+
+		return item;
+	}
+
+	public List<User> getUsers() {
+		return this.users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public User addUser(User user) {
+		getUsers().add(user);
+		user.setLocation(this);
+
+		return user;
+	}
+
+	public User removeUser(User user) {
+		getUsers().remove(user);
+		user.setLocation(null);
+
+		return user;
 	}
 
 }

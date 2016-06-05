@@ -15,22 +15,18 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idCategory;
 
 	private String name;
 
 	//bi-directional many-to-many association to Item
-	@ManyToMany
-	@JoinTable(
-		name="ItemCategory"
-		, joinColumns={
-			@JoinColumn(name="idCategory")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="idItem")
-			}
-		)
+	@ManyToMany(mappedBy="categories")
 	private List<Item> items;
+
+	//bi-directional many-to-one association to ItemCategory
+	@OneToMany(mappedBy="category")
+	private List<ItemCategory> itemCategories;
 
 	public Category() {
 	}
@@ -57,6 +53,28 @@ public class Category implements Serializable {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	public List<ItemCategory> getItemCategories() {
+		return this.itemCategories;
+	}
+
+	public void setItemCategories(List<ItemCategory> itemCategories) {
+		this.itemCategories = itemCategories;
+	}
+
+	public ItemCategory addItemCategory(ItemCategory itemCategory) {
+		getItemCategories().add(itemCategory);
+		itemCategory.setCategory(this);
+
+		return itemCategory;
+	}
+
+	public ItemCategory removeItemCategory(ItemCategory itemCategory) {
+		getItemCategories().remove(itemCategory);
+		itemCategory.setCategory(null);
+
+		return itemCategory;
 	}
 
 }

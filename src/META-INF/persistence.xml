@@ -2,13 +2,13 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="WebAuctions" transaction-type="RESOURCE_LOCAL">
 		<class>model.Bid</class>
-		<class>model.BidPK</class>
 		<class>model.Category</class>
 		<class>model.Image</class>
 		<class>model.Item</class>
+		<class>model.ItemCategory</class>
+		<class>model.ItemCategoryPK</class>
 		<class>model.Location</class>
 		<class>model.Message</class>
-		<class>model.MessagePK</class>
 		<class>model.User</class>
 		<validation-mode>NONE</validation-mode>
 		<properties>

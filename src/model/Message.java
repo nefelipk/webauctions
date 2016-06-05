@@ -13,8 +13,9 @@ import javax.persistence.*;
 public class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private MessagePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int idMessage;
 
 	@Lob
 	private String message;
@@ -24,22 +25,22 @@ public class Message implements Serializable {
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="idSender")
-	private User sender;
+	private User user1;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="idReceiver")
-	private User receiver;
+	private User user2;
 
 	public Message() {
 	}
 
-	public MessagePK getId() {
-		return this.id;
+	public int getIdMessage() {
+		return this.idMessage;
 	}
 
-	public void setId(MessagePK id) {
-		this.id = id;
+	public void setIdMessage(int idMessage) {
+		this.idMessage = idMessage;
 	}
 
 	public String getMessage() {
@@ -58,20 +59,20 @@ public class Message implements Serializable {
 		this.read = read;
 	}
 
-	public User getSender() {
-		return this.sender;
+	public User getUser1() {
+		return this.user1;
 	}
 
-	public void setSender(User sender) {
-		this.sender = sender;
+	public void setUser1(User user1) {
+		this.user1 = user1;
 	}
 
-	public User getReceiver() {
-		return this.receiver;
+	public User getUser2() {
+		return this.user2;
 	}
 
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
+	public void setUser2(User user2) {
+		this.user2 = user2;
 	}
 
 }

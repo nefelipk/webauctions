@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -14,15 +15,15 @@ public class Image implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idImage;
 
 	@Lob
 	private byte[] image;
 
 	//bi-directional many-to-one association to Item
-	@ManyToOne
-	@JoinColumn(name="idImage")
-	private Item item;
+	@OneToMany(mappedBy="image")
+	private List<Item> items;
 
 	public Image() {
 	}
@@ -43,12 +44,26 @@ public class Image implements Serializable {
 		this.image = image;
 	}
 
-	public Item getItem() {
-		return this.item;
+	public List<Item> getItems() {
+		return this.items;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public Item addItem(Item item) {
+		getItems().add(item);
+		item.setImage(this);
+
+		return item;
+	}
+
+	public Item removeItem(Item item) {
+		getItems().remove(item);
+		item.setImage(null);
+
+		return item;
 	}
 
 }
