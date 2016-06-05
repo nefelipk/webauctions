@@ -16,7 +16,6 @@ public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idBid;
 
 	private float amount;

@@ -16,7 +16,6 @@ public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idItem;
 
 	@Column(name="buy_price")
@@ -46,33 +45,24 @@ public class Item implements Serializable {
 	@JoinColumn(name="currently")
 	private Bid bid;
 
-	//bi-directional many-to-many association to Category
-	@ManyToMany
-	@JoinTable(
-		name="ItemCategory"
-		, joinColumns={
-			@JoinColumn(name="idItem")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="idCategory")
-			}
-		)
-	private List<Category> categories;
+	//bi-directional many-to-one association to Location
+	@ManyToOne
+	@JoinColumn(name="idLocation")
+	private Location location;
 
 	//bi-directional many-to-one association to Image
 	@ManyToOne
 	@JoinColumn(name="idImage")
 	private Image image;
 
-	//bi-directional many-to-one association to Location
-	@ManyToOne
-	@JoinColumn(name="idLocation")
-	private Location location;
-
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="idSeller")
 	private User user;
+
+	//bi-directional many-to-many association to Category
+	@ManyToMany(mappedBy="items")
+	private List<Category> categories;
 
 	public Item() {
 	}
@@ -171,12 +161,12 @@ public class Item implements Serializable {
 		this.bid = bid;
 	}
 
-	public List<Category> getCategories() {
-		return this.categories;
+	public Location getLocation() {
+		return this.location;
 	}
 
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	public Image getImage() {
@@ -187,20 +177,20 @@ public class Item implements Serializable {
 		this.image = image;
 	}
 
-	public Location getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
 	public User getUser() {
 		return this.user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Category> getCategories() {
+		return this.categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 }
