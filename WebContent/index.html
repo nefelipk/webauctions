@@ -2,10 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Web Auction</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <script src="bootstrap/js/bootstrap.min.js"></script>
+	<title>Web Auction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -15,7 +17,16 @@
     border-bottom: 1px solid rgba(255,255,255,.3);
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    background-color:transparent;
+    /*background-color:transparent;*/
+    height:10%
+}
+
+.nav-top-height {
+    height:10%
+}
+
+.nav-prop {
+    background-color:#F8F8F8;
 }
 
 .stylish-input-group .input-group-addon{
@@ -36,7 +47,32 @@
 }
 
 .main_image {
-	margin-top:10%;
+	margin-top:8%;
+}
+
+.main_img_border {
+	border:0px;
+	margin: 0px 0px 0px 0px;
+	 -webkit-transform: scale(1.0);
+     /* Browser Variations: */
+     
+     -moz-transform: scale(1.0);
+     -o-transform: scale(1.0);
+     -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+     -o-transition-duration: 0.5s;
+}
+
+.main_img_border:hover {
+/*
+	-webkit-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+	transform: scale(1.1);
+	   */
+     -webkit-transform: scale(1.1);
+     -moz-transform: scale(1.1);
+     -o-transform: scale(1.1);
+  
 }
 
 .secondary_img {
@@ -60,18 +96,90 @@
 .secondary {
 	margin-left:0.2%;
 	margin-right:0.2%;
+	 -webkit-transform: scale(0.8);
+     /* Browser Variations: */
+     
+     -moz-transform: scale(0.8);
+     -o-transform: scale(0.8);
+     -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+     -o-transition-duration: 0.5s;
 }
+
 .secondary:hover {
-	  -webkit-transform: scale(1.2);
-        -ms-transform: scale(1.2);
-        transform: scale(1.2);:
+
+/*	-webkit-transform: scale(1.2);
+	-ms-transform: scale(1.2);
+	transform: scale(1.2);
+*/
+     -webkit-transform: scale(1.1);
+     -moz-transform: scale(1.1);
+     -o-transform: scale(1.1);
+
+}
+
+
+.social:hover {
+     -webkit-transform: scale(1.1);
+     -moz-transform: scale(1.1);
+     -o-transform: scale(1.1);
+ }
+ 
+ .social {
+     -webkit-transform: scale(0.8);
+     /* Browser Variations: */
+     
+     -moz-transform: scale(0.8);
+     -o-transform: scale(0.8);
+     -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+     -o-transition-duration: 0.5s;
+ }
+
+.icon-facebook {
+	color:#3897D9;
+}
+
+.icon-twitter {
+	color:#59BCFB;
+}
+
+.icon-google {
+	color:#E74C3C;
+}
+
+.icon-mail {
+	color:#F1C40F;
+}
+
+.icon-info {
+	color:#64D98A;
+}
+
+.bottom-color {
+	background-color:#F8F8F8;
+}
+
+.nav-height {
+	height:10%;
+	background-color:#F8F8F8;
+}
+
+.content-height {
+	margin-top:2.5%;
+}
+
+.main-content {
+	height:60%;
+	width:100%;
+	margin-top:10%;
 }
 </style>
 
 
 <body class="upper_half">
-		<nav class="navbar navbar-fixed-top ">
-		  <div class="container-fluid">
+		<nav class="navbar navbar-fixed-top nav-top-height">
+		  <div class="container-fluid nav-prop">
 		    <div class="navbar-header">
 		      <a class="navbar-brand navbar_color" href="#">OnL!ne Auctions</a>
 		    </div>
@@ -82,9 +190,12 @@
 		  </div>
 		</nav>
 		
+		<div class="main-content">
 		<div class="main_image">
 			<div class="container-fluid text-center">
-				  <img src="1465221872_auction-hammer.png" width=15% height=15%/>
+				<a href="#">
+				  <img class="main_img_border" src="1465221872_auction-hammer.png" width=15% height=15%/>
+				</a>
 			</div>
 		</div>
 
@@ -103,11 +214,6 @@
 			</div>
 		</div>
 
-	<script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-});
-</script>
 		<div class="search_bar">
 			<div class="container-fluid">
 				<div class="row">
@@ -124,8 +230,18 @@ $(document).ready(function(){
 		   	    	</div>
 		   	    </div>
 		</div>
+		</div>
 	
-	
+	<nav class="navbar navbar-fixed-bottom nav-height">
+		<div class="container-fluid bottom-color">
+        		<div class="text-center center-block content-height">
+                	<a href="#"><i class="fa fa-facebook-square fa-3x social icon-facebook"></i></a>
+	            	<a href="#"><i class="fa fa-twitter-square fa-3x social icon-twitter"></i></a>
+	            	<a href="#"><i class="fa fa-google-plus-square fa-3x social icon-google"></i></a>
+	            	<a href="#"><i class="fa fa-envelope-square fa-3x social icon-mail"></i></a>
+	            	<a href="#"><i class="fa fa-info fa-3x social icon-info"></i></a>
+	            </div>
+		</div>
+	</nav>	
 </body>
-
 </html>
