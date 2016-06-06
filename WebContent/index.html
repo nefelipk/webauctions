@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Web Auction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+
+<style>
+.navbar-custom {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color:transparent;
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+.search_bar {
+	margin-top:2%;
+}
+
+.main_image {
+	margin-top:10%;
+}
+
+.secondary_img {
+	margin-top:1%;
+}
+
+.navbar_color {
+	color:#3897D9; 
+}
+
+.upper_half {
+	background-color:#F2F1EF;
+}
+
+.bottom_half {
+	padding:1px;
+	height:50%;
+	background-color:#5ECA7F;
+}
+
+.secondary {
+	margin-left:0.2%;
+	margin-right:0.2%;
+}
+.secondary:hover {
+	  -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);:
+}
+</style>
+
+
+<body class="upper_half">
+		<nav class="navbar navbar-fixed-top ">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand navbar_color" href="#">OnL!ne Auctions</a>
+		    </div>
+		    <ul class="nav navbar-nav navbar-right">
+		      <li><a href="#" class="navbar_color"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+		      <li><a href="#" class="navbar_color"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		    </ul>
+		  </div>
+		</nav>
+		
+		<div class="main_image">
+			<div class="container-fluid text-center">
+				  <img src="1465221872_auction-hammer.png" width=15% height=15%/>
+			</div>
+		</div>
+
+
+		<div class="secondary_img">
+			<div class="container-fluid text-center">
+				<a href="#">
+				  <img class="secondary" src="cart.png" width=5% height=5%/>
+				</a>
+				<a href="#">
+				  <img class="secondary" src="creditcard.png" width=5% height=5%/>
+				</a>
+				<a href="#">
+				  <img class="secondary" src="door.png" width=5% height=5%/>
+				</a>
+			</div>
+		</div>
+
+	<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+		<div class="search_bar">
+			<div class="container-fluid">
+				<div class="row">
+		        	<div class="col-sm-6 col-sm-offset-3">
+		                <div class="input-group stylish-input-group">
+		                    <input type="text" class="form-control navbar_color"  placeholder="Search" >
+		            	        <span class="input-group-addon">
+		                	        <button type="submit">
+		            	            <span class="glyphicon glyphicon-search"></span>
+		                    	    </button>  
+		                    	</span>
+			                </div>
+		        	   </div>
+		   	    	</div>
+		   	    </div>
+		</div>
+	
+	
+</body>
+
+</html>
