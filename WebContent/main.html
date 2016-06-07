@@ -4,9 +4,9 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -40,8 +40,14 @@
       .row.content {height:auto;} 
     }
     
+    body {
+    	padding-top:115px;
+    }
+    
     .height-nav {
 	    padding: 2.0%;
+	    background:transparent;
+	    margin-bottom :1%;	
 	}
 	
 	.logo-size {
@@ -52,12 +58,14 @@
 	.search-width {
 		width: 50%;
 	}
+	
+	
   </style>
 </head>
 <body>
 
-<nav class="navbar navbar-inverse height-nav">
-  <div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top height-nav">
+  <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
@@ -93,7 +101,7 @@
   </div>
 </nav>
   
-<div class="container-fluid text-center">    
+<div class="container text-center" >    
   <div class="row content">
     <div class="col-sm-2 sidenav">
       <p><a href="#">Link</a></p>
