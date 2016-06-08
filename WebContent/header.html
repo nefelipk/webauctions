@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Bootstrap Example</title>
+	<title>Auction Land - Header</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -9,9 +9,10 @@
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	
 	<script> 
-	$(function(){
-	  $("#signup-modal").load("signup.html"); 
-	});
+		$(function(){
+		  $("#signup-modal").load("signup.html"); 
+		  $("#login-modal").load("login.html"); 
+		});
 	</script>
 	
 	<style>
@@ -109,46 +110,7 @@
 	</nav>
 </body>
 
-	<div id="signup-modal"></div>
-
-			
-			
-			
-<!-- Login Modal --> 
-	<div id="login_modal" class="modal" role="dialog">
-		<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header text-center">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<img class="logo-size" src="logo4.png" />
-			</div>
-				<div class="modal-body">
-					<form class="form-horizontal" role="form">
-					 <div class="form-group">
-					    <label class="control-label col-sm-2" for="usrname">Username:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="username" placeholder="Enter Username">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label class="control-label col-sm-2" for="pwd">Password:</label>
-					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-					    </div>
-					  </div>
-					  <div class="form-group"> 
-					    <div class="col-sm-offset-2 col-sm-10">
-					      <button type="submit" class="btn btn-default">Login</button>
-					    </div>
-					  </div>
-					  
-					</form>
-				</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-			</div>
-			</div>
-			</div>			
-			
+<div id="signup-modal"></div>
+<div id="login-modal"></div>
+	
 </html>
