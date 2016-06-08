@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="auction_land">
 <head>
-	<title>Bootstrap Example</title>
+	<title>Auction Land - Header</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -11,9 +11,10 @@
 	<script src="auction_land.js"></script>
 	
 	<script> 
-	$(function(){
-	  $("#signup-modal").load("signup.html"); 
-	});
+		$(function(){
+		  $("#signup-modal").load("signup.html"); 
+		  $("#login-modal").load("login.html"); 
+		});
 	</script>
 	
 	<style>
@@ -110,7 +111,6 @@
 	</nav>
 </body>
 
-	<!-- <div id="signup-modal"></div> -->
 	<div ng-include="'signup.html'"></div>
 
 			
@@ -153,4 +153,6 @@
 			</div>
 			</div>			
 			
+<div id="login-modal"></div>
+	
 </html>
