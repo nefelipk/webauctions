@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<style>
+		/* Remove the navbar's default margin-bottom and rounded borders */ 
+		.navbar {
+			margin-bottom: 0;
+			border-radius: 0;
+		}
+		
+		/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+		.row.content {height: 450px}
+		
+		/* Set gray background color and 100% height */
+		.sidenav {
+			padding-top: 20px;
+			background-color: #f1f1f1;
+			height: 100%;
+		}
+		
+		/* Set black background color, white text and some padding */
+		footer {
+			background-color: #555;
+			color: white;
+			padding: 15px;
+		}
+		   
+		/* On small screens, set height to 'auto' for sidenav and grid */
+		@media screen and (max-width: 767px) {
+		.sidenav {
+			height: auto;
+			padding: 15px;
+		}
+		.row.content {height:auto;} 
+		}
+		   
+		body {
+			padding-top: 150px;
+		}
+		   
+		.height-nav {
+			padding: 1.0%;
+			background: transparent;
+			margin-bottom: 20%;	
+		}
+		
+		.logo-size {
+			padding: 2.0%;
+			margin: -2.0%;
+			width: 150px;
+			height: 80px;
+		}
+		
+		.search-width {
+			width: 50%;
+		}
+		
+		.header-width {
+			width: 20%;
+			height: 20%;
+		}
+		
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top height-nav">
+		<div class="container">
+			<div class="navbar-header header-width">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>                        
+				</button>
+				<a href="#">
+					<img class="navbar-brand logo-size" src="logo4.png" />
+				</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<!-- 
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Projects</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+				-->
+				<form class="nav navbar-nav navbar-form text-center search-width" role="search">
+					<div class="input-group" style="width: 100%">
+						<input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+						<div class="input-group-btn" style="text-align: left">
+							<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>
+					</div>
+				<!--<div class="input-group-btn" style="text-align: left">
+						<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+					</div>
+					-->
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</body>
+</html>
