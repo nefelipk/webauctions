@@ -5,6 +5,6 @@ import javax.persistence.Persistence;
 
 public class JPAResource {
     
-    public static final EntityManagerFactory factory = Persistence.createEntityManagerFactory("AuctionLand");
+    public static final EntityManagerFactory factory = Persistence.createEntityManagerFactory("WebAuctions");
     
 }

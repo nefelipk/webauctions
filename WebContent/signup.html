@@ -25,7 +25,7 @@
 
 <body>
 		<!-- Modal -->  
-	<div id="signup_modal" class="modal" role="dialog" ng-controller="UserController" >
+	<div id="signup_modal" class="modal" role="dialog" ng-controller="UserController">
 		<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:#F2F1EF">
@@ -39,19 +39,19 @@
 					    <label class="control-label col-sm-2" for="usrname">Username:</label>
 					    <div class="col-sm-10">
 
-					      <input type="text" class="form-control" id="username" placeholder="Username" ng-model="user.username" ng-required>
+					      <input type="text" class="form-control" id="username" ng-model="user.username" placeholder="Username">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="pwd">Password:</label>
 					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" ng-model="user.password" ng-required placeholder="Password">
+					      <input type="password" class="form-control" id="pwd" ng-model="user.password" placeholder="Password">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="pwd">Password again:</label>
 					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" ng-model="user.password" placeholder="Password again">
+					      <input type="password" class="form-control" id="pwd" placeholder="Password again">
 					    </div>
 					  </div>
 					   <div class="form-group">
@@ -66,13 +66,13 @@
 					   <div class="form-group">
 					    <label class="control-label col-sm-2" for="name">Name:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="name" ng-model="user.name" placeholder="Name">
+					      <input type="text" class="form-control" id="name" ng-model="user.firstName"  placeholder="Name">
 					    </div>
 					  </div>
 					   <div class="form-group">
 					    <label class="control-label col-sm-2" for="surname">Surname:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="surname" ng-model="user.surname" placeholder="Surname">
+					      <input type="text" class="form-control" id="surname" ng-model="user.lastName" placeholder="Surname">
 					    </div>
 					  </div>
 					
@@ -88,33 +88,36 @@
 					<div class="form-group">
 					    <label class="control-label col-sm-2" for="country">Country:</label>
 					    <div class="col-sm-10">
-					    	<select class="form-control"></select>
+					      <select class="form-control"
+					      ng-model="user.country" ng-options="country.name for country in countries track by country.code">
+						  <option value="">-- Select a Country --</option>
+						  </select>
 					    </div>
 					  </div>
 					 
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="city">City:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="city" placeholder="City">
+					      <input type="text" class="form-control" id="city" ng-model="user.location.city" placeholder="City">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="address">Address:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="address" placeholder="Address">
+					      <input type="text" class="form-control" id="address" ng-model="user.location.address" placeholder="Address">
 					    </div>
 					  </div>
 
 				     <div class="form-group">
 					    <label class="control-label col-sm-2" for="tel">Telephone:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="telephone" placeholder="Telephone">
+					      <input type="text" class="form-control" id="telephone" ng-model="user.phone" placeholder="Telephone">
 					    </div>
 					  </div>
 <hr>
 					  <div class="form-group" > 
 					    <div class="col-sm-offset-5 col-sm-7">
-					      <button ng-click="submit_function()" type="submit" class="btn" style="background-color:#27AE60; color:#ECF0F1;">Submit</button>
+					      <button class="btn" ng-click="submit()" style="background-color:#27AE60; color:#ECF0F1;">Submit</button>
 					    </div>
 					  </div>
 					</form>
@@ -128,6 +131,6 @@
 			-->
 			</div>
 			</div>
-
+			
 </body>
 </html>

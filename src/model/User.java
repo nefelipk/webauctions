@@ -8,6 +8,7 @@ public class User {
 	private String password;
 	private int id;
 	private String phone;
+	private String email;
 	private float ratingBidder;
 	private float ratingSeller;
 	private Location location;
@@ -79,7 +80,14 @@ public class User {
 	}
 	public void setAfm(String afm) {
 		this.afm = afm;
+	}	
+	public String getEmail() {
+		return email;
 	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 		
 	@Override
 	public String toString() {

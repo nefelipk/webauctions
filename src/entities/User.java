@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@Table(name="User")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +59,7 @@ public class User implements Serializable {
 	private List<Message> messages2;
 
 	//bi-directional many-to-one association to Location
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idLocation")
 	private Location location;
 

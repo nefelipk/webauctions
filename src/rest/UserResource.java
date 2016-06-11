@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import dao.LocationDAO;
 import dao.UserDAO;
 
 @Path("/users")
@@ -20,7 +21,7 @@ public class UserResource {
 		userEntity.setUsername(user.getUsername());
 		userEntity.setSurname(user.getLastName());
 		userEntity.setPassword(user.getPassword());
-		
+		userEntity.setEmail(user.getEmail());
 		userEntity.setPhone(2309394);
 		
 		entities.Location locationEntity = new entities.Location();
@@ -49,6 +50,8 @@ public class UserResource {
 		
 		UserDAO userDB = new UserDAO();
 		int id = userDB.insert(userEntity);	
+		//LocationDAO locationDB = new LocationDAO();
+		//int idLocation = locationDB.insert(locationEntity);
 		return Response
 				.created(UriBuilder.fromResource(UserResource.class)
 						.path(String.valueOf(id))
