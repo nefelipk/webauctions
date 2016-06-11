@@ -81,4 +81,8 @@ public class User {
 		this.afm = afm;
 	}
 		
+	@Override
+	public String toString() {
+		return this.username+" "+" "+this.firstName+" "+this.lastName+" ";
+	}
 }

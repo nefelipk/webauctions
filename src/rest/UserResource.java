@@ -7,7 +7,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import dao.UserDAO;
-import model.User;
 
 @Path("/users")
 public class UserResource {
@@ -15,6 +14,9 @@ public class UserResource {
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.User user) {
+		System.err.println(user.toString());
+		return Response.ok().build();
+		/*
 		entities.User userEntity = new entities.User();
 		userEntity.setAfm(user.getAfm());
 		userEntity.setName(user.getFirstName());
@@ -22,9 +24,7 @@ public class UserResource {
 		userEntity.setSurname(user.getLastName());
 		userEntity.setPassword(user.getPassword());
 		
-		/*
-		 * Phone in db is int. change to string maybe? 
-		 */
+		/
 		//userEntity.setPhone(user.getPhone());
 		
 		entities.Location locationEntity = new entities.Location();
@@ -40,7 +40,7 @@ public class UserResource {
 		
 		userEntity.setLocation(locationEntity);
 		
-		/*fields out of model*/
+		/*fields out of model
 		userEntity.setVerified((byte)0);
 		userEntity.setRatingBidder(0);
 		userEntity.setRatingSeller(0);
@@ -58,5 +58,6 @@ public class UserResource {
 						.path(String.valueOf(id))
 						.build())
 				.build();
+				*/
 	}
 }
