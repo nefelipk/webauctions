@@ -3,7 +3,7 @@
 var app = angular.module('auction_land',['ngResource']);
 
 app.factory('User',['$resource',function($resource) {
-	return $resource('http://localhost:8080/webauctions/services/users');
+	return $resource('http://localhost:8080/WebAuctions/services/users');
 }]);
 
 app.controller('UserController',
