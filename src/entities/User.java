@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+
+import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idUser;
 
 	private byte admin;

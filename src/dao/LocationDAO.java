@@ -32,4 +32,15 @@ public class LocationDAO {
             entityManager.close();
         }
 	}
+	
+	public Location getById(int id) {
+		Location location = null;
+		EntityManager em = JPAResource.factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		location = em.find(Location.class, id);	
+		tx.commit();
+		em.close();
+		return location;
+	}
 }

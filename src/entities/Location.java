@@ -15,7 +15,7 @@ import java.util.List;
 public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idLocation;
 
 	private String address;

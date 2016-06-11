@@ -35,7 +35,6 @@ public class UserResource {
 		locationEntity.setPostalCode(location.getPostalCode());
 		locationEntity.setLocation(null);
 		
-		userEntity.setLocation(locationEntity);
 		
 		/*fields out of model*/
 		userEntity.setVerified((byte)0);
@@ -48,13 +47,18 @@ public class UserResource {
 		userEntity.setMessages2(null);
 		
 		
+		LocationDAO locationDB = new LocationDAO();
+		int idLocation = locationDB.insert(locationEntity);
+		
+		LocationDAO location1DB = new LocationDAO();
+		
+		userEntity.setLocation(location1DB.getById(idLocation));
 		UserDAO userDB = new UserDAO();
 		int id = userDB.insert(userEntity);	
-		//LocationDAO locationDB = new LocationDAO();
-		//int idLocation = locationDB.insert(locationEntity);
+		
 		return Response
 				.created(UriBuilder.fromResource(UserResource.class)
-						.path(String.valueOf(id))
+						.path(String.valueOf(idLocation))
 						.build())
 				.build();
 			
