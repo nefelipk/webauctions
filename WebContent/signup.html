@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="auction_land">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Auction Land - Sign Up</title>
-<script src="./angular/angular.min.js"></script>
-<script src="./auction_land.js"></script>
 </head>
 
 <style>
@@ -27,7 +25,7 @@
 
 <body>
 		<!-- Modal -->  
-	<div id="signup_modal" class="modal" role="dialog" ng-controller="SignUpController" >
+	<div id="signup_modal" class="modal" role="dialog" ng-controller="UserController" >
 		<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:#F2F1EF">
@@ -41,25 +39,25 @@
 					    <label class="control-label col-sm-2" for="usrname">Username:</label>
 					    <div class="col-sm-10">
 
-					      <input type="text" class="form-control" id="username" placeholder="Username" ng-model="name" ng-required>
+					      <input type="text" class="form-control" id="username" placeholder="Username" ng-model="user.username" ng-required>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="pwd">Password:</label>
 					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" placeholder="Password">
+					      <input type="password" class="form-control" id="pwd" ng-model="user.password" ng-required placeholder="Password">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="pwd">Password again:</label>
 					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" placeholder="Password again">
+					      <input type="password" class="form-control" id="pwd" ng-model="user.password" placeholder="Password again">
 					    </div>
 					  </div>
 					   <div class="form-group">
 					    <label class="control-label col-sm-2" for="email">Email:</label>
 					    <div class="col-sm-10">
-					      <input type="email" class="form-control" id="email" placeholder="Email">
+					      <input type="email" class="form-control" id="email" ng-model="user.email" placeholder="Email">
 					    </div>
 					  </div>
 					  
@@ -68,20 +66,20 @@
 					   <div class="form-group">
 					    <label class="control-label col-sm-2" for="name">Name:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="name" placeholder="Name">
+					      <input type="text" class="form-control" id="name" ng-model="user.name" placeholder="Name">
 					    </div>
 					  </div>
 					   <div class="form-group">
 					    <label class="control-label col-sm-2" for="surname">Surname:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="surname" placeholder="Surname">
+					      <input type="text" class="form-control" id="surname" ng-model="user.surname" placeholder="Surname">
 					    </div>
 					  </div>
 					
 					   <div class="form-group">
 					    <label class="control-label col-sm-2" for="TRN">TRN:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="trn" placeholder="Tax Registration Number">
+					      <input type="text" class="form-control" id="trn" ng-model="user.afm" placeholder="Tax Registration Number">
 					    </div>
 					  </div>
 					 

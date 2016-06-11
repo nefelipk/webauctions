@@ -10,13 +10,10 @@ import dao.UserDAO;
 
 @Path("/users")
 public class UserResource {
-	
+		
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.User user) {
-		System.err.println(user.toString());
-		return Response.ok().build();
-		/*
 		entities.User userEntity = new entities.User();
 		userEntity.setAfm(user.getAfm());
 		userEntity.setName(user.getFirstName());
@@ -24,8 +21,7 @@ public class UserResource {
 		userEntity.setSurname(user.getLastName());
 		userEntity.setPassword(user.getPassword());
 		
-		/
-		//userEntity.setPhone(user.getPhone());
+		userEntity.setPhone(2309394);
 		
 		entities.Location locationEntity = new entities.Location();
 		model.Location location = user.getLocation();
@@ -40,7 +36,7 @@ public class UserResource {
 		
 		userEntity.setLocation(locationEntity);
 		
-		/*fields out of model
+		/*fields out of model*/
 		userEntity.setVerified((byte)0);
 		userEntity.setRatingBidder(0);
 		userEntity.setRatingSeller(0);
@@ -58,6 +54,6 @@ public class UserResource {
 						.path(String.valueOf(id))
 						.build())
 				.build();
-				*/
+			
 	}
 }

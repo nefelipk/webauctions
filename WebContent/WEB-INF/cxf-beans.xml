@@ -17,6 +17,9 @@
 			<ref bean="Hello"/>
 			<ref bean="Users"/>
 		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+		</jaxrs:providers>
 	</jaxrs:server>
 	
 </beans>
