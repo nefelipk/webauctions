@@ -5,34 +5,36 @@
 		return $resource('http://localhost:8080/WebAuctions/services/users');
 	} ]);
 
-	app.directive('usernameAvailable',['User', function($timeout,User, $q) {
-		return {
-			restrict : 'AE',
-			require : 'ngModel',
-			link : function(scope, elm, attr, model,User) {
-				model.$asyncValidators.usernameExists = function($scope,User) {
-				
-					var garbage = scope.getAllUsers();
-					model.$setValidity('usernameExists', false);
-					console.log("directive");
-					console.log(garbage.$promise);
-					// here you should access the backend, to check if username
-					// exists
-					// and return a promise
-					// here we're using $q and $timeout to mimic a backend call
-					// that will resolve after 1 sec
-					
-				};
-			}
-		}
-	}]);
-
 	app.controller('UserController', [ '$scope', 'User', 
 			function($scope, User) {
-				$scope.getAllUsers = function() {
-					var all_users = User.query();
-					//console.log(all_users);
-					return all_users;
+				
+				$scope.check_username = function() {
+					User.query().$promise.then(function(data,all_users) {
+						var exists = false;
+						for(var i = 0; i < data.length; i++) {
+							console.log(data[i].username);
+							if($scope.user.username == data[i].username) {	
+								console.log("username exists");
+								exists = true;
+							}
+						}
+						console.log(exists);
+						var input_elem = angular.element(document.querySelector('#username_div'));
+						var span = angular.element(document.querySelector('#username_span'));
+						span.removeClass();
+						input_elem.removeClass('has-error');
+						input_elem.removeClass('has-succcess');
+						if(exists) {
+							input_elem.addClass("has-error has-feedback ");
+							span.addClass("glyphicon glyphicon-remove form-control-feedback")
+						}
+						else {
+							input_elem.addClass("has-success has-feedback");
+							span.addClass("glyphicon glyphicon-ok form-control-feedback");
+						}
+						console.log(span);
+						console.log(input_elem);
+					});			
 				}
 		
 				$scope.countries = [ {

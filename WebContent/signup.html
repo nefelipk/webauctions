@@ -40,20 +40,18 @@
 					<h4 class="text-center" style="color:#2980B9;"><strong>Register</strong></h4>
 			</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form" name="signup-form" ng-submit="signup-form.$valid && submit()" novalidate>
+					<form class="form-horizontal" role="form" name="form" ng-submit="form.$valid && submit()" novalidate>
 					 <div class="form-group has-feedback">
 					    
 					    <label class="control-label col-sm-2" for="usrname">Username:</label>
 					    
-					    <div class="col-sm-10">
-						<input type="text" class="form-control" id="username" 
+					    <div id="username_div" class="col-sm-10">
+						<input type="text" class="form-control" id="username" name="username"
 					      ng-model="user.username" 
 					      ng-required="true"
-					      username-available
-					      ng-model-options="{ updateOn: 'blur'}"
+					      ng-blur="check_username()"
 					      placeholder="Username">
-					      <span ng-if="signup-form.$pending.userNameExists" class="has-error"></span>
-					      <span ng-if="signup.form.$error.userNameExists" class="has-success"></span>
+				        <span id="username_span"></span>
 					    </div>
 					    
 					  </div>
