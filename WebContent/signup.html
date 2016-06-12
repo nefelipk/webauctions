@@ -3,152 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <title>Auction Land - Sign Up</title>
+<link rel="stylesheet" href="signup.css">
 </head>
 
-<style>
-.modal-content  {
-    -webkit-border-radius: 25px !important;
-    -moz-border-radius: 25px  !important;
-    border-radius: 25px !important;
-}
-
-.modal-header  {
-    -webkit-border-top-left-radius: 25px  !important;
-    -moz-border-top-left-radius: 25px  !important;
-    -webkit-border-top-right-radius: 25px  !important;
-    -moz-border-top-right-radius: 25px  !important;
-    border-top-left-radius: 25px !important;
-    border-top-right-radius: 25px !important;
-}
-
-.ng-invalid.ng-dirty {	
-	border-color: #FA787E;
-}
-!
-.ng-valid.ng-dirty {
-	border-color: #78FA89;
-}
-</style>
-
 <body>
-		<!-- Modal -->  
-	<div id="signup_modal" class="modal" role="dialog" ng-controller="UserController as ctrl">
+	<div id="signup_modal" class="modal" role="dialog"
+		ng-controller="UserController as ctrl">
 		<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header" style="background-color:#F2F1EF">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="text-center" style="color:#2980B9;"><strong>Register</strong></h4>
-			</div>
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #F2F1EF">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="text-center" style="color: #2980B9;">
+						<strong>Register</strong>
+					</h4>
+				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form" name="form" ng-submit="form.$valid && submit()" novalidate>
-					 <div class="form-group has-feedback">
-					    
-					    <label class="control-label col-sm-2" for="usrname">Username:</label>
-					    
-					    <div id="username_div" class="col-sm-10">
-						<input type="text" class="form-control" id="username" name="username"
-					      ng-model="user.username" 
-					      ng-required="true"
-					      ng-blur="check_username()"
-					      placeholder="Username">
-				        <span id="username_span"></span>
-					    </div>
-					    
-					  </div>
-					  <div class="form-group">
-					    <label class="control-label col-sm-2" for="pwd">Password:</label>
-					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" ng-model="user.password" required placeholder="Password">
-					    </div>
-					  </div>
-					  <div class="form-group has-feedback" ng-class="{'has-error': pass_match()}">
-					    <label class="control-label col-sm-2" for="pwd">Password again:</label>
-					    <div class="col-sm-10"> 
-					    	<input type="password" class="form-control" id="pwd" ng-model="confirm" placeholder="Password again"> 	
-					    	<!-- 
-					    	<span ng-show="user.password == confirm" class="glyphicon glyphicon-remove form-control-feedback"></span>
-					    	-->
-					    </div>
-					  </div>
-					   <div class="form-group">
-					    <label class="control-label col-sm-2" for="email">Email:</label>
-					    <div class="col-sm-10">
-					      <input type="email" class="form-control" 
-					      id="email" ng-model="user.email" placeholder="Email">
-					      <span ></span>
-					    </div>
-					  </div>
-					  
-					  <hr>
-					  
-					   <div class="form-group">
-					    <label class="control-label col-sm-2" for="name">Name:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="name" ng-model="user.firstName"  placeholder="Name">
-					    </div>
-					  </div>
-					   <div class="form-group">
-					    <label class="control-label col-sm-2" for="surname">Surname:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="surname" ng-model="user.lastName" placeholder="Surname">
-					    </div>
-					  </div>
-					
-					   <div class="form-group">
-					    <label class="control-label col-sm-2" for="TRN">TRN:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="trn" ng-model="user.afm" placeholder="Tax Registration Number">
-					    </div>
-					  </div>
-					 
-					 <hr>
-					 
-					<div class="form-group">
-					    <label class="control-label col-sm-2" for="country">Country:</label>
-					    <div class="col-sm-10">
-					      <select class="form-control"
-					      ng-model="user.country" ng-options="country.name for country in countries track by country.code">
-						  <option value="">-- Select a Country --</option>
-						  </select>
-					    </div>
-					  </div>
-					 
-					  <div class="form-group">
-					    <label class="control-label col-sm-2" for="city">City:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="city" ng-model="user.location.city" placeholder="City">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label class="control-label col-sm-2" for="address">Address:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="address" ng-model="user.location.address" placeholder="Address">
-					    </div>
-					  </div>
+					<form class="form-horizontal" role="form" name="form"
+						ng-submit="form.$valid && submit()" novalidate>
+						<div class="form-group">
 
-				     <div class="form-group">
-					    <label class="control-label col-sm-2" for="tel">Telephone:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="telephone" ng-model="user.phone" placeholder="Telephone">
-					    </div>
-					  </div>
-<hr>
-					  <div class="form-group" > 
-					    <div class="col-sm-offset-5 col-sm-7">
-					      <button class="btn" type="submit" style="background-color:#27AE60; color:#ECF0F1;">Submit</button>
-					    </div>
-					  </div>
+							<div id="username_div" class="col-xs-6 has-feedback" ng-messages="form.username.$error" role="alert">
+								<label class="control-label" for="usrname">Username</label> <input type="text"
+									class="form-control" id="username" name="username"
+									ng-model="user.username" ng-required="true"
+									ng-blur="form.username.$dirty && check_username()" placeholder="Username"> 
+									<span id="username_span"></span> 
+									<i id="i-username" class="glyphicon glyphicon-user form-control-feedback"></i>
+									<div ng-message="exists">Username already exists.</div>
+							</div>
+
+							<div class="col-xs-6 has-feedback">
+								<label for="email">Email</label> 
+								<input type="email"
+									class="form-control" id="email" ng-model="user.email"
+									ng-required="true"
+									placeholder="Email"> 
+								<span></span>
+								<i id="i-username" class="glyphicon glyphicon-envelope form-control-feedback"></i>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<div id="username_div" class="col-xs-6 has-feedback">
+								<label for="pwd">Password:</label> <input
+									type="password" class="form-control" id="pwd"
+									ng-model="user.password" required placeholder="Password">
+								<i id="i-username" class="glyphicon glyphicon-lock form-control-feedback"></i>
+									
+							</div>
+
+							<div class="col-xs-6 has-feedback">
+								<label for="pwd">Confirm Password:</label> <input
+									type="password" class="form-control" id="pwd"
+									ng-model="confirm" required placeholder="Password">
+								<i id="i-username" class="glyphicon glyphicon-lock form-control-feedback"></i>
+									
+							</div>
+						</div>
+						<!--  						<div class="form-group">
+							<label class="control-label col-sm-2" for="pwd">Password:</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" id="pwd"
+									ng-model="user.password" required placeholder="Password">
+							</div>
+						</div>
+						-->
+						<hr>
+
+						<div class="form-group">
+							<div class="col-xs-6 has-feedback">
+								<label  for="name">Name:</label>
+								<input type="text" class="form-control" id="name"
+									ng-model="user.firstName" placeholder="Name">
+								<i id="i-username" class="glyphicon glyphicon-user form-control-feedback"></i>
+									
+							</div>
+						
+							<div class="col-xs-6 has-feedback">
+								<label for="surname">Surname:</label>
+								<input type="text" class="form-control" id="surname"
+									ng-model="user.lastName" placeholder="Surname">
+								<i class="glyphicon glyphicon-user form-control-feedback"></i>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-1" for="TRN">TRN:</label>
+							<div class="col-sm-10 has-feedback">
+								<input type="text" class="form-control" id="trn"
+									ng-model="user.afm" placeholder="Tax Registration Number">
+								<i class="glyphicon glyphicon-info-sign form-control-feedback"></i>
+							</div>
+						</div>
+
+						<hr>
+
+						<div class="form-group">
+							<div class="col-xs-6">
+								<label class="control-label" for="country">Country:</label>
+								<select class="form-control" ng-model="user.country"
+									ng-options="country.name for country in countries track by country.code">
+									<option value="">Country</option>
+								</select>
+							</div>
+	
+							<div class="col-xs-6 has-feedback">
+								<label class="control-label" for="city">City:</label>
+								<input type="text" class="form-control" id="city"
+									ng-model="user.location.city" placeholder="City">
+								<i  class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+							</div>
+						</div>
+	
+						<div class="form-group">
+							<div class="col-xs-6 has-feedback">
+								<label class="control-label" for="address">Address:</label>
+								<input type="text" class="form-control" id="address"
+									ng-model="user.location.address" placeholder="Address">
+								<i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+							</div>
+
+							<div class="col-xs-6 has-feedback">
+								<label class="control-label" for="tel">Telephone:</label>
+								<input type="text" class="form-control" id="telephone"
+									ng-model="user.phone" placeholder="Telephone">
+								<i class="glyphicon glyphicon-phone form-control-feedback"></i>	
+							</div>
+						</div>
+						<hr>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-6">
+								<button class="btn btn-success btn-block" type="submit"
+									style="background-color: #27AE60; color: #ECF0F1;"><strong>Submit</strong></button>
+							</div>
+						</div>
 					</form>
 				</div>
-				
-				</div>
-				<!-- 
-			<div class="modal-footer">
-				<button type="button" class="btn" style="background-color:#E67E22; color:#ECF0F1;" data-dismiss="modal">Close</button>
+
 			</div>
-			-->
-			</div>
-			</div>
-			
+		</div>
+	</div>
+
 </body>
 </html>

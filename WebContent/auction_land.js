@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module('auction_land', [ 'ngResource' ]);
+	var app = angular.module('auction_land', [ 'ngResource','ngMessages' ]);
 
 	app.factory('User', [ '$resource', function($resource) {
 		return $resource('http://localhost:8080/WebAuctions/services/users');
@@ -7,7 +7,7 @@
 
 	app.controller('UserController', [ '$scope', 'User', 
 			function($scope, User) {
-				
+				$scope.err = "";
 				$scope.check_username = function() {
 					User.query().$promise.then(function(data,all_users) {
 						var exists = false;
@@ -20,19 +20,18 @@
 						}
 						console.log(exists);
 						var input_elem = angular.element(document.querySelector('#username_div'));
-						var span = angular.element(document.querySelector('#username_span'));
-						span.removeClass();
-						input_elem.removeClass('has-error');
-						input_elem.removeClass('has-succcess');
+						var i = angular.element(document.querySelector('#i_username'));
+						input_elem.removeClass("has-error");
+						input_elem.removeClass("has-succcess");
 						if(exists) {
-							input_elem.addClass("has-error has-feedback ");
-							span.addClass("glyphicon glyphicon-remove form-control-feedback")
+							input_elem.addClass("has-error");
+							$scope.form.username.$error.exists = true;
 						}
 						else {
-							input_elem.addClass("has-success has-feedback");
-							span.addClass("glyphicon glyphicon-ok form-control-feedback");
+							input_elem.addClass("has-success");
+							$scope.form.username.$error.exists = false;
 						}
-						console.log(span);
+						$scope.err = "already exists!";
 						console.log(input_elem);
 					});			
 				}
