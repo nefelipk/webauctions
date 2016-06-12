@@ -1,8 +1,11 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import db.JPAResource;
 import entities.User;
@@ -31,5 +34,21 @@ public class UserDAO {
         {
             entityManager.close();
         }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<entities.User> getAllUsers() {
+        List<entities.User> users = null;
+        EntityManager em = JPAResource.factory.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        
+        //Query q = em.createQuery("Select u from User u");
+        Query q = em.createNamedQuery("User.findAll");
+        users =  q.getResultList();
+		
+        tx.commit();
+        em.close();
+        return users;
 	}
 }

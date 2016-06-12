@@ -1,8 +1,13 @@
 package rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
@@ -37,12 +42,12 @@ public class UserResource {
 		
 		
 		/*fields out of model*/
-		userEntity.setVerified((byte)0);
+		userEntity.setVerified(false);
 		userEntity.setRatingBidder(0);
 		userEntity.setRatingSeller(0);
 		userEntity.setItems(null);
 		userEntity.setBids(null);
-		userEntity.setAdmin((byte)0);
+		userEntity.setAdmin(false);
 		userEntity.setMessages1(null);
 		userEntity.setMessages2(null);
 		
@@ -62,5 +67,21 @@ public class UserResource {
 						.build())
 				.build();
 			
+	}
+	
+	@GET
+	@Produces({"application/json"})
+	public List<model.User> getAllUsers() {
+		UserDAO userDAO = new UserDAO();
+		List<entities.User> usersEntities = userDAO.getAllUsers();
+		List<model.User> allUsers = null;
+		if(usersEntities != null && usersEntities.size() > 0) {
+			allUsers = new ArrayList<model.User>();
+			for(entities.User crawl : usersEntities) {
+				model.User user = model.wrappers.UserWrapper.mapModelUserFromEntity(crawl);
+				allUsers.add(user);
+			}
+		}
+		return allUsers;
 	}
 }

@@ -19,45 +19,65 @@
     -moz-border-top-right-radius: 25px  !important;
     border-top-left-radius: 25px !important;
     border-top-right-radius: 25px !important;
+}
 
+.ng-invalid.ng-dirty {	
+	border-color: #FA787E;
+}
+!
+.ng-valid.ng-dirty {
+	border-color: #78FA89;
 }
 </style>
 
 <body>
 		<!-- Modal -->  
-	<div id="signup_modal" class="modal" role="dialog" ng-controller="UserController">
+	<div id="signup_modal" class="modal" role="dialog" ng-controller="UserController as ctrl">
 		<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:#F2F1EF">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<!-- <img class="navbar-brand logo-size" src="logo4.png" /> -->
 					<h4 class="text-center" style="color:#2980B9;"><strong>Register</strong></h4>
 			</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form">
-					 <div class="form-group">
+					<form class="form-horizontal" role="form" name="signup-form" ng-submit="signup-form.$valid && submit()" novalidate>
+					 <div class="form-group has-feedback">
+					    
 					    <label class="control-label col-sm-2" for="usrname">Username:</label>
+					    
 					    <div class="col-sm-10">
-
-					      <input type="text" class="form-control" id="username" ng-model="user.username" placeholder="Username">
+						<input type="text" class="form-control" id="username" 
+					      ng-model="user.username" 
+					      ng-required="true"
+					      username-available
+					      ng-model-options="{ updateOn: 'blur'}"
+					      placeholder="Username">
+					      <span ng-if="signup-form.$pending.userNameExists" class="has-error"></span>
+					      <span ng-if="signup.form.$error.userNameExists" class="has-success"></span>
 					    </div>
+					    
 					  </div>
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="pwd">Password:</label>
 					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" ng-model="user.password" placeholder="Password">
+					      <input type="password" class="form-control" id="pwd" ng-model="user.password" required placeholder="Password">
 					    </div>
 					  </div>
-					  <div class="form-group">
+					  <div class="form-group has-feedback" ng-class="{'has-error': pass_match()}">
 					    <label class="control-label col-sm-2" for="pwd">Password again:</label>
 					    <div class="col-sm-10"> 
-					      <input type="password" class="form-control" id="pwd" placeholder="Password again">
+					    	<input type="password" class="form-control" id="pwd" ng-model="confirm" placeholder="Password again"> 	
+					    	<!-- 
+					    	<span ng-show="user.password == confirm" class="glyphicon glyphicon-remove form-control-feedback"></span>
+					    	-->
 					    </div>
 					  </div>
 					   <div class="form-group">
 					    <label class="control-label col-sm-2" for="email">Email:</label>
 					    <div class="col-sm-10">
-					      <input type="email" class="form-control" id="email" ng-model="user.email" placeholder="Email">
+					      <input type="email" class="form-control" 
+					      id="email" ng-model="user.email" placeholder="Email">
+					      <span ></span>
 					    </div>
 					  </div>
 					  
@@ -117,7 +137,7 @@
 <hr>
 					  <div class="form-group" > 
 					    <div class="col-sm-offset-5 col-sm-7">
-					      <button class="btn" ng-click="submit()" style="background-color:#27AE60; color:#ECF0F1;">Submit</button>
+					      <button class="btn" type="submit" style="background-color:#27AE60; color:#ECF0F1;">Submit</button>
 					    </div>
 					  </div>
 					</form>

@@ -20,7 +20,7 @@ public class User implements Serializable {
 	@Id@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idUser;
 
-	private byte admin;
+	private boolean admin;
 
 	private String afm;
 
@@ -42,7 +42,7 @@ public class User implements Serializable {
 
 	private String username;
 
-	private byte verified;
+	private boolean verified;
 
 	//bi-directional many-to-one association to Bid
 	@OneToMany(mappedBy="user")
@@ -76,11 +76,11 @@ public class User implements Serializable {
 		this.idUser = idUser;
 	}
 
-	public byte getAdmin() {
+	public boolean getAdmin() {
 		return this.admin;
 	}
 
-	public void setAdmin(byte admin) {
+	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
 
@@ -156,11 +156,11 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public byte getVerified() {
+	public boolean getVerified() {
 		return this.verified;
 	}
 
-	public void setVerified(byte verified) {
+	public void setVerified(boolean verified) {
 		this.verified = verified;
 	}
 
@@ -182,7 +182,6 @@ public class User implements Serializable {
 	public Bid removeBid(Bid bid) {
 		getBids().remove(bid);
 		bid.setUser(null);
-
 		return bid;
 	}
 
