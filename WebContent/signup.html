@@ -68,8 +68,8 @@
 									ng-model="confirm" ng-required="true" placeholder="Password"
 									ng-change="confirm_pass()">
 								<i class="glyphicon glyphicon-lock form-control-feedback"></i>
-								<div ng-show="form.pass-confirm.$touched || submitted" ng-message="required">You must fill this field.</div>
-								<div ng-show="form.pass-confirm.$touched || submitted" ng-message="form.confirm.$error.match">Password does not match.</div>
+								<div ng-show="form.confirm.$touched || submitted" ng-message="required">You must fill this field.</div>
+								<div ng-show="form.confirm.$dirty || submitted" ng-message="match">Password does not match.</div>
 							</div>
 						</div>
 
