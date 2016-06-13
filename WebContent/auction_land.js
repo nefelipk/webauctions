@@ -791,7 +791,7 @@
 				};
 			} ]);
 
-	/*
+	
 
 	 /*
 	 app.controller('UserController',['$scope','User',function($scope,User) {
@@ -800,11 +800,17 @@
 	 console.log("key pressed");
 	 }
 	 }]);
-
-	 app.controller('TestController',function($scope,$window) {
-	 $scope.test_function = function() {
-	 $window.alert("test");
-	 };
-	 });
-	 */
+*/
+	 app.controller('TestController',['$scope','$window',function($scope,$window) {
+		angular.element($window).bind('resize', function(must) {
+			    console.log($window.innerWidth);
+				if($window.innerWidth < 351) {
+					must = false;
+				}
+				else {
+					must = true;		
+				}
+		});
+		
+	 }]);
 })();

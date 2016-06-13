@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="auction_land">
+<html lang="en" >
 <head>
 	<title>Auction Land - Main page</title>
 	<meta charset="utf-8">
@@ -7,9 +7,7 @@
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<script src="jquery/jquery-1.12.4.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src="angular/angular.min.js"></script>
-	<script src="angular/angular-resource.min.js"></script>
-	<script src="./auction_land.js"></script>
+	
 	<script> 
 		$(function(){
 		  $("#header").load("header.html"); 
@@ -48,11 +46,11 @@
 		}
 		.row.content {height:auto;} 
 		}
-
+	
 		body {
 			padding-top: 150px;
 		}
-
+	
 		.height-nav {
 			padding: 1.0%;
 			background: transparent;
@@ -78,38 +76,103 @@
 		.sign-up-modal {
 			margin-top:15%;
 		}
-		
+	
+		.affix {
+			top: 120px;
+		}
 	</style>
 </head>
 <body>
 	  
 
-<div ng-include="'header.html'"></div> 
+<div id="header"></div> 
 	
-	<div class="container-fluid text-center" >    
-		<div class="row content">
-			<div class="col-sm-2 sidenav">
-				<p><a href="#">Link</a></p>
-				<p><a href="#">Link</a></p>
-				<p><a href="#">Link</a></p>
-			</div>
-			<div class="col-sm-8 text-left"> 
-				<h1>Welcome</h1>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+<div class="container" ng-controller="TestController">
+  <div class="row">
+    <nav class="col-sm-3">
+      <div ng-show="must" class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="15">
+      	<h4>filters</h4>
 				<hr>
-				<h3>Test</h3>
-				<p>Lorem ipsum...</p>
-			</div>
-			<div class="col-sm-2 sidenav">
-				<div class="well">
-					<p>ADS</p>
-				</div>
-				<div class="well">
-					<p>ADS</p>
-				</div>
-			</div>
-		</div>
-	</div>
+				<form>
+					<div class="form-group text-center">
+						<label for="category">category</label> 
+						<input type="text" class="form-control text-center" " name="category">
+					</div>
+					<hr>
+					<div class="form-group">
+						<label for="usr">price</label> 
+					
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option 1</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option 2</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option
+								3</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option
+								3</label>
+						</div>
+					</div>
+						
+						<div class="form-group">
+								<input type="text" class="form-control" >
+								<input type="text" class="form-control" >
+						</div>
+				</form>
+      </div>
+      <div ng-show="must ==false"><button>filters</button> </div>
+      
+    </nav>
+    <div class="col-sm-9">
+      <h1>Some text to enable {{must}}</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+      <h1>Some text to enable scrolling</h1>
+    </div>
+  </div>
+</div>
 	
 	<footer class="container-fluid text-center">
 		<p>Footer Text</p>
@@ -117,3 +180,82 @@
 
 </body>
 </html>
+
+
+<!-- 
+
+
+
+
+
+
+<div class="container " >    
+		<div class="row">
+			<div class="col-sm-3 nav nav-pills nav-stacked" data-spy="affix" data-offset-top="30">
+				<h4>filters</h4>
+				<hr>
+				<form>
+					<div class="form-group text-center">
+						<label for="category">category</label> 
+						<input type="text" class="form-control text-center" style="margin-top:0%; margin-left:15%; width:70%;" name="category">
+					</div>
+					<hr>
+					<div class="form-group">
+						<label for="usr">price</label> 
+					
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option 1</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option 2</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option
+								3</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio">Option
+								3</label>
+						</div>
+					</div>
+						
+						<div class="form-group">
+							<div class="col-sm-4">
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" >
+							</div>
+						</div>
+				</form>
+			</div>
+
+
+			<div class="col-sm-9">
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+				<h1>Some text to enable scrolling</h1>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+ -->
