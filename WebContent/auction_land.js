@@ -7,6 +7,21 @@
 
 	app.controller('UserController', [ '$scope', 'User', 
 			function($scope, User) {
+				
+				$scope.confirm_pass = function() {
+					console.log($scope.form.confirm.$viewValue);
+					if($scope.user.password == $scope.form.confirm.$viewValue) {
+						$scope.form.confirm.$error.match = false;
+						var confirm_div = angular.element(document.querySelector('#confirm-div'));
+						confirm_div.removeClass("has-error");
+
+						console.log("matching password");
+					}
+					else {
+						$scope.form.confirm.$error.match = true;					
+					}
+				};
+				
 				$scope.err = "";
 				$scope.check_username = function() {
 					User.query().$promise.then(function(data,all_users) {
@@ -766,6 +781,7 @@
 					name : 'Zimbabwe',
 					code : 'ZW'
 				} ];
+				
 				$scope.submit = function() {
 					console.log($scope.user.firstName);
 					console.log($scope.user.password);

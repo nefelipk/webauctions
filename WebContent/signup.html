@@ -37,7 +37,7 @@
 							</div>
 
 							<div class="col-xs-6 has-feedback" ng-messages="form.email.$error" role="alert" 
-								ng-class="{'has-error' : (submitted && form.email.$invalid) || (form.eamil.$touched && form.email.$invalid) , 'has-success': form.email.$valid }">
+								ng-class="{'has-error' : (submitted && form.email.$invalid) || (form.email.$touched && form.email.$invalid) , 'has-success': form.email.$valid }">
 								<label class="control-label" for="email">Email:</label> 
 								<input type="email"
 									class="form-control" name="email" ng-model="user.email"
@@ -51,20 +51,25 @@
 						</div>
 						<div class="form-group">
 
-							<div id="username_div" class="col-xs-6 has-feedback">
-								<label for="pwd">Password:</label> <input
-									type="password" class="form-control" id="pwd"
+							<div id="username_div" class="col-xs-6 has-feedback" ng-messages="form.pass.$error" role="alert" 
+								ng-class="{'has-error' : (submitted && form.pass.$invalid) , 'has-success': form.pass.$valid }">
+								<label class="control-label" for="pass">Password:</label> <input
+									type="password" class="form-control" name="pass"
 									ng-model="user.password" ng-required="true" placeholder="Password">
 								<i class="glyphicon glyphicon-lock form-control-feedback"></i>
+								<div ng-show="form.pass.$touched || submitted" ng-message="required">You must fill this field.</div>
 									
 							</div>
 
-							<div class="col-xs-6 has-feedback">
-								<label for="pwd">Confirm Password:</label> <input
-									type="password" class="form-control" id="pwd"
-									ng-model="confirm" ng-required="true" placeholder="Password">
+							<div class="col-xs-6 has-feedback" ng-messages="form.confirm.$error" role="alert" id="confirm-div"
+								ng-class="{'has-error' : (submitted && form.confirm.$invalid) || (form.confirm.$error.match) , 'has-success': form.confirm.$error.match==false }">
+								<label class="control-label" for="pwd">Confirm Password:</label>
+								 <input	type="password" class="form-control" name="confirm"
+									ng-model="confirm" ng-required="true" placeholder="Password"
+									ng-change="confirm_pass()">
 								<i class="glyphicon glyphicon-lock form-control-feedback"></i>
-									
+								<div ng-show="form.pass-confirm.$touched || submitted" ng-message="required">You must fill this field.</div>
+								<div ng-show="form.pass-confirm.$touched || submitted" ng-message="form.confirm.$error.match">Password does not match.</div>
 							</div>
 						</div>
 
@@ -81,7 +86,7 @@
 						
 							<div class="col-xs-6 has-feedback">
 								<label for="surname">Surname:</label>
-								<input type="text" class="form-control" id="surname"
+								<input type="text" class="form-control" id="surname" 
 									ng-model="user.lastName" ng-required="true" placeholder="Surname">
 								<i class="glyphicon glyphicon-user form-control-feedback"></i>
 							</div>
