@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" >
+<!-- <html lang="en" > -->
+<html lang="en" ng-app="auction_land">
 <head>
 	<title>Auction Land - Main page</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<script src="jquery/jquery-1.12.4.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="angular/angular.min.js"></script>
+	<script src="angular/angular-resource.min.js"></script>
+	<script src="angular/angular-messages.js"></script>
+	<script src="./auction_land.js"></script>
 	
 	<script> 
 		$(function(){
 		  $("#header").load("header.html"); 
 		  $("#footer").load("footer.html"); 
+		  $("#items").load("items.html"); 
 		});
 	</script>
 	<style>
@@ -101,10 +109,14 @@
 	</style>
 </head>
 <body>
-	  
+	<ol class = "breadcrumb">
+	    <li><a href = "/WebAuctions">Home</a></li>
+	    <li class = "active">Main</li>
+	</ol> 
 
-				<div ng-include="'header.html'"></div>
+	<div ng-include="'header.html'"></div>
 	
+<<<<<<< HEAD
 <div  class="container-fluid" ng-controller="TestController">
   <div id="main-div" class="row">
     <nav class="col-sm-2">
@@ -117,18 +129,10 @@
 						<input type="text" class="form-control text-center" " name="category">
 					</div>
 					<hr>
-					<div class="form-group">
-						<label for="usr">price</label> 
-					
-						<div class="radio">
-							<label><input type="radio" name="optradio">{{must}}</label>
-						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio">Option 2</label>
-						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio">Option
-								3</label>
+					<form>
+						<div class="form-group text-center">
+							<label for="category">category</label> 
+							<input type="text" class="form-control text-center" " name="category">
 						</div>
 						<div class="radio">
 							<label><input type="radio" name="optradio">Option3</label>
@@ -159,84 +163,6 @@
 			<p>Footer Text</p>
 		</footer>
 
+
 </body>
 </html>
-
-
-<!-- 
-
-
-
-
-
-
-<div class="container " >    
-		<div class="row">
-			<div class="col-sm-3 nav nav-pills nav-stacked" data-spy="affix" data-offset-top="30">
-				<h4>filters</h4>
-				<hr>
-				<form>
-					<div class="form-group text-center">
-						<label for="category">category</label> 
-						<input type="text" class="form-control text-center" style="margin-top:0%; margin-left:15%; width:70%;" name="category">
-					</div>
-					<hr>
-					<div class="form-group">
-						<label for="usr">price</label> 
-					
-						<div class="radio">
-							<label><input type="radio" name="optradio">Option 1</label>
-						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio">Option 2</label>
-						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio">Option
-								3</label>
-						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio">Option
-								3</label>
-						</div>
-					</div>
-						
-						<div class="form-group">
-							<div class="col-sm-4">
-								<input type="text" class="form-control" >
-							</div>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" >
-							</div>
-						</div>
-				</form>
-			</div>
-
-
-			<div class="col-sm-9">
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-				<h1>Some text to enable scrolling</h1>
-			</div>
-
-		</div>
-	</div>
-
-
-
-
-
-
-
-
- -->

@@ -813,7 +813,7 @@
 			$(window).on("resize.doResize", function() {
 				
 				$scope.$apply(function() {
-					if(window.innerWidth < 770) {
+					if(window.innerWidth < 1290) {
 						$scope.must = false;
 					}
 					else {
@@ -825,11 +825,12 @@
  		} 
 	 ]);
 	 
-	 app.controller('MainContentController',['$scope',function($scope) {
+	 app.controller('MainContentController',['$window','$scope',function($window,$scope) {
 		 $scope.content = "index";
 		 $scope.search = function() {
-			 console.log("called");
-			 $scope.content = "main";
+			 $window.location.href = '/WebAuctions/main.html';
+//			 console.log("called");
+//			 $scope.content = "main";
 		 };
 	 }]);
 })();
