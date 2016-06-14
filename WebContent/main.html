@@ -88,9 +88,17 @@
 			margin-bottom:60px;	
 		}
 		
-		.container {
-		
+		.my-group{
+			display:inline-block;
+    		position:relative;
 		}
+		
+		.textarea-btn {
+			position:absolute;
+			bottom:10px;
+			right:10px;
+		}
+		
 	</style>
 </head>
 <body>
@@ -159,9 +167,10 @@
 						
 					</div>
 					<hr>
-					<div class="form-group">
+					<div class="my-group">
 						<label for="description">Description:</label>
 						<textarea class="form-control" rows="5" id="desc"></textarea>
+						<button class="btn btn-primary btn-sm textarea-btn">search></button>
 					</div>
 					</form>
 				</div>
