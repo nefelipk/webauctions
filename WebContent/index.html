@@ -29,6 +29,18 @@
 			height: 300px !important;
 			margin: auto;
 		}
+		.footer {
+	  		position: absolute;
+	  		bottom: 0;
+	  		width: 100%;
+	  		/* Set the fixed height of the footer here */
+	  		height: 60px;
+	  	}
+	  	body {
+	  		margin-bottom:60px;
+	  	}
+  background-color: #f5f5f5;
+}
 		
 		</style>
 	</head>
@@ -105,16 +117,16 @@
 			</a>
 		</div>
 	</div>
-	
+		<footer class="footer text-center">
+			<p>Footer Text</p>
+		</footer>
 	</div>
 	
 		<div ng-switch-when="main">
 			<div ng-include="'main.html'"></div>
 		</div>
 	</div>
-	<footer class="container-fluid text-center">
-		<p>Footer Text</p>
-	</footer>
+	
 
 </body>
 </html>

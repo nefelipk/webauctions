@@ -80,7 +80,13 @@
 			/*left: 0;
 			/*top: 200px; /* 200px from top */
 		}
-
+		body {
+			margin-bottom:60px;
+		}
+		
+		.container {
+		
+		}
 	</style>
 </head>
 <body>
@@ -88,9 +94,9 @@
 
 				<div ng-include="'header.html'"></div>
 	
-<div  class="container" ng-controller="TestController">
+<div  class="container-fluid" ng-controller="TestController">
   <div id="main-div" class="row">
-    <nav class="col-sm-3">
+    <nav class="col-sm-2">
       <div ng-show="must" id="filters" class="nav nav-pills nav-stacked " >
       	<h4>filters</h4>
 				<hr>
@@ -128,13 +134,14 @@
       <div ng-hide="must"><button></button> </div>
       
     </nav>
-    <div class="col-sm-9">
+    <div class="col-sm-8">
     	<div ng-include="'items.html'"></div>
     </div>
   </div>
 </div>
-	
-	
+		<footer class="container-fluid text-center">
+			<p>Footer Text</p>
+		</footer>
 
 </body>
 </html>
