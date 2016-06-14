@@ -837,6 +837,38 @@
 				});			
 			}
 			
+//			$scope.err = "";
+			$scope.check_password = function() {
+				User.query().$promise.then(function(data,all_users) {
+					var wrong = true;
+					for(var i = 0; i < data.length; i++) {
+						console.log(data[i].username);
+						if($scope.user.username == data[i].username) {
+							console.log(data[i].password);
+							if($scope.user.password == data[i].password) {
+								console.log("password is correct");
+								wrong = false;
+							}
+						}
+					}
+					console.log(wrong);
+					var input_elem = angular.element(document.querySelector('#password_div'));
+					var i = angular.element(document.querySelector('#i_password'));
+					input_elem.removeClass("has-error");
+					input_elem.removeClass("has-succcess");
+					if(wrong) {
+						input_elem.addClass("has-error");
+						$scope.form.pass.$error.wrong = true;
+					}
+					else {
+						input_elem.addClass("has-success");
+						$scope.form.pass.$error.wrong = false;
+					}
+					$scope.err = "wrong!";
+					console.log(input_elem);
+				});			
+			}
+			
 			$scope.submit = function() {
 				console.log($scope.user.firstName);
 				console.log($scope.user.password);
