@@ -8,12 +8,11 @@
 		<class>entities.Location</class>
 		<class>entities.Message</class>
 		<class>entities.User</class>
-		<validation-mode>NONE</validation-mode>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tedDB"/>
 			<property name="javax.persistence.jdbc.user" value="ted"/>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.password" value="ted2516"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 		</properties>
 	</persistence-unit>
 </persistence>
