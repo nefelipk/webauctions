@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Auction Land - Sign Up</title>
 	<meta charset="UTF-8">
@@ -32,7 +32,7 @@
 								<span id="username_span"></span> 
 								<i id="i-username" class="glyphicon glyphicon-user form-control-feedback"></i>
 								<div ng-message="exists">Username already exists.</div>
-								<div ng-show="form.email.$touched || submitted" ng-message="required">You must fill this field.</div>
+								<div ng-show="form.username.$touched || submitted" ng-message="required">You must fill this field.</div>
 								
 							</div>
 
@@ -49,6 +49,7 @@
 								<div ng-show="form.email.$touched || submitted" ng-message="required">You must fill this field.</div>
 							</div>
 						</div>
+
 						<div class="form-group">
 
 							<div id="username_div" class="col-xs-6 has-feedback" ng-messages="form.pass.$error" role="alert" 
