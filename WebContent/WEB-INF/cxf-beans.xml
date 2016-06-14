@@ -9,17 +9,18 @@
 	http://cxf.apache.org/schemas/jaxws.xsd
 	http://cxf.apache.org/jaxrs
 	http://cxf.apache.org/schemas/jaxrs.xsd">
-	<import resource="classpath:META-INF/cxf/cxf.xml" />
-	<bean id="Hello" class="rest.HelloWorldResource" />
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+	<bean id="Hello" class="rest.HelloWorldResource"/>
+	<bean id="Test" class="rest.Testaki"/>
 	<bean id="Users" class="rest.UserResource"/>
 	<jaxrs:server id="base" address="/">	
 		<jaxrs:serviceBeans>
 			<ref bean="Hello"/>
+			<ref bean="Test"/>
 			<ref bean="Users"/>
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
 		</jaxrs:providers>
 	</jaxrs:server>
-	
 </beans>
