@@ -825,11 +825,12 @@
  		} 
 	 ]);
 	 
-	 app.controller('MainContentController',['$scope',function($scope) {
+	 app.controller('MainContentController',['$window','$scope',function($window,$scope) {
 		 $scope.content = "index";
 		 $scope.search = function() {
-			 console.log("called");
-			 $scope.content = "main";
+			 $window.location.href = '/WebAuctions/main.html';
+//			 console.log("called");
+//			 $scope.content = "main";
 		 };
 	 }]);
 })();
