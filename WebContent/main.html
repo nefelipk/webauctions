@@ -4,9 +4,7 @@
 	<title>Auction Land - Main page</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-	<script src="jquery/jquery-1.12.4.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+
 	
 	<script> 
 		$(function(){
@@ -77,20 +75,23 @@
 			margin-top:15%;
 		}
 	
-		.affix {
-			top: 120px;
+		div#filters {
+			position: fixed;
+			/*left: 0;
+			/*top: 200px; /* 200px from top */
 		}
+
 	</style>
 </head>
 <body>
 	  
 
-<div id="header"></div> 
+				<div ng-include="'header.html'"></div>
 	
-<div class="container" ng-controller="TestController">
-  <div class="row">
+<div  class="container" ng-controller="TestController">
+  <div id="main-div" class="row">
     <nav class="col-sm-3">
-      <div ng-show="must" class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="15">
+      <div ng-show="must" id="filters" class="nav nav-pills nav-stacked " >
       	<h4>filters</h4>
 				<hr>
 				<form>
@@ -103,7 +104,7 @@
 						<label for="usr">price</label> 
 					
 						<div class="radio">
-							<label><input type="radio" name="optradio">Option 1</label>
+							<label><input type="radio" name="optradio">{{must}}</label>
 						</div>
 						<div class="radio">
 							<label><input type="radio" name="optradio">Option 2</label>
@@ -124,59 +125,16 @@
 						</div>
 				</form>
       </div>
-      <div ng-show="must ==false"><button>filters</button> </div>
+      <div ng-hide="must"><button></button> </div>
       
     </nav>
     <div class="col-sm-9">
-      <h1>Some text to enable {{must}}</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
-      <h1>Some text to enable scrolling</h1>
+    	<div ng-include="'items.html'"></div>
     </div>
   </div>
 </div>
 	
-	<footer class="container-fluid text-center">
-		<p>Footer Text</p>
-	</footer>
+	
 
 </body>
 </html>

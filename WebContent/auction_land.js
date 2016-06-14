@@ -801,16 +801,38 @@
 	 }
 	 }]);
 */
-	 app.controller('TestController',['$scope','$window',function($scope,$window) {
-		angular.element($window).bind('resize', function(must) {
-			    console.log($window.innerWidth);
-				if($window.innerWidth < 351) {
-					must = false;
-				}
-				else {
-					must = true;		
-				}
-		});
-		
+	 app.controller('TestController', [ '$scope', '$window',
+		function($scope, $window) {
+		 	$scope.must = true;
+			$scope.current_content = $scope.content;
+			console.log($scope.current_content);
+			$scope.test_search = function() {
+				console.log("here");
+				$scope.search();
+			}
+			$(window).on("resize.doResize", function() {
+				
+				$scope.$apply(function() {
+					if(window.innerWidth < 770) {
+						$scope.must = false;
+					}
+					else {
+						$scope.must = true;
+					}
+				});
+			});
+
+ 		} 
+	 ]);
+	 
+	 app.controller('MainContentController',['$scope',function($scope) {
+		 $scope.content = "index";
+		 $scope.search = function() {
+			 console.log("called");
+			 $scope.content = "main";
+		 };
 	 }]);
 })();
+
+
+

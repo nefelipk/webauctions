@@ -1,4 +1,6 @@
-/rest/
-/model/
 /dao/
+/db/
 /entities/
+/model/
+/rest/
+/utilities/
