@@ -3,11 +3,13 @@
 <head>
 	<title>Auction Land - Login</title>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="signup.css">
 </head>
-<body>
 
+<body>
 	<!-- Modal -->  
-	<div id="login_modal" class="modal" role="dialog">
+	<div id="login_modal" class="modal" role="dialog"
+		ng-controller="LoginController as ctrl">>
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color:#F2F1EF">
@@ -16,19 +18,39 @@
 					<h4 class="text-center" style="color:#2980B9;"><strong>Login</strong></h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form">
+					<form class="form-horizontal" role="form" name="form"
+						ng-submit="form.$valid && submit()" novalidate>
+						
 						<div class="form-group">
-							<label class="control-label col-sm-2" for="usrname">Username:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="username" placeholder="Enter Username">
+							<div id="username_div" class="has-feedback" ng-messages="form.username.$error" role="alert"
+								ng-class="{'has-error' : submitted && form.username.$invalid}">
+								<label class="control-label col-sm-2" for="usrname">Username:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="username" name="username" 
+										ng-model="user.username" ng-required="true"
+										ng-blur="form.username.$dirty && check_username()" 
+										placeholder="Enter Username">
+									<span id="username_span"></span> 
+									<i id="i-username" class="glyphicon glyphicon-user form-control-feedback"></i>
+<!-- 									<div ng-message="exists">Username already exists.</div> -->
+									<div ng-show="form.email.$touched || submitted" ng-message="required">You must fill this field.</div>
+								</div>
 							</div>
 						</div>
+						
 						<div class="form-group">
-							<label class="control-label col-sm-2" for="pwd">Password:</label>
-							<div class="col-sm-10"> 
-								<input type="password" class="form-control" id="pwd" placeholder="Enter password">
+							<div id="username_div" class="has-feedback" ng-messages="form.pass.$error" role="alert" 
+								ng-class="{'has-error' : (submitted && form.pass.$invalid) , 'has-success': form.pass.$valid }">
+								<label class="control-label col-sm-2" for="pass">Password:</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" name="pass"
+										ng-model="user.password" ng-required="true" placeholder="Password">
+									<i class="glyphicon glyphicon-lock form-control-feedback"></i>
+									<div ng-show="form.pass.$touched || submitted" ng-message="required">You must fill this field.</div>	
+								</div>
 							</div>
 						</div>
+						
 						<!--
 						<div class="form-group"> 
 							<div class="col-sm-offset-2 col-sm-10">
@@ -36,10 +58,17 @@
 							</div>
 						</div>
 						-->
-						
+						<!-- 
 						<div class="form-group" > 
 							<div class="col-sm-offset-5 col-sm-7">
 								<button type="submit" class="btn" style="background-color:#27AE60; color:#ECF0F1;">Login</button>
+							</div>
+						</div>
+						 -->
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-6">
+								<button class="btn btn-success btn-block" type="submit" ng-click="submitted = true"
+									style="background-color: #27AE60; color: #ECF0F1;"><strong>Login</strong></button>
 							</div>
 						</div>
 					</form>

@@ -791,7 +791,61 @@
 				};
 			} ]);
 
-	
+	app.controller('UserController', [ '$scope', 'User', 
+		function($scope, User) {
+			
+//			$scope.confirm_pass = function() {
+//				console.log($scope.form.confirm.$viewValue);
+//				if($scope.user.password == $scope.form.confirm.$viewValue) {
+//					$scope.form.confirm.$error.match = false;
+//					var confirm_div = angular.element(document.querySelector('#confirm-div'));
+//					confirm_div.removeClass("has-error");
+//	
+//					console.log("matching password");
+//				}
+//				else {
+//					$scope.form.confirm.$error.match = true;					
+//				}
+//			};
+			
+//			$scope.err = "";
+//			$scope.check_username = function() {
+//				User.query().$promise.then(function(data,all_users) {
+//					var exists = false;
+//					for(var i = 0; i < data.length; i++) {
+//						console.log(data[i].username);
+//						if($scope.user.username == data[i].username) {	
+//							console.log("username exists");
+//							exists = true;
+//						}
+//					}
+//					console.log(exists);
+//					var input_elem = angular.element(document.querySelector('#username_div'));
+//					var i = angular.element(document.querySelector('#i_username'));
+//					input_elem.removeClass("has-error");
+//					input_elem.removeClass("has-succcess");
+//					if(exists) {
+//						input_elem.addClass("has-error");
+//						$scope.form.username.$error.exists = true;
+//					}
+//					else {
+//						input_elem.addClass("has-success");
+//						$scope.form.username.$error.exists = false;
+//					}
+//					$scope.err = "already exists!";
+//					console.log(input_elem);
+//				});			
+//			}
+//			
+//			$scope.submit = function() {
+//				console.log($scope.user.firstName);
+//				console.log($scope.user.password);
+//				$scope.user.location.country = $scope.user.country.name;
+//				delete $scope.user.country;
+//				User.save($scope.user);
+//			};
+		}
+	]);
 
 	 /*
 	 app.controller('UserController',['$scope','User',function($scope,User) {
