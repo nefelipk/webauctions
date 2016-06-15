@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.MatrixParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -27,6 +28,17 @@ public class UserResource {
 		UsernameResponse response = new UsernameResponse();
 		response.setExists(userDAO.checkUsernames(username));
 		return Response.ok(response).build();
+	}
+	
+	@GET
+	@Path("/{user_pass}")
+	@Produces("application/json")
+	public model.User getSpecificUser(@PathParam("username") final String username, 
+			@MatrixParam("password") final String password) {
+		UserDAO userDAO = new UserDAO();
+		entities.User eUser = userDAO.getSpecificUser(username, password);
+		model.User mUser = model.wrappers.UserWrapper.mapModelUserFromEntity(eUser);
+		return mUser;
 	}
 	
 	@POST
