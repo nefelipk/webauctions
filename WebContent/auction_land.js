@@ -2,7 +2,7 @@
 	var app = angular.module('auction_land', [ 'ngResource','ngMessages' ]);
 
 	app.factory('User', [ '$resource', function($resource) {
-		return $resource('http://localhost:8080/WebAuctions/services/users');
+		return $resource('http://localhost:8080/WebAuctions/services/users/:username');
 	} ]);
 
 	app.controller('UserController', [ '$scope', 'User', 
@@ -20,10 +20,16 @@
 					else {
 						$scope.form.confirm.$error.match = true;					
 					}
+					
 				};
 				
 				$scope.err = "";
 				$scope.check_username = function() {
+					User.get({ username: $scope.user.username}).$promise.then(function(data) {
+						console.log(data.exists);
+					});
+				};
+					/*
 					User.query().$promise.then(function(data,all_users) {
 						var exists = false;
 						for(var i = 0; i < data.length; i++) {
@@ -48,8 +54,9 @@
 						}
 						$scope.err = "already exists!";
 						console.log(input_elem);
-					});			
-				}
+					});
+					*/			
+				
 		
 				$scope.countries = [ {
 					name : 'Afghanistan',
@@ -843,6 +850,8 @@
 					var wrong = true;
 					for(var i = 0; i < data.length; i++) {
 						console.log(data[i].username);
+						console.log(data[i].password);
+						console.log(data);
 						if($scope.user.username == data[i].username) {
 							console.log(data[i].password);
 							if($scope.user.password == data[i].password) {

@@ -7,16 +7,28 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import dao.LocationDAO;
 import dao.UserDAO;
+import model.UsernameResponse;
 
 @Path("/users")
 public class UserResource {
-		
+	
+	@GET
+	@Path("/{username}")
+	@Produces("application/json")
+	public Response checkUsername(@PathParam("username") final String username) {
+		UserDAO userDAO = new UserDAO();
+		UsernameResponse response = new UsernameResponse();
+		response.setExists(userDAO.checkUsernames(username));
+		return Response.ok(response).build();
+	}
+	
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.User user) {
@@ -63,7 +75,7 @@ public class UserResource {
 		
 		return Response
 				.created(UriBuilder.fromResource(UserResource.class)
-						.path(String.valueOf(idLocation))
+						.path(String.valueOf(id))
 						.build())
 				.build();
 			

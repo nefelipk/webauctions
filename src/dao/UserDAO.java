@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
@@ -43,12 +44,32 @@ public class UserDAO {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         
-        //Query q = em.createQuery("Select u from User u");
-        Query q = em.createNamedQuery("User.findAll");
+        Query q = em.createQuery("Select u from User u");
+       // Query q = em.createNamedQuery("User.findAll");
         users =  q.getResultList();
 		
         tx.commit();
         em.close();
         return users;
+	}
+	
+	public boolean checkUsernames(String username) {
+        EntityManager em = JPAResource.factory.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        
+        Query q = em.createQuery("Select u.username from User u where u.username = ?1");
+        q.setParameter(1,username);
+        String exists = null;
+        try {
+        	exists =  (String) q.getSingleResult();
+        } catch(NoResultException noRes) {
+        	exists = null;
+        }
+        tx.commit();
+        em.close();
+		if(exists != null)
+			return true;
+		return false;
 	}
 }
