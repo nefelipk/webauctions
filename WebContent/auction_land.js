@@ -942,6 +942,44 @@
 //			 $scope.content = "main";
 		 };
 	 }]);
+	 
+	 
+	 
+	 app.controller('AuctionsController',['$scope',function($scope) {
+		 // test for ng-repeat
+		 $scope.current_page = 1;
+		 var items_per_page = 10;
+		 
+		 $scope.items = [
+		            {"item" : {"name" :"iphone 5s",
+		             "max_bid" : 35.4,
+		             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
+		             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
+		             "and preceding the iPhone 5S and iPhone 5C. " +
+		             "Formally unveiled as part of a press event on September 12, 2012, "
+		             ,"seller" :
+		             	{
+		            	  "username":"BestSeller09",
+		            	  "seller_rating": 300,
+		             	}
+		            }
+		 }];        
+		 
+		 $scope.getItems = function() {
+			return $scope.items.slice(0,items_per_page); 
+		 };
+		 
+		 var p = $scope.items.length ;
+		 console.log(p);
+		 $scope.pages = new Array(p).join().split(',').map(function(item, index){ return ++index;})
+		 console.log($scope.pages);
+		 
+		 $scope.get_page = function() {
+			 
+		 };
+		              
+	 }]);
+	 
 })();
 
 $(function() {
