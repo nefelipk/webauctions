@@ -72,4 +72,20 @@ public class UserDAO {
 			return true;
 		return false;
 	}
+	
+	
+	public entities.User getSpecificUser(String username, String password) {
+        EntityManager em = JPAResource.factory.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        
+        Query q = em.createQuery("Select u from User u where u.username = ?1 and u.password = ?2");
+        q.setParameter(1,username);
+        q.setParameter(2,password);
+        entities.User user = (User) q.getSingleResult();
+        
+        tx.commit();
+        em.close();
+        return user;
+	}
 }

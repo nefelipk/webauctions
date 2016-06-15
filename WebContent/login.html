@@ -58,8 +58,11 @@
 						<hr>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-6">
+							<div id="login_div" class="has-feedback" ng-messages="form.login.$error" role="alert">
 								<button class="btn btn-success btn-block" type="submit" ng-click="submitted = true"
 									style="background-color: #27AE60; color: #ECF0F1;"><strong>Login</strong></button>
+								<div ng-message="wrong">Wrong username or password.</div>
+							</div>
 							</div>
 						</div>
 					</form>
