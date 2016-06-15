@@ -29,7 +29,7 @@ a.list-group-item.active small {
 			<ul class="pagination">
 				<li ng-class="{'disabled' : current_page == 1}"><a href="#"><</a><li>
 				<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a href="#">{{p}}</a></li>
-				<li ng-class="{'disabled' : current_page == 1}"><a href="#">></a>
+				<li ng-class="{'disabled' : current_page == pages}"><a href="#">></a>
 			</ul>
 		</div>
 				

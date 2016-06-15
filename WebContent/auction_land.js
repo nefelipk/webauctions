@@ -910,8 +910,19 @@
 	 }
 	 }]);
 */
-	 app.controller('TestController', [ '$scope', '$window',
+	 app.controller('SearchController', [ '$scope', '$window',
 		function($scope, $window) {
+		 
+		 	$scope.category = false;
+		 	$scope.price_low = 50;
+		 	$scope.price_mid = 100;
+		 	$scope.price_high = 200;
+		 	$scope.location_continent = false;
+		 	$scope.location_from_km = false;
+		 	$scope.location_to_km = false;
+		 	$scope.description = false;
+		 	
+		 	
 		 	$scope.must = true;
 			$scope.current_content = $scope.content;
 			console.log($scope.current_content);
@@ -980,10 +991,12 @@
 		              
 	 }]);
 	 
+	
+	 
 })();
 
 $(function() {
-
+	$('.dropdown-toggle').dropdown();
     var $sidebar   = $("#sidebar"), 
         $window    = $(window),
         offset     = $sidebar.offset(),
