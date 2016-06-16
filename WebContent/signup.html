@@ -19,7 +19,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form" name="form"
-						ng-submit="form.$valid && submit()" novalidate>
+						ng-submit="form.$valid && submit() " novalidate>
 						<div class="form-group">
 
 							<div id="username_div" class="col-xs-6 has-feedback" ng-messages="form.username.$error" role="alert"
@@ -28,22 +28,23 @@
 								<input type="text"
 									class="form-control" id="username" name="username"
 									ng-model="user.username" ng-required="true"
-									ng-blur="form.username.$dirty && check_username()" placeholder="Username"> 
+									ng-blur="form.username.$dirty && check_username()" placeholder="Username"
+									ng-pattern="username_pattern"> 
 								<span id="username_span"></span> 
 								<i id="i-username" class="glyphicon glyphicon-user form-control-feedback"></i>
 								<div ng-message="exists">Username already exists.</div>
 								<div ng-show="form.username.$touched || submitted" ng-message="required">You must fill this field.</div>
+								<div ng-show="form.username.$touched || submitted" ng-message="pattern">Username must contain only letters and numbers.</div>
 								
 							</div>
 
 							<div class="col-xs-6 has-feedback" ng-messages="form.email.$error" role="alert" 
-								ng-class="{'has-error' : (submitted && form.email.$invalid) || (form.email.$touched && form.email.$invalid) , 'has-success': form.email.$valid }">
+								ng-class="{'has-error' : (submitted || form.email.$touched) && form.email.$invalid , 'has-success': form.email.$valid }">
 								<label class="control-label" for="email">Email:</label> 
 								<input type="email"
 									class="form-control" name="email" ng-model="user.email"
 									ng-required="true"
 									placeholder="Email" > 
-<!-- 								<span id="f-mail" class="has-error" "></span> -->
 								<i class="glyphicon glyphicon-user form-control-feedback"></i>
 								<div ng-show="form.email.$touched || submitted" ng-message="email">You should enter a valid email</div>
 								<div ng-show="form.email.$touched || submitted" ng-message="required">You must fill this field.</div>
@@ -53,23 +54,44 @@
 						<div class="form-group">
 
 							<div id="username_div" class="col-xs-6 has-feedback" ng-messages="form.pass.$error" role="alert" 
-								ng-class="{'has-error' : ((submitted || form.pass.$touched) && form.pass.$invalid), 'has-success': form.pass.$valid }">
-								<label class="control-label" for="pass">Password:</label> <input
+								ng-class="{'has-error' : 
+								(submitted && form.pass.$invalid) || (form.pass.$touched && form.pass.$invalid) || (form.pass.$dirty && !strong && !medium),
+								'has-success': strong, 'has-warning' : medium }"
+								>
+								<label class="control-label" for="pass">Password:</label> 
+								<input ng-focus="focus = true" ng-blur="focus = false" ng-change="strength(user.password);confirm_pass()" 
 									type="password" class="form-control" name="pass"
 									ng-model="user.password" ng-required="true" placeholder="Password">
 								<i class="glyphicon glyphicon-lock form-control-feedback"></i>
 								<div ng-show="form.pass.$touched || submitted" ng-message="required">You must fill this field.</div>
-									
+								<div class="progress">
+								<div class="progress-bar" 
+								  ng-class="{'progress-bar-success' : strong, 'progress-bar-warning' : medium , 'progress-bar-danger' : !strong && !medium}"
+								  role="progressbar" 
+								  aria-valuenow="1"
+								  aria-valuemin="0" aria-valuemax="100" ng-style="{'width' : progress_width}">
+								  {{pass_message}}
+								  </div>
+								</div>
+
+								<div class="alert alert-warning" ng-show="focus && !strong" >
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<strong>Warning!</strong><br/>
+								Use lowercase, uppercase, numbers, and optionally special characters.
+								Minimum length : 6.
+								</div>
 							</div>
 
 							<div class="col-xs-6 has-feedback" ng-messages="form.confirm.$error" role="alert" id="confirm-div"
-								ng-class="{'has-error' : (submitted || form.confirm.$touched) && (form.confirm.$invalid || form.confirm.$error.match) , 'has-success': form.confirm.$error.match==false }">
+								ng-class=
+								"{'has-error' : (submitted || form.confirm.$dirty || form.confirm.$touched) && (form.confirm.$invalid || (!match)) 
+								, 'has-success': match }">
 								<label class="control-label" for="pwd">Confirm Password:</label>
 								 <input	type="password" class="form-control" name="confirm"
 									ng-model="confirm" ng-required="true" placeholder="Password"
 									ng-change="confirm_pass()">
 								<i class="glyphicon glyphicon-lock form-control-feedback"></i>
-								<div ng-show="form.confirm.$touched || submitted" ng-message="required">You must fill this field.</div>
+								<div ng-show="form.confirm.$touched || submitted " ng-message="required">You must fill this field. </div>
 								<div ng-show="form.confirm.$dirty || submitted" ng-message="match">Password does not match.</div>
 							</div>
 						</div>
@@ -125,7 +147,7 @@
 							</div>
 	
 							<div class="col-xs-6 has-feedback" ng-messages="form.city.$error"
-							ng-class="{'has-error' : ((submitted || form.country.$touched) && form.city.$invalid) , 
+							ng-class="{'has-error' : ((submitted || form.city.$touched) && form.city.$invalid) , 
 							'has-success': form.city.$valid }">
 								<label class="control-label" for="city">City:</label>
 								<input type="text" class="form-control" name="city"

@@ -12,19 +12,52 @@
 	app.controller('UserController', [ '$scope', 'User', 
 			function($scope, User) {
 				
+				$scope.username_pattern = "([a-z]|[A-Z]|[0-9])*";
+				/*
+				 * regex from : 
+				 */
+				var strong_regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+	            var medium_regex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+				
+	            $scope.strength = function(pass) {
+	            	if(strong_regex.test(pass)) {
+	            		$scope.pass_class = 1;
+	            		$scope.pass_message = "strong";
+	            		$scope.strong = true;
+	            		$scope.medium = false;
+	            		$scope.progress_width = "100%";
+	            		//delete $scope.form.pass.$error;// = false;           		
+	            	}
+	            	else if(medium_regex.test(pass)) {
+	            		$scope.pass_class = 2;
+	            		$scope.pass_message = "medium (accepted)";   
+	            		$scope.medium = true;
+	            		//delete $scope.form.pass.$error;// = false;
+	            		$scope.strong = false;
+	            		$scope.progress_width = "50%";
+	            	}
+	            	else {
+	            		$scope.pass_class = 3;
+	            		$scope.strong = false;
+	            		$scope.medium = false;
+	            		$scope.progress_width = "1%";
+	            		//$scope.form.pass.$error.strength = true;
+	            		$scope.pass_message = "invalid";
+	            	}
+				};	            
+				$scope.match = false;	
 				$scope.confirm_pass = function() {
-					console.log($scope.form.confirm.$viewValue);
+					var confirm_div = angular.element(document.querySelector('#confirm-div'));
 					if($scope.user.password == $scope.form.confirm.$viewValue) {
 						$scope.form.confirm.$error.match = false;
-						var confirm_div = angular.element(document.querySelector('#confirm-div'));
 						confirm_div.removeClass("has-error");
-
-						console.log("matching password");
+						$scope.match = true;
 					}
 					else {
 						$scope.form.confirm.$error.match = true;					
+						$scope.match = false;
+						confirm_div.addClass("has-error");
 					}
-					
 				};
 				
 				$scope.err = "";
@@ -808,11 +841,17 @@
 				} ];
 				
 				$scope.submit = function() {
+					console.log(">>>>>> SUBMIT <<<<<<<");
 					console.log($scope.user.firstName);
 					console.log($scope.user.password);
 					$scope.user.location.country = $scope.user.country.name;
 					delete $scope.user.country;
-					User.save($scope.user);
+					User.save($scope.user).$promise.then(function(data) {
+						console.log(data);
+					},function() {
+						alert("OOOPS something went wrong. Please try again.");
+						console.log("error");
+					});
 				};
 			} ]);
 

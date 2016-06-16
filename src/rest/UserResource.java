@@ -29,7 +29,7 @@ public class UserResource {
 		response.setExists(userDAO.checkUsernames(username));
 		return Response.ok(response).build();
 	}
-	
+	/*
 	@GET
 	@Path("/{user_pass}")
 	@Produces("application/json")
@@ -40,7 +40,7 @@ public class UserResource {
 		model.User mUser = model.wrappers.UserWrapper.mapModelUserFromEntity(eUser);
 		return mUser;
 	}
-	
+	*/
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.User user) {
@@ -51,7 +51,8 @@ public class UserResource {
 		userEntity.setSurname(user.getLastName());
 		userEntity.setPassword(user.getPassword());
 		userEntity.setEmail(user.getEmail());
-		userEntity.setPhone(2309394);
+		//@TO : change phone to string in db etc. 
+		userEntity.setPhone(212333);
 		
 		entities.Location locationEntity = new entities.Location();
 		model.Location location = user.getLocation();
