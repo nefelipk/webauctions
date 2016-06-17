@@ -5,15 +5,16 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.MatrixParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import dao.LocationDAO;
+import org.apache.cxf.jaxrs.ext.ResponseStatus;
+
 import dao.UserDAO;
 import model.UsernameResponse;
 
@@ -76,22 +77,20 @@ public class UserResource {
 		userEntity.setMessages1(null);
 		userEntity.setMessages2(null);
 		
-		
-		LocationDAO locationDB = new LocationDAO();
-		int idLocation = locationDB.insert(locationEntity);
-		
-		LocationDAO location1DB = new LocationDAO();
-		
-		userEntity.setLocation(location1DB.getById(idLocation));
+		userEntity.setLocation(locationEntity);
 		UserDAO userDB = new UserDAO();
 		int id = userDB.insert(userEntity);	
-		
-		return Response
+		if(id > 0) {
+			return Response
 				.created(UriBuilder.fromResource(UserResource.class)
 						.path(String.valueOf(id))
 						.build())
 				.build();
-			
+		}
+		else {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+	
+		}
 	}
 	
 	@GET

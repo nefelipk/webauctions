@@ -61,7 +61,7 @@ public class User implements Serializable {
 	private List<Message> messages2;
 
 	//bi-directional many-to-one association to Location
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="idLocation")
 	private Location location;
 
