@@ -7,8 +7,8 @@
 </head>
 
 <body>
-	<div id="signup_modal" class="modal" role="dialog"
-		ng-controller="UserController as ctrl">
+	<div ng-controller="UserController as ctrl">
+	<div id="signup_modal" class="modal" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #F2F1EF">
@@ -64,12 +64,13 @@
 									ng-model="user.password" ng-required="true" placeholder="Password">
 								<i class="glyphicon glyphicon-lock form-control-feedback"></i>
 								<div ng-show="form.pass.$touched || submitted" ng-message="required">You must fill this field.</div>
-								<div class="progress">
+								<div class="progress" ng-show="form.pass.$dirty">
 								<div class="progress-bar" 
 								  ng-class="{'progress-bar-success' : strong, 'progress-bar-warning' : medium , 'progress-bar-danger' : !strong && !medium}"
 								  role="progressbar" 
 								  aria-valuenow="1"
-								  aria-valuemin="0" aria-valuemax="100" ng-style="{'width' : progress_width}">
+								  aria-valuemin="0" aria-valuemax="100" ng-style="{'width' : progress_width}"
+								  ">
 								  {{pass_message}}
 								  </div>
 								</div>
@@ -191,6 +192,9 @@
 
 			</div>
 		</div>
+		
+	</div>
+		<div ng-include="'signup_response.html'"></div>
 	</div>
 
 </body>

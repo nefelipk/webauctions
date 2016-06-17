@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module('auction_land', [ 'ngResource','ngMessages' ]);
+	var app = angular.module('auction_land', [ 'ngResource','ngMessages']);
 
 	app.factory('User', [ '$resource', function($resource) {
 		return $resource('http://localhost:8080/WebAuctions/services/users/:username');
@@ -9,8 +9,8 @@
 		return $resource('http://localhost:8080/WebAuctions/services/users/:user_pass', {username:'@username', password:'@password'});
 	} ]);
 
-	app.controller('UserController', [ '$scope', 'User', 
-			function($scope, User) {
+	app.controller('UserController', [ '$scope','User', 
+			function($scope,User) {
 				
 				$scope.username_pattern = "([a-z]|[A-Z]|[0-9])*";
 				/*
@@ -78,35 +78,48 @@
 						$scope.err = "already exists!";
 						console.log(input_elem);
 							
+					},function(){
+						alert("OOOPS:We are very sorry, server could not be reached.Please try again later.");
 					});
 				};
-					/*
-					User.query().$promise.then(function(data,all_users) {
-						var exists = false;
-						for(var i = 0; i < data.length; i++) {
-							console.log(data[i].username);
-							if($scope.user.username == data[i].username) {	
-								console.log("username exists");
-								exists = true;
-							}
-						}
-						console.log(exists);
+				
+				$scope.submit = function() {
+					console.log(">>>>>> SUBMIT <<<<<<<");
+					console.log($scope.user.firstName);
+					console.log($scope.user.password);
+					$scope.user.location.country = $scope.user.country.name;
+					delete $scope.user.country;
+					User.save($scope.user).$promise.then(function(data) {
+						//bring form at initial state
+						$scope.user={};
+						$scope.confirm = "";
+						$scope.match = false;
+						$scope.strong = false;
+						$scope.medium = false;
 						var input_elem = angular.element(document.querySelector('#username_div'));
-						var i = angular.element(document.querySelector('#i_username'));
-						input_elem.removeClass("has-error");
+						input_elem.removeClass("has-succcess");			
 						input_elem.removeClass("has-succcess");
-						if(exists) {
-							input_elem.addClass("has-error");
-							$scope.form.username.$error.exists = true;
-						}
-						else {
-							input_elem.addClass("has-success");
-							$scope.form.username.$error.exists = false;
-						}
-						$scope.err = "already exists!";
-						console.log(input_elem);
+						$scope.form.$setPristine(true);
+						$scope.form.$setUntouched(true);
+						
+						$scope.submitted = false;
+						//
+						$('#signup_modal').modal('hide');
+						$scope.success = true;
+						$scope.title = "Success";
+						$scope.message = "Your registration has been successfull! Please wait untill an admin verify your application.\nThank you.";
+						$('#signup_response').modal('show');
+						console.log(data);
+					},function() {
+						$('#signup_modal').modal('hide');
+						$scope.success = false;
+						$scope.title = "Error";
+						$scope.message = "We are terribly sorry.\nThere must have been a server error.";
+						$('#signup_response').modal('show');
+						console.log("error");
+						$scope.submitted = false;
 					});
-					*/			
+				};		
 				
 		
 				$scope.countries = [ {
@@ -840,19 +853,7 @@
 					code : 'ZW'
 				} ];
 				
-				$scope.submit = function() {
-					console.log(">>>>>> SUBMIT <<<<<<<");
-					console.log($scope.user.firstName);
-					console.log($scope.user.password);
-					$scope.user.location.country = $scope.user.country.name;
-					delete $scope.user.country;
-					User.save($scope.user).$promise.then(function(data) {
-						console.log(data);
-					},function() {
-						alert("OOOPS something went wrong. Please try again.");
-						console.log("error");
-					});
-				};
+			
 			} ]);
 
 	app.controller('LoginController', [ '$scope', 'UserPass', 

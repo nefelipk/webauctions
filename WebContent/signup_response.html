@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>sign up response</title>
+</head>
+
+<body>
+<div id="signup_response" class="modal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color: #F2F1EF">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="text-center" style="color: #2980B9;">
+						<strong>{{title}}</strong>
+					</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert fade in" ng-class="{'alert-success' : success , 'alert-danger' : !success}">
+					<strong>{{title}}!</strong>{{message}}.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>				
+</body>
+</html>
