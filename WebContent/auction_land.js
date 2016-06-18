@@ -62,25 +62,27 @@
 				
 				$scope.err = "";
 				$scope.check_username = function() {
-					User.get({ username: $scope.user.username}).$promise.then(function(data) {
-						var input_elem = angular.element(document.querySelector('#username_div'));
-						var i = angular.element(document.querySelector('#i_username'));
-						input_elem.removeClass("has-error");
-						input_elem.removeClass("has-succcess");
-						if(data.exists) {
-							input_elem.addClass("has-error");
-							$scope.form.username.$error.exists = true;
-						}
-						else {
-							input_elem.addClass("has-success");
-							$scope.form.username.$error.exists = false;
-						}
-						$scope.err = "already exists!";
-						console.log(input_elem);
-							
-					},function(){
-						alert("OOOPS:We are very sorry, server could not be reached.Please try again later.");
-					});
+					if(username != "") {
+						User.get({ username: $scope.user.username}).$promise.then(function(data) {
+							var input_elem = angular.element(document.querySelector('#username_div'));
+							var i = angular.element(document.querySelector('#i_username'));
+							input_elem.removeClass("has-error");
+							input_elem.removeClass("has-succcess");
+							if(data.exists) {
+								input_elem.addClass("has-error");
+								$scope.form.username.$error.exists = true;
+							}
+							else {
+								input_elem.addClass("has-success");
+								$scope.form.username.$error.exists = false;
+							}
+							$scope.err = "already exists!";
+							console.log(input_elem);
+								
+						},function(){
+							alert("OOOPS:We are very sorry, server could not be reached.Please try again later.");
+						});
+					}
 				};
 				
 				$scope.submit = function() {

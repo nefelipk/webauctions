@@ -3,3 +3,4 @@
 .settings/
 build/*
 WebContent/lib/*
+WebContent/WEB-INF/web.xml
