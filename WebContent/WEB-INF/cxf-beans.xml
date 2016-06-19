@@ -10,12 +10,12 @@
 	http://cxf.apache.org/jaxrs
 	http://cxf.apache.org/schemas/jaxrs.xsd">
 	<import resource="classpath:META-INF/cxf/cxf.xml"/>
-	<bean id="Hello" class="rest.HelloWorldResource"/>
+	<bean id="Items" class="rest.ItemResource"/>
 	<bean id="Test" class="rest.Testaki"/>
 	<bean id="Users" class="rest.UserResource"/>
 	<jaxrs:server id="base" address="/">	
 		<jaxrs:serviceBeans>
-			<ref bean="Hello"/>
+			<ref bean="Items"/>
 			<ref bean="Test"/>
 			<ref bean="Users"/>
 		</jaxrs:serviceBeans>

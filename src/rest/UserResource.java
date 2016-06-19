@@ -17,6 +17,7 @@ import org.apache.cxf.jaxrs.ext.ResponseStatus;
 
 import dao.UserDAO;
 import model.UsernameResponse;
+import model.wrappers.UserWrapper;
 
 @Path("/users")
 public class UserResource {
@@ -98,14 +99,7 @@ public class UserResource {
 	public List<model.User> getAllUsers() {
 		UserDAO userDAO = new UserDAO();
 		List<entities.User> usersEntities = userDAO.getAllUsers();
-		List<model.User> allUsers = null;
-		if(usersEntities != null && usersEntities.size() > 0) {
-			allUsers = new ArrayList<model.User>();
-			for(entities.User crawl : usersEntities) {
-				model.User user = model.wrappers.UserWrapper.mapModelUserFromEntity(crawl);
-				allUsers.add(user);
-			}
-		}
+		List<model.User> allUsers = UserWrapper.mapList(usersEntities);
 		return allUsers;
 	}
 }

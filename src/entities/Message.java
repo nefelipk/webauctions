@@ -10,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQuery(name="Message.findAll", query="SELECT m FROM Message m")
+@Table(name="Message")
 public class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 

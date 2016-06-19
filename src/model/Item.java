@@ -1,75 +1,32 @@
-package entities;
+package model;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import model.Bid;
+import model.Category;
+import model.Image;
+import model.Location;
+import model.User;
 
+public class Item {
 
-/**
- * The persistent class for the Item database table.
- * 
- */
-@Entity
-@NamedQuery(name="Item.findAll", query="SELECT i FROM Item i")
-@Table(name="Item")
-public class Item implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
 	private int idItem;
-
-	@Column(name="buy_price")
 	private String buyPrice;
-
-	@Lob
 	private String description;
-
 	private Timestamp ends;
-
-	@Column(name="first_bid")
 	private String firstBid;
-
 	private String name;
-
-	@Column(name="number_of_bids")
 	private int numberOfBids;
-
 	private Timestamp started;
-
-	//bi-directional many-to-one association to Bid
-	@OneToMany(mappedBy="item")
 	private List<Bid> bids;
-
-	//bi-directional many-to-one association to Bid
-	@ManyToOne
-	@JoinColumn(name="currently")
 	private Bid bid;
-
-	//bi-directional many-to-one association to Location
-	@ManyToOne
-	@JoinColumn(name="idLocation")
 	private Location location;
-
-	//bi-directional many-to-one association to Image
-	@ManyToOne
-	@JoinColumn(name="idImage")
 	private Image image;
-
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="idSeller")
 	private User user;
-
-	//bi-directional many-to-many association to Category
-	@ManyToMany(mappedBy="items")
 	private List<Category> categories;
 
-	public Item() {
-	}
-
 	public int getIdItem() {
-		return this.idItem;
+		return idItem;
 	}
 
 	public void setIdItem(int idItem) {
@@ -77,7 +34,7 @@ public class Item implements Serializable {
 	}
 
 	public String getBuyPrice() {
-		return this.buyPrice;
+		return buyPrice;
 	}
 
 	public void setBuyPrice(String buyPrice) {
@@ -85,7 +42,7 @@ public class Item implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
@@ -93,7 +50,7 @@ public class Item implements Serializable {
 	}
 
 	public Timestamp getEnds() {
-		return this.ends;
+		return ends;
 	}
 
 	public void setEnds(Timestamp ends) {
@@ -101,7 +58,7 @@ public class Item implements Serializable {
 	}
 
 	public String getFirstBid() {
-		return this.firstBid;
+		return firstBid;
 	}
 
 	public void setFirstBid(String firstBid) {
@@ -109,7 +66,7 @@ public class Item implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -117,7 +74,7 @@ public class Item implements Serializable {
 	}
 
 	public int getNumberOfBids() {
-		return this.numberOfBids;
+		return numberOfBids;
 	}
 
 	public void setNumberOfBids(int numberOfBids) {
@@ -125,7 +82,7 @@ public class Item implements Serializable {
 	}
 
 	public Timestamp getStarted() {
-		return this.started;
+		return started;
 	}
 
 	public void setStarted(Timestamp started) {
@@ -133,29 +90,15 @@ public class Item implements Serializable {
 	}
 
 	public List<Bid> getBids() {
-		return this.bids;
+		return bids;
 	}
 
 	public void setBids(List<Bid> bids) {
 		this.bids = bids;
 	}
 
-	public Bid addBid(Bid bid) {
-		getBids().add(bid);
-		bid.setItem(this);
-
-		return bid;
-	}
-
-	public Bid removeBid(Bid bid) {
-		getBids().remove(bid);
-		bid.setItem(null);
-
-		return bid;
-	}
-
 	public Bid getBid() {
-		return this.bid;
+		return bid;
 	}
 
 	public void setBid(Bid bid) {
@@ -163,7 +106,7 @@ public class Item implements Serializable {
 	}
 
 	public Location getLocation() {
-		return this.location;
+		return location;
 	}
 
 	public void setLocation(Location location) {
@@ -171,7 +114,7 @@ public class Item implements Serializable {
 	}
 
 	public Image getImage() {
-		return this.image;
+		return image;
 	}
 
 	public void setImage(Image image) {
@@ -179,7 +122,7 @@ public class Item implements Serializable {
 	}
 
 	public User getUser() {
-		return this.user;
+		return user;
 	}
 
 	public void setUser(User user) {
@@ -187,7 +130,7 @@ public class Item implements Serializable {
 	}
 
 	public List<Category> getCategories() {
-		return this.categories;
+		return categories;
 	}
 
 	public void setCategories(List<Category> categories) {
