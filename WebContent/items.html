@@ -6,6 +6,7 @@
 
 <style>
 
+
 a.list-group-item {
     height:auto;
     min-height:220px;
@@ -13,33 +14,37 @@ a.list-group-item {
 a.list-group-item.active small {
     color:#fff;
 }
-.stars {
-    margin:20px auto 1px;    
-}
+
+/*
 .pagination>li>a, .pagination>li>span { 
 	border-radius: 50% !important;margin: 0 5px;
+	border-
 }
+*/
+
 </style>
 </head>
 
 <body>
 
     <div class="row" ng-controller="AuctionsController">
-    	<div class="text-center">
-			<ul class="pagination">
-				<li ng-class="{'disabled' : current_page == 1}"><a href="#"><</a><li>
-				<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a href="#">{{p}}</a></li>
-				<li ng-class="{'disabled' : current_page == pages}"><a href="#">></a>
-			</ul>
+
+    	<div class="list-group">
+
+    	<h3 style="display:inline-block;">{{getItems().length}} live auctions found</h3>
+		<ul class="pagination pagination-sm" style="float:right;" >
+			<li ng-class="{'disabled' : current_page == 1}"><a href="#"><</a><li>
+			<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a href="#">{{p}}</a></li>
+			<li ng-class="{'disabled' : current_page == pages}"><a href="#">></a>
+		</ul>
 		</div>
-				
+
 		<div class="well" >
-	        <h1 class="text-center">{{items.length}} live auctions found</h1>
     		    <div class="list-group">
         		<a ng-repeat="i in getItems()" href="#" class="list-group-item S">
                 	<div class="media col-md-3">
                     	<figure class="pull-left">
-                        <img class="media-object img-rounded img-responsive" src="http://placehold.it/350x250"  alt="placehold.it/350x250" >
+                        <img class="media-object img-rounded img-responsive" src="https://placehold.it/350x250"  alt="placehold.it/350x250" >
                     	</figure>
                 	</div>
                 	<div class="col-md-6">
@@ -59,11 +64,10 @@ a.list-group-item.active small {
 		</div>
 		</div>
 
-		<div class="text-center">
-			<ul class="pagination">
-				<li ng-class="{'disabled' : current_page == 1}"><a href="#"><</a><li>
+			<ul class="pager">
+				<li class="previous" ng-class="{'disabled' : current_page == 1}"><a href="#">Previous</a><li>
 				<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a href="#">{{p}}</a></li>
-				<li ng-class="{'disabled' : current_page == 1}"><a href="#">></a>
+				<li class="next" ng-class="{'disabled' : current_page == 1}"><a href="#">Next</a>
 			</ul>
 		</div>
 		
@@ -71,32 +75,3 @@ a.list-group-item.active small {
 		
 </body>
 </html>
-
-
-<!--
-<a href="#" class="list-group-item active">
-                <div class="media col-md-3">
-                    <figure class="pull-left">
-                        <img class="media-object img-rounded img-responsive"  src="http://placehold.it/350x250" alt="placehold.it/350x250" >
-                    </figure>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="list-group-item-heading"> List group heading </h4>
-                    <p class="list-group-item-text"> Qui diam libris ei, vidisse incorrupte at mel. His euismod salutandi dissentiunt eu. Habeo offendit ea mea. Nostro blandit sea ea, viris timeam molestiae an has. At nisl platonem eum. 
-                        Vel et nonumy gubergren, ad has tota facilis probatus. Ea legere legimus tibique cum, sale tantas vim ea, eu vivendo expetendis vim. Voluptua vituperatoribus et mel, ius no elitr deserunt mediocrem. Mea facilisi torquatos ad.
-                    </p>
-                </div>
-                <div class="col-md-3 text-center">
-                    <h2> 14240 <small> votes </small></h2>
-                    <button type="button" class="btn btn-default btn-lg btn-block"> Vote Now! </button>
-                    <div class="stars">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                    </div>
-                    <p> Average 4.5 <small> / </small> 5 </p>
-                </div>
-          </a> 
- -->

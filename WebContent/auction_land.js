@@ -342,9 +342,7 @@
 		 };
 		 
 		 var p = $scope.items.length ;
-		 console.log(p);
 		 $scope.pages = new Array(p).join().split(',').map(function(item, index){ return ++index;})
-		 console.log($scope.pages);
 		 
 		 $scope.get_page = function() {
 			 
