@@ -7,13 +7,6 @@
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<script src="jquery/jquery-1.12.4.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
-
-	<script> 
-		$(function(){
-		  $("#signup-modal").load("signup.html"); 
-		  $("#login-modal").load("login.html"); 
-		});
-	</script>
 	
 	<style>
 		/* Remove the navbar's default margin-bottom and rounded borders */ 
@@ -54,7 +47,7 @@
 		   
 		.height-nav {
 			padding: 1.0%;
-			background: transparent;
+			//background: transparent;
 			margin-bottom: 20%;	
 		}
 		
@@ -87,7 +80,7 @@
 					<span class="icon-bar"></span>                        
 				</button>
 				<a href="/WebAuctions">
-					<img class="navbar-brand logo-size" src="logo4.png" />
+					<img class="navbar-brand logo-size" src="images/logo4.png" />
 				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
@@ -108,12 +101,8 @@
 	
 	</nav>
 </body>
-
   
 <div ng-include="'signup.html'"></div>
 <div ng-include="'login.html'"></div>
-<!-- 
-<div id="signup-modal"></div>
-<div id="login-modal"></div>
- -->	
+
 </html>

@@ -289,8 +289,8 @@
 		 $scope.current_page = 1;
 		 var items_per_page = 10;
 		 
-		 $scope.items = [
-		            {"item" : {"name" :"iphone 5s",
+		 $scope.items = 
+		            {"item" : [{"name" :"iphone 5s",
 		             "max_bid" : 35.4,
 		             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
 		             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
@@ -299,13 +299,46 @@
 		             ,"seller" :
 		             	{
 		            	  "username":"BestSeller09",
-		            	  "seller_rating": 300,
+		            	  "seller_rating": 300
 		             	}
-		            }
-		 }];        
+		            },{"name" :"iphone 5s",
+			             "max_bid" : 35.4,
+			             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
+			             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
+			             "and preceding the iPhone 5S and iPhone 5C. " +
+			             "Formally unveiled as part of a press event on September 12, 2012, "
+			             ,"seller" :
+			             	{
+			            	  "username":"BestSeller09",
+			            	  "seller_rating": 300
+			             	}
+		            },{"name" :"iphone 5s",
+			             "max_bid" : 35.4,
+			             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
+			             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
+			             "and preceding the iPhone 5S and iPhone 5C. " +
+			             "Formally unveiled as part of a press event on September 12, 2012, "
+			             ,"seller" :
+			             	{
+			            	  "username":"BestSeller09",
+			            	  "seller_rating": 300
+			             	}
+		            },{"name" :"iphone 5s",
+			             "max_bid" : 35.4,
+			             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
+			             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
+			             "and preceding the iPhone 5S and iPhone 5C. " +
+			             "Formally unveiled as part of a press event on September 12, 2012, "
+			             ,"seller" :
+			             	{
+			            	  "username":"BestSeller09",
+			            	  "seller_rating": 300
+			             	}
+		            } 
+		 ]};        
 		 
 		 $scope.getItems = function() {
-			return $scope.items.slice(0,items_per_page); 
+			return $scope.items.item.slice(0,items_per_page); 
 		 };
 		 
 		 var p = $scope.items.length ;
@@ -323,24 +356,37 @@
 	 
 })();
 
+
+/*
+ * main.html sidebar following scroll.
+*/ 
+/*
 $(function() {
+	
 	$('.dropdown-toggle').dropdown();
-    var $sidebar   = $("#sidebar"), 
+
+	var $sidebar   = $("#sidebar"), 
         $window    = $(window),
         offset     = $sidebar.offset(),
         topPadding = 15;
+	//var footer_top = $('#footer').offset().top;
+	//console.log(footer_top);
+	var document_height = $(document).height();
 
-    $window.scroll(function() {
-        if ($window.scrollTop() > offset.top) {
+	$window.scroll(function() {
+		//console.log(document_height-footer_top);
+        console.log($window.scrollTop());
+		if ($window.scrollTop() > offset.top && ($window.scrollTop() < (document_height - 20))) {
             $sidebar.stop().animate({
-                marginTop: $window.scrollTop() - offset.top + topPadding
+                marginTop: $window.scrollTop() + topPadding
             });
         } else {
             $sidebar.stop().animate({
                 marginTop: 0
             });
         }
-    });
-    
-});
 
+    });
+  });
+
+*/

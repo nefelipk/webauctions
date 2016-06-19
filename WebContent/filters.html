@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div ng-show="must" id="filters">	
+	
+		<h4 class="text-center" style="margin-top:79px">filters</h4>
+		<hr>
+		<form>
+			<div class="form-group ">
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button"
+						data-toggle="dropdown">
+						Category <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li ng-model="category" ng-repeat="c in categories"><a
+							href="#">{{c.name}}</a></li>
+					</ul>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group ">
+				<label>price</label>
+				<div class="radio" style="vertical-align: middle">
+					<label><input ng-model="price_till" type="radio"
+						name="optradio">{{price_low}}</label>
+
+				</div>
+				<div class="radio" style="vertical-align: middle">
+					<label><input ng-model="price_between" type="radio"
+						name="optradio">{{price_mid}}</label>
+				</div>
+				<div class="radio" style="vertical-align: middle">
+					<label><input ng-model="price_more" type="radio"
+						name="optradio">{{price_high}}</label>
+				</div>
+
+			</div>
+			<div class="form-inline">
+				<input ng-model="price_from" type="text" size="3"
+					class="form-control" placeholder="from" /> <input
+					ng-model="price_to" type="text" size="3" class="form-control"
+					placeholder="to" />
+				<button class="btn btn-primary btn-sm">></button>
+			</div>
+			<hr>
+			<div class="form-group ">
+				<label>location</label>
+
+				<div class="radio">
+					<label><input ng-model="location_continent" type="radio"
+						style="vertical-align: middle" name="location">US</label>
+				</div>
+				<div class="radio">
+					<label><input ng-model="location_continent" type="radio"
+						style="vertical-align: middle" name="location">Europe</label>
+				</div>
+				<div class="radio">
+					<label><input ng-model="location_continent" type="radio"
+						style="vertical-align: middle" name="location">Asia</label>
+				</div>
+				<div class="radio">
+					<label><input ng-model="location_continent" type="radio"
+						style="vertical-align: middle" name="location">North
+						America</label>
+				</div>
+				<div class="form-inline">
+					<input ng-model="location_from_km" type="text" size="3"
+						class="form-control" placeholder="from km" /> <input
+						ng-model="location_to_km" type="text" size="3"
+						class="form-control" placeholder="to km" />
+					<button class="btn btn-primary btn-sm">></button>
+				</div>
+
+			</div>
+			<hr>
+			<div class="my-group">
+				<label for="description">Description:</label>
+				<textarea ng-model="description" class="form-control" rows="5"
+					id="desc"></textarea>
+				<button class="btn btn-primary btn-sm textarea-btn">search></button>
+			</div>
+		</form>
+	</div>
+	<div ng-hide="must"><button></button> </div>
+
+</body>
+</html>
