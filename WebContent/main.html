@@ -20,11 +20,12 @@
 
 </head>
 <body>
+<!-- 
 	<ol class="breadcrumb">
 	    <li><a href="/WebAuctions">Home</a></li>
 	    <li class="active">Main</li>
 	</ol> 
-
+-->
 	<div ng-include="'header.html'"></div>
 
 	<span ng-controller="AuctionsController">
@@ -33,7 +34,6 @@
 			<!-- ng-controller="SearchController" -->
 			<div class="container-fluid" >
 				<div id="main-div" class="row">
-				{{clicked_item}}
 					<div class="col-xs-offset-1 col-sm-2" id="sidebar">
 						<ng-include src="'filters.html'">	
 					</div>
