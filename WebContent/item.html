@@ -6,18 +6,18 @@
 </head>
 <body>
 
-<div class="contrainer">
+<div class="container-fluid" style="margin-bottom:10%;margin-top:2.5%">
+			
 	<div class="row">
-		<div class="col-sm-3">
-			<!-- <img ng-src="{{current.image}}"> -->
-			<img class="media-object img-rounded img-responsive" src="https://placehold.it/350x250"  alt="placehold.it/350x250" >
+		<h3 class="text-center">{{current.name}}</h3>
+		<div class="col-xs-offset-1 col-sm-4 well">
+			<img class="media-object img-rounded img-responsive center-block" src="images/iphone5s.jpg">
 		</div>
-		<div class="col-sm-4 col-xs-offset-1 " >
-			<h3>{{current.name}}</h3>
-		<div class="well">
+		
+		<div class="col-sm-4" >
+			<div class="well">
 			<div class="row">
-				<div class="col-sm-4"><h4>Time left : </h4></div>
-				<div class="col-sm-4"><h4>{{current.time_left}} 5 : 33</h4></div>
+				<div class="col-sm-8"><h4>Time left : 5 : 33</h4></div>
 				<div class="col-sm-4"><button class="btn btn-primary ">Buy NOW!</button></div>
 			</div>	
 			
@@ -40,29 +40,48 @@
 				<div class="btn btn-primary">Place Bid</div>	
 			</form>
 			<sup>Place a bid statring from {{current.starting_bid}}</sup>
-		</div>
+
+			
+			</div>	
 		</div>	
-			<div class="col-xs-offset-1 col-sm-2 well">
-				<div class="span2">
-					<h4>Seller Information</h4>
-				</div>
-
-				<div class="span8">
-					<h5>{{current.seller.username}}</h5>
-					<h6>Email: {{current.seller.email}}</h6>
-					<h6>Rating: {{current.seller.seller_rating}}</h6>
-					<h6>{{current.seller.num_of_sales}}
-					</h6>
-				</div>
-
+			<div class="col-sm-2 well">
+			<div class="span2">
+				<h4>Seller Information</h4>
 			</div>
-		</div>
+			<div class="span8">
+				<h5>{{current.seller.username}}</h5>
+				<h6>Rating: {{current.seller.seller_rating}}</h6>
+				<h6>{{current.seller.num_of_sales}}
+				</h6>
+			</div>
+			</div>
+		</div>	
 
+	
 	<div class="row">
-		<div class="col-sm-4" id="map">
-			<p>{{current.description}}</p>
-		</div>
-		<div class="col-sm-4" >
+			<div class="col-xs-offset-1 col-sm-4" id="map">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#home">Description</a></li>
+					<li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+					<li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div id="home" class="tab-pane fade in active">
+						<h3>Description</h3>
+						<p>{{current.description}}</p>
+					</div>
+					<div id="menu1" class="tab-pane fade">
+						<h3>Menu 1</h3>
+						<p>Some content in menu 1.</p>
+					</div>
+					<div id="menu2" class="tab-pane fade">
+						<h3>Menu 2</h3>
+						<p>Some content in menu 2.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4" >
 			<img style="width:100%;" src="https://www.advancedcustomfields.com/wp-content/uploads/2013/11/acf-google-maps-field-2.png" >
 		</div>
 	</div>
