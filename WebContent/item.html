@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div class="contrainer-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-sm-offset-1" style="background-color:orange">
+			<!-- <img ng-src="{{current.image}}"> -->
+			<img class="media-object img-rounded img-responsive" src="https://placehold.it/350x250"  alt="placehold.it/350x250" >
+		</div>
+		<div class="col-sm-3" style="background-color:green">
+			<div>
+			{{current.time_left}}
+			Strating bid : {{current_starting_bid}}
+			
+			<div class="btn btn-primary">Place Bid</div>	
+			</div>
+		</div>
+		<div class="col-sm-3" style="background-color:black">
+			<div>
+			{{current.seller.username}} <br/>
+			{{current.seller.seller_rating}}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-offset-1 col-sm-3">
+			<div id="map" style="height : 100px; width:100px"></div>
+		</div>
+		<div class="col-sm-offset-1 col-sm-4">
+			<p>{{current.description}}</p>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

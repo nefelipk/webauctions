@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module('auction_land', [ 'ngResource','ngMessages']);
-
+		
 	app.factory('User', [ '$resource', function($resource) {
 		return $resource('http://localhost:8080/WebAuctions/services/users/:username');
 	} ]);
@@ -238,6 +238,8 @@
 	 }
 	 }]);
 */
+	
+/*	
 	 app.controller('SearchController', [ '$scope', '$window',
 		function($scope, $window) {
 		 
@@ -272,6 +274,7 @@
 
  		} 
 	 ]);
+	 */
 	 
 	 app.controller('MainContentController',['$window','$scope',function($window,$scope) {
 		 $scope.content = "index";
@@ -280,12 +283,56 @@
 //			 console.log("called");
 //			 $scope.content = "main";
 		 };
+
+		
+
 	 }]);
 	 
-	 
-	 
 	 app.controller('AuctionsController',['$scope',function($scope) {
-		 // test for ng-repeat
+			
+		 function initMap() {
+			alert("ok"); 
+		 };
+		 $scope.clicked_item = false;
+		 $scope.set_current = function(item) {
+			 $scope.current = item;
+			 $scope.clicked_item = true;
+		 };
+		 
+		 $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+		 
+		 
+			$scope.category = false;
+		 	$scope.price_low = 50;
+		 	$scope.price_mid = 100;
+		 	$scope.price_high = 200;
+		 	$scope.location_continent = false;
+		 	$scope.location_from_km = false;
+		 	$scope.location_to_km = false;
+		 	$scope.description = false;
+		 	
+		 	
+		 	$scope.must = true;
+			$scope.current_content = $scope.content;
+			console.log($scope.current_content);
+			
+			$scope.test_search = function() {
+				console.log("here");
+				$scope.search();
+			}
+			
+			$(window).on("resize.doResize", function() {
+				
+				$scope.$apply(function() {
+					if(window.innerWidth < 1290) {
+						$scope.must = false;
+					}
+					else {
+						$scope.must = true;
+					}
+				});
+			});
+//	 	 // test for ng-repeat
 		 $scope.current_page = 1;
 		 var items_per_page = 10;
 		 
@@ -353,6 +400,9 @@
 	
 	 
 })();
+
+
+
 
 
 /*

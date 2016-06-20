@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>List of items</title>
 
 <style>
 
@@ -26,8 +26,8 @@ a.list-group-item.active small {
 </head>
 
 <body>
-
-    <div class="row" ng-controller="AuctionsController">
+	<!-- ng-controller="AuctionsController" -->
+    <div class="row" >
 
     	<div class="list-group">
     	<h3 style="display:inline-block;">{{getItems().length}} live auctions found</h3>
@@ -40,7 +40,7 @@ a.list-group-item.active small {
 
 		<div class="well" >
     		    <div class="list-group">
-        		<a ng-repeat="i in getItems()" href="#" class="list-group-item S">
+        		<a ng-repeat="i in getItems()" href="#" class="list-group-item S" ng-click="set_current(i)">
                 	<div class="media col-md-3">
                     	<figure class="pull-left">
                         <img class="media-object img-rounded img-responsive" src="https://placehold.it/350x250"  alt="placehold.it/350x250" >
