@@ -259,4 +259,9 @@ public class User implements Serializable {
 		this.location = location;
 	}
 
+	public  String toString() {
+		return  "*************************\n"+
+				this.username + "\n" + this.password + "\n" + this.name + "\n" + this.surname + "\n" + this.email+"\n"+ this.afm + "\n" +this.phone
+				+"\n*************************\n";
+	}
 }

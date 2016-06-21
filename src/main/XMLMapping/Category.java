@@ -6,7 +6,7 @@
 //
 
 
-package main.xmlMapping;
+package main.XMLMapping;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

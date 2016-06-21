@@ -38,31 +38,31 @@ public class Item implements Serializable {
 	private Timestamp started;
 
 	//bi-directional many-to-one association to Bid
-	@OneToMany(mappedBy="item")
+	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
 	private List<Bid> bids;
 
 	//bi-directional many-to-one association to Bid
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="currently")
 	private Bid bid;
 
 	//bi-directional many-to-one association to Location
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="idLocation")
 	private Location location;
 
 	//bi-directional many-to-one association to Image
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="idImage")
 	private Image image;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="idSeller")
 	private User user;
 
 	//bi-directional many-to-many association to Category
-	@ManyToMany(mappedBy="items")
+	@ManyToMany(mappedBy="items",cascade=CascadeType.ALL)
 	private List<Category> categories;
 
 	public Item() {

@@ -6,7 +6,7 @@
 //
 
 
-package main.xmlMapping;
+package main.XMLMapping;
 
 import java.util.ArrayList;
 import java.util.List;
