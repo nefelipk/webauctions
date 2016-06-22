@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for linux-glibc2.5 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.28, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: tedDB
+-- Host: localhost    Database: tedDB
 -- ------------------------------------------------------
--- Server version	5.5.49-0ubuntu0.14.04.1
+-- Server version	5.6.28-0ubuntu0.15.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -104,10 +104,10 @@ DROP TABLE IF EXISTS `Item`;
 CREATE TABLE `Item` (
   `idItem` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `buy_price` varchar(45) NOT NULL,
-  `first_bid` varchar(45) NOT NULL,
+  `buy_price` varchar(45) DEFAULT NULL,
+  `first_bid` varchar(45) DEFAULT NULL,
+  `currently` varchar(45) DEFAULT NULL,
   `number_of_bids` int(11) NOT NULL,
-  `currently` int(11) NOT NULL,
   `idLocation` int(11) NOT NULL,
   `started` timestamp NULL DEFAULT NULL,
   `ends` timestamp NULL DEFAULT NULL,
@@ -116,13 +116,11 @@ CREATE TABLE `Item` (
   `idSeller` int(11) NOT NULL,
   PRIMARY KEY (`idItem`),
   UNIQUE KEY `idItem_UNIQUE` (`idItem`),
-  KEY `fk_Item_Bid1_idx` (`currently`),
   KEY `fk_Item_Location1_idx` (`idLocation`),
   KEY `fk_Item_Image1_idx` (`idImage`),
   KEY `fk_Item_User1_idx` (`idSeller`),
-  CONSTRAINT `fk_Item_Bid1` FOREIGN KEY (`currently`) REFERENCES `Bid` (`idBid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Item_Location1` FOREIGN KEY (`idLocation`) REFERENCES `Location` (`idLocation`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Item_Image1` FOREIGN KEY (`idImage`) REFERENCES `Image` (`idImage`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Item_Location1` FOREIGN KEY (`idLocation`) REFERENCES `Location` (`idLocation`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Item_User1` FOREIGN KEY (`idSeller`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -149,8 +147,8 @@ CREATE TABLE `ItemCategory` (
   PRIMARY KEY (`idItem`,`idCategory`),
   KEY `fk_Item_has_Category_Category1_idx` (`idCategory`),
   KEY `fk_Item_has_Category_Item1_idx` (`idItem`),
-  CONSTRAINT `fk_Item_has_Category_Item1` FOREIGN KEY (`idItem`) REFERENCES `Item` (`idItem`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Item_has_Category_Category1` FOREIGN KEY (`idCategory`) REFERENCES `Category` (`idCategory`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Item_has_Category_Category1` FOREIGN KEY (`idCategory`) REFERENCES `Category` (`idCategory`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Item_has_Category_Item1` FOREIGN KEY (`idItem`) REFERENCES `Item` (`idItem`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,6 +204,7 @@ CREATE TABLE `Message` (
   `idReceiver` int(11) NOT NULL,
   `message` longtext,
   `read` tinyint(1) NOT NULL,
+  `time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idMessage`),
   UNIQUE KEY `idMessage_UNIQUE` (`idMessage`),
   KEY `fk_User_has_User_User2_idx` (`idReceiver`),
@@ -270,4 +269,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-14 12:34:23
+-- Dump completed on 2016-06-22 14:57:27
