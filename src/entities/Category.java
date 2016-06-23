@@ -16,21 +16,13 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idCategory;
 
 	private String name;
 
 	//bi-directional many-to-many association to Item
-	@ManyToMany
-	@JoinTable(
-		name="ItemCategory"
-		, joinColumns={
-			@JoinColumn(name="idCategory")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="idItem")
-			}
-		)
+	@ManyToMany(mappedBy="categories")
 	private List<Item> items;
 
 	public Category() {

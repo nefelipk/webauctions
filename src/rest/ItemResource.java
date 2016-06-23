@@ -16,11 +16,11 @@ public class ItemResource {
 	@GET
 	@Path("/{term}")
 	@Produces({"application/json"})
-	public List<Item> generalSearch(String term) {
+	public List<model.Item> generalSearch(String term) {
 		ItemDAO itemDAO = new ItemDAO();
 		List<entities.Item> i = itemDAO.generalSearch(term);
 		List<model.Item> items = ItemWrapper.mapList(i);
-		return items;		
+		return items;
 	}
 	
 }

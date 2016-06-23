@@ -1,6 +1,17 @@
 (function() {
 	var app = angular.module('auction_land', [ 'ngResource','ngMessages']);
 		
+/*	
+	app.config(['$routeProvider',function($routeProvider){
+		$routeProvider
+		.when('/',{
+			templateUrl : 'welcome.html',
+		})
+		.when('/messages', {
+			templateUrl : 'messages.html',
+		});
+	}]);
+*/	
 	app.factory('User', [ '$resource', function($resource) {
 		return $resource('http://localhost:8080/WebAuctions/services/users/:username');
 	} ]);
@@ -9,6 +20,10 @@
 		return $resource('http://localhost:8080/WebAuctions/services/users/:user_pass', {username:'@username', password:'@password'});
 	} ]);
 
+	app.factory('Item', [ '$resource', function($resource) {
+		return $resource('http://localhost:8080/WebAuctions/services/items/:term');
+	} ]);
+	
 	app.controller('UserController', [ '$scope','User', 
 			function($scope,User) {
 				
@@ -275,11 +290,11 @@
  		} 
 	 ]);
 	 */
-	 
-	 app.controller('MainContentController',['$window','$scope',function($window,$scope) {
-		 $scope.content = "index";
-		 $scope.search = function() {
-			 $window.location.href = '/WebAuctions/main.html';
+/*	 
+	 app.controller('MainContentController',['$window','$rootScope','$scope','Item',function($window,$rootScope,$scope,Item) {
+		
+			 //
+
 //			 console.log("called");
 //			 $scope.content = "main";
 		 };
@@ -287,22 +302,29 @@
 		
 
 	 }]);
-	 
-	 app.controller('AuctionsController',['$scope',function($scope) {
-			
-		 function initMap() {
-			alert("ok"); 
-		 };
+	*/ 
+	 app.controller('AuctionsController',['$window','$scope','Item',function($window,$scope,Item) {
+		 $scope.content = "index";
+		 $scope.search = function(term) {
+			console.log("Search term : ");
+			console.log(term);
+			Item.query({ term: term}).$promise.then(function(data) {
+				console.log("ok respone");
+				console.log(data[0]);
+				$scope.content = "main";
+				$scope.items = data.slice();	
+				$window.location.href = '/WebAuctions/main.html';
+			});
+		 };	 
+		 
 		 $scope.clicked_item = false;
 		 $scope.set_current = function(item) {
 			 $scope.current = item;
 			 $scope.clicked_item = true;
-		 };
+		 };		 
+		 	
 		 
-		 $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
-		 
-		 
-			$scope.category = false;
+		 	$scope.category = false;
 		 	$scope.price_low = 50;
 		 	$scope.price_mid = 100;
 		 	$scope.price_high = 200;
@@ -334,62 +356,15 @@
 			});
 //	 	 // test for ng-repeat
 		 $scope.current_page = 1;
-		 var items_per_page = 10;
-		 
-		 $scope.items = 
-		            {"item" : [{"name" :"iphone 5s",
-		             "max_bid" : 35.4,
-		             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
-		             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
-		             "and preceding the iPhone 5S and iPhone 5C. " +
-		             "Formally unveiled as part of a press event on September 12, 2012, "
-		             ,"seller" :
-		             	{
-		            	  "username":"BestSeller09",
-		            	  "seller_rating": 300
-		             	}
-		            },{"name" :"iphone 5s",
-			             "max_bid" : 35.4,
-			             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
-			             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
-			             "and preceding the iPhone 5S and iPhone 5C. " +
-			             "Formally unveiled as part of a press event on September 12, 2012, "
-			             ,"seller" :
-			             	{
-			            	  "username":"BestSeller09",
-			            	  "seller_rating": 300
-			             	}
-		            },{"name" :"iphone 5s",
-			             "max_bid" : 35.4,
-			             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
-			             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
-			             "and preceding the iPhone 5S and iPhone 5C. " +
-			             "Formally unveiled as part of a press event on September 12, 2012, "
-			             ,"seller" :
-			             	{
-			            	  "username":"BestSeller09",
-			            	  "seller_rating": 300
-			             	}
-		            },{"name" :"iphone 5s",
-			             "max_bid" : 35.4,
-			             "description" : "The iPhone 5 is a smartphone that was designed and marketed by Apple Inc. " +
-			             "It is the sixth generation of the iPhone, succeeding the iPhone 4S " +
-			             "and preceding the iPhone 5S and iPhone 5C. " +
-			             "Formally unveiled as part of a press event on September 12, 2012, "
-			             ,"seller" :
-			             	{
-			            	  "username":"BestSeller09",
-			            	  "seller_rating": 300
-			             	}
-		            } 
-		 ]};        
+		 var items_per_page = 10;      
 		 
 		 $scope.getItems = function() {
-			return $scope.items.item.slice(0,items_per_page); 
+			 console.log("Lenght : "+$scope.items.length);
+			return $scope.items.slice(0,items_per_page); 
 		 };
 		 
-		 var p = $scope.items.length ;
-		 $scope.pages = new Array(p).join().split(',').map(function(item, index){ return ++index;})
+		 //var p = $scope.items.length ;
+		 //$scope.pages = new Array(p).join().split(',').map(function(item, index){ return ++index;})
 		 
 		 $scope.get_page = function() {
 			 

@@ -17,12 +17,14 @@ public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idItem;
 
 	@Column(name="buy_price")
 	private String buyPrice;
 
-	@Lob
+	private String currently;
+
 	private String description;
 
 	private Timestamp ends;
@@ -38,32 +40,36 @@ public class Item implements Serializable {
 	private Timestamp started;
 
 	//bi-directional many-to-one association to Bid
-	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="item",cascade=CascadeType.PERSIST)
 	private List<Bid> bids;
 
-	//bi-directional many-to-one association to Bid
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="currently")
-	private Bid bid;
-
-	//bi-directional many-to-one association to Location
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="idLocation")
-	private Location location;
+	//bi-directional many-to-many association to Category
+	@ManyToMany(cascade=CascadeType.PERSIST)
+	@JoinTable(
+		name="ItemCategory"
+		, joinColumns={
+			@JoinColumn(name="idItem")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="idCategory")
+			}
+		)
+	private List<Category> categories;
 
 	//bi-directional many-to-one association to Image
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="idImage")
 	private Image image;
 
+	//bi-directional many-to-one association to Location
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="idLocation")
+	private Location location;
+
 	//bi-directional many-to-one association to User
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idSeller")
 	private User user;
-
-	//bi-directional many-to-many association to Category
-	@ManyToMany(mappedBy="items",cascade=CascadeType.ALL)
-	private List<Category> categories;
 
 	public Item() {
 	}
@@ -82,6 +88,14 @@ public class Item implements Serializable {
 
 	public void setBuyPrice(String buyPrice) {
 		this.buyPrice = buyPrice;
+	}
+
+	public String getCurrently() {
+		return this.currently;
+	}
+
+	public void setCurrently(String currently) {
+		this.currently = currently;
 	}
 
 	public String getDescription() {
@@ -154,20 +168,12 @@ public class Item implements Serializable {
 		return bid;
 	}
 
-	public Bid getBid() {
-		return this.bid;
+	public List<Category> getCategories() {
+		return this.categories;
 	}
 
-	public void setBid(Bid bid) {
-		this.bid = bid;
-	}
-
-	public Location getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public Image getImage() {
@@ -178,20 +184,20 @@ public class Item implements Serializable {
 		this.image = image;
 	}
 
+	public Location getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 	public User getUser() {
 		return this.user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public List<Category> getCategories() {
-		return this.categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
 	}
 
 }

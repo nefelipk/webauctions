@@ -90,7 +90,6 @@ public class UserResource {
 		}
 		else {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-	
 		}
 	}
 	

@@ -1,8 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,7 +15,8 @@ import java.util.List;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idUser;
 
 	private boolean admin;
@@ -61,7 +60,7 @@ public class User implements Serializable {
 	private List<Message> messages2;
 
 	//bi-directional many-to-one association to Location
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idLocation")
 	private Location location;
 
@@ -182,6 +181,7 @@ public class User implements Serializable {
 	public Bid removeBid(Bid bid) {
 		getBids().remove(bid);
 		bid.setUser(null);
+
 		return bid;
 	}
 
@@ -259,9 +259,4 @@ public class User implements Serializable {
 		this.location = location;
 	}
 
-	public  String toString() {
-		return  "*************************\n"+
-				this.username + "\n" + this.password + "\n" + this.name + "\n" + this.surname + "\n" + this.email+"\n"+ this.afm + "\n" +this.phone
-				+"\n*************************\n";
-	}
 }

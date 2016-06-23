@@ -3,7 +3,6 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -17,6 +16,7 @@ public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idBid;
 
 	private float amount;
@@ -29,13 +29,9 @@ public class Bid implements Serializable {
 	private Item item;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idBidder")
 	private User user;
-
-	//bi-directional many-to-one association to Item
-	@OneToMany(mappedBy="bid")
-	private List<Item> items;
 
 	public Bid() {
 	}
@@ -78,28 +74,6 @@ public class Bid implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public List<Item> getItems() {
-		return this.items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-
-	public Item addItem(Item item) {
-		getItems().add(item);
-		item.setBid(this);
-
-		return item;
-	}
-
-	public Item removeItem(Item item) {
-		getItems().remove(item);
-		item.setBid(null);
-
-		return item;
 	}
 
 }

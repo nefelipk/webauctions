@@ -11,13 +11,14 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Image.findAll", query="SELECT i FROM Image i")
+@Table(name="Image")
 public class Image implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idImage;
 
-	@Lob
 	private byte[] image;
 
 	//bi-directional many-to-one association to Item

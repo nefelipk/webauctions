@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -15,12 +16,14 @@ public class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idMessage;
 
-	@Lob
 	private String message;
 
-	private byte read;
+	private boolean read;
+
+	private Timestamp time;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -51,12 +54,20 @@ public class Message implements Serializable {
 		this.message = message;
 	}
 
-	public byte getRead() {
+	public boolean getRead() {
 		return this.read;
 	}
 
-	public void setRead(byte read) {
+	public void setRead(boolean read) {
 		this.read = read;
+	}
+
+	public Timestamp getTime() {
+		return this.time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
 	}
 
 	public User getUser1() {

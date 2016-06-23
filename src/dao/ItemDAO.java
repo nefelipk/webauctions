@@ -22,9 +22,9 @@ public class ItemDAO {
 		// OR i.idItem IN (SELECT ic.idItem FROM ItemCategory ic,Category c
 		// WHERE ic.idCategory = c.idCategory AND c.name LIKE :term3)
 
-		Query q = em.createQuery("SELECT i FROM Item i WHERE i.description LIKE :term1 OR i.name LIKE :term2 ");
-		q.setParameter("term1", term);
-		q.setParameter("term2", term);
+		Query q = em.createQuery("SELECT i FROM Item i WHERE i.description LIKE :term1 OR i.name LIKE :term2 ");		
+		q.setParameter("term1", "%"+term+"%");
+		q.setParameter("term2", "%"+term+"%");
 		items = q.getResultList();
 		tx.commit();
 		em.close();
@@ -38,8 +38,16 @@ public class ItemDAO {
 		transaction.begin();
 		try {
 			entityManager.persist(item);
-			entityManager.flush();
 			id = item.getIdItem();
+			
+			for(entities.Bid crawl : item.getBids()) {
+				crawl.setItem(item);
+				entityManager.persist(crawl);
+			}	
+			//item.getBid().setItem(item);
+			//entityManager.persist(item.getBid());
+
+			entityManager.flush();
 			transaction.commit();
 			return id;
 		} catch (PersistenceException e) {

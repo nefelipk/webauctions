@@ -1,11 +1,11 @@
 package main.XMLMappingWrappers;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import main.XMLMapping.Bid;
 import main.XMLMapping.Bids;
+import main.XMLMapping.Item;
 
 public class BidWrapper {
 	public static List<entities.Bid> mapList(Bids b) {
@@ -23,8 +23,10 @@ public class BidWrapper {
 		entities.Bid bid = new entities.Bid();
 		if(b == null)
 			return null;
-		bid.setAmount(Float.valueOf(b.getAmount()));
-		bid.setTime(Timestamp.valueOf(b.getTime()));
+		String amount = b.getAmount();
+		amount = amount.replace("$","");
+		bid.setAmount(Float.valueOf(amount));
+		bid.setTime(ItemWrapper.convertToTimestamp(b.getTime()));
 		bid.setUser(UserWrapper.mapBidder(b.getBidder()));
 		return bid;
 	}

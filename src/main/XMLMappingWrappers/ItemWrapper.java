@@ -35,9 +35,14 @@ public class ItemWrapper {
 	
 	public static entities.Item map(Item i) {
 		entities.Item item = new entities.Item();
-		if (i.getBids().getBid().size() > 0)
-			item.setBid(BidWrapper.map(i.getBids().getBid().get(1)));
-		item.setBuyPrice(i.getBuyPrice());
+		item.setIdItem(Integer.valueOf(i.getItemID()));
+		String currently = i.getCurrently();
+		currently = currently.replace("$","");
+		item.setCurrently(currently);
+		if(i.getBuyPrice() == null) 
+			item.setBuyPrice("0");
+		else 
+			item.setBuyPrice(i.getBuyPrice());
 		item.setDescription(i.getDescription());
 		item.setFirstBid(i.getFirstBid());
 		item.setCategories(CategoryWrapper.mapList(i.getCategory()));
@@ -48,7 +53,6 @@ public class ItemWrapper {
 		item.setName(i.getName());
 		item.setUser(UserWrapper.mapSeller(i.getSeller()));
 		item.setBids(BidWrapper.mapList(i.getBids()));
-
 		return item;
 	}
 }

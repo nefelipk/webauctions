@@ -40,7 +40,10 @@
 		
 	</style>
 </head>
-<body ng-controller="MainContentController">
+<body ng-controller="AuctionsController">
+
+
+
 	<ol class="breadcrumb">
 	    <li class="active">Home</li>
 	</ol>
@@ -52,9 +55,9 @@
 			<div class="row">
 			   	<div class="col-sm-6 col-sm-offset-3">
 					<div class="input-group stylish-input-group">
-						<input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+						<input type="text" ng-model="term" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
 						<div class="input-group-btn" style="text-align: left">
-							<button ng-click="search()" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+							<button ng-click="search(term)" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
 					</div>
 				</div>
@@ -116,6 +119,7 @@
 	<footer class="footer text-center">
 		<p>Footer Text</p>
 	</footer>
+</div>
 
 
 </body>

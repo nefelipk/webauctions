@@ -9,7 +9,7 @@ public class BidWrapper {
 		bid.setAmount(b.getAmount());
 		bid.setTime(b.getTime());
 		bid.setUser(UserWrapper.map(b.getUser()));
-		bid.setItem(ItemWrapper.map(b.getItem()));
+		//bid.setItem(ItemWrapper.map(b.getItem()));
 		return bid;
 	}
 	
