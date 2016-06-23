@@ -12,6 +12,7 @@
 		});
 	}]);
 */	
+	
 	app.factory('User', [ '$resource', function($resource) {
 		return $resource('http://localhost:8080/WebAuctions/services/users/:username');
 	} ]);
@@ -303,18 +304,20 @@
 
 	 }]);
 	*/ 
+
 	 app.controller('AuctionsController',['$window','$scope','Item',function($window,$scope,Item) {
 		 $scope.content = "index";
 		 $scope.search = function(term) {
-			console.log("Search term : ");
-			console.log(term);
-			Item.query({ term: term}).$promise.then(function(data) {
+			$scope.items = 	Item.query({ term: term});
+			$scope.content = "main";
+			//$window.location.href = '/WebAuctions/main.html';
+
+			/*.$promise.then(function(data) {
 				console.log("ok respone");
 				console.log(data[0]);
 				$scope.content = "main";
-				$scope.items = data.slice();	
-				$window.location.href = '/WebAuctions/main.html';
 			});
+			*/
 		 };	 
 		 
 		 $scope.clicked_item = false;
@@ -323,7 +326,7 @@
 			 $scope.clicked_item = true;
 		 };		 
 		 	
-		 
+		 	console.log($scope.items);
 		 	$scope.category = false;
 		 	$scope.price_low = 50;
 		 	$scope.price_mid = 100;

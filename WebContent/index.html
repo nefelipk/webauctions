@@ -43,7 +43,9 @@
 <body ng-controller="AuctionsController">
 
 
+<div ng-switch="content">
 
+<div ng-switch-when="index">
 	<ol class="breadcrumb">
 	    <li class="active">Home</li>
 	</ol>
@@ -119,6 +121,11 @@
 	<footer class="footer text-center">
 		<p>Footer Text</p>
 	</footer>
+</div>
+<div ng-switch-when="main">
+<ng-include src="'main.html'"></ng-include>
+</div>
+
 </div>
 
 
