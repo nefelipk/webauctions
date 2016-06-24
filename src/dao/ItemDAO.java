@@ -22,9 +22,8 @@ public class ItemDAO {
 		// OR i.idItem IN (SELECT ic.idItem FROM ItemCategory ic,Category c
 		// WHERE ic.idCategory = c.idCategory AND c.name LIKE :term3)
 
-		Query q = em.createQuery("SELECT i FROM Item i WHERE i.description LIKE :term1 OR i.name LIKE :term2 ");		
+		Query q = em.createQuery("SELECT i FROM Item i WHERE i.description LIKE :term1 OR i.name LIKE :term1 ");		
 		q.setParameter("term1", "%"+term+"%");
-		q.setParameter("term2", "%"+term+"%");
 		items = q.getResultList();
 		tx.commit();
 		em.close();

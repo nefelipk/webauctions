@@ -308,6 +308,7 @@
 	 app.controller('AuctionsController',['$window','$scope','Item',function($window,$scope,Item) {
 		 $scope.content = "index";
 		 $scope.search = function(term) {
+			 console.log(term);
 			$scope.items = 	Item.query({ term: term});
 			$scope.content = "main";
 			//$window.location.href = '/WebAuctions/main.html';
