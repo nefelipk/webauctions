@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module('auction_land', [ 'ngResource','ngMessages']);
+	var app = angular.module('auction_land', [ 'ngResource','ngMessages','dibari.angular-ellipsis']);
 		
 /*	
 	app.config(['$routeProvider',function($routeProvider){
@@ -308,7 +308,6 @@
 	 app.controller('AuctionsController',['$window','$scope','Item',function($window,$scope,Item) {
 		 $scope.content = "index";
 		 $scope.search = function(term) {
-			 console.log(term);
 			$scope.items = 	Item.query({ term: term});
 			$scope.content = "main";
 			//$window.location.href = '/WebAuctions/main.html';
@@ -343,7 +342,6 @@
 			console.log($scope.current_content);
 			
 			$scope.test_search = function() {
-				console.log("here");
 				$scope.search();
 			}
 			
