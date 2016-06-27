@@ -1,6 +1,8 @@
 package dao;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -21,10 +23,11 @@ public class ItemDAO {
 
 		// OR i.idItem IN (SELECT ic.idItem FROM ItemCategory ic,Category c
 		// WHERE ic.idCategory = c.idCategory AND c.name LIKE :term3)
-
-		Query q = em.createQuery("SELECT i FROM Item i WHERE i.description LIKE :term1 OR i.name LIKE :term1 ");		
-		q.setParameter("term1", "%"+term+"%");
+		
+		Query q = em.createQuery("SELECT i FROM Item i WHERE i.description LIKE :term OR i.name LIKE :term");		
+		q.setParameter("term", "%"+term+"%");
 		items = q.getResultList();
+
 		tx.commit();
 		em.close();
 		return items;

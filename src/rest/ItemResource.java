@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import dao.ItemDAO;
-import model.Item;
 import model.wrappers.ItemWrapper;
 
 @Path("/items")
@@ -16,7 +16,7 @@ public class ItemResource {
 	@GET
 	@Path("/{term}")
 	@Produces({"application/json"})
-	public List<model.Item> generalSearch(String term) {
+	public List<model.Item> generalSearch(@PathParam("term") final String term) {
 		ItemDAO itemDAO = new ItemDAO();
 		List<entities.Item> i = itemDAO.generalSearch(term);
 		List<model.Item> items = ItemWrapper.mapList(i);

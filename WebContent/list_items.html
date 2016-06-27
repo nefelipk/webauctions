@@ -4,14 +4,13 @@
 <meta charset="UTF-8">
 <title>List of items</title>
 <style>
-
-
 a.list-group-item {
-    height:auto;
-    min-height:220px;
+	height: auto;
+	min-height: 220px;
 }
+
 a.list-group-item.active small {
-    color:#fff;
+	color: #fff;
 }
 
 /*
@@ -20,66 +19,78 @@ a.list-group-item.active small {
 	border-
 }
 */
-
-.hide-overflow {
-	//white-space: nowrap;
-	max-height:80px;
+.hide-overflow { //
+	white-space: nowrap;
+	max-height: 80px;
 	overflow: hidden;
-    text-overflow: ellipsis;
-  	//width:100%;
+	text-overflow: ellipsis; //
+	width: 100%;
 }
 
 #des-div {
-	max-height:140px;
+	max-height: 140px;
 }
-
 </style>
 
 </head>
 
 <body>
 	<!--  -->
-    <div class="row" >
+	<div class="row">
 
-    	<div class="list-group">
-    	<h3 style="display:inline-block;">{{getItems().length}} live auctions found</h3>
-		<ul class="pagination pagination-sm" style="float:right;" >
-			<li ng-class="{'disabled' : current_page == 1}"><a href="#"><</a><li>
-			<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a href="#">{{p}}</a></li>
-			<li ng-class="{'disabled' : current_page == pages}"><a href="#">></a>
-		</ul>
-		</div>
-		<div class="well" >
-			<div class="list-group " >
-        		<a ng-repeat="i in getItems()" href="#" class="list-group-item" ng-click="set_current(i)">
-                	<div class="media col-md-3" >
-                    	<figure class="pull-left">
-                        <img class="media-object img-rounded img-responsive" src="https://placehold.it/350x250"  alt="placehold.it/350x250" >
-                    	</figure>
-                	</div>
-                	<div class="col-md-6 " >
-                    	<h4 class="list-group-item-heading"> {{i.name}} </h4>
-                    	<p id="des-div" data-ellipsis data-ng-bind="i.description" data-ellipsis-append="read more" class="list-group-item-text" > 
-                    	<!-- {{i.description}}  -->
-                    	</p>
-                	</div>
-                <div class="col-md-3 text-center ">
-            		 <h3> {{i.max_bid}} <small> &euro; </small></h3>
-                    <button type="button" class="btn btn-default btn-lg ">Bid Now! </button>
-                    <p style="margin-top:10%;">{{i.seller.username}}<br/>
-                    <i>Rating : {{i.seller.seller_rating}}</i>
-                    </p>
-                </div>
-         	 </a>	
-		</div>
-		</div>
-
-			<ul class="pager">
-				<li class="previous" ng-class="{'disabled' : current_page == 1}"><a href="#">Previous</a><li>
-				<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a href="#">{{p}}</a></li>
-				<li class="next" ng-class="{'disabled' : current_page == 1}"><a href="#">Next</a>
+		<div class="list-group">
+			<h3 style="display: inline-block;">{{getItems().length}} live
+				auctions found</h3>
+			<ul class="pagination pagination-sm" style="float: right;">
+				<li ng-class="{'disabled' : current_page == 1}"><a href="#"><</a>
+				<li>
+				<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a
+					href="#">{{p}}</a></li>
+				<li ng-class="{'disabled' : current_page == pages}"><a href="#">></a>
 			</ul>
 		</div>
-				
+		<div class="well">
+			<div class="list-group ">
+				<a ng-repeat="i in getItems()" href="#" class="list-group-item"
+					ng-click="set_current(i)">
+					<div class="media col-md-3">
+						<figure class="pull-left">
+							<img class="media-object img-rounded img-responsive"
+								src="https://placehold.it/350x250" alt="placehold.it/350x250">
+						</figure>
+					</div>
+					<div class="col-md-6 ">
+						<h4 class="list-group-item-heading">{{i.name}}</h4>
+						<p id="des-div" data-ellipsis data-ng-bind="i.description"
+							data-ellipsis-append="read more" class="list-group-item-text">
+							<!-- {{i.description}}  -->
+						</p>
+					</div>
+					<div class="col-md-3 text-center ">
+						<h3>
+							{{i.max_bid}} <small> &euro; </small>
+						</h3>
+						<button type="button" class="btn btn-default btn-lg ">Bid
+							Now!</button>
+						<p style="margin-top: 10%;">
+							{{i.seller.username}}<br /> <i>Rating :
+								{{i.seller.seller_rating}}</i>
+						</p>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<ul class="pager">
+			<li class="previous" ng-class="{'disabled' : current_page == 1}"><a
+				href="#">Previous</a>
+			<li>
+			<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a
+				href="#">{{p}}</a></li>
+			<li class="next" ng-class="{'disabled' : current_page == 1}"><a
+				href="#">Next</a>
+		</ul>
+	</div>
+
 </body>
 </html>

@@ -309,6 +309,7 @@
 		 $scope.content = "index";
 		 $scope.search = function(term) {
 			$scope.items = 	Item.query({ term: term});
+			console.log(term);
 			$scope.content = "main";
 			//$window.location.href = '/WebAuctions/main.html';
 
@@ -322,6 +323,7 @@
 		 
 		 $scope.clicked_item = false;
 		 $scope.set_current = function(item) {
+			 console.log($scope.items);
 			 $scope.current = item;
 			 $scope.clicked_item = true;
 		 };		 
@@ -335,7 +337,6 @@
 		 	$scope.location_from_km = false;
 		 	$scope.location_to_km = false;
 		 	$scope.description = false;
-		 	
 		 	
 		 	$scope.must = true;
 			$scope.current_content = $scope.content;
