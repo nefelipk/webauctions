@@ -68,13 +68,13 @@ a.list-group-item.active small {
 					</div>
 					<div class="col-md-3 text-center ">
 						<h3>
-							{{i.max_bid}} <small> &euro; </small>
+							{{get_max_bid(i)}} <small> &euro; </small>
 						</h3>
 						<button type="button" class="btn btn-default btn-lg ">Bid
 							Now!</button>
 						<p style="margin-top: 10%;">
-							{{i.seller.username}}<br /> <i>Rating :
-								{{i.seller.seller_rating}}</i>
+							{{i.user.username}}<br /> <i>Rating :
+								{{i.user.seller_rating}}</i>
 						</p>
 					</div>
 				</a>
