@@ -284,7 +284,7 @@
 				$scope.filtered_items = angular.copy($scope.items);//.slice();
 				$scope.filtered_items.pop();
 				$scope.pages = Array.apply(null, {length: $scope.filtered_items.length/10}).map(Number.call, Number);
-				//console.log($scope.items);
+				console.log($scope.items);
 				$scope.content = "main";
 			});
 			// $window.location.href =
@@ -293,10 +293,12 @@
 		};
 		
 		$scope.get_max_bid = function(item) {
+			console.log("run");
 			if(item != null) {
-				if(item.bid != null) {
+				if(item.bids != null) {
 					var bids = item.bids.slice();
-					return Math.max.apply(Math,bids.map(function(o){return o.amount;}));
+					var max = Math.max.apply(Math,bids.map(function(o){return o.amount;}));
+					return max;
 				}
 			}
 		};
@@ -336,7 +338,14 @@
 			
 			return $scope.filtered_items.slice(from, to);
 		};
-
+		
+		$scope.get_rating = function(item) {
+			if(item.user.ratingSeller == 0 || item.user.ratingSeller == null)
+				return "Not yet rated";
+			else 
+				return item.user.ratingSeller;
+		};
+		
 		$scope.categories = null;
 		$scope.getCategories = function() {
 			if ($scope.categories == null) {
@@ -375,9 +384,7 @@
 					//length--;
 					$scope.filtered_items.pop();
 				}
-				else {
-					console.log("found");
-				}
+				
 				
 				//console.log("i= "+i);
 				//console.log("length= "+length);
