@@ -278,11 +278,13 @@
 	app.controller('AuctionsController', [ '$window', '$scope', 'Item', function($window, $scope, Item) {
 		$scope.content = "index";
 		$scope.search = function(term) {
-			Item.query({term : term}).$promise.then(function (data){
+			Item.query({term : term}).$promise.then(function (data) {
 				$scope.items = data.slice();
-				$scope.filtered_items = $scope.items.slice(0,$scope.items.length-1);
+				//$scope.filtered_items = $.extend(true,[],$scope.items);
+				$scope.filtered_items = angular.copy($scope.items);//.slice();
+				$scope.filtered_items.pop();
 				$scope.pages = Array.apply(null, {length: $scope.filtered_items.length/10}).map(Number.call, Number);
-				console.log($scope.items);
+				//console.log($scope.items);
 				$scope.content = "main";
 			});
 			// $window.location.href =
@@ -291,8 +293,12 @@
 		};
 		
 		$scope.get_max_bid = function(item) {
-			var bids = item.bids.slice();
-			return Math.max.apply(Math,bids.map(function(o){return o.amount;}));
+			if(item != null) {
+				if(item.bid != null) {
+					var bids = item.bids.slice();
+					return Math.max.apply(Math,bids.map(function(o){return o.amount;}));
+				}
+			}
 		};
 
 		$scope.clicked_item = false;
@@ -339,21 +345,47 @@
 			}
 			return $scope.categories;
 		};
-
+		
+		$scope.live_filters = {
+			category : null
+		};
+		
 		$scope.filter = function() {
+
+			//$scope.filtered_items = $.extend(true,[],$scope.items);	
+			$scope.filtered_items = angular.copy($scope.items);//.slice();
+			$scope.filtered_items.pop();
 			var length = $scope.filtered_items.length;
-			for (var i = 0; i < length; i++) {
+			//console.log("length : "+length);
+			//console.log($scope.filtered_items);
+			//console.log($scope.items);
+			console.log($scope.live_filters.category.name);
+			for (var i = length-1; i >= 0; i--) {
 				var found = false;
-				for (var j = 0; j < $scope.filtered_items[i].categories.length || found; j++) {
-					if ($scope.filtered_items[i].categories[j].name == $scope.category) {
+				console.log($scope.filtered_items[i].categories);
+				for (var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
+					if ($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name) {
 						found = true;
 					}
 				}
+				
 				if (!found) {
-					$scope.filtered_items.splice(i, 1);
-					length--;
+					//console.log(found);
+					//$scope.filtered_items.splice(i, 1);
+					//length--;
+					$scope.filtered_items.pop();
 				}
+				else {
+					console.log("found");
+				}
+				
+				//console.log("i= "+i);
+				//console.log("length= "+length);
 			}
+			
+			//console.log(length);
+			//console.log($scope.filtered_items);
+			//console.log($scope.items);
 		};
 
 

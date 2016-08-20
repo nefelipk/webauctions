@@ -22,10 +22,14 @@
 							href="#">{{c.name}}</a></li>
 					</ul>
 					-->
-					<select class="form-control" ng-model="category"
+					<select class="form-control" 
 							ng-options="c.name for c in getCategories()"
-							ng-change="filter()">
+							ng-model="live_filters.category"
+							ng-change="filter()"
+							>
+							<!-- 
 							<option value="">Category</option>
+							-->
 					</select>
 				</div>
 			</div>
