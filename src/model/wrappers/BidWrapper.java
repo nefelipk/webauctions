@@ -2,12 +2,14 @@ package model.wrappers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BidWrapper {
 	public static model.Bid map(entities.Bid b) {
 		model.Bid bid = new model.Bid();
 		bid.setAmount(b.getAmount());
-		bid.setTime(b.getTime());
+		bid.setTime(b.getTime().toString());
 		bid.setUser(UserWrapper.map(b.getUser()));
 		//bid.setItem(ItemWrapper.map(b.getItem()));
 		return bid;

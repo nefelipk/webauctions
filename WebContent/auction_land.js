@@ -277,6 +277,7 @@
 
 	app.controller('AuctionsController', [ '$window', '$scope', 'Item', function($window, $scope, Item) {
 		$scope.content = "index";
+		
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
 				$scope.items = data.slice();
@@ -285,6 +286,7 @@
 				$scope.filtered_items.pop();
 				$scope.pages = Array.apply(null, {length: $scope.filtered_items.length/10}).map(Number.call, Number);
 				console.log($scope.items);
+				$scope.fix_filter_prices($scope.items);
 				$scope.content = "main";
 			});
 			// $window.location.href =
@@ -292,8 +294,20 @@
 
 		};
 		
+		var max_bids_array = [];
+		$scope.fix_filter_prices = function(items) {
+			for(i = 0; i < items.length-1; i++) {
+				var max = $scope.get_max_bid(items[i]);
+				items[i].max = max;
+				max_bids_array.push(max);
+				max_bids_array.sort(function(a, b){return a-b});
+			}
+			$scope.mid_price = (max_bids_array[max_bids_array.length-1] + max_bids_array[0]) / 2;
+			console.log($scope.mid_price);
+		}
+		
+		
 		$scope.get_max_bid = function(item) {
-			console.log("run");
 			if(item != null) {
 				if(item.bids != null) {
 					var bids = item.bids.slice();
@@ -301,8 +315,38 @@
 					return max;
 				}
 			}
+			return null;
 		};
-
+		
+		
+		$scope.get_max_bid_object = function(item) {
+			var pos = 0;
+			var max = item.bids[pos].amount;
+			for(i = 1; i < item.bids; i++) {
+				if(item.bids[i] > max) {
+					max = item.bids[i].amount;
+					pos = i;
+				}
+			}
+			return item.bids[pos];
+		}
+		
+		$scope.get_ending_time = function(item) {
+			if(item.ends == null) { 
+				var last_bid = $scope.get_max_bid_object(item)
+				if(last_bid != null) {
+					var ends = Date.parse(last_bid.time);
+					if(ends < Date.now()) {
+						return "Ended";
+					}
+				}
+				else return "Ended";
+			}
+			else {
+				return item.ends;
+			}
+		};
+		
 		$scope.clicked_item = false;
 		$scope.set_current = function(item) {
 			$scope.current = item;
@@ -360,35 +404,38 @@
 		};
 		
 		$scope.filter = function() {
+			console.log("called");
+			console.log(max_bids_array);
 
-			//$scope.filtered_items = $.extend(true,[],$scope.items);	
 			$scope.filtered_items = angular.copy($scope.items);//.slice();
 			$scope.filtered_items.pop();
 			var length = $scope.filtered_items.length;
-			//console.log("length : "+length);
-			//console.log($scope.filtered_items);
-			//console.log($scope.items);
-			console.log($scope.live_filters.category.name);
-			for (var i = length-1; i >= 0; i--) {
-				var found = false;
-				console.log($scope.filtered_items[i].categories);
-				for (var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
-					if ($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name) {
-						found = true;
+			if($scope.live_filters.category_change == true) {
+				for (var i = length-1; i >= 0; i--) {
+					var found = false;
+					console.log($scope.filtered_items[i].categories);
+					for (var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
+						if ($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name)
+							found = true;
 					}
+					if (!found)
+						$scope.filtered_items.pop()
 				}
-				
-				if (!found) {
-					//console.log(found);
-					//$scope.filtered_items.splice(i, 1);
-					//length--;
-					$scope.filtered_items.pop();
-				}
-				
-				
-				//console.log("i= "+i);
-				//console.log("length= "+length);
 			}
+			
+			if($scope.live_filters.option_price_change == true) {
+				//console.log("price");
+				for (var i = length-1; i >= 0; i--) {
+					console.log($scope.live_filters.price);
+					if($scope.live_filters.price == "less" && $scope.filtered_items[i].max >= $scope.mid_price)
+						$scope.filtered_items.pop();
+					else if($scope.live_filters.price == "more" && $scope.filtered_items[i].max <= $scope.mid_price)
+						$scope.filtered_items.pop();
+				}
+			}
+		
+			$scope.live_filters.category_change = false;
+			$scope.live_filters.option_price_change = false;
 			
 			//console.log(length);
 			//console.log($scope.filtered_items);

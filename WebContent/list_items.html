@@ -6,7 +6,7 @@
 <style>
 a.list-group-item {
 	height: auto;
-	min-height: 220px;
+	min-height: 250px;
 }
 
 a.list-group-item.active small {
@@ -25,6 +25,14 @@ a.list-group-item.active small {
 	overflow: hidden;
 	text-overflow: ellipsis; //
 	width: 100%;
+}
+
+.err {
+	color: #e74c3c;
+}
+
+.succ {
+	color : #27ae60;
 }
 
 #des-div {
@@ -67,14 +75,17 @@ a.list-group-item.active small {
 							<!-- {{i.description}}  -->
 						</p>
 					</div>
-					<div class="col-md-3 text-center ">
-						<h3>
-							{{get_max_bid(i)}} <small> &euro; </small>
+					<div class="col-md-3 text-center "  >
+						<h3 class="text-center">
+							{{get_max_bid(i)}}  &euro; <br/>
+							<time ng-class="{'err' : get_ending_time(i) == 'Ended' , 'succ' : get_ending_time(i) != 'Ended'}">
+							{{get_ending_time(i)}}
+							</time>
 						</h3>
-						<button type="button" class="btn btn-default btn-lg ">Bid
+						<button type="button" ng-show="i.ended == true" class="btn btn-default btn-lg ">Bid
 							Now!</button>
 						<p style="margin-top: 10%;">
-							{{i.user.username}} 
+							{{i.user.username}}<br/> 
 							<i>Rating :	{{get_rating(i)}}</i>
 								<!-- {{i.user.seller_rating}} -->
 						</p>

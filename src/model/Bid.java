@@ -8,7 +8,7 @@ import model.User;
 public class Bid {
 
 	private float amount;
-	private Timestamp time;
+	private String time;
 	private Item item;
 	private User user;
 
@@ -20,11 +20,11 @@ public class Bid {
 		this.amount = amount;
 	}
 
-	public Timestamp getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Timestamp time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 

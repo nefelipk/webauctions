@@ -5,9 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div ng-show="must" id="filters">	
-	
-		<h4 class="text-center" style="margin-top:79px">filters</h4>
+	<div ng-show="must" id="filters">
+
+		<h4 class="text-center" style="margin-top: 79px">filters</h4>
 		<hr>
 		<form>
 			<div class="form-group ">
@@ -22,14 +22,11 @@
 							href="#">{{c.name}}</a></li>
 					</ul>
 					-->
-					<select class="form-control" 
-							ng-options="c.name for c in getCategories()"
-							ng-model="live_filters.category"
-							ng-change="filter()"
-							>
-							<!-- 
-							<option value="">Category</option>
-							-->
+					<select class="form-control"
+						ng-options="c.name for c in getCategories()"
+						ng-model="live_filters.category" ng-change="live_filter.category_change = true;filter()">
+						<option value="">Categories (all)</option>
+
 					</select>
 				</div>
 			</div>
@@ -37,17 +34,20 @@
 			<div class="form-group ">
 				<label>price</label>
 				<div class="radio" style="vertical-align: middle">
-					<label><input ng-model="price_till" type="radio"
-						name="optradio">{{price_low}}</label>
+					<label>
+						<input ng-model="live_filters.price" ng-value="less" 
+						ng-click="live_filters.option_price_change = true;filter()"
+						type="radio" name="optradio"> 
+						< {{mid_price}}
+					</label>
 
 				</div>
 				<div class="radio" style="vertical-align: middle">
-					<label><input ng-model="price_between" type="radio"
-						name="optradio">{{price_mid}}</label>
-				</div>
-				<div class="radio" style="vertical-align: middle">
-					<label><input ng-model="price_more" type="radio"
-						name="optradio">{{price_high}}</label>
+					<label>
+					<input ng-model="live_filters.price" ng-value="more"
+					ng-click="live_filters.option_price_change = true;filter()" 
+					type="radio"
+					name="optradio"> > {{mid_price}}</label>
 				</div>
 
 			</div>
@@ -97,7 +97,9 @@
 			</div>
 		</form>
 	</div>
-	<div ng-hide="must"><button></button> </div>
+	<div ng-hide="must">
+		<button></button>
+	</div>
 
 </body>
 </html>
