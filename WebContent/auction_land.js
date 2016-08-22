@@ -281,12 +281,13 @@
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
 				$scope.items = data.slice();
-				//$scope.filtered_items = $.extend(true,[],$scope.items);
-				$scope.filtered_items = angular.copy($scope.items);//.slice();
-				$scope.filtered_items.pop();
-				$scope.pages = Array.apply(null, {length: $scope.filtered_items.length/10}).map(Number.call, Number);
+				
 				console.log($scope.items);
 				$scope.fix_filter_prices($scope.items);
+				$scope.filtered_items = angular.copy($scope.items);
+				$scope.filtered_items.pop();
+				$scope.pages = Array.apply(null, {length: $scope.filtered_items.length/10}).map(Number.call, Number);
+				$scope.current_items = $scope.get_items();
 				$scope.content = "main";
 			});
 			// $window.location.href =
@@ -353,11 +354,7 @@
 			$scope.clicked_item = true;
 		};
 
-		/* object $scope.filter.<filter_name> */
-		$scope.category = false;
-		$scope.price_low = 50;
-		$scope.price_mid = 100;
-		$scope.price_high = 200;
+		
 		$scope.location_continent = false;
 		$scope.location_from_km = false;
 		$scope.location_to_km = false;
@@ -372,16 +369,30 @@
 		}
 
 		$scope.current_page = 1;
-		var items_per_page = 10;
-
-		$scope.getItems = function() {
+		var items_per_page = 5;
+				
+		$scope.get_items = function() {
 			var from = ($scope.current_page - 1) * items_per_page;
 			var to = $scope.current_page * items_per_page;
 			if ($scope.current_page * items_per_page >= $scope.filtered_items.length)
 				to = $scope.filtered_items.length;
-			
 			return $scope.filtered_items.slice(from, to);
 		};
+
+		$scope.get_next_page = function() { 
+			console.log("change_page");
+			$scope.current_page++;
+			$scope.current_items = $scope.get_items();
+		}
+		
+		$scope.get_previous_page = function() {
+			$scope.current_page--;
+			$scope.current_items = $scope.get_items();
+		}
+		//$scope.current_items = $scope.getItems();
+		//$scope.change_page = function() {
+		//	$scope.current_items = $scope.getItems();
+		//};
 		
 		$scope.get_rating = function(item) {
 			if(item.user.ratingSeller == 0 || item.user.ratingSeller == null)
@@ -403,46 +414,86 @@
 			category : null
 		};
 		
+		
+		$scope.apllied_filters = {
+			category : false,
+			mid_price : false,
+			given_price : false,
+			location : false,
+			free_text : false
+		};
+		
 		$scope.filter = function() {
-			console.log("called");
-			console.log(max_bids_array);
-
-			$scope.filtered_items = angular.copy($scope.items);//.slice();
-			$scope.filtered_items.pop();
-			var length = $scope.filtered_items.length;
+			
+			$scope.apllied_any_filter = true;
 			if($scope.live_filters.category_change == true) {
-				for (var i = length-1; i >= 0; i--) {
-					var found = false;
-					console.log($scope.filtered_items[i].categories);
-					for (var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
-						if ($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name)
-							found = true;
-					}
-					if (!found)
-						$scope.filtered_items.pop()
-				}
+				$scope.filter_by_category();
 			}
 			
 			if($scope.live_filters.option_price_change == true) {
-				//console.log("price");
-				for (var i = length-1; i >= 0; i--) {
-					console.log($scope.live_filters.price);
-					if($scope.live_filters.price == "less" && $scope.filtered_items[i].max >= $scope.mid_price)
-						$scope.filtered_items.pop();
-					else if($scope.live_filters.price == "more" && $scope.filtered_items[i].max <= $scope.mid_price)
-						$scope.filtered_items.pop();
-				}
+				$scope.filter_by_mid_price();
 			}
-		
+			
+			if($scope.live_filters.price_beetween_change == true) {
+				$scope.filter_by_given_price();
+			}
+			
 			$scope.live_filters.category_change = false;
 			$scope.live_filters.option_price_change = false;
+			$scope.live_filters.price_beetween_change = false;
 			
-			//console.log(length);
-			//console.log($scope.filtered_items);
-			//console.log($scope.items);
+			$scope.current_items = $scope.filtered_items;
 		};
 
+		$scope.filter_by_category = function() {
+			$scope.filtered_items = angular.copy($scope.items);
+			$scope.filtered_items.pop();
+			var length = $scope.filtered_items.length;for (var i = length-1; i >= 0; i--) {
+				var found = false;
+				console.log($scope.filtered_items[i].categories);
+				for (var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
+					if ($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name)
+						found = true;
+				}
+				if (!found)
+					$scope.filtered_items.splice(i,1);
+			}
+			$scope.live_filters.option_price_change = true;
+			$scope.live_filters.price_beetween_change = true;
+		};
+		
+		$scope.filter_by_mid_price = function() {
+			console.log($scope.live_filters.price);
+			for (var i = $scope.filtered_items.length-1; i >= 0; i--) {
+				if($scope.live_filters.price == "less" && $scope.filtered_items[i].max >= $scope.mid_price)
+					$scope.filtered_items.splice(i,1);
+				else if($scope.live_filters.price == "more" && $scope.filtered_items[i].max <= $scope.mid_price)
+					$scope.filtered_items.splice(i,1);
+			}
+		};
+		
+		$scope.filter_by_given_price = function() {
+			for (var i = ($scope.filtered_items.length)-1; i >= 0 ; i--) {
+				console.log($scope.filtered_items[i].max);
+				if(($scope.live_filters.price_from > $scope.filtered_items[i].max) 
+						|| ($scope.live_filters.price_to < $scope.filtered_items[i].max)) {
+					$scope.filtered_items.splice(i,1);
+				}
+			}
+		};
+		
+		$scope.clear_filters = function() {
+			$scope.live_filters.category = null;
+			$scope.live_filters.price_from = null;
+			$scope.live_filters.price_to = null;
+			$scope.apllied_any_filter = false;
+			$scope.filtered_items = angular.copy($scope.items);
+			$scope.filtered_items.pop();
+			$scope.current_page = 1;
+			$scope.current_items = $scope.get_items();
+		}
 
+		
 		$(window).on("resize.doResize", function() {
 
 			$scope.$apply(function() {
