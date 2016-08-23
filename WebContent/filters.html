@@ -18,7 +18,7 @@
 				<div class="dropdown">
 					<select class="form-control"
 						ng-options="c.name for c in getCategories()"
-						ng-model="live_filters.category" ng-change="live_filter.category_change = true;filter()">
+						ng-model="live_filters.category" ng-change="applied_filters.category = true;filter()">
 						<option value="">Categories (all)</option>
 
 					</select>
@@ -30,7 +30,7 @@
 				<div class="radio" style="vertical-align: middle">
 					<label>
 						<input ng-model="live_filters.price" ng-value="'less'" 
-						ng-click="live_filters.option_price_change = true;filter()"
+						ng-click="applied_filters.mid_price = true;filter()"
 						type="radio" name="optradio"> 
 						< {{mid_price}}
 					</label>
@@ -39,7 +39,7 @@
 				<div class="radio" style="vertical-align: middle">
 					<label>
 					<input ng-model="live_filters.price" ng-value="'more'"
-					ng-click="live_filters.option_price_change = true;filter();" 
+					ng-click="applied_filters.mid_price = true;filter();" 
 					type="radio"
 					name="optradio"> > {{mid_price}}</label>
 				</div>
@@ -53,7 +53,7 @@
 					ng-model="live_filters.price_to" type="text" size="3" class="form-control"
 					placeholder="to" 
 				/>
-				<button class="btn btn-primary btn-sm" ng-click="live_filters.price_beetween_change = true;filter()">></button>
+				<button class="btn btn-primary btn-sm" ng-click=""applied_filters.given_price = true;filter()">></button>
 			</div>
 			<hr>
 			<div class="form-group ">
@@ -88,9 +88,9 @@
 			<hr>
 			<div class="my-group">
 				<label for="description">Description:</label>
-				<textarea ng-model="description" class="form-control" rows="5"
+				<textarea ng-model="live_filters.text" class="form-control" rows="5"
 					id="desc"></textarea>
-				<button class="btn btn-primary btn-sm textarea-btn">search></button>
+				<button class="btn btn-primary btn-sm textarea-btn" ng-click="applied_filters.free_text = true; filter();">search></button>
 			</div>
 		</form>
 	</div>

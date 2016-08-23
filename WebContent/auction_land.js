@@ -415,7 +415,7 @@
 		};
 		
 		
-		$scope.apllied_filters = {
+		$scope.applied_filters = {
 			category : false,
 			mid_price : false,
 			given_price : false,
@@ -424,42 +424,45 @@
 		};
 		
 		$scope.filter = function() {
+			console.log($scope.live_filters.category);
 			
 			$scope.apllied_any_filter = true;
-			if($scope.live_filters.category_change == true) {
+			
+			$scope.filtered_items = angular.copy($scope.items);
+			$scope.filtered_items.pop();
+			
+			if($scope.applied_filters.category == true)
 				$scope.filter_by_category();
-			}
-			
-			if($scope.live_filters.option_price_change == true) {
+				
+			if($scope.applied_filters.mid_price == true) 
 				$scope.filter_by_mid_price();
-			}
 			
-			if($scope.live_filters.price_beetween_change == true) {
+			if($scope.applied_filters.given_price == true)
 				$scope.filter_by_given_price();
-			}
+					
+			if($scope.applied_filters.free_text == true)
+				$scope.filter_by_description();
 			
-			$scope.live_filters.category_change = false;
-			$scope.live_filters.option_price_change = false;
-			$scope.live_filters.price_beetween_change = false;
-			
-			$scope.current_items = $scope.filtered_items;
+			$scope.current_items = $scope.get_items();
 		};
 
 		$scope.filter_by_category = function() {
-			$scope.filtered_items = angular.copy($scope.items);
-			$scope.filtered_items.pop();
-			var length = $scope.filtered_items.length;for (var i = length-1; i >= 0; i--) {
-				var found = false;
-				console.log($scope.filtered_items[i].categories);
-				for (var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
-					if ($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name)
-						found = true;
-				}
-				if (!found)
-					$scope.filtered_items.splice(i,1);
+			if($scope.live_filters.category == null) {
+				$scope.filtered_items = angular.copy($scope.items);
+				$scope.filtered_items.pop();
 			}
-			$scope.live_filters.option_price_change = true;
-			$scope.live_filters.price_beetween_change = true;
+			else {
+				for (var i = $scope.filtered_items.length-1; i >= 0; i--) {
+					var found = false;
+					console.log($scope.filtered_items[i].categories);
+					for(var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
+						if($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name)
+							found = true;
+					}
+					if (!found)
+						$scope.filtered_items.splice(i,1);
+				}
+			}
 		};
 		
 		$scope.filter_by_mid_price = function() {
@@ -482,11 +485,33 @@
 			}
 		};
 		
+		$scope.filter_by_description = function() {
+			console.log("description");
+			console.log($scope.live_filters.text);
+			var regex = new RegExp($scope.live_filters.text,'gi');
+			for(var i = $scope.filtered_items.length-1; i >= 0; i--) {
+				var res = $scope.filtered_items[i].description.match(regex); 
+				if(res == null)
+					$scope.filtered_items.splice(i,1);
+				else 
+					console.log($scope.filtered_items[i].name+" "+res);
+			}
+		};
+		
+		
 		$scope.clear_filters = function() {
 			$scope.live_filters.category = null;
 			$scope.live_filters.price_from = null;
 			$scope.live_filters.price_to = null;
+			$scope.live_filters.free_text = "";
+			
 			$scope.apllied_any_filter = false;
+			$scope.applied_filters.category = false;
+			$scope.applied_filters.mid_price = false;
+			$scope.applied_filters.given_price = false;
+			$scope.applied_filters.location = false;
+			$scope.applied_filters.free_text = false;
+						
 			$scope.filtered_items = angular.copy($scope.items);
 			$scope.filtered_items.pop();
 			$scope.current_page = 1;
