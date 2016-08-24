@@ -420,11 +420,11 @@
 			mid_price : false,
 			given_price : false,
 			location : false,
+			country : false,
 			free_text : false
 		};
 		
 		$scope.filter = function() {
-			console.log($scope.live_filters.category);
 			
 			$scope.apllied_any_filter = true;
 			
@@ -443,6 +443,9 @@
 			if($scope.applied_filters.free_text == true)
 				$scope.filter_by_description();
 			
+			if($scope.applied_filters.country == true) 
+				$scope.filter_by_country();
+				
 			$scope.current_items = $scope.get_items();
 		};
 
@@ -466,7 +469,7 @@
 		};
 		
 		$scope.filter_by_mid_price = function() {
-			console.log($scope.live_filters.price);
+			console.log("filter by mid price");
 			for (var i = $scope.filtered_items.length-1; i >= 0; i--) {
 				if($scope.live_filters.price == "less" && $scope.filtered_items[i].max >= $scope.mid_price)
 					$scope.filtered_items.splice(i,1);
@@ -476,6 +479,7 @@
 		};
 		
 		$scope.filter_by_given_price = function() {
+			console.log("filter by given price");
 			for (var i = ($scope.filtered_items.length)-1; i >= 0 ; i--) {
 				console.log($scope.filtered_items[i].max);
 				if(($scope.live_filters.price_from > $scope.filtered_items[i].max) 
@@ -498,12 +502,29 @@
 			}
 		};
 		
+		$scope.filter_by_country = function() {
+			console.log("filter by location");
+			for(var i = $scope.filtered_items.length-1; i >= 0; i--) {
+				var regex = new RegExp($scope.live_filters.country,'gi');
+				var res = $scope.filtered_items[i].location.country.match(regex); 
+				if(res == null) {
+					res = $scope.filtered_items[i].location.location.match(regex);
+					if(res == null)
+						$scope.filtered_items.splice(i,1);
+					else
+						console.log($scope.filtered_items[i].name+" "+res);
+				}
+				else 
+					console.log($scope.filtered_items[i].name+" "+res);
+			}
+		}
 		
 		$scope.clear_filters = function() {
 			$scope.live_filters.category = null;
+			$scope.live_filters.price = null;
 			$scope.live_filters.price_from = null;
 			$scope.live_filters.price_to = null;
-			$scope.live_filters.free_text = "";
+			$scope.live_filters.text = "";
 			
 			$scope.apllied_any_filter = false;
 			$scope.applied_filters.category = false;
