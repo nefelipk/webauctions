@@ -47,14 +47,24 @@ a.list-group-item.active small {
 	<div class="row">
 
 		<div class="list-group">
-			<h3 style="display: inline-block;">{{current_items.length}}
-				auctions found</h3>
+			<h3 style="display: inline-block;">{{filtered_items.length}}
+				auctions <small>page {{current_page}} of {{pages.length}}</small></h3>
 			<ul class="pagination pagination-sm" style="float: right;">
-				<li ng-class="{'disabled' : current_page == 1}"><a href="#" ng-click="get_previous_page()"><</a>
+				<li >
+					<button ng-class="{'disabled' : current_page == 1}" ng-disabled="current_page == 1"
+					class="btn btn-default btn-sm" ng-click="get_previous_page()"><</button>
+				</li>
+				
+				<li ng-repeat="p in pages" >
+					<button class="btn btn-default btn-sm" ng-class="{'btn-primary' : current_page == p}">{{p}}</button>
+				</li>
+				
 				<li>
-				<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a
-					href="#">{{p}}</a></li>
-				<li><a href="#" ng-click="get_next_page()">></a>
+					<button class="btn btn-default btn-sm" ng-disabled="current_page == last_page" ng-click="get_next_page()" 
+					ng-class="{'disabled' : current_page == last_page}"
+					>>
+					</button>
+				</li>
 			</ul>
 		</div>
 		<div class="well">

@@ -277,6 +277,7 @@
 
 	app.controller('AuctionsController', [ '$window', '$scope', 'Item', function($window, $scope, Item) {
 		$scope.content = "index";
+		var items_per_page = 5;
 		
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
@@ -286,14 +287,46 @@
 				$scope.fix_filter_prices($scope.items);
 				$scope.filtered_items = angular.copy($scope.items);
 				$scope.filtered_items.pop();
-				$scope.pages = Array.apply(null, {length: $scope.filtered_items.length/10}).map(Number.call, Number);
+				
+				$scope.fix_pages();
+				console.log($scope.pages);
+				
 				$scope.current_items = $scope.get_items();
 				$scope.content = "main";
 			});
-			// $window.location.href =
-			// '/WebAuctions/main.html';
+			// $window.location.href = '/WebAuctions/main.html';
 
 		};
+		
+		$scope.current_page = 1;
+				
+		$scope.fix_pages = function() {
+			$scope.pages = [];
+			console.log($scope.filtered_items.length/items_per_page);
+			for(i = 0; i < $scope.filtered_items.length/items_per_page; i++)
+				$scope.pages.push(i+1);
+			$scope.last_page = $scope.pages[$scope.pages.length-1];
+			$scope.current_page = 1;
+		};
+		
+		$scope.get_items = function() {
+			var from = ($scope.current_page - 1) * items_per_page;
+			var to = $scope.current_page * items_per_page;
+			if ($scope.current_page * items_per_page >= $scope.filtered_items.length)
+				to = $scope.filtered_items.length;
+			return $scope.filtered_items.slice(from, to);
+		};
+
+		$scope.get_next_page = function() { 
+			console.log("change_page");
+			$scope.current_page++;
+			$scope.current_items = $scope.get_items();
+		}
+		
+		$scope.get_previous_page = function() {
+			$scope.current_page--;
+			$scope.current_items = $scope.get_items();
+		}
 		
 		var max_bids_array = [];
 		$scope.fix_filter_prices = function(items) {
@@ -367,32 +400,6 @@
 		$scope.test_search = function() {
 			$scope.search();
 		}
-
-		$scope.current_page = 1;
-		var items_per_page = 5;
-				
-		$scope.get_items = function() {
-			var from = ($scope.current_page - 1) * items_per_page;
-			var to = $scope.current_page * items_per_page;
-			if ($scope.current_page * items_per_page >= $scope.filtered_items.length)
-				to = $scope.filtered_items.length;
-			return $scope.filtered_items.slice(from, to);
-		};
-
-		$scope.get_next_page = function() { 
-			console.log("change_page");
-			$scope.current_page++;
-			$scope.current_items = $scope.get_items();
-		}
-		
-		$scope.get_previous_page = function() {
-			$scope.current_page--;
-			$scope.current_items = $scope.get_items();
-		}
-		//$scope.current_items = $scope.getItems();
-		//$scope.change_page = function() {
-		//	$scope.current_items = $scope.getItems();
-		//};
 		
 		$scope.get_rating = function(item) {
 			if(item.user.ratingSeller == 0 || item.user.ratingSeller == null)
@@ -445,8 +452,10 @@
 			
 			if($scope.applied_filters.country == true) 
 				$scope.filter_by_country();
-				
+			
+			$scope.fix_pages();
 			$scope.current_items = $scope.get_items();
+			
 		};
 
 		$scope.filter_by_category = function() {
@@ -535,6 +544,8 @@
 						
 			$scope.filtered_items = angular.copy($scope.items);
 			$scope.filtered_items.pop();
+
+			$scope.fix_pages();
 			$scope.current_page = 1;
 			$scope.current_items = $scope.get_items();
 		}
