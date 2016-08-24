@@ -276,8 +276,10 @@
 	 */
 
 	app.controller('AuctionsController', [ '$window', '$scope', 'Item', function($window, $scope, Item) {
+		console.log("*********** controller**************");
 		$scope.content = "index";
 		var items_per_page = 5;
+		$scope.items_per_page = items_per_page;
 		
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
@@ -321,11 +323,13 @@
 			console.log("change_page");
 			$scope.current_page++;
 			$scope.current_items = $scope.get_items();
+			$window.scrollTo(0,0);
 		}
 		
 		$scope.get_previous_page = function() {
 			$scope.current_page--;
 			$scope.current_items = $scope.get_items();
+			$window.scrollTo(0,0);
 		}
 		
 		var max_bids_array = [];
@@ -380,6 +384,7 @@
 				return item.ends;
 			}
 		};
+		
 		
 		$scope.clicked_item = false;
 		$scope.set_current = function(item) {
@@ -563,9 +568,21 @@
 		});
 
 	} ]);
+	
+	
 
 })();
 
+var initialize = function() {
+	var mapProp = {
+		center:new google.maps.LatLng(51.508742,-0.120850),
+		zoom:5,
+		mapTypeId:google.maps.MapTypeId.ROADMAP
+	};
+	var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+	google.maps.event.addDomListener(window, 'load', initialize);
+	google.maps.event.trigger(map, 'resize');
+};
 /*
  * main.html sidebar following scroll.
  */

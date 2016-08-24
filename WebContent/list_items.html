@@ -38,6 +38,8 @@ a.list-group-item.active small {
 #des-div {
 	max-height: 140px;
 }
+
+
 </style>
 
 </head>
@@ -45,7 +47,7 @@ a.list-group-item.active small {
 <body>
 	<!--  -->
 	<div class="row">
-
+	
 		<div class="list-group">
 			<h3 style="display: inline-block;">{{filtered_items.length}}
 				auctions <small>page {{current_page}} of {{pages.length}}</small></h3>
@@ -67,6 +69,7 @@ a.list-group-item.active small {
 				</li>
 			</ul>
 		</div>
+
 		<div class="well">
 			<div class="list-group ">
 				<a ng-repeat="i in current_items" 
@@ -105,15 +108,86 @@ a.list-group-item.active small {
 		</div>
 
 		<ul class="pager">
-			<li class="previous" ng-class="{'disabled' : current_page == 1}"><a
-				href="#">Previous</a>
+			<li >
+				<button ng-class="{'disabled' : current_page == 1}" ng-disabled="current_page == 1"
+				class="btn btn-default btn-sm" ng-click="get_previous_page()"><</button>
+			</li>
+				
+			<li ng-repeat="p in pages" >
+				<button class="btn btn-default btn-sm" ng-class="{'btn-primary' : current_page == p}">{{p}}</button>
+			</li>
+			
 			<li>
-			<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}"><a
-				href="#">{{p}}</a></li>
-			<li class="next" ng-class="{'disabled' : current_page == 1}"><a
-				href="#">Next</a>
+				<button class="btn btn-default btn-sm" ng-disabled="current_page == last_page" ng-click="get_next_page()" 
+				ng-class="{'disabled' : current_page == last_page}"
+				>>
+				</button>
+			</li>
 		</ul>
 	</div>
 
 </body>
 </html>
+
+
+<!-- 
+<div class="list-group">
+			<h3 style="display: inline-block;">{{filtered_items.length}}
+				auctions <small>page {{current_page}} of {{pages.length}}</small></h3>
+			<ul class="pagination pagination-sm" style="float: right;">
+				<li >
+					<button ng-class="{'disabled' : current_page == 1}" ng-disabled="current_page == 1"
+					class="btn btn-default btn-sm" ng-click="get_previous_page()"><</button>
+				</li>
+				
+				<li ng-repeat="p in pages" >
+					<button class="btn btn-default btn-sm" ng-class="{'btn-primary' : current_page == p}">{{p}}</button>
+				</li>
+				
+				<li>
+					<button class="btn btn-default btn-sm" ng-disabled="current_page == last_page" ng-click="get_next_page()" 
+					ng-class="{'disabled' : current_page == last_page}"
+					>>
+					</button>
+				</li>
+			</ul>
+		</div>
+ -->
+ <!-- OR ? -->
+ <!-- 
+ <div class="list-group">
+			<div class="row">
+			<div class="col-sm-3">
+			<h3 style="display: inline-block;">{{filtered_items.length}} auctions 
+				
+			</h3>
+			</div>
+			<div class="col-sm-offset-2 col-sm-3">
+			<h3>
+				<small style="text-align:right">page {{current_page}} of {{pages.length}} 
+					
+				</small>
+			</h3>	
+			</div>
+			<div class="col-sm-4">
+			<ul class="pagination pagination-sm" style="float: right;">
+				<li >
+					<button ng-class="{'disabled' : current_page == 1}" ng-disabled="current_page == 1"
+					class="btn btn-default btn-sm" ng-click="get_previous_page()"><</button>
+				</li>
+				
+				<li ng-repeat="p in pages" >
+					<button class="btn btn-default btn-sm" ng-class="{'btn-primary' : current_page == p}">{{p}}</button>
+				</li>
+				
+				<li>
+					<button class="btn btn-default btn-sm" ng-disabled="current_page == last_page" ng-click="get_next_page()" 
+					ng-class="{'disabled' : current_page == last_page}"
+					>>
+					</button>
+				</li>
+			</ul>
+			</div>
+			</div>
+		</div>
+  -->

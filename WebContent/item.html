@@ -2,7 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>{{current.name}}</title>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAkwqT274QZMdhfDQCS_C71GJ5wR5rmDRE&callback=initialize" async defer></script>
+<script>
+
+</script>
 </head>
 <body>
 
@@ -66,18 +70,16 @@
 					<li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
 				</ul>
 
+					
 				<div class="tab-content">
 					<div id="home" class="tab-pane fade in active">
 						<h3>{{current.name}}</h3>
 						<p>{{current.description}}</p>
 					</div>
 					<div id="menu1" class="tab-pane fade">
-						<h3>Menu 1</h3>
-						<p>Some content in menu 1.</p>
+						<div id="googleMap" style="width:600px;height:480px;"> </div>
 					</div>
-					<div id="menu2" class="tab-pane fade">
-						<img src="https://www.advancedcustomfields.com/wp-content/uploads/2013/11/acf-google-maps-field-2.png" >
-					</div>
+					
 				</div>
 			</div>
 			
