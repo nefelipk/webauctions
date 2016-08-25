@@ -1,6 +1,12 @@
 (function() {
-	var app = angular.module('auction_land', [ 'ngResource', 'ngMessages', 'dibari.angular-ellipsis' ]);
-
+	var app = angular.module('auction_land', ['ngResource', 'ngMessages', 'dibari.angular-ellipsis','uiGmapgoogle-maps' ])
+	.config(function(uiGmapGoogleMapApiProvider) {
+	    uiGmapGoogleMapApiProvider.configure({
+	        key: 'AIzaSyAkwqT274QZMdhfDQCS_C71GJ5wR5rmDRE',
+	        //v: '3.20', //defaults to latest 3.X anyhow
+	        libraries: 'weather,geometry,visualization'
+	});
+	});
 	/*
 	 * app.config(['$routeProvider',function($routeProvider){ $routeProvider
 	 * .when('/',{ templateUrl : 'welcome.html', }) .when('/messages', {
@@ -275,7 +281,9 @@
 	 * }]);
 	 */
 
-	app.controller('AuctionsController', [ '$window', '$scope', 'Item', function($window, $scope, Item) {
+	app.controller('AuctionsController', [ '$window', '$scope','uiGmapGoogleMapApi',
+	                                       'uiGmapIsReady','Item', 
+	                                       function($window, $scope, uiGmapGoogleMapApi,uiGmapIsReady,Item ) {
 		console.log("*********** controller**************");
 		$scope.content = "index";
 		var items_per_page = 5;
@@ -554,7 +562,36 @@
 			$scope.current_page = 1;
 			$scope.current_items = $scope.get_items();
 		}
+		
+		$scope.markers = [];
 
+		$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
+		
+		uiGmapGoogleMapApi.then(function(maps) {
+    		$scope.google = google;
+		});
+		
+		
+		
+		uiGmapIsReady.promise().then(function(maps) {
+			$scope.map.control.refresh();  	
+		});
+		
+		$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+			$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
+		})
+
+		/*
+		$scope.resize = function() {
+			console.log("trigger");
+			$scope.google.maps.event.addListener($scope.map.control.getGMap(), "idle", function(){
+				$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
+				console.log("resized");
+		    });
+			console.log("show");
+		};
+		*/
 		
 		$(window).on("resize.doResize", function() {
 
@@ -571,18 +608,9 @@
 	
 	
 
+
 })();
 
-var initialize = function() {
-	var mapProp = {
-		center:new google.maps.LatLng(51.508742,-0.120850),
-		zoom:5,
-		mapTypeId:google.maps.MapTypeId.ROADMAP
-	};
-	var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-	google.maps.event.addDomListener(window, 'load', initialize);
-	google.maps.event.trigger(map, 'resize');
-};
 /*
  * main.html sidebar following scroll.
  */
