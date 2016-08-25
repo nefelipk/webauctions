@@ -573,12 +573,38 @@
 				$scope.map.center.latitude = $scope.current.location.latitude;
 				$scope.map.center.longitude = $scope.current.location.longitude;
 			}
+			
+			else {
+				/*
+				 * country + 
+				 * 	if(city == null) -> location ->
+				 * 	if(location == null) -> address
+				 * 
+				 * 	else
+				 * 	(plain)country 
+				 */
+				
+				$scope.geocoder.geocode( { 'address': $scope.current.location.country }, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						console.log(results[0].geometry.location.lat());
+						var coords = {latitude :  results[0].geometry.location.lat(), longitude : results[0].geometry.location.lng()};
+						$scope.map.center.latitude = coords.latitude;
+						$scope.map.center.longitude = coords.longitude;
+			        	$scope.current.coords = coords;
+			        } else {
+			          alert("Geocode was not successful for the following reason: " + status);
+			        }
+			    });
+			}
+			
 		};
 		
 		uiGmapGoogleMapApi.then(function(maps) {
 			$scope.markers = [];
 			$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 5 };
 			$scope.google = google;
+			$scope.geocoder = new google.maps.Geocoder();
+			console.log($scope.geocoder);
 		});
 		
 		
