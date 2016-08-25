@@ -398,6 +398,7 @@
 		$scope.set_current = function(item) {
 			$scope.current = item;
 			$scope.clicked_item = true;
+			$scope.current.mkey = key++;
 		};
 
 		
@@ -563,24 +564,34 @@
 			$scope.current_items = $scope.get_items();
 		}
 		
-		$scope.markers = [];
-
-		$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 8 };
-
+		var key = 0;
+		current_item_location = function() {
+			if(($scope.current.location.latitude != 0) && ($scope.current.location.longitude != 0)) {
+				console.log("CURRENT ITEM MAP")
+				var coords = { latitude : $scope.current.location.latitude, longitude : $scope.current.location.longitude};
+				$scope.current.coords = coords;
+				$scope.map.center.latitude = $scope.current.location.latitude;
+				$scope.map.center.longitude = $scope.current.location.longitude;
+			}
+		};
 		
 		uiGmapGoogleMapApi.then(function(maps) {
-    		$scope.google = google;
+			$scope.markers = [];
+			$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 5 };
+			$scope.google = google;
 		});
 		
 		
-		
+		/*
 		uiGmapIsReady.promise().then(function(maps) {
 			$scope.map.control.refresh();  	
 		});
+		*/
 		
 		$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+			current_item_location();
 			$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
-		})
+		});
 
 		/*
 		$scope.resize = function() {
