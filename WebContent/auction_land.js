@@ -3,7 +3,7 @@
 	.config(function(uiGmapGoogleMapApiProvider) {
 	    uiGmapGoogleMapApiProvider.configure({
 	        key: 'AIzaSyAkwqT274QZMdhfDQCS_C71GJ5wR5rmDRE',
-	        //v: '3.20', //defaults to latest 3.X anyhow
+	        // v: '3.20', //defaults to latest 3.X anyhow
 	        libraries: 'weather,geometry,visualization'
 	});
 	});
@@ -572,33 +572,48 @@
 				$scope.current.coords = coords;
 				$scope.map.center.latitude = $scope.current.location.latitude;
 				$scope.map.center.longitude = $scope.current.location.longitude;
+				
+				var loc = { lat: coords.latitude, lng: coords.longitude};
+		        $scope.geocoder.geocode({'location': loc}, function(results, status) {
+		        	if(status == google.maps.GeocoderStatus.OK) {
+		                if(results[1]) 
+		                	$scope.current.final_location = results[1].formatted_address;	
+		                else 
+		                	alert('No results found');
+		        	}
+		        	else {
+		        		alert('Geocoder failed due to: ' + status);
+		        	}
+		        });
 			}
 			
 			else {
 				/*
-				 * country + 
-				 * 	if(city == null) -> location ->
-				 * 	if(location == null) -> address
+				 * country + if(city == null) -> location -> if(location ==
+				 * null) -> address
 				 * 
-				 * 	else
-				 * 	(plain)country 
+				 * else (plain)country
 				 */
 				
 				$scope.geocoder.geocode( { 'address': $scope.current.location.country }, function(results, status) {
-					if (status == google.maps.GeocoderStatus.OK) {
+					if(status == google.maps.GeocoderStatus.OK) {
 						console.log(results[0].geometry.location.lat());
 						var coords = {latitude :  results[0].geometry.location.lat(), longitude : results[0].geometry.location.lng()};
 						$scope.map.center.latitude = coords.latitude;
 						$scope.map.center.longitude = coords.longitude;
 			        	$scope.current.coords = coords;
-			        } else {
+			        	
+						$scope.current.final_location = $scope.current.location.country
+
+			        } 
+					else {
 			          alert("Geocode was not successful for the following reason: " + status);
 			        }
 			    });
 			}
 			
 		};
-		
+			
 		uiGmapGoogleMapApi.then(function(maps) {
 			$scope.markers = [];
 			$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 5 };
@@ -609,10 +624,9 @@
 		
 		
 		/*
-		uiGmapIsReady.promise().then(function(maps) {
-			$scope.map.control.refresh();  	
-		});
-		*/
+		 * uiGmapIsReady.promise().then(function(maps) {
+		 * $scope.map.control.refresh(); });
+		 */
 		
 		$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 			current_item_location();
@@ -620,15 +634,12 @@
 		});
 
 		/*
-		$scope.resize = function() {
-			console.log("trigger");
-			$scope.google.maps.event.addListener($scope.map.control.getGMap(), "idle", function(){
-				$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
-				console.log("resized");
-		    });
-			console.log("show");
-		};
-		*/
+		 * $scope.resize = function() { console.log("trigger");
+		 * $scope.google.maps.event.addListener($scope.map.control.getGMap(),
+		 * "idle", function(){
+		 * $scope.google.maps.event.trigger($scope.map.control.getGMap(),
+		 * 'resize'); console.log("resized"); }); console.log("show"); };
+		 */
 		
 		$(window).on("resize.doResize", function() {
 
