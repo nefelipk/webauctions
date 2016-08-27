@@ -403,18 +403,24 @@
 			return item.bids[pos];
 		}
 		
+		/******** convention ********/
 		$scope.get_ending_time = function(item) {
 			if(item.ends == null) { 
 				var last_bid = $scope.get_max_bid_object(item)
 				if(last_bid != null) {
 					var ends = Date.parse(last_bid.time);
 					if(ends < Date.now()) {
+						item.ended = true;
 						return "Ended";
 					}
 				}
-				else return "Ended";
+				else {
+					item.ended = true;
+					return "Ended";
+				}
 			}
 			else {
+				item.ended = false;
 				return item.ends;
 			}
 		};
@@ -653,7 +659,20 @@
 
 	app.controller('AuctionController',['$scope','$route','AuctionService','uiGmapGoogleMapApi', function($scope,$route,AuctionService,uiGmapGoogleMapApi) {
 		$scope.current = AuctionService.get_current_auction();
-
+		
+		$scope.get_first_bid = function(auction) {
+			auction.firstBid = auction.firstBid.replace('$','');
+			console.log(auction.firstBid);
+			return auction.firstBid;
+		};
+		
+		$scope.get_ending_time = function(auction) {
+			if(auction.ended)
+				return "Ended";
+			else
+				return auction.ends;
+		};
+		
 		current_item_location = function() {
 			if(($scope.current.location.latitude != 0) && ($scope.current.location.longitude != 0)) {
 				console.log("CURRENT ITEM MAP")

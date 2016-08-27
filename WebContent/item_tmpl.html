@@ -4,6 +4,7 @@
 <title>Insert title here</title>
 <style>
 .angular-google-map-container { height: 400px; }
+.err { color: #e74c3c; }
 </style>
 </head>
 <body>
@@ -21,34 +22,54 @@
 		<div class="col-sm-4" >
 			<div class="well">
 			<div class="row">
-				<div class="col-sm-8"><h4>Time left : 5 : 33</h4></div>
-				<div class="col-sm-4"><button class="btn btn-primary ">Buy NOW!</button></div>
+				<div class="col-sm-6">
+					<h4>
+					Time left : 
+						<span ng-class="{'err' : current.ended == true}"> 
+							{{get_ending_time(current)}} 
+						</span>
+					</h4>
+				</div>
+				<div class="col-sm-6">
+					<button type="button" class="btn btn-sm btn-info">
+    					<span class="glyphicon glyphicon-shopping-cart"></span>BUY NOW
+ 					</button>
+ 				</div>
 			</div>	
 			
 			
-			<div class="row">
-				<div class="col-sm-6"><h5><strong>Starting bid : 30 &euro;</strong></h5></div>
-				<div class="col-sm-6"><h5>No bids yet!</h5></div>
-			</div>	
+			<div ><h5><strong>Starting bid : {{get_first_bid(current)}} &euro;</strong></h5></div>
 				
 						
 			<div class="row">
 				<div class="col-sm-6">
-				<h5><strong>Current bid : {{current.starting_bid}} 50.99 &euro;</strong></h5>
+				<span ng-switch="current.ended">
+					<span ng-switch-when="true">
+					<h5><strong>Sold for: {{current.max}} &euro;</strong></h5>
+					</span>
+					<span ng-switch-when="!true">
+						<h5><strong>Current bid : {{current.starting_bid}} &euro;</strong></h5>
+					</span>
+				</span>
 				</div>
-				<div class="col-sm-6"> <h5>{{current.num_bids}} 8 bids</h5></div>
+				<div class="col-sm-6"> <h5>{{current.bids.length}} bids</h5></div>
 			</div>
 			
-			<form class="form-group form-inline">
-				<input type="text"class="form-control"/>
-				<div class="btn btn-primary">Place Bid</div>	
-			</form>
-			<sup>Place a bid statring from {{current.starting_bid}}</sup>
+			<div class="form-inline" >
+				<form class="input-group">
+					<input size="15" type="text"class="form-control"/> 
+					 <span class="input-group-btn"> 	
+						<button class="btn btn-primary"> Place Bid</button>
+					</span>
+				</form>
+			</div>
+			<sup>Place a bid statring from {{current.max}}</sup>
 
 			
 			</div>	
 		</div>	
-			<div class="col-sm-2 well">
+		
+		<div class="col-sm-2 well">
 			<div class="span2">
 				<h4>Seller Information</h4>
 			</div>
