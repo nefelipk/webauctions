@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module('auction_land', ['ngResource', 'ngMessages', 'dibari.angular-ellipsis','uiGmapgoogle-maps' ])
+	var app = angular.module('auction_land', ['ngResource','ngRoute', 'ngMessages', 'dibari.angular-ellipsis','uiGmapgoogle-maps' ])
 	.config(function(uiGmapGoogleMapApiProvider) {
 	    uiGmapGoogleMapApiProvider.configure({
 	        key: 'AIzaSyAkwqT274QZMdhfDQCS_C71GJ5wR5rmDRE',
@@ -7,11 +7,15 @@
 	        libraries: 'weather,geometry,visualization'
 	});
 	});
-	/*
-	 * app.config(['$routeProvider',function($routeProvider){ $routeProvider
-	 * .when('/',{ templateUrl : 'welcome.html', }) .when('/messages', {
-	 * templateUrl : 'messages.html', }); }]);
-	 */
+	
+	app.config(['$routeProvider',function($routeProvider){ 
+		$routeProvider
+			.when('/',{ templateUrl : 'index_tmpl.html', }) 
+			.when('/messages', { templateUrl : 'messages.html', })
+			.when('/search', {templateUrl : 'search_tmpl.html', })
+			.when('/item', {templateUrl : 'item_tmpl.html', });
+	}]);
+	
 
 	app.factory('User', [ '$resource', function($resource) {
 		return $resource('http://localhost:8080/WebAuctions/services/users/:username');
@@ -27,7 +31,21 @@
 	app.factory('Item', [ '$resource', function($resource) {
 		return $resource('http://localhost:8080/WebAuctions/services/items/:term');
 	} ]);
-
+	
+	app.service('SearchService', function() {
+		var items = [];
+		var add_items = function(list_items) {
+			items = angular.copy(list_items);
+		};
+		var get_items = function() {
+			return items;
+		};
+		return {
+			add_items : add_items,
+			get_items : get_items
+		};
+	});
+	
 	app.controller('UserController', [ '$scope', 'User', function($scope, User) {
 
 		$scope.username_pattern = "([a-z]|[A-Z]|[0-9])*";
@@ -280,12 +298,22 @@
 	 * 
 	 * }]);
 	 */
-
-	app.controller('AuctionsController', [ '$window', '$scope','uiGmapGoogleMapApi',
-	                                       'uiGmapIsReady','Item', 
-	                                       function($window, $scope, uiGmapGoogleMapApi,uiGmapIsReady,Item ) {
-		console.log("*********** controller**************");
-		$scope.content = "index";
+	
+	app.controller('SearchController',['$scope','$location','Item','SearchService',function($scope,$location,Item,SearchService) {
+		$scope.search = function(term) {
+			Item.query({term : term}).$promise.then(function (data) {
+				$scope.items = data.slice();
+				SearchService.add_items($scope.items);
+				$location.path("/search");
+				
+				
+			});	
+		};
+	}]);
+	
+	
+	app.controller('AuctionsController', [ '$window', '$scope','$location','AuctionService','Item','SearchService',
+	                                       function($window, $scope,$location,AuctionService,Item,SearchService ) {
 		var items_per_page = 5;
 		$scope.items_per_page = items_per_page;
 		
@@ -302,10 +330,8 @@
 				console.log($scope.pages);
 				
 				$scope.current_items = $scope.get_items();
-				$scope.content = "main";
+				
 			});
-			// $window.location.href = '/WebAuctions/main.html';
-
 		};
 		
 		$scope.current_page = 1;
@@ -393,23 +419,27 @@
 			}
 		};
 		
+		$scope.items = SearchService.get_items();
+		console.log("items : ");
+		console.log($scope.items);
+		$scope.fix_filter_prices($scope.items);
+		$scope.filtered_items = angular.copy($scope.items);
+		$scope.filtered_items.pop();
+		$scope.fix_pages();
+		console.log($scope.pages);
+		$scope.current_items = $scope.get_items();
 		
-		$scope.clicked_item = false;
+		var marker_key = 0;
 		$scope.set_current = function(item) {
-			$scope.current = item;
-			$scope.clicked_item = true;
-			$scope.current.mkey = key++;
+			item.mkey = marker_key++;
+			AuctionService.set_current_auction(item);
 		};
-
 		
 		$scope.location_continent = false;
 		$scope.location_from_km = false;
 		$scope.location_to_km = false;
 		$scope.description = false;
 		/**/
-
-		$scope.must = true;
-		$scope.current_content = $scope.content;
 
 		$scope.test_search = function() {
 			$scope.search();
@@ -564,7 +594,66 @@
 			$scope.current_items = $scope.get_items();
 		}
 		
-		var key = 0;
+		$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+			var google = AuctionService.get_google_api();
+			var map = AuctionService.get_map();
+			console.log("called");
+			current_item_location();
+			google.maps.event.trigger(map.control.getGMap(), 'resize'); 
+			console.log("exit");
+		});
+		
+		$(window).on("resize.doResize", function() {
+
+			$scope.$apply(function() {
+				if (window.innerWidth < 1290) {
+					$scope.must = false;
+				} else {
+					$scope.must = true;
+				}
+			});
+		});
+
+	} ]);
+	
+	app.service('AuctionService',function() {
+		var current_auction = {};
+		var google_api = null;
+		var map_instance = null;
+		var set_current_auction = function(auction) {
+			current_auction = auction;
+		};
+		var get_current_auction = function() {
+			return current_auction;
+		};
+		var get_google_api = function() {
+			return google_api;
+		};
+		var set_google_api = function(google) {
+			google_api = google;
+		};
+		var set_map = function(map) {
+			map_instance = map;
+		};
+		var get_map = function() {
+			return map_instance; 
+		};
+		
+		return {
+			set_current_auction : set_current_auction,
+			get_current_auction : get_current_auction,
+			get_google_api : get_google_api,
+			set_google_api : set_google_api,
+			set_map : set_map,
+			get_map : get_map
+		};
+	}); 
+	
+	var global_google = "";
+
+	app.controller('AuctionController',['$scope','$route','AuctionService','uiGmapGoogleMapApi', function($scope,$route,AuctionService,uiGmapGoogleMapApi) {
+		$scope.current = AuctionService.get_current_auction();
+
 		current_item_location = function() {
 			if(($scope.current.location.latitude != 0) && ($scope.current.location.longitude != 0)) {
 				console.log("CURRENT ITEM MAP")
@@ -611,56 +700,47 @@
 			        }
 			    });
 			}
+			AuctionService.set_map($scope.map);
 			
 		};
-			
+		
+		$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 5 };
+
 		uiGmapGoogleMapApi.then(function(maps) {
-			$scope.markers = [];
-			$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 5 };
+			$scope.markers = [];	
 			$scope.google = google;
 			$scope.geocoder = new google.maps.Geocoder();
-			console.log($scope.geocoder);
+			console.log($scope.map);
+			console.log("google api returned");
+			AuctionService.set_google_api($scope.google);
+			AuctionService.set_map($scope.map);
 		});
+			
 		
 		
-		/*
-		 * uiGmapIsReady.promise().then(function(maps) {
-		 * $scope.map.control.refresh(); });
-		 */
-		
-		$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-			current_item_location();
-			$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
-		});
-
-		/*
-		 * $scope.resize = function() { console.log("trigger");
-		 * $scope.google.maps.event.addListener($scope.map.control.getGMap(),
-		 * "idle", function(){
-		 * $scope.google.maps.event.trigger($scope.map.control.getGMap(),
-		 * 'resize'); console.log("resized"); }); console.log("show"); };
-		 */
+	}]);
+	
+	app.controller('FiltersController',['$scope',function($scope) {
+	
+		if(window.innerWidth < 1290)
+			$scope.show_filters = false;
+		else
+			$scope.show_filters = true;
 		
 		$(window).on("resize.doResize", function() {
-
 			$scope.$apply(function() {
-				if (window.innerWidth < 1290) {
-					$scope.must = false;
-				} else {
-					$scope.must = true;
-				}
+				if (window.innerWidth < 1290)
+					$scope.show_filters = false;
+				else 
+					$scope.show_filters = true;
 			});
 		});
-
-	} ]);
-	
-	
-
+	}]);
 
 })();
 
 /*
- * main.html sidebar following scroll.
+ * filters sidebar following scroll.
  */
 /*
  * $(function() {

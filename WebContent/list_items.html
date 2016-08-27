@@ -45,9 +45,7 @@ a.list-group-item.active small {
 </head>
 
 <body>
-	<!--  -->
 	<div class="row">
-	
 		<div class="list-group">
 			<h3 style="display: inline-block;">{{filtered_items.length}}
 				auctions <small>page {{current_page}} of {{pages.length}}</small></h3>
@@ -73,7 +71,7 @@ a.list-group-item.active small {
 		<div class="well">
 			<div class="list-group ">
 				<a ng-repeat="i in current_items" 
-					href="#" class="list-group-item"
+					href="#/item" class="list-group-item"
 					ng-click="set_current(i)">
 					<div class="media col-md-3">
 						<figure class="pull-left">

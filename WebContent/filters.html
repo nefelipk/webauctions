@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<div ng-show="must" id="filters">
+
+	<div ng-controller="FiltersController">
+	<div ng-show="show_filters" id="filters">
 
 		<h4 class="text-center" style="margin-top: 79px">filters 
 		
@@ -104,9 +105,9 @@
 			</div>
 		</form>
 	</div>
-	<div ng-hide="must">
-		<button></button>
+	<div ng-hide="show_filters">
+		<button>filters ></button>
 	</div>
-
+</div>
 </body>
 </html>
