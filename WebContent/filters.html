@@ -33,7 +33,7 @@
 						<input ng-model="live_filters.price" ng-value="'less'" 
 						ng-click="applied_filters.mid_price = true;filter()"
 						type="radio" name="optradio"> 
-						< {{mid_price}}
+						< {{mid_price}} <small>&euro;</small>
 					</label>
 
 				</div>
@@ -42,7 +42,7 @@
 					<input ng-model="live_filters.price" ng-value="'more'"
 					ng-click="applied_filters.mid_price = true;filter();" 
 					type="radio"
-					name="optradio"> > {{mid_price}}</label>
+					name="optradio"> > {{mid_price}} <small>&euro;</small></label>
 				</div>
 
 			</div>

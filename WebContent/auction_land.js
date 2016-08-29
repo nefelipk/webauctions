@@ -299,18 +299,36 @@
 	 * }]);
 	 */
 	
-	app.controller('SearchController',['$scope','$location','Item','SearchService',function($scope,$location,Item,SearchService) {
+	app.controller('SearchController',['$scope','$route','$location','Item','SearchService',
+	                                   function($scope,$route,$location,Item,SearchService) {
+		$scope.search = function(term) {
+			Item.query({term : term}).$promise.then(function (data) {
+				$scope.items = data.slice();
+				SearchService.add_items($scope.items);
+				console.log($scope.items);
+				$route.reload();
+				$location.path("/search");
+			});	
+		};
+		
+		$scope.print = function() {
+			console.log("search_controller");
+		};
+	}]);
+	
+	app.controller('SearchController2',['$scope','$location','Item','SearchService',function($scope,$location,Item,SearchService) {
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
 				$scope.items = data.slice();
 				SearchService.add_items($scope.items);
 				$location.path("/search");
-				
-				
 			});	
 		};
+		
+		$scope.print = function() {
+			console.log("search_controller");
+		};
 	}]);
-	
 	
 	app.controller('AuctionsController', [ '$window', '$scope','$location','AuctionService','Item','SearchService',
 	                                       function($window, $scope,$location,AuctionService,Item,SearchService ) {

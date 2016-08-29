@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html ng-app>
 <head>
 	<title>Auction Land - Header</title>
 	<meta charset="utf-8">
@@ -70,7 +69,7 @@
 </head>
 
 <body>
-
+	<div ng-controller="SearchController">
 	<nav class="navbar navbar-default navbar-fixed-top height-nav">
 		<div class="container">
 			<div class="navbar-header header-width">
@@ -87,9 +86,9 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<form class="nav navbar-nav navbar-form text-center search-width" role="search">
 					<div class="input-group" style="width: 100%" >
-						<input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+						<input type="text"  ng-model="term" class="form-control" placeholder="{{term}}" name="srch-term" id="srch-term">
 						<div class="input-group-btn" style="text-align: left">
-							<button ng-click="test_function()" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+							<button ng-click="search(term)" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
 					</div>
 				</form>
@@ -101,6 +100,7 @@
 	</div>
 	
 	</nav>
+	</div>
 </body>
   
 <div ng-include="'signup.html'"></div>
