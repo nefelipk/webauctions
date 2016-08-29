@@ -6,13 +6,13 @@
 <body>
 
 	<div ng-controller="FiltersController">
-	<div ng-show="show_filters" id="filters">
+	<div  ng-show="show_filters" id="filters">
 
-		<h4 class="text-center" style="margin-top: 79px">filters 
+		<h3 class="text-center" >filters 
 		
 		<button type="button" class="btn btn-danger" 
 		ng-show="apllied_any_filter" ng-click="clear_filters()">  <span class="glyphicon glyphicon-remove"></span> clear all</button>
-		</h4>
+		</h3>
 		<hr>
 		<form>
 			<div class="form-group ">
@@ -107,7 +107,7 @@
 		</form>
 	</div>
 	<div ng-hide="show_filters">
-		<button>filters ></button>
+		<button class="btn btn-info">filters ></button>
 	</div>
 </div>
 </body>

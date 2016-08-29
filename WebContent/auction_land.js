@@ -413,8 +413,16 @@
 				}
 			}
 			else {
-				item.ended = false;
-				return item.ends;
+				var ends = Date.parse(item.ends);
+
+				if(ends < Date.now()) {
+					item.ended = true;
+					return "Ended";
+				}
+				else {
+					item.ended = false;
+					return  Date.parse(ends);
+				}
 			}
 		};
 		
@@ -454,7 +462,12 @@
 		$scope.categories = null;
 		$scope.getCategories = function() {
 			if ($scope.categories == null) {
-				$scope.categories = $scope.items[$scope.items.length - 1].categories
+				$scope.categories = $scope.items[$scope.items.length - 1].categories.sort(function(a,b) {
+					if(a.name< b.name)
+						return -1;
+				    if(a.name > b.name)
+				    	return 1;
+				});
 				return $scope.categories;
 			}
 			return $scope.categories;
@@ -612,7 +625,8 @@
 				}
 			});
 		});
-
+		
+		
 	} ]);
 	
 	app.service('AuctionService',function() {
@@ -733,7 +747,7 @@
 	}]);
 	
 	app.controller('FiltersController',['$scope',function($scope) {
-	
+		
 		if(window.innerWidth < 1290)
 			$scope.show_filters = false;
 		else

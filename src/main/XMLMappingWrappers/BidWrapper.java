@@ -25,6 +25,7 @@ public class BidWrapper {
 			return null;
 		String amount = b.getAmount();
 		amount = amount.replace("$","");
+		amount = amount.replace(",","");
 		bid.setAmount(Float.valueOf(amount));
 		bid.setTime(ItemWrapper.convertToTimestamp(b.getTime()));
 		bid.setUser(UserWrapper.mapBidder(b.getBidder()));

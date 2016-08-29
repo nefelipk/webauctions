@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.Timestamp;
 import java.util.List;
 import model.Bid;
 import model.Category;
@@ -13,11 +12,11 @@ public class Item {
 	private int idItem;
 	private String buyPrice;
 	private String description;
-	private Timestamp ends;
+	private String ends;
 	private String firstBid;
 	private String name;
 	private int numberOfBids;
-	private Timestamp started;
+	private String started;
 	private List<Bid> bids;
 	private Bid bid;
 	private Location location;
@@ -49,11 +48,11 @@ public class Item {
 		this.description = description;
 	}
 
-	public Timestamp getEnds() {
+	public String getEnds() {
 		return ends;
 	}
 
-	public void setEnds(Timestamp ends) {
+	public void setEnds(String ends) {
 		this.ends = ends;
 	}
 
@@ -81,11 +80,11 @@ public class Item {
 		this.numberOfBids = numberOfBids;
 	}
 
-	public Timestamp getStarted() {
+	public String getStarted() {
 		return started;
 	}
 
-	public void setStarted(Timestamp started) {
+	public void setStarted(String started) {
 		this.started = started;
 	}
 

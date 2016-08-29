@@ -1,6 +1,6 @@
 package main.XMLMappingWrappers;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,12 +23,13 @@ public class ItemWrapper {
 	}
 
 	public static Timestamp convertToTimestamp(String dateTime) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd-yy HH:mm:ss");
 		try {
 			Date date = (Date) dateFormat.parse(dateTime);
 			Timestamp stamp = new Timestamp(date.getTime());
 			return stamp;
 		} catch (ParseException e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
@@ -50,6 +51,7 @@ public class ItemWrapper {
 		item.setNumberOfBids(Integer.valueOf(i.getNumberOfBids()));
 		item.setStarted(convertToTimestamp(i.getStarted()));
 		item.setEnds(convertToTimestamp(i.getEnds()));
+		
 		item.setName(i.getName());
 		item.setUser(UserWrapper.mapSeller(i.getSeller()));
 		item.setBids(BidWrapper.mapList(i.getBids()));

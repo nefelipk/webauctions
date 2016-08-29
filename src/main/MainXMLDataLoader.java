@@ -15,29 +15,20 @@ public class MainXMLDataLoader {
 	public static void main(String[] args) throws Exception {
 		JAXBContext context = JAXBContext.newInstance(Items.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
-		Items items = (Items) unmarshaller
-				.unmarshal(new FileReader("/home/dimitris/Desktop/ted/ebay-data/items-0.xml"));
-
-		for (Item crawl : items.getItem()) {
-			/*
-			 * for(Bid b : crawl.getBids().getBid()) { entities.User userEntity
-			 * = UserWrapper.mapBidder(b.getBidder());
-			 * //System.out.println(UserWrapper.mapBidder(b.getBidder()).
-			 * toString()); UserDAO userDB = new UserDAO(); int id =
-			 * userDB.insert(userEntity); } entities.User userEntity =
-			 * UserWrapper.mapSeller(crawl.getSeller()); UserDAO userDB = new
-			 * UserDAO(); int id = userDB.insert(userEntity);
-			 */
-			if (crawl.getBids().getBid().size() > 0) {
-				if (crawl.getCurrently()  != null) {
-					ItemDAO itemDB = new ItemDAO();
-					itemDB.insert(ItemWrapper.map(crawl));
+		
+		for(int i = 0; i < 40; i++) {
+			String fullPathName = "/home/dimitris/Desktop/ted/ebay-data/items-"+i+".xml";
+			System.out.println("file "+i);
+			Items items = (Items) unmarshaller.unmarshal(new FileReader(fullPathName));
+			for (Item crawl : items.getItem()) {
+				if (crawl.getBids().getBid().size() > 0) {
+					if (crawl.getCurrently()  != null) {
+						ItemDAO itemDB = new ItemDAO();
+						itemDB.insert(ItemWrapper.map(crawl));
+					}
 				}
 			}
 		}
-
-		// System.out.println(items);
-
 	}
 
 }

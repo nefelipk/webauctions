@@ -15,8 +15,8 @@ public class ItemWrapper {
 		item.setCategories(CategoryWrapper.mapList(i.getCategories()));
 		item.setDescription(i.getDescription());
 
-		item.setStarted(i.getStarted());
-		item.setEnds(i.getEnds());
+		item.setStarted(i.getStarted().toString());
+		item.setEnds(i.getEnds().toString());
 		
 		item.setImage(ImageWrapper.map(i.getImage()));
 		item.setUser(UserWrapper.map(i.getUser()));
