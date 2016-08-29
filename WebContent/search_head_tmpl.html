@@ -13,6 +13,7 @@
     background:transparent;
     margin-top:0px;
     padding-top:2px;
+    padding-bottom:0px;
     font-size:16px;
 }
 .pagination > li.active > a:hover,
@@ -31,6 +32,7 @@
 	<div class="col-sm-4">
 		<ul class="pagination pagination-sm" style="float: right;">
 			<li><a ng-class="{'disabled' : current_page == 1}"
+				ng-hide="current_page == 1"
 				ng-disabled="current_page == 1" 
 				ng-click="get_page(current_page-1)" ><</a>
 			</li>
@@ -41,7 +43,7 @@
 			</li>
 
 			<li><a 
-				ng-disabled="current_page == last_page"
+				ng-hide="current_page == last_page"
 				ng-click="get_page(current_page+1)"
 				ng-class="{'disabled' : current_page == last_page}">> </a>
 			</li>
