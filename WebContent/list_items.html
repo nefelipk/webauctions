@@ -52,15 +52,16 @@ a.list-group-item.active small {
 			<ul class="pagination pagination-sm" style="float: right;">
 				<li >
 					<button ng-class="{'disabled' : current_page == 1}" ng-disabled="current_page == 1"
-					class="btn btn-default btn-sm" ng-click="get_previous_page()"><</button>
+					class="btn btn-default btn-sm" ng-click="get_page(current_page-1)"><</button>
 				</li>
 				
 				<li ng-repeat="p in pages" >
-					<button class="btn btn-default btn-sm" ng-class="{'btn-primary' : current_page == p}">{{p}}</button>
+					<button class="btn btn-default btn-sm" ng-class="{'btn-primary' : current_page == p}" 
+					ng-click="get_page(p)">{{p}}</button>
 				</li>
 				
 				<li>
-					<button class="btn btn-default btn-sm" ng-disabled="current_page == last_page" ng-click="get_next_page()" 
+					<button class="btn btn-default btn-sm" ng-disabled="current_page == last_page" ng-click="get_page(current_page+1)" 
 					ng-class="{'disabled' : current_page == last_page}"
 					>>
 					</button>

@@ -352,19 +352,12 @@
 				to = $scope.filtered_items.length;
 			return $scope.filtered_items.slice(from, to);
 		};
-
-		$scope.get_next_page = function() { 
-			console.log("change_page");
-			$scope.current_page++;
-			$scope.current_items = $scope.get_items();
-			$window.scrollTo(0,0);
-		}
 		
-		$scope.get_previous_page = function() {
-			$scope.current_page--;
+		$scope.get_page = function(page_num) {
+			$scope.current_page = page_num;
 			$scope.current_items = $scope.get_items();
-			$window.scrollTo(0,0);
-		}
+			$window.scrollTo(0,0);	
+		}; 
 		
 		var max_bids_array = [];
 		$scope.fix_filter_prices = function(items) {
