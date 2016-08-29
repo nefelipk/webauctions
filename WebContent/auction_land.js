@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module('auction_land', ['ngResource','ngRoute', 'ngMessages', 'dibari.angular-ellipsis','uiGmapgoogle-maps' ])
+	var app = angular.module('auction_land', ['ngResource','LocalStorageModule','ngRoute', 'ngMessages', 'dibari.angular-ellipsis','uiGmapgoogle-maps' ])
 	.config(function(uiGmapGoogleMapApiProvider) {
 	    uiGmapGoogleMapApiProvider.configure({
 	        key: 'AIzaSyAkwqT274QZMdhfDQCS_C71GJ5wR5rmDRE',
@@ -299,13 +299,15 @@
 	 * }]);
 	 */
 	
-	app.controller('SearchController',['$scope','$route','$location','Item','SearchService',
-	                                   function($scope,$route,$location,Item,SearchService) {
+	app.controller('SearchController',['$scope','$route','localStorageService','$location','Item','SearchService',
+	                                   function($scope,$route,localStorageService,$location,Item,SearchService) {
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
+				localStorageService.remove('auctions');
 				$scope.items = data.slice();
 				SearchService.add_items($scope.items);
 				console.log($scope.items);
+				localStorageService.set('auctions',$scope.items);
 				$route.reload();
 				$location.path("/search");
 			});	
@@ -315,9 +317,14 @@
 			console.log("search_controller");
 		};
 	}]);
-	
-	app.controller('AuctionsController', [ '$window', '$scope','$location','AuctionService','Item','SearchService',
-	                                       function($window, $scope,$location,AuctionService,Item,SearchService ) {
+		
+	app.controller('AuctionsController', [ '$window', '$scope','$location','localStorageService','AuctionService','Item','SearchService',
+	                                       function($window, $scope,$location,localStorageService,AuctionService,Item,SearchService ) {
+		
+		$scope.items = localStorageService.get('auctions');
+		console.log("refreshed items : ");
+		console.log($scope.items);
+		
 		var items_per_page = 5;
 		$scope.items_per_page = items_per_page;
 		
@@ -430,7 +437,7 @@
 			}
 		};
 		
-		$scope.items = SearchService.get_items();
+		//$scope.items = SearchService.get_items();
 		console.log("items : ");
 		console.log($scope.items);
 		$scope.fix_filter_prices($scope.items);
@@ -634,7 +641,7 @@
 	} ]);
 	
 	app.service('AuctionService',function() {
-		var current_auction = {};
+		var current_auction = null;
 		var google_api = null;
 		var map_instance = null;
 		var set_current_auction = function(auction) {
@@ -668,9 +675,14 @@
 	
 	var global_google = "";
 
-	app.controller('AuctionController',['$scope','$route','AuctionService','uiGmapGoogleMapApi', function($scope,$route,AuctionService,uiGmapGoogleMapApi) {
-		$scope.current = AuctionService.get_current_auction();
+	app.controller('AuctionController',['$scope','$route','localStorageService','AuctionService','uiGmapGoogleMapApi', function($scope,$route,localStorageService,AuctionService,uiGmapGoogleMapApi) {
 		
+		$scope.current = AuctionService.get_current_auction();
+		console.log($scope.current);
+		if($scope.current == null)
+			$scope.current = localStorageService.get('current_item');
+		localStorageService.set('current_item',$scope.current);
+		  
 		$scope.get_first_bid = function(auction) {
 			auction.firstBid = auction.firstBid.replace('$','');
 			console.log(auction.firstBid);
