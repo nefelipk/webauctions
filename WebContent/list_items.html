@@ -47,11 +47,11 @@ a.list-group-item.active small {
 	     border-left: 0px;
      }
 }
+
 </style>
 </head>
 
 <body>
-	<div class="well">
 		<div class="list-group ">
 			<a ng-repeat="i in current_items" 
 					href="#/item" class="list-group-item"
@@ -89,27 +89,23 @@ a.list-group-item.active small {
 				</div>	
 			</a>
 		</div>
-	</div>
+		<ul class="pagination pagination-sm" style="float: right;">
+			<li><a ng-class="{'disabled' : current_page == 1}"
+				ng-disabled="current_page == 1" class="btn btn-default btn-sm"
+				ng-click="get_page(current_page-1)"><</a>
+			</li>
 
-		<ul class="pager">
-			<li >
-				<button ng-class="{'disabled' : current_page == 1}" ng-disabled="current_page == 1"
-				class="btn btn-default btn-sm" ng-click="get_page(p)"><</button>
+			<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}">
+				<a class="btn btn-default btn-sm"
+				ng-click="get_page(p)">{{p}}</a>
 			</li>
-				
-			<li ng-repeat="p in pages" >
-				<button class="btn btn-default btn-sm" ng-class="{'btn-primary' : current_page == p}" 
-				ng-click="get_page(p)">{{p}}</button>
-			</li>
-			
-			<li>
-				<button class="btn btn-default btn-sm" ng-disabled="current_page == last_page" ng-click="get_page(p)"
-				ng-class="{'disabled' : current_page == last_page}"
-				>>
-				</button>
+
+			<li><a class="btn btn-default btn-sm"
+				ng-disabled="current_page == last_page"
+				ng-click="get_page(current_page+1)"
+				ng-class="{'disabled' : current_page == last_page}">> </a>
 			</li>
 		</ul>
-	</div>
 
 </body>
 </html>
