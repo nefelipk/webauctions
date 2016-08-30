@@ -4,28 +4,30 @@
 <title>Insert title here</title>
 
 <style>
-	.sign-up-modal {
-		margin-top:15%;
-	}
-	.carousel-inner > .item > img,
+.carousel-inner > .item > img,
 	.carousel-inner > .item > a > img {
 		width: auto;
 		height: 300px !important;
 		margin: auto;
-	}
+}
 	.footer {
 		position: absolute;
 		bottom: 0;
 		width: 100%;
-		/* Set the fixed height of the footer here */
+		/* Set the fixed height of the footer here 
 		height: 60px;
 	}
+/*
+	.sign-up-modal {
+		margin-top:15%;
+	}
+	
 	body {
 		margin-bottom:60px;
 		background-color: #f5f5f5;
 		
 	}
-	
+*/	
 </style>
 
 </head>
@@ -35,7 +37,7 @@
 	    <li class="active">Home</li>
 	</ol>
 
-	<div ng-include="'index_header.html'"></div>
+	<div ng-include="'app/components/home/index_header.html'"></div>
 	
 	<!-- Search bar -->
 	<div class="search_bar" ng-controller="SearchController">
@@ -74,7 +76,7 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
-					<img src="images/bidders.jpg" alt="Chania" width="200" height="100">
+					<img src="assets/img/bidders.jpg" alt="Chania" width="200" height="100">
 					<div class="carousel-caption">
 						<h3>Bidders</h3>
 						<p style="color: #2f4f4f;">Bidders</p>
@@ -82,19 +84,19 @@
 				</div>
 				
 				<div class="item">
-					<img src="images/need_items.png" alt="Flower" width="200" height="100">
+					<img src="assets/img/need_items.png" alt="Flower" width="200" height="100">
 				</div>
 				
 				<div class="item">
-					<img src="images/bids.png" alt="Chania" width="200" height="100">
+					<img src="assets/img/bids.png" alt="Chania" width="200" height="100">
 				</div>
 				
 				<div class="item">
-					<img src="images/live_auction.png" alt="Flower" width="200" height="100">
+					<img src="assets/img/live_auction.png" alt="Flower" width="200" height="100">
 				</div>
 				
 				<div class="item">
-					<img src="images/sold.jpg" alt="Flower" width="200" height="100">
+					<img src="assets/img/sold.jpg" alt="Flower" width="200" height="100">
 				</div>
 			</div>
 			

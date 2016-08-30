@@ -1,12 +1,13 @@
 <html ng-app>
 <head>
 	<title>Auction Land - Header</title>
+	<!-- 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<script src="jquery/jquery-1.12.4.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
-	
+	-->
 	<style>
 		/* Remove the navbar's default margin-bottom and rounded borders */ 
 		.navbar {
@@ -74,7 +75,7 @@
 		<div class="container">
 			<div class="navbar-header header-width">
 				<a href="/WebAuctions">
-					<img class="navbar-brand logo-size" src="images/logo4.png" />
+					<img class="navbar-brand logo-size" src="assets/img/logo4.png" />
 				</a>
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 					<span class="icon-bar"></span>
@@ -103,7 +104,7 @@
 	</div>
 </body>
   
-<div ng-include="'signup.html'"></div>
-<div ng-include="'login.html'"></div>
+<div ng-include="'app/shared/header/signup.html'"></div>
+<div ng-include="'app/shared/header/login.html'"></div>
 
 </html>
