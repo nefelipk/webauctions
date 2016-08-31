@@ -12,15 +12,7 @@ body {
 	font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-.footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #efefef;
-  text-align: center;
-}
+
 
 .footer-distributed{
 	position: absolute;

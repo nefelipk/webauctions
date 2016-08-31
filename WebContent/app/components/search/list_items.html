@@ -7,12 +7,27 @@
 a.list-group-item {
 	height: auto;
 	min-height: 250px;
+	  -o-transition:.9s;
+  -ms-transition:.9s;
+  -moz-transition:.9s;
+  -webkit-transition:.9s;
+  /* ...and now for the proper property */
+  transition:.9s;  
 }
 
 a.list-group-item.active small {
 	color: #fff;
 }
 
+a.list-group-item:hover,  
+a.list-group-item:focus {  
+  text-decoration: none;  
+ // background-color: #9b59b6;
+  opacity : 0.95;
+ // color : #ecf0f1;
+ background-color: #ecf0f1
+}  
+  
 /*
 .pagination>li>a, .pagination>li>span { 
 	border-radius: 50% !important;margin: 0 5px;
