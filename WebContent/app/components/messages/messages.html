@@ -2,12 +2,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Messages</title>
+
 <style>
-html, body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-}
+
 
 #wrapper {
 	min-height: 100%;
@@ -23,34 +20,28 @@ html, body {
 	padding-bottom: 110px; /* Height of the footer element */
 }
 
-#footer {
-	background: #ffab62;
-	width: 100%;
-	height: 100px;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-}
 .pagination>li>a {
 	border: 0px;
-	color:black;'
+	color: black;
+	'
 }
+
 .pagination>li.active>a {
-    font-weight: 900;
-    color:black;
-    background:transparent;
-    margin-top:0px;
-    padding-top:2px;
-    padding-bottom:0px;
-    font-size:16px;
+	font-weight: 900;
+	color: black;
+	background: transparent;
+	margin-top: 0px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	font-size: 16px;
 }
-.pagination > li.active > a:hover,
-.pagination > li > a:hover {
-	background-color:transparent;
+
+.pagination>li.active>a:hover, .pagination>li>a:hover {
+	background-color: transparent;
 }
 
 .well {
-	background-color:transparent;
+	background-color: transparent;
 }
 
 h3 {
@@ -60,181 +51,339 @@ h3 {
 	padding: 10px 0px 6px 0px;
 	font-size: 26px;
 	letter-spacing: -2px;
-	font-weight: bold; 
+	font-weight: bold;
 }
+
+
+.side_borders {
+	border-left: 1px dashed #333;
+	border-right: 1px dashed #333;
+}
+
+ul > li > a {
+	color : #333;
+}
+
+ul > li > a  : hover {
+
+}
+
+ul > li > a.active {
+	font-weight : 600;
+	color : red;
+}
+
 
 </style>
 </head>
 <body>
 
-<div ng-include="'app/shared/header/header.html'"></div>
+	<div ng-include="'app/shared/header/header.html'"></div>
 
-<div class="container-fluid" ng-controller="MessagesController">
-    <div class="row">
-	<div class="col-sm-offset-1" >
-	<h3>
-	<span style="margin-top:15px;" class="glyphicon glyphicon-comment"></span>Messages
-	</h3>
-	</div>
-	</div>
-	
-    <div class="row">
-    <div class="col-sm-offset-1 col-sm-9">
-    <hr />
-    </div>
-    </div>
-   
-    <div class="row">
-        <div class="col-sm-offset-3 col-sm-3 ">
-            <div class="btn-group" style="margin:0;">
-                <button type="button" class="btn btn-default">
-                    <div class="checkbox" style="margin: 0;">
-                        <label>
-                            <input type="checkbox"> Select all
-                        </label>
-                    </div>
-                </button>
-            </div>
-            <button type="button" class="btn btn-default" data-toggle="tooltip" title="Refresh">
-                   <span class="glyphicon glyphicon-refresh"></span>   </button>
-        </div>
-        
-		<div class="col-sm-offset-2 col-sm-2">
-			<ul class="pagination pagination-sm" style="float: right;margin:0">
-			<li><a ng-class="{'disabled' : current_page == 1}"
-				ng-hide="current_page == 1"
-				ng-disabled="current_page == 1" 
-				ng-click="get_page(current_page-1)" ><</a>
-			</li>
-			<li> 
-			<a>
-				{{current_page}} of {{pages.length}}
-			</a>
-			</li>
-
-			<li><a 
-				ng-hide="current_page == last_page"
-				ng-click="get_page(current_page+1)"
-				ng-class="{'disabled' : current_page == last_page}">> </a>
-			</li>
-		</ul>
+	<div class="container-fluid" ng-controller="MessagesController">
+		<div class="row">
+			<div class="col-sm-offset-1">
+				<h3>
+					<span style="margin-top: 15px;" class="glyphicon glyphicon-comment"></span>Messages
+				</h3>
+			</div>
 		</div>
-    </div>
 
-    <div class="row">
-    <div class="col-sm-offset-1 col-sm-9">
-    <hr />
-    </div>
-    </div>
+		<div class="row">
+			<div class="col-sm-offset-1 col-sm-9">
+				<hr />
+			</div>
+		</div>
 
-    <div class="row">
-        <div class="col-sm-offset-1 col-sm-3 col-md-2 well">
-            <a href="#" class="btn btn-danger btn-sm btn-block" role="button">COMPOSE</a>
-            <hr />
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><span class="badge pull-right">42</span> Inbox </a></li>
-                <li><a href="javascript:undefined">Sent</a></li>
-            </ul>
+		<div class="row">
+			
+        <div class="col-sm-offset-1 col-sm-3 col-md-2 side_borders">
+			<ul class="nav nav-tab nav-stacked" role="tablist">
+				<li class="text-center" role="presentation" >
+					<a ng-click="set_active(1)" id="compose_tab" data-toggle="tab" data-target="#compose" >
+	        	   	<span class="glyphicon glyphicon-pencil" ></span>
+	    	       	Compose
+					</a>
+				</li>
+				<li class="text-center" role="presentation" >
+					<a  data-toggle="tab" class="active" data-target="#inbox"
+						ng-click ="set_active(2)" id="inbox_tab">
+						<span class="glyphicon glyphicon-import" style="margin-right: 3px;"></span>
+						Inbox
+					</a>
+				</li>
+				
+				<li class="text-center" role="presentation">
+					<a  data-toggle="tab" data-target="#sent"
+					ng-click="set_active(3)" id="sent_tab"><span class="glyphicon glyphicon-export" style="margin-right: 3px;"></span>
+						Sent
+					</a>
+				</li>
+				
+				<li class="text-center" role="presentation">
+					<a  data-toggle="pill" data-target="">
+					<span	class="glyphicon glyphicon-chevron-down" style="margin-right: 3px;"></span>
+						More
+					</a>
+				</li>
+			</ul>
+			
         </div>
         
-        <div class="col-sm-7" >
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab"><span class="glyphicon glyphicon-inbox">
-                </span>Inbox</a></li>
-            </ul>
-
-				<div class="panel-group" id="accordion">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<div class="row">
-								<input class="col-sm-1" type="checkbox" ng-click="selected = !selected;"/>
-								
-								<a class="col-sm-10" data-toggle="collapse" data-parent="#accordion"
-									href="#collapse1" onclick="return false;""> Username
-								</a>
-								<button ng-show="selected == true;" type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-trash"></span>
-								</button>
-								</div>
-							</h4>
-						</div>
-						<div id="collapse1" class="panel-collapse collapse in">
-							<div class="panel-body">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt
-								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-								commodo consequat.</div>
-						</div>
+			<div class="col-sm-7 tab-content">
+				<div role="tabpanel" id="inbox" class="tab-pane fade in active">
+				<div class="panel-group" id="accordion" >
+					<div class="btn-group" style="margin: 0;">
+						<button type="button" class="btn btn-default">
+							<div class="checkbox" style="margin: 0;">
+								<label> <input type="checkbox"> Select all
+								</label>
+							</div>
+						</button>
+						<button ng-show="selected == true;" type="button"
+							class="btn btn-danger">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+						<button type="button" class="btn btn-default"
+							data-toggle="tooltip" title="Refresh">
+							  <span class="glyphicon glyphicon glyphicon-repeat"></span>   
+						</button>
+						
 					</div>
+
+					<ul class="pagination pagination-sm pull-right"
+						style="float: right; margin: 0">
+						<li><a ng-class="{'disabled' : current_page == 1}"
+							ng-hide="current_page == 1" ng-disabled="current_page == 1"
+							ng-click="get_page(current_page-1)"><</a></li>
+						<li><a> {{current_page}} of {{pages.length}} </a></li>
+
+						<li><a href="javascript:undefined" ng-hide="current_page == last_page"
+							ng-click="get_page(current_page+1)"
+							ng-class="{'disabled' : current_page == last_page}">> </a></li>
+					</ul>
 					
 					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapse2" onclick="return false;"> Collapsible Group 2</a>
-							</h4>
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<div class="row">
+										<input class="col-sm-1" type="checkbox"
+											ng-click="selected = !selected;" style="border-right: 2px;" />
+										<a class="col-sm-9" data-toggle="collapse"
+											data-parent="#accordion" href="#collapse1"
+											onclick="return false;""> Username </a>
+
+										<button ng-show="selected == true;"
+											ng-click="show_reply = true" type="button"
+											class="btn btn-default">
+											<span class="glyphicon glyphicon-share-alt"></span>
+										</button>
+										<button ng-show="selected == true;" type="button"
+											class="btn btn-danger">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</div>
+								</h4>
+							</div>
+							<div id="collapse1" class="panel-collapse collapse ">
+								<div class="panel-body">Lorem ipsum dolor sit amet,
+									consectetur adipisicing elit, sed do eiusmod tempor incididunt
+									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+									nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+									commodo consequat.</div>
+							</div>
+
+							<!-- Reply div -->
+							<div ng-show="show_reply" class="panel panel-default">
+								<div class="panel-body message">
+									<p class="text-center">New Message</p>
+									<form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="to" class="col-sm-1 control-label">To:</label>
+											<div class="col-sm-11">
+												<input type="email" class="form-control" id="to"
+													placeholder="Type email">
+											</div>
+										</div>
+									</form>
+									<div class="col-sm-11 col-sm-offset-1">
+										<br />
+										<div class="form-group">
+											<textarea class="form-control" id="message" name="body"
+												rows="12" placeholder="Click here to reply"></textarea>
+										</div>
+										<div class="form-group">
+											<button type="submit" class="btn btn-success">Send</button>
+											<button type="submit" ng-click="show_reply = !show_reply"
+												class="btn btn-danger">Discard</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div id="collapse2" class="panel-collapse collapse">
-							<div class="panel-body">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt
-								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-								commodo consequat.</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<div class="row">
+										<input class="col-sm-1" type="checkbox"
+											ng-click="selected = !selected;" style="border-right: 2px;" />
+										<a class="col-sm-9" data-toggle="collapse"
+											data-parent="#accordion" href="#collapse2"
+											onclick="return false;""> Username </a>
+
+										<button ng-show="selected == true;"
+											ng-click="show_reply = true" type="button"
+											class="btn btn-default">
+											<span class="glyphicon glyphicon-share-alt"></span>
+										</button>
+										<button ng-show="selected == true;" type="button"
+											class="btn btn-danger">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</div>
+								</h4>
+							</div>
+							<div id="collapse2" class="panel-collapse collapse ">
+								<div class="panel-body">Lorem ipsum dolor sit amet,
+									consectetur adipisicing elit, sed do eiusmod tempor incididunt
+									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+									nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+									commodo consequat.</div>
+							</div>
+
+							<!-- Reply div -->
+							<div ng-show="show_reply" class="panel panel-default">
+								<div class="panel-body message">
+									<p class="text-center">New Message</p>
+									<form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="to" class="col-sm-1 control-label">To:</label>
+											<div class="col-sm-11">
+												<input type="email" class="form-control" id="to"
+													placeholder="Type email">
+											</div>
+										</div>
+									</form>
+									<div class="col-sm-11 col-sm-offset-1">
+										<br />
+										<div class="form-group">
+											<textarea class="form-control" id="message" name="body"
+												rows="12" placeholder="Click here to reply"></textarea>
+										</div>
+										<div class="form-group">
+											<button type="submit" class="btn btn-success">Send</button>
+											<button type="submit" ng-click="show_reply = !show_reply"
+												class="btn btn-danger">Discard</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<div class="row">
+										<input class="col-sm-1" type="checkbox"
+											ng-click="selected = !selected;" style="border-right: 2px;" />
+										<a class="col-sm-9" data-toggle="collapse"
+											data-parent="#accordion" href="#collapse3"
+											onclick="return false;""> Username </a>
+
+										<button ng-show="selected == true;"
+											ng-click="show_reply = true" type="button"
+											class="btn btn-default">
+											<span class="glyphicon glyphicon-share-alt"></span>
+										</button>
+										<button ng-show="selected == true;" type="button"
+											class="btn btn-danger">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</div>
+								</h4>
+							</div>
+							<div id="collapse3" class="panel-collapse collapse ">
+								<div class="panel-body">Lorem ipsum dolor sit amet,
+									consectetur adipisicing elit, sed do eiusmod tempor incididunt
+									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+									nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+									commodo consequat.</div>
+							</div>
+
+							<!-- Reply div -->
+							<div ng-show="show_reply" class="panel panel-default">
+								<div class="panel-body message">
+									<p class="text-center">New Message</p>
+									<form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="to" class="col-sm-1 control-label">To:</label>
+											<div class="col-sm-11">
+												<input type="email" class="form-control" id="to"
+													placeholder="Type email">
+											</div>
+										</div>
+									</form>
+									<div class="col-sm-11 col-sm-offset-1">
+										<br />
+										<div class="form-group">
+											<textarea class="form-control" id="message" name="body"
+												rows="12" placeholder="Click here to reply"></textarea>
+										</div>
+										<div class="form-group">
+											<button type="submit" class="btn btn-success">Send</button>
+											<button type="submit" ng-click="show_reply = !show_reply"
+												class="btn btn-danger">Discard</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+				<div role="tabpanel" id="compose" class="tab-pane fade">
 					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapse3" onclick="return false;"> Collapsible Group 3</a>
-							</h4>
-						</div>
-						<div id="collapse3" class="panel-collapse collapse">
-							<div class="panel-body">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt
-								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-								commodo consequat.</div>
+						<div class="panel-body message">
+							<p class="text-center">New Message</p>
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<label for="to" class="col-sm-1 control-label">To:</label>
+									<div class="col-sm-11">
+										<input type="email" class="form-control" id="to"
+											placeholder="Type username">
+									</div>
+								</div>
+							</form>
+							<div class="row">
+								<div class="col-sm-11 col-sm-offset-1">
+								
+								<div class="form-group">
+									<textarea class="form-control" id="message" name="body"
+										rows="12" placeholder="Click here to reply"></textarea>
+								</div>
+								</div>
+							</div>	
+								<div class="row">
+									<div class="col-sm-offset-1 col-sm-1">
+										<button type="submit" class="btn btn-success">Send</button>
+									</div>
+									<div class="col-sm-offset-7 col-sm-2 pull-right">	
+										<button type="submit" ng-click="show_reply = !show_reply"
+											class="btn btn-danger">Discard</button>
+									</div>
+								</div>
+
+							</div>
 						</div>
 					</div>
 				</div>
 
-
 			</div>
-        
-    </div>
-</div>
-
-		<div id="footer" class="text-center">
-			<p>Footer Text</p>
 		</div>
-	</div>
+<!-- 
+	<footer class="footer text-center" style="margin-top: 50px;"
+		<p>Footer Text</p>
+	</footer>
+	-->
 </body>
 </html>
 
-<!-- 
-            <div class="tab-content">
-                <div class="tab-pane fade in active" id="home">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <input type="checkbox">
-                            <span class="name" style="min-width: 120px;
-                                display: inline-block;">Username</span> 
-                            <span class="">Subject</span>
-                            <span class="badge">12:10 AM</span> 
-                       </a>
-                       
-                    </div>
-                </div>
-                <div class="tab-pane fade in" id="profile">
-                    <div class="list-group">
-                        <div class="list-group-item">
-                            <span class="text-center">This tab is empty.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade in" id="messages">...</div>
-                <div class="tab-pane fade in" id="settings">This tab is empty.</div>
-            </div>
--->
