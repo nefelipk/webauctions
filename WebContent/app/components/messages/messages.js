@@ -1,5 +1,5 @@
 
-angular.module('auction_land').controller('MessagesController',['$scope',function($scope) {
+angular.module('auction_land').controller('MessagesController',['$scope','Message',function($scope,Message) {
 	$scope.pages = [1,2];		
 	$scope.current_page = 1;
 	$scope.selected = false;
@@ -20,5 +20,17 @@ angular.module('auction_land').controller('MessagesController',['$scope',functio
 			sent_tab.addClass('active');
 
 	};
-
+	
+	$scope.message = {};
+	$scope.send = function() {
+		$scope.message.message = "This is a TEST MESSAGE";
+		$scope.message.receiverUsername = "golddust49";
+		$scope.message.senderUsername = "pro-one";
+		$scope.read = false;
+		var date = new Date();
+		$scope.message.time = date.getTime();
+		Message.save($scope.message).$promise.then(function(data) {
+			return;
+		});
+	}
 }]);

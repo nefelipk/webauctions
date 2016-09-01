@@ -302,14 +302,7 @@ angular.module('auction_land').controller('AuctionsController',
 			$scope.current_items = $scope.get_items();
 		}
 		
-		$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-			var google = AuctionService.get_google_api();
-			var map = AuctionService.get_map();
-			console.log("called");
-			current_item_location();
-			google.maps.event.trigger(map.control.getGMap(), 'resize'); 
-			console.log("exit");
-		});
+		
 		
 		$(window).on("resize.doResize", function() {
 

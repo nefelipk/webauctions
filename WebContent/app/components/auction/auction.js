@@ -114,6 +114,13 @@ angular.module('auction_land').controller('AuctionController',['$scope','$route'
 		AuctionService.set_map($scope.map);
 	});
 		
-	
+	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+		var google = AuctionService.get_google_api();
+		var map = AuctionService.get_map();
+		console.log("called");
+		current_item_location();
+		google.maps.event.trigger(map.control.getGMap(), 'resize'); 
+		console.log("exit");
+	});
 	
 }]);

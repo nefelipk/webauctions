@@ -11,19 +11,13 @@ import java.sql.Timestamp;
  */
 @Entity
 @NamedQuery(name="Message.findAll", query="SELECT m FROM Message m")
-@Table(name="Message")
+@Table(name="\"Message\"")
 public class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idMessage;
-
-	private String message;
-
-	private boolean read;
-
-	private Timestamp time;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -34,6 +28,12 @@ public class Message implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="idReceiver")
 	private User user2;
+		
+	private String message;
+	@Column(name="\"read\"")
+	private boolean read;
+
+	private Timestamp time;
 
 	public Message() {
 	}

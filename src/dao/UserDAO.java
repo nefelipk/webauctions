@@ -88,4 +88,23 @@ public class UserDAO {
         em.close();
         return user;
 	}
+	
+	public entities.User getUserByUsername(String username) {
+		EntityManager em = JPAResource.factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+
+		Query q = em.createQuery("Select u from User u where u.username = ?1");
+		q.setParameter(1, username);
+		
+		/* original code 
+		 * entities.User user = (User) q.getSingleResult();
+		 */
+		entities.User user = (User) q.getResultList().get(0);
+		
+
+		tx.commit();
+		em.close();
+		return user;
+	}
 }
