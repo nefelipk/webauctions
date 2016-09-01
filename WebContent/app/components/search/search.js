@@ -4,7 +4,6 @@ angular.module('auction_land').controller('SearchController',['$scope','$route',
 		$scope.search = function(term) {
 			$scope.searching = true;
 			Item.query({term : term}).$promise.then(function (data) {
-				$scope.searching = false;
 				localStorageService.remove('auctions');
 				$scope.items = data.slice();
 				SearchService.add_items($scope.items);
@@ -12,6 +11,7 @@ angular.module('auction_land').controller('SearchController',['$scope','$route',
 				localStorageService.set('auctions',$scope.items);
 				$route.reload();
 				$location.path("/search");
+				$scope.searching = false;
 			});	
 		};
 		

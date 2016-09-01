@@ -23,7 +23,6 @@ angular.module('auction_land').controller('MessagesController',['$scope','Messag
 	
 	$scope.message = {};
 	$scope.send = function() {
-		$scope.message.message = "This is a TEST MESSAGE";
 		$scope.message.receiverUsername = "golddust49";
 		$scope.message.senderUsername = "pro-one";
 		$scope.read = false;
