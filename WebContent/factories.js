@@ -15,5 +15,5 @@ angular.module('auction_land').factory('Item', [ '$resource', function($resource
 } ]);
 
 angular.module('auction_land').factory('Message', [ '$resource', function($resource) {
-	return $resource('http://localhost:8080/WebAuctions/services/messages/');
+	return $resource('http://localhost:8080/WebAuctions/services/messages/:username');
 } ]);

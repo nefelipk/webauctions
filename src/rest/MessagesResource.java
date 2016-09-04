@@ -1,16 +1,20 @@
 package rest;
 
-import java.util.logging.Logger;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
 import dao.MessageDAO;
 import dao.UserDAO;
+import model.wrappers.MessageWrapper;
 
 @Path("/messages")
 public class MessagesResource {
@@ -32,8 +36,8 @@ public class MessagesResource {
 		if(id > 0) {
 			return Response
 				.created(UriBuilder.fromResource(UserResource.class)
-						.path(String.valueOf(id))
-						.build())
+				.path(String.valueOf(id))
+				.build())
 				.build();
 		}
 		else {
@@ -41,4 +45,14 @@ public class MessagesResource {
 		}
 	}
 	
+	@GET
+	@Path("/{username}")
+	@Produces({"application/json"})
+	public List<model.Message> getMessageByUsername(@PathParam("username") String username) {
+		MessageDAO messageDAO = new MessageDAO();
+		List<entities.Message> m = messageDAO.getMessageByUsername(username);
+		
+		List<model.Message> messages = MessageWrapper.mapList(m);
+		return messages;
+	}
 }
