@@ -60,6 +60,10 @@ h3 {
 	border-right: 1px dashed #333;
 }
 
+.right_border {
+	border-right: 1px solid #333;
+}
+
 ul > li > a {
 	color : #333;
 }
@@ -175,166 +179,41 @@ ul > li > a.active {
 							ng-class="{'disabled' : current_page == last_page}">> </a></li>
 					</ul>
 					
-					<div class="panel panel-default">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default" ng-repeat="m in messages">
 							<div class="panel-heading">
-								<h4 class="panel-title">
-									<div class="row">
-										<input class="col-sm-1" type="checkbox"
-											ng-click="selected = !selected;" style="border-right: 2px;" />
-										<a class="col-sm-9" data-toggle="collapse"
-											data-parent="#accordion" href="#collapse1"
-											onclick="return false;""> Username </a>
-
-										<button ng-show="selected == true;"
-											ng-click="show_reply = true" type="button"
-											class="btn btn-default">
-											<span class="glyphicon glyphicon-share-alt"></span>
-										</button>
-										<button ng-show="selected == true;" type="button"
-											class="btn btn-danger">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
+								<div class="row">
+									<div class="col-sm-1 right_border">
+									<input  type="checkbox"
+										ng-click="selected = !selected;"/>
 									</div>
-								</h4>
-							</div>
-							<div id="collapse1" class="panel-collapse collapse ">
-								<div class="panel-body">Lorem ipsum dolor sit amet,
-									consectetur adipisicing elit, sed do eiusmod tempor incididunt
-									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-									nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-									commodo consequat.</div>
-							</div>
-
-							<!-- Reply div -->
-							<div ng-show="show_reply" class="panel panel-default">
-								<div class="panel-body message">
-									<p class="text-center">New Message</p>
-									<form class="form-horizontal" role="form">
-										<div class="form-group">
-											<label for="to" class="col-sm-1 control-label">To:</label>
-											<div class="col-sm-11">
-												<input type="email" class="form-control" id="to"
-													placeholder="Type email">
-											</div>
-										</div>
-									</form>
-									<div class="col-sm-11 col-sm-offset-1">
-										<br />
-										<div class="form-group">
-											<textarea class="form-control" id="message" name="body"
-												rows="12" placeholder="Click here to reply"></textarea>
-										</div>
-										<div class="form-group">
-											<button type="submit" class="btn btn-success">Send</button>
-											<button type="submit" ng-click="show_reply = !show_reply"
-												class="btn btn-danger">Discard</button>
-										</div>
+									<a class="col-sm-7" data-toggle="collapse"
+										data-parent="#accordion" href="#collapse{{m.pos}}"
+										onclick="return false;""> {{m.senderUsername}} 
+									</a>
+									<div class="col-sm-4">
+									<time class="pull-right" datetime="{{m.time}}">{{m.readable_date}}</time>
+									<button ng-show="selected == true;"
+										ng-click="show_reply = true" type="button"
+										class="btn btn-default">
+										<span class="glyphicon glyphicon-share-alt"></span>
+									</button>
+									<button ng-show="selected == true;" type="button"
+										class="btn btn-danger">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
 									</div>
 								</div>
 							</div>
-						</div>
-
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<div class="row">
-										<input class="col-sm-1" type="checkbox"
-											ng-click="selected = !selected;" style="border-right: 2px;" />
-										<a class="col-sm-9" data-toggle="collapse"
-											data-parent="#accordion" href="#collapse2"
-											onclick="return false;""> Username </a>
-
-										<button ng-show="selected == true;"
-											ng-click="show_reply = true" type="button"
-											class="btn btn-default">
-											<span class="glyphicon glyphicon-share-alt"></span>
-										</button>
-										<button ng-show="selected == true;" type="button"
-											class="btn btn-danger">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</div>
-								</h4>
-							</div>
-							<div id="collapse2" class="panel-collapse collapse ">
-								<div class="panel-body">Lorem ipsum dolor sit amet,
-									consectetur adipisicing elit, sed do eiusmod tempor incididunt
-									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-									nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-									commodo consequat.</div>
+							<div id="collapse{{m.pos}}" class="panel-collapse collapse ">
+								<div class="panel-body">{{m.time}}<br/>{{m.message}}</div>
 							</div>
 
 							<!-- Reply div -->
 							<div ng-show="show_reply" class="panel panel-default">
 								<div class="panel-body message">
-									<p class="text-center">New Message</p>
-									<form class="form-horizontal" role="form">
-										<div class="form-group">
-											<label for="to" class="col-sm-1 control-label">To:</label>
-											<div class="col-sm-11">
-												<input type="email" class="form-control" id="to"
-													placeholder="Type email">
-											</div>
-										</div>
-									</form>
-									<div class="col-sm-11 col-sm-offset-1">
-										<br />
-										<div class="form-group">
-											<textarea class="form-control" id="message" name="body"
-												rows="12" placeholder="Click here to reply"></textarea>
-										</div>
-										<div class="form-group">
-											<button type="submit" class="btn btn-success">Send</button>
-											<button type="submit" ng-click="show_reply = !show_reply"
-												class="btn btn-danger">Discard</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<div class="row">
-										<input class="col-sm-1" type="checkbox"
-											ng-click="selected = !selected;" style="border-right: 2px;" />
-										<a class="col-sm-9" data-toggle="collapse"
-											data-parent="#accordion" href="#collapse3"
-											onclick="return false;""> Username </a>
-
-										<button ng-show="selected == true;"
-											ng-click="show_reply = true" type="button"
-											class="btn btn-default">
-											<span class="glyphicon glyphicon-share-alt"></span>
-										</button>
-										<button ng-show="selected == true;" type="button"
-											class="btn btn-danger">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</div>
-								</h4>
-							</div>
-							<div id="collapse3" class="panel-collapse collapse ">
-								<div class="panel-body">Lorem ipsum dolor sit amet,
-									consectetur adipisicing elit, sed do eiusmod tempor incididunt
-									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-									nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-									commodo consequat.</div>
-							</div>
-
-							<!-- Reply div -->
-							<div ng-show="show_reply" class="panel panel-default">
-								<div class="panel-body message">
-									<p class="text-center">New Message</p>
-									<form class="form-horizontal" role="form">
-										<div class="form-group">
-											<label for="to" class="col-sm-1 control-label">To:</label>
-											<div class="col-sm-11">
-												<input type="email" class="form-control" id="to"
-													placeholder="Type email">
-											</div>
-										</div>
-									</form>
+									<p class="text-center">Reply</p>
+									
 									<div class="col-sm-11 col-sm-offset-1">
 										<br />
 										<div class="form-group">
@@ -351,9 +230,10 @@ ul > li > a.active {
 							</div>
 						</div>
 				</div>
+				</div>
 			</div>
 				<div ng-show="message_sent" class="slideUp alert alert-success">
-					<strong>Success!</strong> Your message to {{$scope.message.receiverUsername}} have been sent. 
+					<strong>Success!</strong> Your message to {{$scope.new_message.receiverUsername}} have been sent. 
 				</div>
 				<div role="tabpanel" id="compose" class="tab-pane fade">
 					<div class="panel panel-default">
@@ -363,7 +243,7 @@ ul > li > a.active {
 								<div class="form-group">
 									<label for="to" class="col-sm-1 control-label">To:</label>
 									<div class="col-sm-11">
-										<input ng-model="message.receiverUsername" type="text" class="form-control" id="to"
+										<input ng-model="new_message.receiverUsername" type="text" class="form-control" id="to"
 											placeholder="Type username">
 									</div>
 								</div>
@@ -372,7 +252,7 @@ ul > li > a.active {
 								<div class="col-sm-11 col-sm-offset-1">
 								
 								<div class="form-group">
-									<textarea ng-model="message.message" class="form-control" id="message" name="body"
+									<textarea ng-model="new_message.message" class="form-control" id="message" name="body"
 										rows="12" placeholder="Click here to reply"></textarea>
 								</div>
 								</div>

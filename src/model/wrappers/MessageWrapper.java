@@ -11,6 +11,7 @@ public class MessageWrapper {
 		message.setRead(m.getRead());
 		message.setReceiverUsername(m.getUser2().getUsername());
 		message.setSenderUsername(m.getUser1().getUsername());
+		message.setTime(m.getTime().toString());
 		return message;
 	}
 	
