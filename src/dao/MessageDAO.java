@@ -48,12 +48,15 @@ public class MessageDAO {
         {	
         	UserDAO userDAO = new UserDAO();
         	entities.User user = userDAO.getUserByUsername(username);
-        	
-        	Query q = entityManager.
-        			createQuery("Select m from Message m "
-        					+ "where m.user2.idUser = ?1 or m.user1.idUser = ?1 "
-        					+ "order by m.user1.idUser asc");
-            q.setParameter(1,user.getIdUser());    
+        	/*		createQuery("Select m from Message m "
+			+ "where (m.user2.idUser = ?1 or m.user1.idUser = ?1) "
+			+ "and () order by m.user1.idUser asc");
+*/
+        	Query q = entityManager.createQuery("Select m from Message m "
+        			+ "where (m.user2.idUser = ?1 and m.deleted_by_sender = false) or (m.user1.idUser = ?1 and m.deleted_by_receiver = false) "
+        			+ "order by m.time asc");
+        				
+        	q.setParameter(1,user.getIdUser());    
 
             transaction.commit();
             messages = (List<entities.Message>) q.getResultList();
@@ -91,6 +94,7 @@ public class MessageDAO {
         					+ "where m.user2.idUser = ?1 or m.user1.idUser = ?1 "
         					+ "order by m.user1.idUser asc");
 			*/
+        	transaction.commit();
         }	
         catch (PersistenceException e)
         {
