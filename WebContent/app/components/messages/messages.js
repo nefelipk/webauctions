@@ -56,6 +56,7 @@ angular.module('auction_land').controller('MessagesController',
 		}
 	});
 	
+	$scope.current_tab = "Inbox";
 	$scope.set_active = function(tab) {
 		var inbox_tab = angular.element(document.querySelector('#inbox_tab'));
 		var sent_tab = angular.element(document.querySelector('#sent_tab'));
@@ -64,13 +65,18 @@ angular.module('auction_land').controller('MessagesController',
 		sent_tab.removeClass('active');
 		compose_tab.removeClass('active');
 		
-		if(tab == 1)
+		if(tab == 1) {
 			compose_tab.addClass('active');
-		else if(tab == 2)
+			$scope.current_tab = "Compose";
+		}
+		else if(tab == 2) {
+			$scope.current_tab = "Inbox";
 			inbox_tab.addClass('active');
-		else if(tab == 3)
+		}
+		else if(tab == 3) {
+			$scope.current_tab = "Sent";
 			sent_tab.addClass('active');
-
+		}
 	};
 	
 	
@@ -96,4 +102,12 @@ angular.module('auction_land').controller('MessagesController',
 			return;
 		});
 	}
+	
+	$scope.reading = false;
+	$scope.read_message = function(message) {
+		$scope.current = message;
+		$scope.reading = true;
+		$scope.current = true;
+	};
+	
 }]);

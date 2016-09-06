@@ -151,10 +151,13 @@ ul > li > a.active {
 				<div class="panel-group" id="accordion" >
 					<div class="btn-group" style="margin: 0;">
 						<button type="button" class="btn btn-default">
-							<div class="checkbox" style="margin: 0;">
+							 
+							<div class="checkbox" >
 								<label> <input type="checkbox"> Select all
 								</label>
 							</div>
+							
+							
 						</button>
 						<button ng-show="selected == true;" type="button"
 							class="btn btn-danger">
@@ -182,28 +185,28 @@ ul > li > a.active {
 					<div class="panel-group" id="accordion">
 						<div class="panel panel-default" ng-repeat="m in messages">
 							<div class="panel-heading">
-								<div class="row">
-									<div class="col-sm-1 right_border">
-									<input  type="checkbox"
-										ng-click="selected = !selected;"/>
-									</div>
-									<a class="col-sm-7" data-toggle="collapse"
+									<button type="button" class="btn btn-default">
+							 
+							<div class="checkbox" >
+								<label> <input type="checkbox"></label>
+							</div>
+							
+							
+						</button>
+									<a  data-toggle="collapse"
 										data-parent="#accordion" href="#collapse{{m.pos}}"
 										onclick="return false;""> {{m.senderUsername}} 
 									</a>
-									<div class="col-sm-4">
 									<time class="pull-right" datetime="{{m.time}}">{{m.readable_date}}</time>
 									<button ng-show="selected == true;"
 										ng-click="show_reply = true" type="button"
-										class="btn btn-default">
+										class="btn btn-default btn-xs pull-right">
 										<span class="glyphicon glyphicon-share-alt"></span>
 									</button>
 									<button ng-show="selected == true;" type="button"
-										class="btn btn-danger">
+										class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-trash"></span>
 									</button>
-									</div>
-								</div>
 							</div>
 							<div id="collapse{{m.pos}}" class="panel-collapse collapse ">
 								<div class="panel-body">{{m.time}}<br/>{{m.message}}</div>
@@ -229,7 +232,6 @@ ul > li > a.active {
 								</div>
 							</div>
 						</div>
-				</div>
 				</div>
 			</div>
 				<div ng-show="message_sent" class="slideUp alert alert-success">
@@ -277,6 +279,8 @@ ul > li > a.active {
 
 			</div>
 		</div>
+		</div>
+		
 <!-- 
 	<footer class="footer text-center" style="margin-top: 50px;"
 		<p>Footer Text</p>
@@ -285,3 +289,7 @@ ul > li > a.active {
 </body>
 </html>
 
+
+<!-- 
+								
+								-->
