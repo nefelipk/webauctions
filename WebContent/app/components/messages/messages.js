@@ -47,14 +47,24 @@ angular.module('auction_land').controller('MessagesController',
 		message.readable_date = r_month + " " + r_date;
 	}
 	
-	Message.query({username : 'ripone07'}).$promise.then(function(data) {
-		$scope.messages = data;
-		console.log($scope.messages);
-		for(i = 0; i < $scope.messages.length; i++) {
-			$scope.messages[i].pos = i+1;
-			add_readable_date($scope.messages[i]);
-		}
-	});
+	$scope.refresh = function() {
+		Message.query({username : 'ripone07'}).$promise.then(function(data) {
+			$scope.inbox = data[0];
+			$scope.sent = data[1];
+			console.log($scope.sent);
+			console.log($scope.inbox);
+	
+			for(i = 0; i < $scope.inbox.length; i++) {
+				$scope.inbox[i].pos = i+1;
+				add_readable_date($scope.inbox[i]);
+			}
+			for(i = 0; i < $scope.sent.length; i++) {
+				$scope.sent[i].pos = i+1;
+				add_readable_date($scope.sent[i]);
+			}
+		});
+	};
+	$scope.refresh();
 	
 	$scope.current_tab = "Inbox";
 	$scope.set_active = function(tab) {
@@ -79,13 +89,20 @@ angular.module('auction_land').controller('MessagesController',
 		}
 	};
 	
-	
+	$scope.delete_message = function() {
+		if($scope.selected == true) {
+			Message.delete({username : 'ripone', id : $scope.selected_message.id}).$promise.then(function() {
+				console.log("successfully delete message");
+			});
+		}
+	};
 	
 	$scope.new_message = {};
 	$scope.new_message_sent = false;
 	$scope.send = function() {
 		
-		$scope.new_message.senderUsername = "pro-one";
+		$scope.new_message.receiverUsername = "Antonios";
+		$scope.new_message.senderUsername = "ripone07";
 		//$scope.new_message.senderUsername = $cookies.get('username');
 		$scope.read = false;
 		var date = new Date();
@@ -101,13 +118,33 @@ angular.module('auction_land').controller('MessagesController',
 			}, 3000);	
 			return;
 		});
-	}
+	};
+	
+	$scope.select_all = false;
+	$scope.selected = false;
+	$scope.select = function(message) {
+		$scope.selected = !$scope.selected;
+		$scope.selected_message = message;
+	};
 	
 	$scope.reading = false;
 	$scope.read_message = function(message) {
 		$scope.current = message;
 		$scope.reading = true;
-		$scope.current = true;
+		$scope.current.read = true;
+	};
+	
+	$scope.reading_sent = false;
+	$scope.read_sent_message = function(message) {
+		$scope.current_sent = message;
+		$scope.reading_sent = true;
+	};
+	
+	$scope.back = function() {
+		$scope.reading = false;
+		$scope.current = {};
+		$scope.reading_sent = false;
+		$scope.current_sent = {};
 	};
 	
 }]);

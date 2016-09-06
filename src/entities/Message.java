@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @NamedQuery(name="Message.findAll", query="SELECT m FROM Message m")
-@Table(name="\"Message\"")
+@Table(name="Message")
 public class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,8 +30,29 @@ public class Message implements Serializable {
 	private User user2;
 		
 	private String message;
+	
+	/* escape character because 'read' is a keyword for mysql */
 	@Column(name="\"read\"")
 	private boolean read;
+	
+	private boolean deleted_by_receiver;
+	private boolean deleted_by_sender;
+	
+	public boolean isDeleted_by_receiver() {
+		return deleted_by_receiver;
+	}
+
+	public void setDeleted_by_receiver(boolean deleted_by_receiver) {
+		this.deleted_by_receiver = deleted_by_receiver;
+	}
+
+	public boolean isDeleted_by_sender() {
+		return deleted_by_sender;
+	}
+
+	public void setDeleted_by_sender(boolean deleted_by_sender) {
+		this.deleted_by_sender = deleted_by_sender;
+	}
 
 	private Timestamp time;
 

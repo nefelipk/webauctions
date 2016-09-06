@@ -1,8 +1,10 @@
 package rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -48,11 +50,37 @@ public class MessagesResource {
 	@GET
 	@Path("/{username}")
 	@Produces({"application/json"})
-	public List<model.Message> getMessageByUsername(@PathParam("username") String username) {
+	public List<List<model.Message>> getMessageByUsername(@PathParam("username") String username) {
 		MessageDAO messageDAO = new MessageDAO();
 		List<entities.Message> m = messageDAO.getMessageByUsername(username);
 		
 		List<model.Message> messages = MessageWrapper.mapList(m);
-		return messages;
+
+		List<List<model.Message>> allMessages = new ArrayList<List<model.Message>>();
+		List<model.Message> inbox = new ArrayList<model.Message>();
+		List<model.Message> sent = new ArrayList<model.Message>();
+
+		for(model.Message crawl : messages) {
+			if(crawl.getReceiverUsername().equals(username))
+				inbox.add(crawl);
+			else
+				sent.add(crawl);
+		}
+		allMessages.add(inbox);
+		allMessages.add(sent);
+		return allMessages;
+
+	}
+	
+	@DELETE
+	@Path("/{username}/{id}")
+	public Response deleteMessageById(@PathParam("username")String username,@PathParam("id")int id) {
+		MessageDAO messageDAO = new MessageDAO();
+		messageDAO.deleteMessageById(username, id);
+		return Response
+				.created(UriBuilder.fromResource(UserResource.class)
+				.path(String.valueOf(id))
+				.build())
+				.build();
 	}
 }

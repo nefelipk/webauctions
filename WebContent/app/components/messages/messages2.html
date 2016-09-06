@@ -102,12 +102,6 @@ ul > li > a.active {
 .table-inbox tr td:hover {
     cursor: pointer;
 }
-.table-inbox tr td .fa-star.inbox-started, .table-inbox tr td .fa-star:hover {
-    color: #f78a09;
-}
-.table-inbox tr td .fa-star {
-    color: #d5d5d5;
-}
 .table-inbox tr.unread td {
     background: none repeat scroll 0 0 #f7f7f7;
     font-weight: 600;
@@ -181,23 +175,24 @@ ul > li > a.active {
 		</ul>
 	</div>
 	
-	<div class="col-sm-7">
-		<div class="btn-toolbar">
+	<div class="col-sm-7" ng-cloak>
+		<div class="btn-toolbar" ng-hide="current_tab == 'Compose'">
 				<div class="btn-group">
-					<button class="btn btn-default">
+					<button class="btn btn-default" ng-click="back()">
 						<i class="fa fa-arrow-left" aria-hidden="true"></i>
 					</button> 
 				</div>
 				<div class="btn-group">
 					<button class="btn btn-default">
-						<i class="fa fa-check-square-o" aria-hidden="true"> </i>
+						<i class="fa fa-check-square-o" aria-hidden="true" ng-click="select_all = !select_all"> </i>
 					</button>
-					<button class="btn btn-default">
+					<button class="btn btn-default" ng-click="refresh()">
 						<i class="fa fa-refresh"> </i>
 					</button>
 				</div>
 				<div class="btn-group">
-					<button class="btn btn-default">
+					<button class="btn btn-default" ng-click="delete_message()"
+					ng-disabled="(selected == false) && (select_all == false)">
 						<span class="fa fa-trash-o" aria-hidden="true"></span>
 					</button>
 				</div>
@@ -222,15 +217,14 @@ ul > li > a.active {
 			<div ng-show="reading == false" class="inbox-body">
 				<table class="table table-inbox table-hover">
 					<tbody>
-							<tr ng-class="{'unread' : m.read == false}" ng-repeat="m in messages" ng-click="read_message(m)">
-							<td class="inbox-small-cells">
-								<input type="checkbox"
-								class="mail-checkbox">
+							<tr ng-class="{'unread' : m.read == false}" ng-repeat="m in inbox" >
+							<td style="width:5%">
+								<input type="checkbox" ng-click="select(m)" ng-checked="select_all">
 							</td>
-							<td class="view-message  dont-show">
+							<td  ng-click="read_message(m)">
 								{{m.senderUsername}}</td>
-							<td class="view-message ">{{m.first_line}}</td>
-							<td class="view-message  text-right">{{m.readable_date}}</td>
+							<td ng-click="read_message(m)">{{m.first_line}}</td>
+							<td class="text-right" ng-click="read_message(m)">{{m.readable_date}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -243,6 +237,30 @@ ul > li > a.active {
 			</div>
 		</div>
 
+		<div role="tabpanel" id="sent" class="tab-pane fade ">
+			<div ng-show="reading_sent == false" class="inbox-body">
+				<table class="table table-inbox table-hover">
+					<tbody>
+							<tr ng-repeat="s in sent" ng-click="read_sent_message(s)">
+							<td class="inbox-small-cells">
+								<input type="checkbox"
+								class="mail-checkbox">
+							</td>
+							<td class="view-message  dont-show">
+								{{s.senderUsername}}</td>
+							<td class="view-message ">{{s.first_line}}</td>
+							<td class="view-message  text-right">{{s.readable_date}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div ng-show="reading_sent == true">
+				{{current_sent.senderUsername}} <br/>
+				{{current_sent.time}} <br/>
+				{{current.message}}<br/>
+			</div>
+		</div>
 
 		<div role="tabpanel" id="compose" class="tab-pane fade">
 			<div class="panel panel-default">

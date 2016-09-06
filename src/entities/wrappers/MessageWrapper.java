@@ -16,6 +16,8 @@ public class MessageWrapper {
 		message.setRead(false);
 		Timestamp time = new Timestamp(Long.valueOf(m.getTime()));
 		message.setTime(time);
+		message.setDeleted_by_receiver(false);
+		message.setDeleted_by_sender(false);
 		return message;
 	}
 }
