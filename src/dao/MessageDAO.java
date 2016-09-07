@@ -53,7 +53,7 @@ public class MessageDAO {
 			+ "and () order by m.user1.idUser asc");
 */
         	Query q = entityManager.createQuery("Select m from Message m "
-        			+ "where (m.user2.idUser = ?1 and m.deleted_by_sender = false) or (m.user1.idUser = ?1 and m.deleted_by_receiver = false) "
+        			+ "where (m.user1.idUser = ?1 and m.deleted_by_sender = false) or (m.user2.idUser = ?1 and m.deleted_by_receiver = false) "
         			+ "order by m.time asc");
         				
         	q.setParameter(1,user.getIdUser());    
@@ -87,7 +87,7 @@ public class MessageDAO {
         		message.setDeleted_by_receiver(true);
 
         	if(message.isDeleted_by_receiver() && message.isDeleted_by_sender())
-        			entityManager.remove(message);
+        		entityManager.remove(message);
         	/*
         	Query q = entityManager.
         			createQuery("Select m from Message m "

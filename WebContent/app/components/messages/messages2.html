@@ -184,7 +184,7 @@ ul > li > a.active {
 				</div>
 				<div class="btn-group">
 					<button class="btn btn-default">
-						<i class="fa fa-check-square-o" aria-hidden="true" ng-click="select_all = !select_all"> </i>
+						<i class="fa fa-check-square-o" aria-hidden="true" ng-click="select_all()"> </i>
 					</button>
 					<button class="btn btn-default" ng-click="refresh()">
 						<i class="fa fa-refresh"> </i>
@@ -217,9 +217,9 @@ ul > li > a.active {
 			<div ng-show="reading == false" class="inbox-body">
 				<table class="table table-inbox table-hover">
 					<tbody>
-							<tr ng-class="{'unread' : m.read == false}" ng-repeat="m in inbox" >
+						<tr id="row{[m.id}}" ng-class="{'unread' : m.read == false}" ng-repeat="m in current_messages" >
 							<td style="width:5%">
-								<input type="checkbox" ng-click="select(m)" ng-checked="select_all">
+								<input type="checkbox" ng-click="select(m)" ng-checked="check_all">
 							</td>
 							<td  ng-click="read_message(m)">
 								{{m.senderUsername}}</td>
