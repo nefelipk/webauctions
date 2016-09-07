@@ -73,10 +73,10 @@ h3 {
 					</span>
 					<div > <h5>{{current.bids.length}} bids</h5></div>
 					<div class="form-inline" >
-						<form class="input-group">
-							<input size="15" type="text"class="form-control"/> 
+						<form class="input-group" >
+							<input size="15" type="text"class="form-control" ng-disabled="current.ended == true"/> 
 					 		<span class="input-group-btn"> 	
-								<button class="btn btn-primary">
+								<button class="btn btn-primary" ng-disabled="current.ended == true" >
 								<span class="fa fa-gavel" aria-hidden="true"></span>
 								 Bid</button>
 							</span>

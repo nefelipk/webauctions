@@ -117,7 +117,7 @@ angular.module('auction_land').controller('AuctionsController',
 				}
 				else {
 					item.ended = false;
-					return  Date.parse(ends);
+					return  item.ends;
 				}
 			}
 		};

@@ -31,6 +31,9 @@ angular.module('auction_land').controller('MessagesController',
 		message.readable_date = r_month + " " + r_date;
 	}
 	
+	var fix_first_line = function(message) {
+		message.first_line = message.message.substring(0,20) + "...";
+	};
 	/********************************************************************/
 	/*********************************************************************
 							CONSUME SERVICES 
@@ -41,45 +44,48 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.current_items = [];
 	$scope.refresh = function() {
 		Message.query({username : 'ripone07'}).$promise.then(function(data) {
-			//$scope.inbox = $.map(data[0], function(el) { return el });
 			$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
-			
-			//$scope.sent = $.map(data[1], function(el) { return el });
 			$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
-			//console.log($scope.sent);
-			//console.log($scope.inbox);
 	
 			for(i = 0; i < $scope.inbox.length; i++) {
 				$scope.inbox[i].pos = i+1;
 				add_readable_date($scope.inbox[i]);
+				fix_first_line($scope.inbox[i]);
 			}
 			for(i = 0; i < $scope.sent.length; i++) {
 				$scope.sent[i].pos = i+1;
 				add_readable_date($scope.sent[i]);
+				fix_first_line($scope.sent[i]);
 			}
 			
 			$scope.presented_messages = $scope.inbox;
 			$scope.fix_pages();
-			$scope.current_messages = $scope.get_items();
+			$scope.current_items = $scope.get_items();
 			//console.log($scope.presented_messages.length);
+
 		});
 	};
 	$scope.refresh();
 	
 	
 	$scope.delete_message = function() {
-		//if($scope.selected == true) {
 		console.log("****** delete messages *********");
-		console.log($scope.selected_messages);
-		for(i = $scope.selected_messages.length-1; i >= 0; i--) {
-			Message.delete({username : 'ripone', id : $scope.selected_messages[i].id}).$promise.then(function() {
-
+		var length = $scope.selected_messages.length-1
+		$scope.selected = false;
+		$scope.check_all = false;
+		for(i = length; i >= 0; i--) {
+			console.log($scope.current_items[$scope.selected_messages[i]]);
+			var response = Message.remove({username : 'ripone',id : $scope.current_items[$scope.selected_messages[i]].id});
+			response.$then(function() {
+				$scope.current_items.splice($scope.selected_messages[i],1);
+				$scope.selected_messages.pop();
+				$scope.fix_pages();
+				$scope.current_items = $scope.get_items();
 			});
-			console.log("successfully delete message with id :" + $scope.selected_messages[i]);
-			$scope.current_messages.splice($scope.current_messages.indexOf($scope.selected_messages[i]),1);
-			//console.log($scope.current_messages);
-			$scope.selected_messages.pop();
+			
 		}
+		
+		
 		//console.log($scope.selected_messages);
 		//}
 	};
@@ -144,12 +150,12 @@ angular.module('auction_land').controller('MessagesController',
 	
 	$scope.get_page = function(page_num) {
 		$scope.current_page = page_num;
-		$scope.current_messages = $scope.get_items();
+		$scope.current_items = $scope.get_items();
 		$window.scrollTo(0,0);	
 	}; 
 	
 
-	$scope.current_messages = $scope.get_items();
+	$scope.current_items = $scope.get_items();
 	
 	/*********************************************************************/
 	/*********************************************************************/
@@ -170,27 +176,43 @@ angular.module('auction_land').controller('MessagesController',
 	**********************************************************************/
 	/*********************************************************************/
 	$scope.check_all = false;
-	$scope.select_all = function() {
-		$scope.check_all = !$scope.check_all
-		$scope.selected_messages = $scope.inbox;
-	}
-	
 	$scope.selected_messages = new Array();
 	$scope.selected = false;
-	$scope.select = function(message) {
-		//$scope.selected = !$scope.selected;
-		console.log(message);
-		var index = $scope.selected_messages.indexOf(message);
-		if(index != -1) {
-			$scope.selected_messages.splice(index,1);
-			console.log("found");
+	
+	$scope.select_all = function() {
+	
+	}
+	
+
+	$scope.select = function(index) {
+		if(index == null) {
+			$scope.check_all = !$scope.check_all;
+		
+			if($scope.selected_messages.length > 0)
+				$scope.selected_messages = [];
+			else {
+				$scope.selected_messages = new Array();
+				for(i = 0; i < $scope.current_items.length; i++)
+					$scope.selected_messages.push(i);
+				console.log($scope.selected_messages);
+				//$scope.selected_messages = $scope.current_items;
+			}
 		}
 		else {
-			console.log("not found");
-			$scope.selected_messages.push(message);
+			//console.log($scope.selected_messages);	
+			//console.log(message);
+			var pos = $scope.selected_messages.indexOf(index);
+			if(pos != -1) {
+				$scope.selected_messages.splice(pos,1);
+				console.log("found");
+			}
+			else {
+				console.log("not found");
+				$scope.selected_messages.push(index);
+			}
+			console.log("selected_messages : ");
+			console.log($scope.selected_messages);
 		}
-		console.log("selected_messages : ");
-		console.log($scope.selected_messages);
 	};
 	
 	$scope.reading = false;
