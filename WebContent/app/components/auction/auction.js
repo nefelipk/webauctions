@@ -31,7 +31,9 @@ angular.module('auction_land').service('AuctionService',function() {
 		};
 }); 
 
-angular.module('auction_land').controller('AuctionController',['$scope','$route','localStorageService','AuctionService','uiGmapGoogleMapApi', function($scope,$route,localStorageService,AuctionService,uiGmapGoogleMapApi) {
+angular.module('auction_land').controller('AuctionController',
+		['$scope','$route','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi',
+		 function($scope,$route,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi) {
 	
 	$scope.current = AuctionService.get_current_auction();
 	console.log($scope.current);
@@ -51,6 +53,21 @@ angular.module('auction_land').controller('AuctionController',['$scope','$route'
 		else
 			return auction.ends;
 	};
+	
+	$scope.bid = {};
+	$scope.place_bid = function() {
+		$scope.bid.item = {};
+		$scope.bid.item.idItem = $scope.current.idItem;
+		$scope.bid.time = (new Date().getTime()).toString();
+		$scope.bid.user = {};
+		$scope.bid.user.username = "ripone07"
+		console.log("bid : ");
+		console.log($scope.bid);
+		Bid.save($scope.bid).$promise.then(function(data) {
+			console.log(data);
+		});
+	};
+	
 	
 	current_item_location = function() {
 		if(($scope.current.location.latitude != 0) && ($scope.current.location.longitude != 0)) {

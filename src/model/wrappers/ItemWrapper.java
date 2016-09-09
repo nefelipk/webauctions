@@ -7,6 +7,7 @@ public class ItemWrapper {
 	public static model.Item map(entities.Item i) {
 		model.Item item = new model.Item();
 		
+		item.setIdItem(i.getIdItem());
 		//item.setBid(BidWrapper.map(i.getBid()));
 		item.setBids(BidWrapper.mapList(i.getBids()));
 		item.setFirstBid(i.getFirstBid());

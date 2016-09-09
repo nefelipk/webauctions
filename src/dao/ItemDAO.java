@@ -1,8 +1,6 @@
 package dao;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -10,6 +8,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import db.JPAResource;
+import entities.Bid;
 import entities.Item;
 
 public class ItemDAO {
@@ -60,4 +59,44 @@ public class ItemDAO {
 			entityManager.close();
 		}
 	}
+	
+	public entities.Item getById(int id) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        
+        try {	
+        	entities.Item item = (entities.Item) entityManager.find(entities.Item.class,id);
+        	transaction.commit();
+        	return item;
+		}
+        catch(PersistenceException e) {
+			if (transaction.isActive())
+				transaction.rollback();
+			return null;
+		}
+        finally {
+			entityManager.close();
+		}
+	}
+	
+	public void placeBid(Bid bid) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+       
+        try {	
+        	entities.Item item = (entities.Item) entityManager.find(entities.Item.class,bid.getItem().getIdItem());
+        	item.addBid(bid);
+        	transaction.commit();
+		}
+        catch(PersistenceException e) {
+			if (transaction.isActive())
+				transaction.rollback();
+			return;
+		}
+        finally {
+			entityManager.close();
+		}
+	};
 }

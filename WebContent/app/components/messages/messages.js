@@ -75,19 +75,14 @@ angular.module('auction_land').controller('MessagesController',
 		$scope.check_all = false;
 		for(i = length; i >= 0; i--) {
 			console.log($scope.current_items[$scope.selected_messages[i]]);
-			var response = Message.remove({username : 'ripone',id : $scope.current_items[$scope.selected_messages[i]].id});
+			var response = Message.remove({username : 'ripone07',id : $scope.current_items[$scope.selected_messages[i]].id});
 			response.$then(function() {
 				$scope.current_items.splice($scope.selected_messages[i],1);
 				$scope.selected_messages.pop();
 				$scope.fix_pages();
 				$scope.current_items = $scope.get_items();
 			});
-			
 		}
-		
-		
-		//console.log($scope.selected_messages);
-		//}
 	};
 	
 	$scope.new_message = {};

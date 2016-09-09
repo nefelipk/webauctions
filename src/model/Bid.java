@@ -1,15 +1,14 @@
 package model;
 
-import java.sql.Timestamp;
-import java.util.List;
-import model.Item;
-import model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class Bid {
 
 	private float amount;
 	private String time;
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private Item item;
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private User user;
 
 	public float getAmount() {

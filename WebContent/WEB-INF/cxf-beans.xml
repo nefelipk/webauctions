@@ -14,12 +14,14 @@
 	<bean id="Test" class="rest.Testaki"/>
 	<bean id="Users" class="rest.UserResource"/>
 	<bean id="Messages" class="rest.MessagesResource"/>
+	<bean id="Bids" class="rest.BidResource"/>
 	<jaxrs:server id="base" address="/">	
 		<jaxrs:serviceBeans>
 			<ref bean="Items"/>
 			<ref bean="Test"/>
 			<ref bean="Users"/>
 			<ref bean="Messages"/>
+			<ref bean="Bids"/>
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>

@@ -19,19 +19,38 @@ a.list-group-item.active small {
 	color: #fff;
 	
 }
-
+/*
 a.list-group-item:hover,  
 a.list-group-item:focus {  
 	text-decoration: none;  
 	// background-color: #9b59b6;
 	opacity : 0.95;
 	// color : #ecf0f1;
+	
 	background-color: #FBFBFB;
 	border : 3px 3px;
 	border-color : #e74c3c;
 	border-style : solid;
 	box-shadow: 0 0 10px #e67e22;
+	
 }  
+*/ 
+a.list-group-item.glowing-ended:hover {
+	background-color: #FBFBFB;
+	border : 3px 3px;
+	border-color : #e74c3c;
+	border-style : solid;
+	box-shadow: 0 0 10px #e67e22;
+}
+
+a.list-group-item.glowing-live:hover,
+a.list-group-item.glowing-live:focus {
+	background-color: #FBFBFB;
+	border : 3px 3px;
+	border-color : #2ecc71;
+	border-style : solid;
+	box-shadow: 0 0 10px #27ae60;
+}
   
 /*
 .pagination>li>a, .pagination>li>span { 
@@ -76,7 +95,8 @@ a.list-group-item:focus {
 <body>
 		<div class="list-group ">
 			<a ng-repeat="i in current_items" 
-					href="#/item" class="list-group-item"
+					href="#/item" class="list-group-item" 
+					ng-class="{'glowing-live' : i.ended == false, 'glowing-ended' : i.ended == true}"
 					ng-click="set_current(i)">
 					
 				<div style="margin-top:2.5%">

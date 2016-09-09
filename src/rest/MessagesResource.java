@@ -37,7 +37,7 @@ public class MessagesResource {
 		int id = userDB.insert(messageEntity);	
 		if(id > 0) {
 			return Response
-				.created(UriBuilder.fromResource(UserResource.class)
+				.created(UriBuilder.fromResource(MessagesResource.class)
 				.path(String.valueOf(id))
 				.build())
 				.build();
