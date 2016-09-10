@@ -40,11 +40,12 @@
 	<div ng-include="'app/components/home/index_header.html'"></div>
 
 <div ng-controller="SearchController">
-	<div class="row text-center" ng-show="searching == true"> 
+	<div class="container-fluid" ng-show="searching == true">
+	<div class="row text-center" > 
 			<span class="sr-only">Searching...</span>	
 			<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
 	</div>
-
+	</div>
 	<div ng-show="searching == false"> 
 	<!-- Search bar -->
 	<div class="search_bar" >

@@ -89,13 +89,35 @@ a.list-group-item.glowing-live:focus {
 .list-group-item {
 	margin-bottom : 5px;
 }
+
+.item { }
+
+.item.ng-move,
+.item.ng-enter,
+.item.ng-leave {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.item.ng-leave.ng-leave-active,
+.item.ng-move,
+.item.ng-enter {
+  opacity:0;
+}
+
+.item.ng-leave,
+.item.ng-move.ng-move-active,
+.item.ng-enter.ng-enter-active {
+  opacity:1;
+}
 </style>
 </head>
 
 <body>
-		<div class="list-group ">
-			<a ng-repeat="i in current_items" 
+		<div class="list-group " >
+			<a ng-repeat="i in current_items" ng-cloak  on-finish-render="ngRepeatFinished"
 					href="#/item" class="list-group-item" 
+					class="item"
 					ng-class="{'glowing-live' : i.ended == false, 'glowing-ended' : i.ended == true}"
 					ng-click="set_current(i)">
 					
@@ -117,6 +139,7 @@ a.list-group-item.glowing-live:focus {
 						<h3 class="text-center" style="margin-top:0;">
 							{{get_max_bid(i)}}  &euro; <br/>
 							<time ng-class="{'err' : get_ending_time(i) == 'Ended' , 'succ' : get_ending_time(i) != 'Ended'}">
+							<i ng-show="i.ended == false">Active <br/></i>
 							{{get_ending_time(i)}}
 							</time>
 						</h3>

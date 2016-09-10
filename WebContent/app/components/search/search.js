@@ -11,7 +11,9 @@ angular.module('auction_land').controller('SearchController',['$scope','$route',
 				localStorageService.set('auctions',$scope.items);
 				$route.reload();
 				$location.path("/search");
-				$scope.searching = false;
+				//$scope.searching = false;
+			}, function() {
+				$location.path("/no_results");
 			});	
 		};
 		

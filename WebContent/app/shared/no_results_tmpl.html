@@ -1,0 +1,25 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>no results found</title>
+<style>
+.alert {
+	background-color:#d35400;
+	color:#2c3e50;
+}
+</style>
+</head>
+<body>
+
+<div ng-include="'app/shared/header/header.html'"></div>
+
+<div class="container-fluid">
+	<div class="row">
+			<div class="alert alert-danger text-center">
+			  <strong>Sorry!</strong> We couldn't find anything for "{{search.term}}".<br/>
+			  <i class="fa fa-frown-o fa-5x" aria-hidden="true"></i>
+			</div>
+		<div>
+</div>
+</body>
+</html>

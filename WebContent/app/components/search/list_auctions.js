@@ -1,14 +1,14 @@
 angular.module('auction_land').controller('AuctionsController', 
-		[ '$window', '$scope','$location',
+		[ '$window', '$scope','$timeout','$location',
 		  'localStorageService','AuctionService',
 		  'Item','SearchService',
-		  function($window, $scope,$location,
+		  function($window, $scope,$timeout,$location,
 				  localStorageService,AuctionService,
 				  Item,SearchService ) {
 		
 		$scope.items = localStorageService.get('auctions');
-		console.log("refreshed items : ");
-		console.log($scope.items);
+		//console.log("refreshed items : ");
+		//console.log($scope.items);
 		
 		var items_per_page = 5;
 		$scope.items_per_page = items_per_page;
@@ -17,13 +17,13 @@ angular.module('auction_land').controller('AuctionsController',
 			Item.query({term : term}).$promise.then(function (data) {
 				$scope.items = data.slice();
 				
-				console.log($scope.items);
+				//console.log($scope.items);
 				$scope.fix_filter_prices($scope.items);
 				$scope.filtered_items = angular.copy($scope.items);
 				$scope.filtered_items.pop();
 				
 				$scope.fix_pages();
-				console.log($scope.pages);
+				//console.log($scope.pages);
 				
 				$scope.current_items = $scope.get_items();
 				
@@ -34,7 +34,7 @@ angular.module('auction_land').controller('AuctionsController',
 				
 		$scope.fix_pages = function() {
 			$scope.pages = [];
-			console.log($scope.filtered_items.length/items_per_page);
+			//console.log($scope.filtered_items.length/items_per_page);
 			for(i = 0; i < $scope.filtered_items.length/items_per_page; i++)
 				$scope.pages.push(i+1);
 			$scope.last_page = $scope.pages[$scope.pages.length-1];
@@ -46,7 +46,7 @@ angular.module('auction_land').controller('AuctionsController',
 			var to = $scope.current_page * items_per_page;
 			if ($scope.current_page * items_per_page >= $scope.filtered_items.length)
 				to = $scope.filtered_items.length;
-			return $scope.filtered_items.slice(from, to);
+			return angular.copy($scope.filtered_items.slice(from, to));
 		};
 		
 		$scope.get_page = function(page_num) {
@@ -64,7 +64,7 @@ angular.module('auction_land').controller('AuctionsController',
 				max_bids_array.sort(function(a, b){return a-b});
 			}
 			$scope.mid_price = (max_bids_array[max_bids_array.length-1] + max_bids_array[0]) / 2;
-			console.log($scope.mid_price);
+			//console.log($scope.mid_price);
 		}
 		
 		
@@ -123,13 +123,13 @@ angular.module('auction_land').controller('AuctionsController',
 		};
 		
 		//$scope.items = SearchService.get_items();
-		console.log("items : ");
-		console.log($scope.items);
+		//console.log("items : ");
+		//console.log($scope.items);
 		$scope.fix_filter_prices($scope.items);
 		$scope.filtered_items = angular.copy($scope.items);
 		$scope.filtered_items.pop();
 		$scope.fix_pages();
-		console.log($scope.pages);
+		//console.log($scope.pages);
 		$scope.current_items = $scope.get_items();
 		
 		var marker_key = 0;
@@ -182,8 +182,11 @@ angular.module('auction_land').controller('AuctionsController',
 			country : false,
 			free_text : false
 		};
-		
+
+		$scope.filtering = false;
 		$scope.filter = function() {
+			
+			$scope.filtering = true;
 			
 			$scope.apllied_any_filter = true;
 			
@@ -208,8 +211,13 @@ angular.module('auction_land').controller('AuctionsController',
 			$scope.fix_pages();
 			$scope.current_items = $scope.get_items();
 			
+			
 		};
-
+		
+		$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+			$scope.filtering = false;
+		});
+		
 		$scope.filter_by_category = function() {
 			if($scope.live_filters.category == null) {
 				$scope.filtered_items = angular.copy($scope.items);
@@ -218,7 +226,7 @@ angular.module('auction_land').controller('AuctionsController',
 			else {
 				for (var i = $scope.filtered_items.length-1; i >= 0; i--) {
 					var found = false;
-					console.log($scope.filtered_items[i].categories);
+					//console.log($scope.filtered_items[i].categories);
 					for(var j = 0; (j < $scope.filtered_items[i].categories.length) && !found; j++) {
 						if($scope.filtered_items[i].categories[j].name == $scope.live_filters.category.name)
 							found = true;
@@ -230,7 +238,7 @@ angular.module('auction_land').controller('AuctionsController',
 		};
 		
 		$scope.filter_by_mid_price = function() {
-			console.log("filter by mid price");
+			//console.log("filter by mid price");
 			for (var i = $scope.filtered_items.length-1; i >= 0; i--) {
 				if($scope.live_filters.price == "less" && $scope.filtered_items[i].max >= $scope.mid_price)
 					$scope.filtered_items.splice(i,1);
@@ -240,9 +248,9 @@ angular.module('auction_land').controller('AuctionsController',
 		};
 		
 		$scope.filter_by_given_price = function() {
-			console.log("filter by given price");
+			//console.log("filter by given price");
 			for (var i = ($scope.filtered_items.length)-1; i >= 0 ; i--) {
-				console.log($scope.filtered_items[i].max);
+				//console.log($scope.filtered_items[i].max);
 				if(($scope.live_filters.price_from > $scope.filtered_items[i].max) 
 						|| ($scope.live_filters.price_to < $scope.filtered_items[i].max)) {
 					$scope.filtered_items.splice(i,1);
@@ -251,20 +259,20 @@ angular.module('auction_land').controller('AuctionsController',
 		};
 		
 		$scope.filter_by_description = function() {
-			console.log("description");
-			console.log($scope.live_filters.text);
+			//console.log("description");
+			//console.log($scope.live_filters.text);
 			var regex = new RegExp($scope.live_filters.text,'gi');
 			for(var i = $scope.filtered_items.length-1; i >= 0; i--) {
 				var res = $scope.filtered_items[i].description.match(regex); 
 				if(res == null)
 					$scope.filtered_items.splice(i,1);
-				else 
-					console.log($scope.filtered_items[i].name+" "+res);
+				//else 
+					//console.log($scope.filtered_items[i].name+" "+res);
 			}
 		};
 		
 		$scope.filter_by_country = function() {
-			console.log("filter by location");
+			//console.log("filter by location");
 			for(var i = $scope.filtered_items.length-1; i >= 0; i--) {
 				var regex = new RegExp($scope.live_filters.country,'gi');
 				var res = $scope.filtered_items[i].location.country.match(regex); 
@@ -272,11 +280,11 @@ angular.module('auction_land').controller('AuctionsController',
 					res = $scope.filtered_items[i].location.location.match(regex);
 					if(res == null)
 						$scope.filtered_items.splice(i,1);
-					else
-						console.log($scope.filtered_items[i].name+" "+res);
+					//else
+						//console.log($scope.filtered_items[i].name+" "+res);
 				}
-				else 
-					console.log($scope.filtered_items[i].name+" "+res);
+				//else 
+					//console.log($scope.filtered_items[i].name+" "+res);
 			}
 		}
 		
@@ -315,5 +323,18 @@ angular.module('auction_land').controller('AuctionsController',
 			});
 		});
 		
-		
+		$scope.filtering = false;
 	} ]);
+
+angular.module('auction_land').directive('onFinishRender', function ($timeout) {
+return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+        if(scope.$last === true) {
+            $timeout(function () {
+                scope.$emit(attr.onFinishRender);
+            });
+        }
+    }
+}
+});
