@@ -20,5 +20,5 @@ angular.module('auction_land').factory('Message', [ '$resource', function($resou
 
 
 angular.module('auction_land').factory('Bid', [ '$resource', function($resource) {
-	return $resource('http://localhost:8080/WebAuctions/services/bid');
+	return $resource('http://localhost:8080/WebAuctions/services/bid/:id');
 } ]);

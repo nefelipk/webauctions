@@ -2,6 +2,7 @@ angular.module('auction_land').service('AuctionService',function() {
 		var current_auction = null;
 		var google_api = null;
 		var map_instance = null;
+		
 		var set_current_auction = function(auction) {
 			current_auction = auction;
 		};
@@ -32,8 +33,8 @@ angular.module('auction_land').service('AuctionService',function() {
 }); 
 
 angular.module('auction_land').controller('AuctionController',
-		['$scope','$route','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi',
-		 function($scope,$route,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi) {
+		['$scope','$route','$timeout','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi',
+		 function($scope,$route,$timeout,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi) {
 	
 	$scope.current = AuctionService.get_current_auction();
 	console.log($scope.current);
@@ -54,17 +55,45 @@ angular.module('auction_land').controller('AuctionController',
 			return auction.ends;
 	};
 	
+	$scope.check_amount = function() {
+		if($scope.bid.amount > $scope.current.max)
+			return true;
+		else
+			return false;
+	};
+	
+	$scope.bid_placed = false;
+	$scope.give_warning = function() {
+		if($scope.bid_form.$invalid == true)
+			return;
+		$scope.bid_placed = true;
+	};
+	
 	$scope.bid = {};
 	$scope.place_bid = function() {
+		if($scope.bid_form.$valid == false) {
+			return;
+		}
 		$scope.bid.item = {};
 		$scope.bid.item.idItem = $scope.current.idItem;
 		$scope.bid.time = (new Date().getTime()).toString();
 		$scope.bid.user = {};
+		/* get username from cookies */
 		$scope.bid.user.username = "ripone07"
 		console.log("bid : ");
 		console.log($scope.bid);
 		Bid.save($scope.bid).$promise.then(function(data) {
-			console.log(data);
+			/* get new bids */
+			Bid.query({id : $scope.current.idItem}).$promise.then(function(data) {
+				$scope.current.bids = data;
+				var bids = $scope.current.bids.slice();
+				$scope.current.max = Math.max.apply(Math,bids.map(function(o){return o.amount;}));
+			});
+			$scope.bid = {};
+			$scope.successfull_bid = true;
+			$timeout(function() { 
+				$scope.successfull_bid = false; 
+			}, 3000);
 		});
 	};
 	
@@ -80,7 +109,7 @@ angular.module('auction_land').controller('AuctionController',
 			var loc = { lat: coords.latitude, lng: coords.longitude};
 	        $scope.geocoder.geocode({'location': loc}, function(results, status) {
 	        	if(status == google.maps.GeocoderStatus.OK) {
-	                if(results[1]) 
+	                if(results[1])
 	                	$scope.current.final_location = results[1].formatted_address;	
 	                else 
 	                	alert('No results found');

@@ -99,4 +99,23 @@ public class ItemDAO {
 			entityManager.close();
 		}
 	};
+	
+	public List<entities.Bid> getBidsForAuction(int id) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        try {	
+        	entities.Item item = (entities.Item) entityManager.find(entities.Item.class,id);
+        	transaction.commit();
+        	return item.getBids();
+		}
+        catch(PersistenceException e) {
+			if (transaction.isActive())
+				transaction.rollback();
+			return null;
+		}
+        finally {
+			entityManager.close();
+		}
+	}
 }
