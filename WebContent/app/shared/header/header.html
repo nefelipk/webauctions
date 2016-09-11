@@ -86,18 +86,21 @@
 				
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
-				<form class="nav navbar-nav navbar-form text-center search-width" role="search">
+				<form class="nav navbar-nav navbar-form text-center search-width" 
+					ng-show="search_bar == 'header'" role="search">
+					
 					<div class="input-group" style="width: 100%" >
 						<input type="text" ng-keyup="$event.keyCode == 13 && search(term)" ng-model="term" class="form-control" placeholder="{{term}}" name="srch-term" id="srch-term">
 						<div class="input-group-btn" style="text-align: left">
 							<button ng-click="search(term)" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
 					</div>
+				
 				</form>
 				<ul class="nav navbar-nav navbar-right" >
 					<li><a href="#/messages"><span class="glyphicon glyphicon-comment"></span> Messages</a></li>
-					<li><a href="#" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-					<li><a href="#" data-toggle="modal" data-target="#signup_modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+					<li><a href="" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					<li><a href="" data-toggle="modal" data-target="#signup_modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 				</ul>
 		</div>
 	</div>

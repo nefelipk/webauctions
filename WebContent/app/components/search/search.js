@@ -1,5 +1,7 @@
-angular.module('auction_land').controller('SearchController',['$scope','$route','localStorageService','$location','Item','SearchService',
-	                                   function($scope,$route,localStorageService,$location,Item,SearchService) {
+angular.module('auction_land').controller('SearchController',
+		['$scope','$route','localStorageService','$location','Item','SearchService',
+		 function($scope,$route,localStorageService,$location,Item,SearchService) {
+		
 		$scope.searching = false;
 		$scope.search = function(term) {
 			$scope.searching = true;
@@ -16,6 +18,17 @@ angular.module('auction_land').controller('SearchController',['$scope','$route',
 				$location.path("/no_results");
 			});	
 		};
+		
+		if($location.path() != '/') {
+			console.log($location.path());
+			$scope.search_bar = "header";
+		}
+		$scope.$on('$locationChangeStart', function(event) {
+			if($location.path() != '/') {
+				console.log($location.path());
+				$scope.search_bar = "header";
+			}
+		});
 		
 		$scope.print = function() {
 			console.log("search_controller");
