@@ -9,9 +9,20 @@ angular.module('auction_land').controller('AuctionsController',
 		$scope.items = localStorageService.get('auctions');
 		//console.log("refreshed items : ");
 		//console.log($scope.items);
+		$scope.current_page = 1;
+		$scope.items_per_page = 5;
 		
-		var items_per_page = 5;
-		$scope.items_per_page = items_per_page;
+		$scope.fix_pages = function() {
+			$scope.pages = [];
+			if($scope.filtered_items.length/$scope.items_per_page > 7)
+				$scope.items_per_page = 10;
+			for(i = 0; i < $scope.filtered_items.length/$scope.items_per_page; i++)
+				$scope.pages.push(i+1);
+			$scope.last_page = $scope.pages[$scope.pages.length-1];
+			$scope.current_page = 1;
+		};
+		
+			
 		
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
@@ -30,21 +41,12 @@ angular.module('auction_land').controller('AuctionsController',
 			});
 		};
 		
-		$scope.current_page = 1;
-				
-		$scope.fix_pages = function() {
-			$scope.pages = [];
-			//console.log($scope.filtered_items.length/items_per_page);
-			for(i = 0; i < $scope.filtered_items.length/items_per_page; i++)
-				$scope.pages.push(i+1);
-			$scope.last_page = $scope.pages[$scope.pages.length-1];
-			$scope.current_page = 1;
-		};
+		
 		
 		$scope.get_items = function() {
-			var from = ($scope.current_page - 1) * items_per_page;
-			var to = $scope.current_page * items_per_page;
-			if ($scope.current_page * items_per_page >= $scope.filtered_items.length)
+			var from = ($scope.current_page - 1) * $scope.items_per_page;
+			var to = $scope.current_page * $scope.items_per_page;
+			if ($scope.current_page * $scope.items_per_page >= $scope.filtered_items.length)
 				to = $scope.filtered_items.length;
 			return angular.copy($scope.filtered_items.slice(from, to));
 		};

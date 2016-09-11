@@ -29,7 +29,8 @@ body {
 	width: 100%;
 	text-align: left;
 	font: normal 16px sans-serif;
-	padding: 25px ;
+	//padding: 25px ;
+	padding: 10px 30px;
 	margin-top: 30px;
 }
 
@@ -88,7 +89,7 @@ body {
 
 	.footer-distributed .footer-right{
 		float: none;
-		margin: 0 auto 20px;
+		margin: 0 auto 30px;
 	}
 
 	.footer-distributed .footer-left p.footer-links{
