@@ -1,10 +1,10 @@
 package rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.MatrixParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -12,8 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
-
-import org.apache.cxf.jaxrs.ext.ResponseStatus;
 
 import dao.UserDAO;
 import model.UsernameResponse;
@@ -31,18 +29,18 @@ public class UserResource {
 		response.setExists(userDAO.checkUsernames(username));
 		return Response.ok(response).build();
 	}
-	/*
-	@GET
-	@Path("/{user_pass}")
-	@Produces("application/json")
-	public model.User getSpecificUser(@PathParam("username") final String username, 
-			@MatrixParam("password") final String password) {
+	
+	@POST
+	@Path("/login/")
+	@Consumes({"application/json"})
+	@Produces({"application/json"})
+	public model.User login(final model.User user) {
 		UserDAO userDAO = new UserDAO();
-		entities.User eUser = userDAO.getSpecificUser(username, password);
-		model.User mUser = model.wrappers.UserWrapper.mapModelUserFromEntity(eUser);
+		entities.User eUser = userDAO.getSpecificUser(user.getUsername(), user.getPassword());
+		model.User mUser = model.wrappers.UserWrapper.map(eUser);
 		return mUser;
 	}
-	*/
+	
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.User user) {

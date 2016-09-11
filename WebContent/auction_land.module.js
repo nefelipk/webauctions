@@ -4,6 +4,7 @@ angular.module('auction_land',
 		  'LocalStorageModule', 
 		  'ngRoute',
 		  'ngMessages', 
+		  'ngCookies',
 		  'dibari.angular-ellipsis', 
 		  'uiGmapgoogle-maps' ]);
 

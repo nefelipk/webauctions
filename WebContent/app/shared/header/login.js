@@ -1,4 +1,5 @@
-angular.module('auction_land').controller('LoginController', [ '$scope', 'UserPass', function($scope, User) {
+angular.module('auction_land').controller('LoginController', 
+		[ '$scope','$cookies','UserLogin', function($scope,$cookies,UserLogin) {
 
 		// $scope.err = "";
 		// $scope.check_username = function() {
@@ -33,10 +34,8 @@ angular.module('auction_land').controller('LoginController', [ '$scope', 'UserPa
 
 		$scope.err = "";
 		$scope.check_user_pass = function() {
-			UserPass.get({
-				username : $scope.user.username,
-				password : $scope.user.password
-			}).$promise.then(function(data) {
+			UserLogin.save($scope.user).$promise.then(function(data) {
+				/*
 				var wrong = true;
 				if (data != null) {
 					console.log("username and password are correct");
@@ -55,6 +54,14 @@ angular.module('auction_land').controller('LoginController', [ '$scope', 'UserPa
 				}
 				$scope.err = "wrong!";
 				console.log(input_elem);
+				*/
+			    $('#login_modal').modal('hide');
+			    
+				$cookies.put('logged-in',true);
+				$cookies.put('username',$scope.user.username);
+				console.log($cookies.get('logged-in'))
+			},function() {
+				$cookies.put('logged-in',false);
 			});
 		};
 
