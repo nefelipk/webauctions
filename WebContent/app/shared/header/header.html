@@ -98,9 +98,10 @@
 				
 				</form>
 				<ul class="nav navbar-nav navbar-right" >
-					<li><a href="#/messages"><span class="glyphicon glyphicon-comment"></span> Messages</a></li>
-					<li><a href="" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-					<li><a href="" data-toggle="modal" data-target="#signup_modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+					<li ng-if="!logged_in"><a href="" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					<li ng-if="!logged_in"><a href="" data-toggle="modal" data-target="#signup_modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+					<li ng-if="logged_in"><a href="#/messages"><span class="glyphicon glyphicon-comment"></span> Messages</a></li>
+					<li ng-if="logged_in" ng-click="logout()"><a href=""><span class="glyphicon glyphicon-log-out" ></span> Logout</a></li>
 				</ul>
 		</div>
 	</div>
