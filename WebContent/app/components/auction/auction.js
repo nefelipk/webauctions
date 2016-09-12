@@ -33,8 +33,25 @@ angular.module('auction_land').service('AuctionService',function() {
 }); 
 
 angular.module('auction_land').controller('AuctionController',
-		['$scope','$route','$timeout','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi',
-		 function($scope,$route,$timeout,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi) {
+		['$scope','$route','$timeout','$cookies','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi',
+		 function($scope,$route,$timeout,$cookies,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi) {
+	
+	$scope.logged_in = $cookies.get('logged-in');		
+	if($scope.logged_in != 'true')			
+		$scope.message = "You have to login to place a bid !";
+	else
+		$scope.message = "";
+	$scope.$watch(function(){
+		return $cookies.get('logged-in');
+	}, function(stored_data){
+		$scope.logged_in = stored_data;
+		console.log($scope.logged_in);
+		if($scope.logged_in != 'true')			
+			$scope.message = "You have to login to place a bid !";
+		else
+			$scope.message = "";
+	});	
+	
 	
 	$scope.current = AuctionService.get_current_auction();
 	console.log($scope.current);
@@ -79,7 +96,10 @@ angular.module('auction_land').controller('AuctionController',
 		$scope.bid.time = (new Date().getTime()).toString();
 		$scope.bid.user = {};
 		/* get username from cookies */
-		$scope.bid.user.username = "ripone07"
+		$scope.bid.user.username = $cookies.get('username');
+		if($scope.bid.user.username == undefined || $scope.bid.user.username == null) {
+			alert("SEVERE ERROR WITH LOGIN. YOUR BID WAS NOT PLACED");
+		}
 		console.log("bid : ");
 		console.log($scope.bid);
 		Bid.save($scope.bid).$promise.then(function(data) {

@@ -71,8 +71,9 @@ h3 {
 						</span>
 					</span>
 					<div > <h5>{{current.bids.length}} bids</h5></div>
-					<div class="form-inline" ng-show="bid_placed == false">
-							<form class="input-group" name="bid_form">
+					<div class="form-inline" ng-show="bid_placed == false"
+					>
+							<form class="input-group" name="bid_form" ng-attr-title="{{message}}">
 								<input size="15" type="number" 
 								min="{{current.max+0.1}}"
 								class="form-control" 
@@ -84,7 +85,7 @@ h3 {
 								<!-- ng-pattern="/^\d+$/" -->
 						 		<span class="input-group-btn"> 	
 									<button class="btn btn-primary" 
-									ng-disabled="current.ended == true " 
+									ng-disabled="current.ended == true || logged_in != 'true'" 
 									ng-click="give_warning()">
 										<span class="fa fa-gavel" aria-hidden="true"></span> Bid
 								 	</button>
