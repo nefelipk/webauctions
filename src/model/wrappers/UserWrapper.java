@@ -28,7 +28,7 @@ public class UserWrapper {
 		location.setLatitude(entityUser.getLocation().getLatitude());
 		location.setLongitude(entityUser.getLocation().getLongitude());
 		location.setPostalCode(entityUser.getLocation().getPostalCode());
-
+		
 		user.setLocation(location);
 
 		return user;

@@ -18,6 +18,7 @@ angular.module('auction_land').controller('LoginController',
 					$scope.show_welcome = false;
 					$('#login_modal').modal('hide');
 				},2000);
+				console.log(data);
 				$cookies.put('logged-in',true);
 				$cookies.put('username',$scope.user.username);
 				$cookies.put('password',$scope.user.password);

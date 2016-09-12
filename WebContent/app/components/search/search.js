@@ -2,11 +2,17 @@ angular.module('auction_land').controller('SearchController',
 		['$scope','$route','$cookies','localStorageService','$location','Item','SearchService',
 		 function($scope,$route,$cookies,localStorageService,$location,Item,SearchService) {
 		
-		$scope.logged_in = $cookies.get('logged-in');	
+		$scope.logged_in = $cookies.get('logged-in');
+		$scope.username = $cookies.get('username');
 		$scope.$watch(function(){
 			return $cookies.get('logged-in');
 		}, function(stored_data){
 			$scope.logged_in = stored_data;
+		});	
+		$scope.$watch(function(){
+			return $cookies.get('username');
+		}, function(stored_data){
+			$scope.username = stored_data;
 		});	
 		
 		$scope.logout = function() {

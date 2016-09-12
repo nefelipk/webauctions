@@ -102,19 +102,7 @@ ul > li > a.active {
 
 <div class="container-fluid" ng-controller="MessagesController">
 	
-	<div class="row">
-		<div class="col-sm-offset-1">
-			<h3>
-	<!-- 		<span style="margin-top: 15px;" class="glyphicon glyphicon-comment"></span>Messages
-	-->		</h3>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-offset-1 col-sm-9">
-			<hr />
-		</div>
-	</div>
+	
 	
 	<div class="row" style="margin-bottom:20px;">
 		<div class="col-md-offset-1 col-md-2 text-center" style="background-color:#f1c40f;color:#2C3E50;">
@@ -134,21 +122,22 @@ ul > li > a.active {
 	<div class="col-md-offset-1 col-md-2 side_borders">
 		<ul class="nav nav-tab nav-stacked" role="tablist">
 			<li class="text-center" role="presentation" >
-				<a ng-click="set_active(1)" id="compose_tab" data-toggle="tab" data-target="#compose" >
+				<a ng-click="set_active(1)" id="compose_tab" data-toggle="tab" data-target="#compose" 
+				href="">
         	   	<span class="glyphicon glyphicon-pencil" ></span>
     	       	Compose
 				</a>
 			</li>
 			<li class="text-center" role="presentation" >
 				<a  data-toggle="tab" class="active" data-target="#inbox"
-					ng-click ="set_active(2)" id="inbox_tab">
+					href="" ng-click ="set_active(2)" id="inbox_tab">
 					<span class="glyphicon glyphicon-import" style="margin-right: 3px;"></span>
 					Inbox
 				</a>
 			</li>
 			
 			<li class="text-center" role="presentation">
-				<a  data-toggle="tab" data-target="#sent"
+				<a  data-toggle="tab" data-target="#sent" href=""
 				ng-click="set_active(3)" id="sent_tab"><span class="glyphicon glyphicon-export" style="margin-right: 3px;"></span>
 					Sent
 				</a>
@@ -294,6 +283,19 @@ ul > li > a.active {
 
 	</div>
 	</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-offset-1">
+			<h3>
+	<!-- 		<span style="margin-top: 15px;" class="glyphicon glyphicon-comment"></span>Messages
+	-->		</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-offset-1 col-sm-9">
+			<hr />
+		</div>
 	</div>
 	</div>
 	

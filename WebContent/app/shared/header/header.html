@@ -64,6 +64,44 @@
 		.container-fluid {
 			margin : 0px 30px;
 		}
+		
+		.nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+    background:#fff;
+}
+.dropdown {
+    background:transparent;
+    border:0px solid #ccc;
+    border-radius:4px;
+}
+.dropdown-menu>li>a {
+    color: black;
+}
+.dropdown ul.dropdown-menu {
+    border-radius:4px;
+    box-shadow:none;
+    margin-top:20px;
+    width:300px;
+}
+.dropdown ul.dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    z-index: 10;
+}
+.dropdown ul.dropdown-menu:after {
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 14px;
+    z-index: 9;
+}
 	</style>
 </head>
 
@@ -95,10 +133,45 @@
 				
 				</form>
 				<ul class="nav navbar-nav navbar-right" >
-					<li ng-if="!logged_in" ><a href="" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-					<li ng-if="!logged_in"><a href="" data-toggle="modal" data-target="#signup_modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-					<li ng-if="logged_in"><a href="#/messages"><span class="glyphicon glyphicon-comment"></span> Messages</a></li>
-					<li ng-if="logged_in" ng-click="logout()"><a href=""><span class="glyphicon glyphicon-log-out" ></span> Logout</a></li>
+					<li ng-if="logged_in != 'true'" >
+						<a href="" data-toggle="modal" data-target="#login_modal">
+						<span class="glyphicon glyphicon-log-in"></span> 
+						Login
+						</a>
+					</li>
+					<li ng-if="logged_in != 'true'">
+						<a href="" data-toggle="modal" data-target="#signup_modal">
+						<span class="glyphicon glyphicon-user"></span> 
+						Sign Up
+						</a>
+					</li>
+					<li ng-if="logged_in == 'true'" class="dropdown">
+						<a href="" class="dropdown-toggle"
+							data-toggle="dropdown">{{username}} 
+							<span  class="glyphicon glyphicon-user "></span>		
+							<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="">My Auctions
+									<span class="fa fa-gavel pull-right" aria-hidden="true"></span>
+									</a>
+								</li>
+
+								<li class="divider"></li>
+								<li>
+									<a href="#/messages">Messages 
+										<span class="badge pull-right">	42 </span></a></li>
+
+								<li class="divider"></li>
+								<li ng-click="logout()">
+									<a href="" >
+										Sign Out 
+									<span class="glyphicon glyphicon-log-out pull-right"></span>
+									</a>
+								</li>
+							</ul>
+					</li>
 				</ul>
 		</div>
 	</div>
@@ -111,3 +184,30 @@
 <div ng-include="'app/shared/header/login.html'"></div>
 
 </html>
+
+
+<!-- 
+
+<div class="dropdown" ng-if="logged_in = 'true'">
+	<a class="dropdown-toggle" type="button"
+		data-toggle="dropdown"
+		href="">
+			
+		{{username}} <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li ng-if="logged_in">
+			<a href="#/messages">
+				<span class="glyphicon glyphicon-comment pull-right"></span> 
+				Messages
+			</a>
+		</li>
+		<li ng-if="logged_in" ng-click="logout()">
+			<a href=""><span class="glyphicon glyphicon-log-out pull-right" ></span>
+			Logout
+			</a>
+		</li>
+	</ul>
+</div>
+
+ -->
