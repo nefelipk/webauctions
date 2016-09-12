@@ -1,16 +1,10 @@
 
 angular.module('auction_land').controller('MessagesController',
 		['$scope','$timeout','$cookies','Message','$window',
-		 function($scope,$timeout,Message,$window) {
+		 function($scope,$timeout,$cookies,Message,$window) {
 
-	//$scope.selected = false;
-	
-	/*
-	Message.query({username : $cookies.get('username')}).$promise.then(function(data) {
-		console.log(data);
-	});
-	*/
-	
+	$scope.username = $cookies.get('username');
+			
 	var add_readable_date = function(message) {
 		var month = new Array();
 		month[0] = "January";
@@ -43,7 +37,7 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.presented_messages = [];
 	$scope.current_items = [];
 	$scope.refresh = function() {
-		Message.query({username : 'ripone07'}).$promise.then(function(data) {
+		Message.query({username : $cookies.get('username')}).$promise.then(function(data) {
 			$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
 			$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
 	
@@ -75,7 +69,7 @@ angular.module('auction_land').controller('MessagesController',
 		$scope.check_all = false;
 		for(i = length; i >= 0; i--) {
 			console.log($scope.current_items[$scope.selected_messages[i]]);
-			var response = Message.remove({username : 'ripone07',id : $scope.current_items[$scope.selected_messages[i]].id});
+			var response = Message.remove({username : $cookies.get('username'),id : $scope.current_items[$scope.selected_messages[i]].id});
 			response.$then(function() {
 				$scope.current_items.splice($scope.selected_messages[i],1);
 				$scope.selected_messages.pop();
