@@ -1,108 +1,37 @@
 angular.module('auction_land').controller('LoginController', 
-		[ '$scope','$cookies','UserLogin', function($scope,$cookies,UserLogin) {
-
-		// $scope.err = "";
-		// $scope.check_username = function() {
-		// User.query().$promise.then(function(data,all_users) {
-		// var not_exists = true;
-		// for(var i = 0; i < data.length; i++) {
-		// console.log(data[i].username);
-		// if($scope.user.username == data[i].username) {
-		// console.log("username does not exist");
-		// not_exists = false;
-		// }
-		// }
-		// console.log(not_exists);
-		// var input_elem =
-		// angular.element(document.querySelector('#username_div'));
-		// var i =
-		// angular.element(document.querySelector('#i_username'));
-		// input_elem.removeClass("has-error");
-		// input_elem.removeClass("has-succcess");
-		// if(not_exists) {
-		// input_elem.addClass("has-error");
-		// $scope.form.username.$error.not_exists = true;
-		// }
-		// else {
-		// input_elem.addClass("has-success");
-		// $scope.form.username.$error.not_exists = false;
-		// }
-		// $scope.err = "does not exist!";
-		// console.log(input_elem);
-		// });
-		// }
-
+		[ '$scope','$cookies','$timeout','UserLogin', function($scope,$cookies,$timeout,UserLogin) {
+			
+		$scope.user = {};	
 		$scope.err = "";
+		$scope.error_login = false;
+		$scope.show_welcome = false;
+
 		$scope.check_user_pass = function() {
+			$scope.error_login = false;
+			console.log($scope.user);
 			UserLogin.save($scope.user).$promise.then(function(data) {
-				/*
-				var wrong = true;
-				if (data != null) {
-					console.log("username and password are correct");
-					wrong = false;
-				}
-				document.write("user and pass: " + wrong + " ");
-				console.log(wrong);
+			    var input_elem = angular.element(document.querySelector('#login_div'));
 				input_elem.removeClass("has-error");
-				input_elem.removeClass("has-succcess");
-				if (wrong) {
-					input_elem.addClass("has-error");
-					$scope.form.login.$error.wrong = true;
-				} else {
-					input_elem.addClass("has-success");
-					$scope.form.login.$error.wrong = false;
-				}
-				$scope.err = "wrong!";
-				console.log(input_elem);
-				*/
-			    $('#login_modal').modal('hide');
-			    
+				input_elem.addClass("has-succcess");
+				$scope.show_welcome = true;
+				$timeout(function() {
+					$scope.show_welcome = false;
+					$('#login_modal').modal('hide');
+				},2000);
 				$cookies.put('logged-in',true);
 				$cookies.put('username',$scope.user.username);
-				console.log($cookies.get('logged-in'))
+				$cookies.put('password',$scope.user.password);
 			},function() {
+				$scope.error_login = true;
+			    var input_elem = angular.element(document.querySelector('#login_div'));
+				input_elem.removeClass("has-error");
+				input_elem.removeClass("has-success");
+				input_elem.addClass("has-error");
 				$cookies.put('logged-in',false);
 			});
 		};
 
-		// $scope.err = "";
-		// $scope.check_password = function() {
-		// User.query().$promise.then(function(data,all_users) {
-		// var wrong = true;
-		// for(var i = 0; i < data.length; i++) {
-		// console.log(data[i].username);
-		// console.log(data[i].password);
-		// console.log(data);
-		// if($scope.user.username == data[i].username) {
-		// console.log(data[i].password);
-		// document.write("data password: " + data[i].password);
-		// document.write("scope password: " + $scope.user.password);
-		// if($scope.user.password == data[i].password) {
-		// console.log("password is correct");
-		// wrong = false;
-		// }
-		// }
-		// }
-		// console.log(wrong);
-		// var input_elem =
-		// angular.element(document.querySelector('#password_div'));
-		// var i =
-		// angular.element(document.querySelector('#i_password'));
-		// input_elem.removeClass("has-error");
-		// input_elem.removeClass("has-succcess");
-		// if(wrong) {
-		// input_elem.addClass("has-error");
-		// $scope.form.pass.$error.wrong = true;
-		// }
-		// else {
-		// input_elem.addClass("has-success");
-		// $scope.form.pass.$error.wrong = false;
-		// }
-		// $scope.err = "wrong!";
-		// console.log(input_elem);
-		// });
-		// }
-
+		/*
 		$scope.submit = function() {
 			console.log($scope.user.firstName);
 			console.log($scope.user.password);
@@ -110,4 +39,5 @@ angular.module('auction_land').controller('LoginController',
 			// delete $scope.user.country;
 			// User.save($scope.user);
 		};
+		*/
 	} ]);

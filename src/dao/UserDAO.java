@@ -82,9 +82,8 @@ public class UserDAO {
         Query q = em.createQuery("Select u from User u where u.username = ?1 and u.password = ?2");
         q.setParameter(1,username);
         q.setParameter(2,password);
-		/* original code 
-		 * entities.User user = (User) q.getSingleResult();
-		 */
+		//entities.User user = (User) q.getSingleResult();
+		 
 		entities.User user = (User) q.getResultList().get(0);
         
         tx.commit();

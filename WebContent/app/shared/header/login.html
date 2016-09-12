@@ -17,29 +17,33 @@
 					<!-- <img class="logo-size" src="logo4.png" /> -->
 					<h4 class="text-center" style="color:#2980B9;"><strong>Login</strong></h4>
 				</div>
-				<div class="modal-body">
-					<form class="form-horizontal" role="form" name="form"
+				<div class="modal-body" id="login_div">
+					<div class="alert alert-danger text-center" ng-if="error_login">
+			  			<strong>Error!</strong>The username or password that you've entered is incorrect<br/>
+					</div>
+					<div class="alert alert-success text-center" ng-if="show_welcome">
+			  			<strong>Welcome {{user.username}}</strong>
+					</div>
+					
+					<form class="form-horizontal" role="form" name="form" ng-if="!show_welcome"
 						ng-submit="form.$valid && check_user_pass()" novalidate>
 						
 						<div class="form-group">
-							<div id="username_div" class="has-feedback" ng-messages="form.username.$error" role="alert" 
+							<div id="username_div" class="has-feedback"  role="alert" 
 								ng-class="{'has-error' : (submitted && form.username.$invalid) || (form.username.$touched && form.username.$invalid) , 'has-success': form.username.$valid }">
 								<label class="control-label col-sm-2" for="usrname">Username:</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="username" name="username" 
 										ng-model="user.username" ng-required="true"
-										ng-blur="form.username.$dirty && check_username()" 
 										placeholder="Enter Username">
 									<span id="username_span"></span> 
 									<i id="i-username" class="glyphicon glyphicon-user form-control-feedback"></i>
-									<div ng-message="not_exists">Username does not exist.</div>
-									<div ng-show="form.username.$touched || submitted" ng-message="required">You must fill this field.</div>
 								</div>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<div id="password_div" class="has-feedback" ng-messages="form.pass.$error" role="alert" 
+							<div id="password_div" class="has-feedback"  role="alert" 
 								ng-class="{'has-error' : (submitted && form.pass.$invalid) , 'has-success': form.pass.$valid }">
 								<label class="control-label col-sm-2" for="pass">Password:</label>
 								<div class="col-sm-10">
@@ -49,8 +53,6 @@
 										placeholder="Password">
 									<span id="password_span"></span> 
 									<i id="i-password" class="glyphicon glyphicon-lock form-control-feedback"></i>
-									<div ng-message="wrong">Wrong password.</div>
-									<div ng-show="form.pass.$touched || submitted" ng-message="required">You must fill this field.</div>	
 								</div>
 							</div>
 						</div>
