@@ -56,6 +56,8 @@ angular.module('auction_land').controller('MessagesController',
 			$scope.fix_pages();
 			$scope.current_items = $scope.get_items();
 			//console.log($scope.presented_messages.length);
+			console.log($scope.inbox);
+			console.log($scope.sent);
 
 		});
 	};
