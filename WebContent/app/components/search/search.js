@@ -9,6 +9,7 @@ angular.module('auction_land').controller('SearchController',
 		}, function(stored_data){
 			$scope.logged_in = stored_data;
 		});	
+		
 		$scope.$watch(function(){
 			return $cookies.get('username');
 		}, function(stored_data){
@@ -44,13 +45,14 @@ angular.module('auction_land').controller('SearchController',
 			console.log($location.path());
 			$scope.search_bar = "header";
 		}
+		
 		$scope.$on('$locationChangeStart', function(event) {
 			if($location.path() != '/') {
 				console.log($location.path());
 				$scope.search_bar = "header";
 			}
 		});
-		
+
 		$scope.print = function() {
 			console.log("search_controller");
 		};
