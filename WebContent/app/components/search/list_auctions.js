@@ -112,14 +112,15 @@ angular.module('auction_land').controller('AuctionsController',
 			}
 			else {
 				var ends = Date.parse(item.ends);
-
+				var now = Date.now();
 				if(ends < Date.now()) {
 					item.ended = true;
 					return "Ended";
 				}
 				else {
 					item.ended = false;
-					return  item.ends;
+					var time_left = (ends - now)/1000;
+					return time_left;
 				}
 			}
 		};

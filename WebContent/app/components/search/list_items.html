@@ -6,7 +6,7 @@
 <style>
 a.list-group-item {
 	height: auto;
-	min-height: 250px;
+	min-height: 220px;
 	  -o-transition:.9s;
   -ms-transition:.9s;
   -moz-transition:.9s;
@@ -37,7 +37,6 @@ a.list-group-item:focus {
 */ 
 a.list-group-item.glowing-ended:hover {
 	background-color: #FBFBFB;
-	border : 3px 3px;
 	border-color : #e74c3c;
 	border-style : solid;
 	box-shadow: 0 0 10px #e67e22;
@@ -46,7 +45,6 @@ a.list-group-item.glowing-ended:hover {
 a.list-group-item.glowing-live:hover,
 a.list-group-item.glowing-live:focus {
 	background-color: #FBFBFB;
-	border : 3px 3px;
 	border-color : #2ecc71;
 	border-style : solid;
 	box-shadow: 0 0 10px #27ae60;
@@ -137,15 +135,26 @@ a.list-group-item.glowing-live:focus {
 					</div>
 					<div class="col-md-3 text-center divider"  >
 						<h3 class="text-center" style="margin-top:0;">
+
 							{{get_max_bid(i)}}  &euro; <br/>
-							<time ng-class="{'err' : get_ending_time(i) == 'Ended' , 'succ' : get_ending_time(i) != 'Ended'}">
-							<i ng-show="i.ended == false">Active <br/></i>
-							{{get_ending_time(i)}}
-							</time>
+							
+							<i ng-show="i.ended == false" class="succ">Active <br/></i>
+							<i ng-show="i.ended == true" class="err">Ended<br/></i>
+							<small> 
+								<timer ng-show="i.ended == false" class="succ"
+									countdown="get_ending_time(i)" max-time-unit="'day'" interval="1000">
+									{{days}} d{{daysS}}
+									{{hours}} h{{hoursS}} 
+									{{minutes}} m{{minutesS}} 
+									{{seconds}} s{{secondsS}}
+								</timer>
+							</small>
 						</h3>
-						<button type="button" ng-show="i.ended == true" class="btn btn-default btn-lg ">Bid
+						<!-- 
+						<button type="button" ng-show="i.ended == !true" class="btn btn-default btn-lg ">Bid
 							Now!</button>
-						<p style="margin-top: 10%;">
+						 -->
+						 <p style="margin-top: 5%;">
 							{{i.user.username}}<br/> 
 							<i>Rating :	{{get_rating(i)}}</i>
 								<!-- {{i.user.seller_rating}} -->

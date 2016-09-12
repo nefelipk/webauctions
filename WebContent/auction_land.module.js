@@ -5,6 +5,7 @@ angular.module('auction_land',
 		  'ngRoute',
 		  'ngMessages', 
 		  'ngCookies',
+		  'timer',
 		  'dibari.angular-ellipsis', 
 		  'uiGmapgoogle-maps' ]);
 
