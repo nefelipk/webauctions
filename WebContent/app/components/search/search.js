@@ -30,7 +30,7 @@ angular.module('auction_land').controller('SearchController',
 				$location.path("/search");
 				//$scope.searching = false;
 			}, function() {
-				$location.path("/no_results");
+				$location.path("/no_results/"+term);
 			});	
 		};
 		

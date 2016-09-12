@@ -1,6 +1,6 @@
 
 angular.module('auction_land').controller('MessagesController',
-		['$scope','$timeout','Message','$window',
+		['$scope','$timeout','$cookies','Message','$window',
 		 function($scope,$timeout,Message,$window) {
 
 	//$scope.selected = false;
@@ -89,9 +89,7 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.new_message_sent = false;
 	
 	$scope.send = function() {
-		$scope.new_message.receiverUsername = "Antonios";
-		$scope.new_message.senderUsername = "ripone07";
-		//$scope.new_message.senderUsername = $cookies.get('username');
+		$scope.new_message.senderUsername = $cookies.get('username');
 		$scope.read = false;
 		var date = new Date();
 		$scope.new_message.time = date.getTime();
