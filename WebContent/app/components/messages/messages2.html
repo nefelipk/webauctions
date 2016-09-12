@@ -153,7 +153,7 @@ ul > li > a.active {
 	</div>
 	
 	<div class="col-sm-7" ng-cloak>
-		<div class="btn-toolbar" ng-hide="current_tab == 'Compose'">
+		<div class="btn-toolbar" ng-hide="current_tab == 'Compose' || reading == true || reading_sent == true">
 				<div class="btn-group">
 					<button class="btn btn-default" ng-click="back()">
 						<i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -208,10 +208,42 @@ ul > li > a.active {
 				</table>
 			</div>
 			
-			<div ng-show="reading == true">
-				{{current.senderUsername}} <br/>
-				{{current.time}} <br/>
-				{{current.message}}<br/>
+			<div ng-show="reading == true" style="margin-bottom:20%;">
+				<hr />
+				<div class="row" >
+					<div class="col-sm-3" style="font-weight:bold;">
+						<a>{{current.senderUsername}}</a>
+					</div> 
+					<div class="col-sm-offset-1 col-sm-4"><div class="pull-right">{{current.time}}</div></div>
+					<div class="col-sm-4">
+						<div class="pull-right">
+							<button class="btn btn-default" ng-click="show_reply = !show_reply">
+							<span class="fa fa-reply" ></span>
+							</button>
+							<button class="btn btn-default" ng-click="delete_current(current)">
+							<span class="fa fa-trash-o" ></span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-sm-offset-1 col-sm-10">
+						<p style="margin-top:5%;font-size:14pt">
+							{{current.message}}
+						<p/>
+						<div ng-show="show_reply" style="margin-top:5%;">
+						<div class="form-group">
+							<label for="reply">Reply:</label>
+							<textarea class="form-control" rows="5" id="reply" ng-model="reply"></textarea>
+							<button class="btn btn-success" ng-click="send_reply()">Send</button>
+							<button class="btn btn-danger pull-right" ng-click="reply = '';show_reply = false;">
+								<span class="fa fa-trash-o" ></span>
+							</button>
+						</div>	
+					</div>
+			</div>
+			</div>	
 			</div>
 		</div>
 
@@ -234,9 +266,13 @@ ul > li > a.active {
 			</div>
 			
 			<div ng-show="reading_sent == true">
-				{{current_sent.senderUsername}} <br/>
-				{{current_sent.time}} <br/>
-				{{current.message}}<br/>
+				<hr />
+				<i>FROM</i> : 
+				{{current_sent.senderUsername}} <span class="pull-right">{{current_sent.time}} </span>
+				<hr />
+				<p style="margin-top:5%;font-size:14pt">
+				{{current.message}}
+				</p>
 			</div>
 		</div>
 

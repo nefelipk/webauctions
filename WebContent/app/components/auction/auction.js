@@ -45,7 +45,6 @@ angular.module('auction_land').controller('AuctionController',
 		return $cookies.get('logged-in');
 	}, function(stored_data){
 		$scope.logged_in = stored_data;
-		console.log($scope.logged_in);
 		if($scope.logged_in != 'true')			
 			$scope.message = "You have to login to place a bid !";
 		else
@@ -54,14 +53,12 @@ angular.module('auction_land').controller('AuctionController',
 	
 	
 	$scope.current = AuctionService.get_current_auction();
-	console.log($scope.current);
 	if($scope.current == null)
 		$scope.current = localStorageService.get('current_item');
 	localStorageService.set('current_item',$scope.current);
 	  
 	$scope.get_first_bid = function(auction) {
 		auction.firstBid = auction.firstBid.replace('$','');
-		console.log(auction.firstBid);
 		return auction.firstBid;
 	};
 	
@@ -100,8 +97,6 @@ angular.module('auction_land').controller('AuctionController',
 		if($scope.bid.user.username == undefined || $scope.bid.user.username == null) {
 			alert("SEVERE ERROR WITH LOGIN. YOUR BID WAS NOT PLACED");
 		}
-		console.log("bid : ");
-		console.log($scope.bid);
 		Bid.save($scope.bid).$promise.then(function(data) {
 			/* get new bids */
 			Bid.query({id : $scope.current.idItem}).$promise.then(function(data) {
@@ -120,7 +115,6 @@ angular.module('auction_land').controller('AuctionController',
 	
 	current_item_location = function() {
 		if(($scope.current.location.latitude != 0) && ($scope.current.location.longitude != 0)) {
-			console.log("CURRENT ITEM MAP")
 			var coords = { latitude : $scope.current.location.latitude, longitude : $scope.current.location.longitude};
 			$scope.current.coords = coords;
 			$scope.map.center.latitude = $scope.current.location.latitude;
@@ -150,7 +144,6 @@ angular.module('auction_land').controller('AuctionController',
 			
 			$scope.geocoder.geocode( { 'address': $scope.current.location.country }, function(results, status) {
 				if(status == google.maps.GeocoderStatus.OK) {
-					console.log(results[0].geometry.location.lat());
 					var coords = {latitude :  results[0].geometry.location.lat(), longitude : results[0].geometry.location.lng()};
 					$scope.map.center.latitude = coords.latitude;
 					$scope.map.center.longitude = coords.longitude;
@@ -174,8 +167,6 @@ angular.module('auction_land').controller('AuctionController',
 		$scope.markers = [];	
 		$scope.google = google;
 		$scope.geocoder = new google.maps.Geocoder();
-		console.log($scope.map);
-		console.log("google api returned");
 		AuctionService.set_google_api($scope.google);
 		AuctionService.set_map($scope.map);
 	});
@@ -183,10 +174,8 @@ angular.module('auction_land').controller('AuctionController',
 	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 		var google = AuctionService.get_google_api();
 		var map = AuctionService.get_map();
-		console.log("called");
 		current_item_location();
 		google.maps.event.trigger(map.control.getGMap(), 'resize'); 
-		console.log("exit");
 	});
 	
 }]);

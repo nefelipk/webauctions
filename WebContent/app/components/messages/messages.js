@@ -164,6 +164,19 @@ angular.module('auction_land').controller('MessagesController',
 							VIEWS CONTROLL 
 	**********************************************************************/
 	/*********************************************************************/
+	
+	$scope.delete_current = function(current) {
+		var index = $scope.current_items.indexOf(current); 
+		console.log(index);
+		Message.remove({username : $cookies.get('username'),id : $scope.current_items[index].id}).$promise.then(function() {
+			$scope.inbox.splice(index,1);
+			$scope.current_items = $scope.get_items();	
+			$scope.reading = false;
+		});	
+		
+	};
+	
+	
 	$scope.check_all = false;
 	$scope.selected_messages = new Array();
 	$scope.selected = false;
@@ -172,7 +185,7 @@ angular.module('auction_land').controller('MessagesController',
 	
 	}
 	
-
+	
 	$scope.select = function(index) {
 		if(index == null) {
 			$scope.check_all = !$scope.check_all;
@@ -223,7 +236,7 @@ angular.module('auction_land').controller('MessagesController',
 		$scope.reading_sent = false;
 		$scope.current_sent = {};
 	};
-	
+	$scope.show_reply = false;
 	$scope.current_tab = "Inbox";
 	$scope.set_active = function(tab) {
 		var inbox_tab = angular.element(document.querySelector('#inbox_tab'));
