@@ -171,11 +171,19 @@ angular.module('auction_land').controller('AuctionController',
 		AuctionService.set_map($scope.map);
 	});
 		
+	/* when using a google map inside a bootstrap tab it is 
+	 * almost necessary to use 'resize' event because the
+	 * map does not load properly.
+	 */
 	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-		var google = AuctionService.get_google_api();
-		var map = AuctionService.get_map();
-		current_item_location();
-		google.maps.event.trigger(map.control.getGMap(), 'resize'); 
+		var activeTab = $(".tab-content").find(".active");
+		var id = activeTab.attr('id');
+		if(id == "map1") {
+			var google = AuctionService.get_google_api();
+			var map = AuctionService.get_map();
+			current_item_location();
+			$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
+		}
 	});
 	
 }]);
