@@ -22,7 +22,10 @@ angular.module('auction_land').controller('AuctionsController',
 			$scope.current_page = 1;
 		};
 		
-			
+		$scope.finishLoading = function() {
+			var filters = angular.element(document.querySelector('#sidebar'));
+			filters.addClass('well');
+		}
 		
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {

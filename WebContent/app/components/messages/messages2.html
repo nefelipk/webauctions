@@ -40,10 +40,6 @@
 	background-color: transparent;
 }
 
-.well {
-	background-color: transparent;
-}
-
 h3 {
 	font-family: times, Times New Roman, times-roman, georgia, serif;
 	/*color: #444;
@@ -53,6 +49,7 @@ h3 {
 	font-size: 26px;
 	letter-spacing: -2px;
 	font-weight: bold;
+	border-radius:0;
 }
 
 
@@ -96,6 +93,13 @@ ul > li > a.active {
     cursor: pointer;
 }
 
+.panel,.panel-deafult {
+	background-color:white;
+	border-radius: 0;
+	margin-bottom : 2px;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
 </style>
 </head>
 <body>
@@ -104,23 +108,14 @@ ul > li > a.active {
 	
 	
 	
-	<div class="row" style="margin-bottom:20px;">
-		<div class="col-md-offset-1 col-md-2 text-center" style="background-color:#f1c40f;color:#2C3E50;">
-			<h4>
-			{{username}}
-			</h4>
-		</div>
-		<div class="col-md-7" style="background-color:#16A085;color:#FBFBFB;">
-			<h4>
-			{{current_tab}}
-			</h4>
-		</div>
-	</div>	
 	
-	<div class="row" style="margin-bottom:20px;">
+	<div class="row " style="margin-bottom:20px;">
 	
-	<div class="col-md-offset-1 col-md-2 side_borders">
-		<ul class="nav nav-tab nav-stacked" role="tablist">
+	<div class="col-md-offset-1 col-md-2 panel panel-default" style="padding:0px 0px;">
+		<div class="text-center panel-heading" style="background-color:#f1c40f;color:#2C3E50;">
+			<h3> {{username}} </h3>
+		</div>
+		<ul class="nav nav-tab nav-stacked panel-body" role="tablist">
 			<li class="text-center" role="presentation" >
 				<a ng-click="set_active(1)" id="compose_tab" data-toggle="tab" data-target="#compose" 
 				href="">
@@ -128,6 +123,7 @@ ul > li > a.active {
     	       	Compose
 				</a>
 			</li>
+			<hr/>
 			<li class="text-center" role="presentation" >
 				<a  data-toggle="tab" class="active" data-target="#inbox"
 					href="" ng-click ="set_active(2)" id="inbox_tab">
@@ -135,6 +131,7 @@ ul > li > a.active {
 					Inbox
 				</a>
 			</li>
+			<hr/>
 			
 			<li class="text-center" role="presentation">
 				<a  data-toggle="tab" data-target="#sent" href=""
@@ -142,6 +139,7 @@ ul > li > a.active {
 					Sent
 				</a>
 			</li>
+			<hr/>
 			
 			<li class="text-center" role="presentation">
 				<a  data-toggle="pill" data-target="">
@@ -152,7 +150,13 @@ ul > li > a.active {
 		</ul>
 	</div>
 	
-	<div class="col-sm-7" ng-cloak>
+	<div class="col-sm-7 panel panel-default"  style="padding:0px 0px;margin-left:5px;" ng-cloak>
+		<div class="text-center panel-heading" style="background-color:#16A085;color:#FBFBFB;">
+			<h3>
+			{{current_tab}}
+			</h3>
+		</div>
+	
 		<div class="btn-toolbar" ng-hide="current_tab == 'Compose' || reading == true || reading_sent == true">
 				<div class="btn-group">
 					<button class="btn btn-default" ng-click="back()">
@@ -190,7 +194,7 @@ ul > li > a.active {
 			</div>
 		<div class="tab-content">
 		
-		<div role="tabpanel" id="inbox" class="tab-pane fade in active" style="margin-top:10px;" ng-cloak>
+		<div role="tabpanel" id="inbox" class="tab-pane fade in active " style="margin-top:10px;" ng-cloak>
 			<div ng-show="reading == false" class="inbox-body">
 				<table class="table table-inbox table-hover" >
 					<tbody>
@@ -276,7 +280,7 @@ ul > li > a.active {
 			</div>
 		</div>
 
-		<div role="tabpanel" id="compose" class="tab-pane fade">
+		<div role="tabpanel" id="compose" class="tab-pane fade ">
 			<div class="panel panel-default">
 				<div ng-show="message_sent" class="slideUp alert alert-success">
 					<strong>Success!</strong> Your message to {{$scope.new_message.receiverUsername}} have been sent. 

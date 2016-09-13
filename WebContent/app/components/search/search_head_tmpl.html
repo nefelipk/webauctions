@@ -31,18 +31,18 @@
 	</div>
 	<div class="col-sm-4">
 		<ul class="pagination pagination-sm" style="float: right;">
-			<li><a ng-class="{'disabled' : current_page == 1}"
+			<li><a href="" 
+				ng-class="{'disabled' : current_page == 1}"
 				ng-hide="current_page == 1"
 				ng-disabled="current_page == 1" 
 				ng-click="get_page(current_page-1)" ><</a>
 			</li>
 
 			<li ng-repeat="p in pages" ng-class="{'active' : current_page == p}">
-				<a 
-				ng-click="get_page(p)">{{p}}</a>
+				<a href="" ng-click="get_page(p)">{{p}}</a>
 			</li>
 
-			<li><a 
+			<li><a href=""
 				ng-hide="current_page == last_page"
 				ng-click="get_page(current_page+1)"
 				ng-class="{'disabled' : current_page == last_page}">> </a>

@@ -36,6 +36,7 @@ angular.module('auction_land').controller('AuctionController',
 		['$scope','$route','$timeout','$cookies','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi',
 		 function($scope,$route,$timeout,$cookies,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi) {
 	
+			
 	$scope.logged_in = $cookies.get('logged-in');		
 	if($scope.logged_in != 'true')			
 		$scope.message = "You have to login to place a bid !";
