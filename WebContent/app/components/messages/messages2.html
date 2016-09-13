@@ -23,7 +23,6 @@
 .pagination>li>a {
 	border: 0px;
 	color: black;
-	'
 }
 
 .pagination>li.active>a {
@@ -36,8 +35,13 @@
 	font-size: 16px;
 }
 
-.pagination>li.active>a:hover, .pagination>li>a:hover {
-	background-color: transparent;
+.pagination > li.active > a:hover,
+.pagination > li > a:hover {
+	background-color:#ecf0f1;
+}
+
+.nohover:hover {
+	background-color:white;
 }
 
 h3 {
@@ -93,11 +97,19 @@ ul > li > a.active {
     cursor: pointer;
 }
 
-.panel,.panel-deafult {
+.panel,
+.panel-body,
+.panel-heading
+.panel-deafult {
 	background-color:white;
 	border-radius: 0;
 	margin-bottom : 2px;
-	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	//box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	box-shadow: 0 3px 0px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.btn {
+	border-radius : 0;
 }
 
 </style>
@@ -150,56 +162,61 @@ ul > li > a.active {
 		</ul>
 	</div>
 	
-	<div class="col-sm-7 panel panel-default"  style="padding:0px 0px;margin-left:5px;" ng-cloak>
+	<div class="col-sm-7 panel panel-default"  
+		style="padding:0px 0px;margin-left:5px;" 
+		ng-cloak>
 		<div class="text-center panel-heading" style="background-color:#16A085;color:#FBFBFB;">
 			<h3>
 			{{current_tab}}
 			</h3>
 		</div>
 	
-		<div class="btn-toolbar" ng-hide="current_tab == 'Compose' || reading == true || reading_sent == true">
-				<div class="btn-group">
-					<button class="btn btn-default" ng-click="back()">
-						<i class="fa fa-arrow-left" aria-hidden="true"></i>
-					</button> 
-				</div>
-				<div class="btn-group">
-					<button class="btn btn-default" ng-click="select(null)">
-						<i class="fa fa-check-square-o" aria-hidden="true" > </i>
-					</button>
-					<button class="btn btn-default" ng-click="refresh()">
-						<i class="fa fa-refresh"> </i>
-					</button>
-				</div>
-				<div class="btn-group">
-					<button class="btn btn-default" ng-click="delete_message()"
-					ng-disabled="(selected == false) && (select_all == false)">
-						<span class="fa fa-trash-o" aria-hidden="true"></span>
-					</button>
-				</div>
-				
-				<div class="pull-right">
-					<ul class="pagination pagination-sm pull-right"
-						style="float: right; margin: 0">
-						<li><a ng-class="{'disabled' : current_page == 1}"
-							ng-hide="current_page == 1" ng-disabled="current_page == 1"
-							ng-click="get_page(current_page-1)"><</a></li>
-						<li><a> {{current_page}} of {{pages.length}} </a></li>
-
-						<li><a href="javascript:undefined" ng-hide="current_page == last_page"
-							ng-click="get_page(current_page+1)"
-							ng-class="{'disabled' : current_page == last_page}">> </a></li>
-					</ul>
-				</div>
-			</div>
 		<div class="tab-content">
-		
-		<div role="tabpanel" id="inbox" class="tab-pane fade in active " style="margin-top:10px;" ng-cloak>
+	
+		<div class="btn-toolbar" ng-hide="current_tab == 'Compose'" 
+			style="margin-top:2.5%;margin-left:2.5%;margin-right:2.5%;">
+			<div class="">
+				<button class="btn btn-default" ng-click="back()">
+					<i class="fa fa-arrow-left" aria-hidden="true"></i>
+				</button> 
+				<button class="btn btn-default" ng-click="select(null)">
+					<i class="fa fa-check-square-o" aria-hidden="true" > </i>
+				</button>
+				<button class="btn btn-default" ng-click="refresh()">
+					<i class="fa fa-refresh"> </i>
+				</button>
+				<button class="btn btn-default" ng-click="delete_message()"
+					ng-disabled="(selected == false) && (select_all == false)">
+					<span class="fa fa-trash-o" aria-hidden="true"></span>
+				</button>
+			</div>
+			
+			<div class="pull-right">
+				<ul class="pagination pagination-sm pull-right"
+					style="float: right; margin: 0">
+					<li>
+						<a style="cursor:default" class="nohover"> {{current_page}} of {{pages.length}} </a>
+					<li>
+					<li><a href="" 
+						ng-class="{'disabled' : current_page == 1}"
+						ng-hide="current_page == 1" ng-disabled="current_page == 1"
+						ng-click="get_page(current_page-1)"><</a></li>
+					<li><a href="javascript:undefined" ng-hide="current_page == last_page"
+						ng-click="get_page(current_page+1)"
+					ng-class="{'disabled' : current_page == last_page}">> </a></li>
+				</ul>
+			</div>
+		</div>
+			
+		<div role="tabpanel" id="inbox" class="tab-pane fade in active " 
+			style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
 			<div ng-show="reading == false" class="inbox-body">
-				<table class="table table-inbox table-hover" >
+				<table class="table table-inbox table-hover">
 					<tbody>
-						<tr id="row{[m.id}}" ng-class="{'unread' : m.read == false}" ng-repeat="m in current_items" 
-						ng-hide="m.deleted">
+						<tr id="row{[m.id}}" ng-class="{'unread' : m.read == false}" 
+						ng-repeat="m in current_items" 
+						ng-hide="m.deleted"
+						style="border: 1px solid">
 							<td style="width:5%">
 								<input type="checkbox" ng-click="select($index)" ng-checked="check_all">
 							</td>
@@ -251,11 +268,13 @@ ul > li > a.active {
 			</div>
 		</div>
 
-		<div role="tabpanel" id="sent" class="tab-pane fade ">
+		<div role="tabpanel" id="sent" class="tab-pane fade" 
+			style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
 			<div ng-show="reading_sent == false" class="inbox-body">
 				<table class="table table-inbox table-hover">
 					<tbody>
-							<tr ng-repeat="s in sent" ng-click="read_sent_message(s)">
+							<tr ng-repeat="s in sent" ng-click="read_sent_message(s)"
+							style="border: 1px solid">
 							<td class="inbox-small-cells">
 								<input type="checkbox"
 								class="mail-checkbox">
@@ -332,11 +351,6 @@ ul > li > a.active {
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-sm-offset-1 col-sm-9">
-			<hr />
-		</div>
-	</div>
 	</div>
 	
 </body>

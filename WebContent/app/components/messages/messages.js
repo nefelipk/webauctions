@@ -262,6 +262,8 @@ angular.module('auction_land').controller('MessagesController',
 			$scope.presented_messages = $scope.sent;
 			$scope.fix_pages();
 		}
+		$scope.reading_sent = false;
+		$scope.reading = false
 	};
 	
 	/*********************************************************************/

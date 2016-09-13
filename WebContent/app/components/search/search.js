@@ -22,6 +22,7 @@ angular.module('auction_land').controller('SearchController',
 			angular.forEach(cookies, function (v, k) {
 			    $cookies.remove(k);
 			});
+			$location.path('/');
 		};
 		
 		$scope.searching = false;
