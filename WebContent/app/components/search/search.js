@@ -11,22 +11,8 @@ angular.module('auction_land').controller('SearchController',
 			$scope.logged_in = stored_data;
 			$scope.user = $cookies.getObject('user');
 		});	
-		
-		/*
-		$scope.$watch(function(){
-			return $cookies.getObject('user');
-		}, function(stored_data){
-			$scope.user = stored_data;
-			$scope.logged_in = true;
-		});	
-		*/
-		/*
-		$scope.$watch(function(){
-			return $cookies.get('username');
-		}, function(stored_data){
-			$scope.username = stored_data;
-		});	
-		*/
+	
+		$scope.category = "General";
 		
 		$scope.logout = function() {
 			console.log("logout");
@@ -40,6 +26,20 @@ angular.module('auction_land').controller('SearchController',
 		$scope.searching = false;
 		$scope.search = function(term) {
 			$scope.searching = true;
+			
+			if($scope.category == 'Category') {
+				
+			}
+			else if($scope.category == 'General') {
+				
+			}
+			else if($scope.category == 'Location') {
+				
+			}
+			else if($scope.category == 'Price') {
+				
+			}
+			
 			Item.query({term : term}).$promise.then(function (data) {
 				localStorageService.remove('auctions');
 				$scope.items = data.slice();
@@ -54,6 +54,7 @@ angular.module('auction_land').controller('SearchController',
 			});	
 		};
 		
+		/*
 		if($location.path() != '/') {
 			console.log($location.path());
 			$scope.search_bar = "header";
@@ -69,5 +70,6 @@ angular.module('auction_land').controller('SearchController',
 		$scope.print = function() {
 			console.log("search_controller");
 		};
+		*/
 	}]);
 		
