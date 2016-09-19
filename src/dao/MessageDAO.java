@@ -114,7 +114,7 @@ public class MessageDAO {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		try {
-			Query q = entityManager.createQuery("Select m from Message m where m.user2.idUser = ?1 AND m.read = 0");
+			Query q = entityManager.createQuery("Select m from Message m where m.user2.idUser = ?1 AND m.read = 0 and m.deleted_by_receiver = 0");
 			q.setParameter(1, userID);
 			List<entities.Message> unreadMessages = q.getResultList();
 			return unreadMessages.size();
