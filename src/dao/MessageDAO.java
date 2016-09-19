@@ -117,12 +117,7 @@ public class MessageDAO {
 			Query q = entityManager.createQuery("Select m from Message m where m.user2.idUser = ?1 AND m.read = 0");
 			q.setParameter(1, userID);
 			List<entities.Message> unreadMessages = q.getResultList();
-
-			Logger LOGGER = Logger.getLogger(MessageDAO.class.getName());
-			LOGGER.log(Level.SEVERE, " {0} UNREAD MESSAGES ", unreadMessages.size());
-
 			return unreadMessages.size();
-
 		} catch (Exception e) {
 			return 0;
 		} finally {
@@ -130,3 +125,4 @@ public class MessageDAO {
 		}
 	}
 }
+

@@ -147,7 +147,6 @@ angular.module('auction_land').controller('MessagesController',
 	
 	$scope.fix_pages = function() {
 		$scope.pages = [];
-		console.log($scope.presented_messages.length/messages_per_page);
 		for(i = 0; i < $scope.presented_messages.length/messages_per_page; i++)
 			$scope.pages.push(i+1);
 		$scope.last_page = $scope.pages[$scope.pages.length-1];

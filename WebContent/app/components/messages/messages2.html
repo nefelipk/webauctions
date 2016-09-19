@@ -4,8 +4,6 @@
 <title>Messages</title>
 
 <style>
-
-
 #wrapper {
 	min-height: 100%;
 	position: relative;
@@ -35,13 +33,12 @@
 	font-size: 16px;
 }
 
-.pagination > li.active > a:hover,
-.pagination > li > a:hover {
-	background-color:#ecf0f1;
+.pagination>li.active>a:hover, .pagination>li>a:hover {
+	background-color: #ecf0f1;
 }
 
 .nohover:hover {
-	background-color:white;
+	background-color: white;
 }
 
 h3 {
@@ -50,12 +47,11 @@ h3 {
 	*/
 	margin: 0;
 	padding: 10px 0px 6px 0px;
-	font-size: 26px;
-	letter-spacing: -2px;
+	font-size: 20px;
+	letter-spacing: 0px;
 	font-weight: bold;
-	border-radius:0;
+	border-radius: 0;
 }
-
 
 .side_borders {
 	border-left: 1px dashed #333;
@@ -66,60 +62,91 @@ h3 {
 	border-right: 1px solid #333;
 }
 
-ul > li > a {
-	color : #333;
+ul>li>a {
+	color: #333;
 }
 
-ul > li > a  : hover {
-
+ul>li>a  : hover {
+	
 }
 
-ul > li > a.active {
-	font-weight : 600;
-	color : red;
+ul>li>a.active {
+	font-weight: 600;
+	color: red;
 }
 
 .ng-hide-add, .ng-hide-remove {
-    /* ensure visibility during the transition */
-    display: block !important; /* yes, important */
+	/* ensure visibility during the transition */
+	display: block !important; /* yes, important */
 }
 
 .slideUp {
-    transition: .5s linear all;
-    //height: 80px;
-    overflow: hidden;
+	transition: .5s linear all; //
+	height: 80px;
+	overflow: hidden;
 }
+
 .slideUp.ng-hide {
-    height:0;
+	height: 0;
 }
 
 .table-inbox tr td:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
-.panel,
-.panel-body,
-.panel-heading
+.panel, .panel-body, .panel-heading
 .panel-deafult {
-	background-color:white;
+	background-color: transparent;
 	border-radius: 0;
-	margin-bottom : 2px;
-	//box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-	box-shadow: 0 3px 0px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	margin-bottom: 2px; //
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+	box-shadow: 0 3px 0px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.panel-default>.panel-heading {
+	background-color: transparent;
 }
 
 .btn {
-	border-radius : 0;
+	border-radius: 0;
 }
 
 tr.read {
-	background-color: rgba(243,243,243,.85);
+	background-color: rgba(243, 243, 243, .85);
 }
 
 tr.unread {
-	background-color:white;
-	font-weight : bold;
+	background-color: white;
+	font-weight: bold;
 }
+
+.compose {
+	background-color: #e74c3c;
+	color: #e74c3c;
+}
+
+.inbox {
+	background-color: #27ae60;
+	color: #27ae60;
+}
+
+.sent {
+	background-color: #2980b9;
+	color: #2980b9;
+}
+
+.paragraph-message {
+	margin-top: 2.5%;
+	font-size: 16px;
+
+	min-height: 100px;
+	text-indent: 50px;
+	text-align: justify;
+	margin-bottom:2.5%;
+	font-family: verdana,helvetica,sans-serif;
+}
+
 </style>
 </head>
 <body>
@@ -132,7 +159,7 @@ tr.unread {
 	<div class="row " style="margin-bottom:20px;">
 	
 	<div class="col-md-offset-1 col-md-2 panel panel-default" style="padding:0px 0px;">
-		<div class="text-center panel-heading" style="background-color:#f1c40f;color:#2C3E50;">
+		<div class="text-center panel-heading" > <!-- style="background-color:#f1c40f;color:#2C3E50;" -->
 			<h3> {{username}} </h3>
 		</div>
 		<ul class="nav nav-tab nav-stacked panel-body" role="tablist">
@@ -173,7 +200,9 @@ tr.unread {
 	<div class="col-sm-7 panel panel-default"  
 		style="padding:0px 0px;margin-left:5px;" 
 		ng-cloak>
-		<div class="text-center panel-heading" style="background-color:#16A085;color:#FBFBFB;">
+		<div class="text-center panel-heading" 
+			ng-class="{'compose' : current_tab =='Compose' , 'inbox' : current_tab == 'Inbox' , 'sent' : curent_tab == 'Sent'}">
+			<!-- style="background-color:#16A085;color:#FBFBFB;" -->
 			<h3>
 			{{current_tab}}
 			</h3>
@@ -248,7 +277,7 @@ tr.unread {
 				<hr />
 				<div class="row" >
 					<div class="col-sm-6" style="font-weight:bold;">
-						from : <a style="decoration:none;">{{current.senderUsername}}</a>
+						from : <a style=" text-decoration: none;color:#3498db;">{{current.senderUsername}}</a>
 					</div> 
 					<div class="col-sm-6">
 						<div class="pull-right">{{current.time}}</div>
@@ -257,7 +286,7 @@ tr.unread {
 				<hr />
 				<div class="row">
 					<div class="col-sm-12">
-						<p style="margin-top:2.5%;font-size:16px">
+						<p class="paragraph-message">
 							{{current.message}}
 						<p/>
 						<div ng-if="show_reply == true" style="margin-top:5%;">
@@ -281,7 +310,7 @@ tr.unread {
 				<table class="table table-inbox table-hover">
 					<tbody>
 							<tr ng-repeat="s in sent" ng-click="read_sent_message(s)"
-							style="border: 1px solid">
+							class="read">
 							<td class="inbox-small-cells">
 								<input type="checkbox"
 								class="mail-checkbox">
@@ -297,12 +326,22 @@ tr.unread {
 			
 			<div ng-show="reading_sent == true">
 				<hr />
-				<i>FROM</i> : 
-				{{current_sent.senderUsername}} <span class="pull-right">{{current_sent.time}} </span>
+				<div class="row" >
+					<div class="col-sm-6" style="font-weight:bold;">
+						to : <a style=" text-decoration: none;color:#3498db;">{{current_sent.receiverUsername}}</a>
+					</div> 
+					<div class="col-sm-6">
+						<div class="pull-right">{{current_sent.time}}</div>
+					</div>
+				</div>
 				<hr />
-				<p style="margin-top:5%;font-size:16px">
-				{{current.message}}
-				</p>
+				<div class="row">
+					<div class="col-sm-12">
+						<p class="paragraph-message">
+							{{current_sent.message}}
+						<p/>
+					</div>
+				</div>	
 			</div>
 		</div>
 
@@ -312,37 +351,38 @@ tr.unread {
 					<strong>Success!</strong> Your message to {{$scope.new_message.receiverUsername}} have been sent. 
 				</div>
 				<div class="panel-body message">
-					<p class="text-center">New Message</p>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							<label for="to" class="col-sm-1 control-label">To:</label>
-							<div class="col-sm-11">
-								<input ng-model="new_message.receiverUsername" type="text"
-									class="form-control" id="to" placeholder="Type username">
+					<div style="margin-left:2.5%;margin-right:2.5%">
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<div class="col-sm-12">
+										<input ng-model="new_message.receiverUsername" type="text"
+											class="form-control" id="to" placeholder="Type username">
+									</div>
+								</div>
+							</form>
+		
+							<div class="row">
+								<div class="col-sm-12 ">
+									<div class="form-group">
+										<textarea ng-model="new_message.message" class="form-control"
+											id="message" name="body" rows="12"
+											placeholder="Click here to compose new message"></textarea>
+									</div>
+								</div>
 							</div>
-						</div>
-					</form>
-
-					<div class="row">
-						<div class="col-sm-11 col-sm-offset-1">
-							<div class="form-group">
-								<textarea ng-model="new_message.message" class="form-control"
-									id="message" name="body" rows="12"
-									placeholder="Click here to compose new message"></textarea>
+		
+							<div class="row">
+								<div class="col-sm-6">
+									<button ng-click="send()" type="submit" class="btn btn-success">Send</button>
+								</div>
+								<div class="col-sm-6">
+									<div class="pull-right">
+										<button type="submit" ng-click=""
+											class="btn btn-danger">Discard</button>
+									</div>
+								</div>
 							</div>
-						</div>
 					</div>
-
-					<div class="row">
-						<div class="col-sm-offset-1 col-sm-1">
-							<button ng-click="send()" type="submit" class="btn btn-success">Send</button>
-						</div>
-						<div class="col-sm-offset-7 col-sm-2 pull-right">
-							<button type="submit" ng-click="show_reply = !show_reply"
-								class="btn btn-danger">Discard</button>
-						</div>
-					</div>
-
 				</div>
 			</div>
 		</div>
