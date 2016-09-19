@@ -71,8 +71,8 @@ angular.module('auction_land').controller('MessagesController',
 		$scope.check_all = false;
 		for(i = length; i >= 0; i--) {
 			console.log($scope.current_items[$scope.selected_messages[i]]);
-			var response = Message.remove({username : $cookies.getObject('user').username,id : $scope.current_items[$scope.selected_messages[i]].id});
-			response.$then(function() {
+			var response = Message.remove({username : $cookies.getObject('user').username,id : $scope.current_items[$scope.selected_messages[i]].id})
+			.$promise.then(function() {
 				$scope.current_items.splice($scope.selected_messages[i],1);
 				$scope.selected_messages.pop();
 				$scope.fix_pages();
@@ -200,6 +200,15 @@ angular.module('auction_land').controller('MessagesController',
 		
 	};
 	
+	$scope.delete_current_sent = function(current) {
+		var index = $scope.current_items.indexOf(current); 
+		Message.remove({username : $cookies.getObject('user').username,id : $scope.current_items[index].id}).$promise.then(function() {
+			$scope.inbox.splice(index,1);
+			$scope.current_items = $scope.get_items();	
+			$scope.reading_sent = false;
+		});	
+		
+	};
 	
 	$scope.check_all = false;
 	$scope.selected_messages = new Array();
@@ -208,6 +217,7 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.select_all = function() {
 	
 	}
+	
 	
 	
 	$scope.select = function(index) {
