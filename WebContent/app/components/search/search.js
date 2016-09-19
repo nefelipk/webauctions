@@ -64,7 +64,6 @@ angular.module('auction_land').controller('SearchController',
 			if($location.path() != '/') {
 				console.log($location.path());
 				$scope.search_bar = "header";
-				$scope.$apply();
 			}
 		});
 
