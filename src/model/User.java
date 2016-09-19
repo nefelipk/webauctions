@@ -14,6 +14,15 @@ public class User {
 	private Location location;
 	private boolean admin;
 	private String afm;
+	private int unreadMessages;
+	
+	public int getUnreadMessages() {
+		return unreadMessages;
+	}
+
+	public void setUnreadMessages(int unreadMessages) {
+		this.unreadMessages = unreadMessages;
+	}
 
 	public String getUsername() {
 		return username;

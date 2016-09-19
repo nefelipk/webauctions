@@ -4,17 +4,29 @@ angular.module('auction_land').controller('SearchController',
 		
 		$scope.logged_in = $cookies.get('logged-in');
 		$scope.username = $cookies.get('username');
+		
 		$scope.$watch(function(){
 			return $cookies.get('logged-in');
 		}, function(stored_data){
 			$scope.logged_in = stored_data;
+			$scope.user = $cookies.getObject('user');
 		});	
 		
+		/*
+		$scope.$watch(function(){
+			return $cookies.getObject('user');
+		}, function(stored_data){
+			$scope.user = stored_data;
+			$scope.logged_in = true;
+		});	
+		*/
+		/*
 		$scope.$watch(function(){
 			return $cookies.get('username');
 		}, function(stored_data){
 			$scope.username = stored_data;
 		});	
+		*/
 		
 		$scope.logout = function() {
 			console.log("logout");

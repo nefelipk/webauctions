@@ -112,6 +112,14 @@ ul > li > a.active {
 	border-radius : 0;
 }
 
+tr.read {
+	background-color: rgba(243,243,243,.85);
+}
+
+tr.unread {
+	background-color:white;
+	font-weight : bold;
+}
 </style>
 </head>
 <body>
@@ -213,10 +221,9 @@ ul > li > a.active {
 			<div ng-show="reading == false" class="inbox-body">
 				<table class="table table-inbox table-hover">
 					<tbody>
-						<tr id="row{[m.id}}" ng-class="{'unread' : m.read == false}" 
+						<tr id="row{[m.id}}" ng-class="{'unread' : m.read == false , 'read' : m.read == true}" 
 						ng-repeat="m in current_items" 
-						ng-hide="m.deleted"
-						style="border: 1px solid">
+						ng-hide="m.deleted">
 							<td style="width:5%">
 								<input type="checkbox" ng-click="select($index)" ng-checked="check_all">
 							</td>

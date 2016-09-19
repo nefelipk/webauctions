@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -83,4 +84,22 @@ public class MessagesResource {
 				.build())
 				.build();
 	}
+	
+	@PUT
+	@Consumes({"application/json"})
+	public Response modifyMessage(model.Message message) {
+		UserDAO userDAO = new UserDAO();
+		entities.User user = userDAO.getUserByUsername(message.getReceiverUsername());
+		if(user != null) {
+			MessageDAO messageDAO = new MessageDAO();
+			if(messageDAO.updateMessageById(message.getId()) > 0)
+				return Response.ok().build();
+			else 
+				return Response.serverError().entity("No message with such id").build();
+		}
+		else {
+			return Response.serverError().entity("No such user exists").build();
+		}
+	}
+	
 }

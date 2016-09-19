@@ -17,11 +17,15 @@ angular.module('auction_land').controller('LoginController',
 				$timeout(function() {
 					$scope.show_welcome = false;
 					$('#login_modal').modal('hide');
+					$cookies.putObject('user',data);
+					$cookies.put('logged-in',true);
+					//$cookies.put('username',$scope.user.username);
+					//$cookies.put('password',$scope.user.password);
 				},2000);
 				console.log(data);
-				$cookies.put('logged-in',true);
-				$cookies.put('username',$scope.user.username);
-				$cookies.put('password',$scope.user.password);
+//				$cookies.put('logged-in',true);
+//				$cookies.put('username',$scope.user.username);
+//				$cookies.put('password',$scope.user.password);
 			},function() {
 				$scope.error_login = true;
 			    var input_elem = angular.element(document.querySelector('#login_div'));
@@ -32,13 +36,4 @@ angular.module('auction_land').controller('LoginController',
 			});
 		};
 
-		/*
-		$scope.submit = function() {
-			console.log($scope.user.firstName);
-			console.log($scope.user.password);
-			$scope.user.location.country = $scope.user.country.name;
-			// delete $scope.user.country;
-			// User.save($scope.user);
-		};
-		*/
 	} ]);

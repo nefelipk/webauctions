@@ -136,7 +136,7 @@
 				</form>
 				<ul class="nav navbar-nav navbar-right" >
 					<li ng-if="logged_in != 'true'" >
-						<a href="" data-toggle="modal" data-target="#login_modal">
+						<a href="" data-toggle="modal" data-target="#login_modal" >
 						<span class="glyphicon glyphicon-log-in"></span> 
 						Login
 						</a>
@@ -147,9 +147,9 @@
 						Sign Up
 						</a>
 					</li>
-					<li ng-if="logged_in == 'true'" class="dropdown">
+					<li ng-show="logged_in == 'true'" class="dropdown">
 						<a href="" class="dropdown-toggle"
-							data-toggle="dropdown">{{username}} 
+							data-toggle="dropdown">{{user.username}} 
 							<span  class="glyphicon glyphicon-user "></span>		
 							<span class="caret"></span>
 						</a>
@@ -163,7 +163,9 @@
 								<li class="divider"></li>
 								<li>
 									<a href="#/messages">Messages 
-										<span class="badge pull-right">	42 </span></a></li>
+										<span class="badge pull-right">{{user.unreadMessages}}</span>
+									</a>
+								</li>
 
 								<li class="divider"></li>
 								<li ng-click="logout()">
@@ -187,29 +189,3 @@
 
 </html>
 
-
-<!-- 
-
-<div class="dropdown" ng-if="logged_in = 'true'">
-	<a class="dropdown-toggle" type="button"
-		data-toggle="dropdown"
-		href="">
-			
-		{{username}} <span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu">
-		<li ng-if="logged_in">
-			<a href="#/messages">
-				<span class="glyphicon glyphicon-comment pull-right"></span> 
-				Messages
-			</a>
-		</li>
-		<li ng-if="logged_in" ng-click="logout()">
-			<a href=""><span class="glyphicon glyphicon-log-out pull-right" ></span>
-			Logout
-			</a>
-		</li>
-	</ul>
-</div>
-
- -->

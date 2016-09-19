@@ -1,13 +1,13 @@
 package dao;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-
-import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 
 import db.JPAResource;
 
@@ -106,5 +106,45 @@ public class MessageDAO {
             entityManager.close();
         }
         return;
+	}
+	
+	public int updateMessageById(int id) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        
+        try {
+        	entities.Message message = (entities.Message) entityManager.find(entities.Message.class,id);
+        	message.setRead(true);
+        	transaction.commit();
+        	return message.getIdMessage();
+        } catch(Exception e) {
+        	return -1;
+        }
+        finally {
+        	entityManager.close();
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public int getNumberOfUnreadMessages(int userID) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        try {
+			Query q = entityManager.createQuery("Select m from Message m where m.user2.idUser = ?1 AND m.read = 0");
+        	q.setParameter(1,userID);    
+			List<entities.Message> unreadMessages = q.getResultList();
+			
+			Logger LOGGER = Logger.getLogger( MessageDAO.class.getName() );
+			LOGGER.log( Level.SEVERE, " {0} UNREAD MESSAGES ", unreadMessages.size() );
+
+			
+			return unreadMessages.size();
+        } catch(Exception e) {
+        	return 0;
+        } finally {
+        	entityManager.close();
+        }
 	}
 }

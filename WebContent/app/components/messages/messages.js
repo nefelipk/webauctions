@@ -3,7 +3,7 @@ angular.module('auction_land').controller('MessagesController',
 		['$scope','$timeout','$cookies','Message','$window',
 		 function($scope,$timeout,$cookies,Message,$window) {
 
-	$scope.username = $cookies.get('username');
+	$scope.username = $cookies.getObject('user').username;
 			
 	var add_readable_date = function(message) {
 		var month = new Array();
@@ -37,7 +37,7 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.presented_messages = [];
 	$scope.current_items = [];
 	$scope.refresh = function() {
-		Message.query({username : $cookies.get('username')}).$promise.then(function(data) {
+		Message.query({username : $cookies.getObject('user').username}).$promise.then(function(data) {
 			$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
 			$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
 	
@@ -71,7 +71,7 @@ angular.module('auction_land').controller('MessagesController',
 		$scope.check_all = false;
 		for(i = length; i >= 0; i--) {
 			console.log($scope.current_items[$scope.selected_messages[i]]);
-			var response = Message.remove({username : $cookies.get('username'),id : $scope.current_items[$scope.selected_messages[i]].id});
+			var response = Message.remove({username : $cookies.getObject('user').username,id : $scope.current_items[$scope.selected_messages[i]].id});
 			response.$then(function() {
 				$scope.current_items.splice($scope.selected_messages[i],1);
 				$scope.selected_messages.pop();
@@ -85,7 +85,7 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.new_message_sent = false;
 	
 	$scope.send = function() {
-		$scope.new_message.senderUsername = $cookies.get('username');
+		$scope.new_message.senderUsername = $cookies.getObject('user').username;
 		$scope.read = false;
 		var date = new Date();
 		$scope.new_message.time = date.getTime();
@@ -100,6 +100,32 @@ angular.module('auction_land').controller('MessagesController',
 			return;
 		});
 	};
+	
+	$scope.reading = false;
+	$scope.read_message = function(message) {
+		$scope.current = message;
+		$scope.reading = true;
+		if(message.read == false) {
+			$scope.current.read = true;
+			var user = {};
+			/*
+			var pos = message.pos;
+			delete message["pos"];
+			var readable_date = message.readable_date;
+			delete message["readable_date"];
+			var first_line = message.first_line;
+			delete message["first_line"];
+			*/
+			user.username = $cookies.getObejct('user').username;
+			user.password = $cookies.getObject('user').password;
+			Message.update(message).$promise.then(function(data) {
+				console.log("good");
+			},function(data){
+				alert(data);
+			}); 
+		}
+	};
+
 	/*********************************************************************/
 	/*********************************************************************/
 	/*********************************************************************/
@@ -168,7 +194,7 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.delete_current = function(current) {
 		var index = $scope.current_items.indexOf(current); 
 		console.log(index);
-		Message.remove({username : $cookies.get('username'),id : $scope.current_items[index].id}).$promise.then(function() {
+		Message.remove({username : $cookies.getObject('user').username,id : $scope.current_items[index].id}).$promise.then(function() {
 			$scope.inbox.splice(index,1);
 			$scope.current_items = $scope.get_items();	
 			$scope.reading = false;
@@ -217,12 +243,7 @@ angular.module('auction_land').controller('MessagesController',
 		}
 	};
 	
-	$scope.reading = false;
-	$scope.read_message = function(message) {
-		$scope.current = message;
-		$scope.reading = true;
-		$scope.current.read = true;
-	};
+
 	
 	$scope.reading_sent = false;
 	$scope.read_sent_message = function(message) {
