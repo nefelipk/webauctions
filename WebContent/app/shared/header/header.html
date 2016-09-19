@@ -104,6 +104,24 @@
     right: 14px;
     z-index: 9;
 }
+
+.badge1 {
+   position:relative;
+}
+.badge1[data-badge]:after {
+   content:attr(data-badge);
+   position:absolute;
+   top:-8px;
+   right:-16px;
+   font-size:.7em;
+   background: #e74c3c;
+   color:white;
+   width:18px;height:18px;
+   text-align:center;
+   line-height:18px;
+   border-radius:50%;
+   box-shadow:0 0 1px #333;
+}
 	</style>
 </head>
 
@@ -148,10 +166,12 @@
 						</a>
 					</li>
 					<li ng-show="logged_in == 'true'" class="dropdown">
-						<a href="" class="dropdown-toggle"
-							data-toggle="dropdown">{{user.username}} 
-							<span  class="glyphicon glyphicon-user "></span>		
-							<span class="caret"></span>
+						<a href="" class="dropdown-toggle" 
+							data-toggle="dropdown">
+							<span ng-class="{'badge1' : user.unreadMessages >= 1}" data-badge="{{user.unreadMessages}}">
+								{{user.username}} 
+							</span>
+							<span ng-if="user.unreadMessages < 1" class="caret"></span>
 						</a>
 							<ul class="dropdown-menu">
 								<li>

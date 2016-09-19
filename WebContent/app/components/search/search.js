@@ -10,6 +10,7 @@ angular.module('auction_land').controller('SearchController',
 		}, function(stored_data){
 			$scope.logged_in = stored_data;
 			$scope.user = $cookies.getObject('user');
+			console.log($scope.user.unreadMessages);
 		});	
 		
 		/*

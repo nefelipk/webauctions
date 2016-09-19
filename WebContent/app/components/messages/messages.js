@@ -108,16 +108,15 @@ angular.module('auction_land').controller('MessagesController',
 		if(message.read == false) {
 			$scope.current.read = true;
 			var user = {};
-			/*
-			var pos = message.pos;
-			delete message["pos"];
-			var readable_date = message.readable_date;
-			delete message["readable_date"];
-			var first_line = message.first_line;
-			delete message["first_line"];
-			*/
-			user.username = $cookies.getObejct('user').username;
-			user.password = $cookies.getObject('user').password;
+		
+			var user_cookie = $cookies.getObject('user');
+			console.log("unread messageeees");
+			console.log(user_cookie);
+			user_cookie.unreadMessages = user_cookie.unreadMessages - 1;
+			$cookies.putObject('user',user_cookie);
+			$cookies.put('logged-in',false);
+			$cookies.put('logged-in',true);
+			
 			Message.update(message).$promise.then(function(data) {
 				console.log("good");
 			},function(data){
@@ -143,7 +142,7 @@ angular.module('auction_land').controller('MessagesController',
 	/*********************************************************************/
 
 	
-	var messages_per_page = 5;
+	var messages_per_page = 10;
 	$scope.current_page = 1;
 	
 	$scope.fix_pages = function() {
@@ -257,7 +256,12 @@ angular.module('auction_land').controller('MessagesController',
 		$scope.reading_sent = false;
 		$scope.current_sent = {};
 	};
+	
 	$scope.show_reply = false;
+	$scope.change_reply = function() {
+		$scope.show_reply = !$scope.show_reply;
+	}
+	
 	$scope.current_tab = "Inbox";
 	$scope.set_active = function(tab) {
 		var inbox_tab = angular.element(document.querySelector('#inbox_tab'));
