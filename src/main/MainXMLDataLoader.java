@@ -16,8 +16,7 @@ public class MainXMLDataLoader {
 		JAXBContext context = JAXBContext.newInstance(Items.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		
-		///for(int i = 0; i < 40; i++) {
-		int i = 0;
+		for(int i = 0; i < 40; i++) {
 			String fullPathName = "/home/dimitris/Desktop/ted/ebay-data/items-"+i+".xml";
 			System.out.println("file "+i);
 			Items items = (Items) unmarshaller.unmarshal(new FileReader(fullPathName));
@@ -29,7 +28,7 @@ public class MainXMLDataLoader {
 					}
 				}
 			}
-		//}	
+		}	
 	}
 
 }
