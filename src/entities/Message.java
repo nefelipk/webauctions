@@ -20,12 +20,12 @@ public class Message implements Serializable {
 	private int idMessage;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="idSender")
 	private User user1;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="idReceiver")
 	private User user2;
 		

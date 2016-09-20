@@ -94,7 +94,7 @@ angular.module('auction_land').controller('AuctionController',
 		$scope.bid.time = (new Date().getTime()).toString();
 		$scope.bid.user = {};
 		/* get username from cookies */
-		$scope.bid.user.username = $cookies.get('username');
+		$scope.bid.user.username = $cookies.getObject('user').username;
 		if($scope.bid.user.username == undefined || $scope.bid.user.username == null) {
 			alert("SEVERE ERROR WITH LOGIN. YOUR BID WAS NOT PLACED");
 		}
