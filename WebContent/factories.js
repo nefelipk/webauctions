@@ -20,6 +20,15 @@ angular.module('auction_land').factory('Item', [ '$resource', function($resource
 	return $resource('http://localhost:8080/WebAuctions/services/items/:term');
 } ]);
 
+angular.module('auction_land').factory('ItemLocation', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/location/:term');
+} ]);
+
+angular.module('auction_land').factory('ItemPrice', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/price/:term');
+} ]);
+
+
 angular.module('auction_land').factory('Message', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/messages/:username/:id',null,{
 		'update': { method:'PUT' }

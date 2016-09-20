@@ -1,6 +1,7 @@
 angular.module('auction_land').controller('SearchController',
-		['$scope','$route','$cookies','localStorageService','$location','Item','TopCategories','TopUsers','SearchService',
-		 function($scope,$route,$cookies,localStorageService,$location,Item,TopCategories,TopUsers,SearchService) {
+		['$scope','$route','$cookies','localStorageService','$location',
+		 'Item','TopCategories','TopUsers','SearchService','ItemPrice','ItemLocation',
+		 function($scope,$route,$cookies,localStorageService,$location,Item,TopCategories,TopUsers,SearchService,ItemPrice,ItemLocation) {
 		
 		$scope.logged_in = $cookies.get('logged-in');
 		$scope.username = $cookies.get('username');
