@@ -1,0 +1,269 @@
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+
+<style>
+#wrapper {
+	min-height: 100%;
+	position: relative;
+}
+
+#header {
+	background: #ededed;
+	padding: 10px;
+}
+
+#content {
+	padding-bottom: 110px; /* Height of the footer element */
+}
+
+.pagination>li>a {
+	border: 0px;
+	color: black;
+}
+
+.pagination>li.active>a {
+	font-weight: 900;
+	color: black;
+	background: transparent;
+	margin-top: 0px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	font-size: 16px;
+}
+
+.pagination>li.active>a:hover, .pagination>li>a:hover {
+	background-color: #ecf0f1;
+}
+
+.nohover:hover {
+	background-color: white;
+}
+
+h3 {
+	font-family: times, Times New Roman, times-roman, georgia, serif;
+	/*color: #444;
+	*/
+	margin: 0;
+	padding: 10px 0px 6px 0px;
+	font-size: 20px;
+	letter-spacing: 0px;
+	font-weight: bold;
+	border-radius: 0;
+}
+
+.side_borders {
+	border-left: 1px dashed #333;
+	border-right: 1px dashed #333;
+}
+
+.right_border {
+	border-right: 1px solid #333;
+}
+
+ul>li>a {
+	color: #333;
+}
+
+ul>li>a  : hover {
+	
+}
+
+ul>li>a.active {
+	font-weight: 600;
+	color: red;
+}
+
+.ng-hide-add, .ng-hide-remove {
+	/* ensure visibility during the transition */
+	display: block !important; /* yes, important */
+}
+
+.slideUp {
+	transition: .5s linear all; //
+	height: 80px;
+	overflow: hidden;
+}
+
+.slideUp.ng-hide {
+	height: 0;
+}
+
+.table-inbox tr td:hover {
+	cursor: pointer;
+}
+
+.panel, .panel-body, .panel-heading
+.panel-deafult {
+	background-color: transparent;
+	border-radius: 0;
+	margin-bottom: 2px; //
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+	box-shadow: 0 3px 0px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.panel-default>.panel-heading {
+	background-color: transparent;
+}
+
+.btn {
+	border-radius: 0;
+}
+
+tr.read {
+	background-color: rgba(243, 243, 243, .85);
+}
+
+tr.unread {
+	background-color: white;
+	font-weight: bold;
+}
+
+.edit {
+	background-color: #e74c3c;
+	color: #e74c3c;
+}
+
+.overview {
+	background-color: #27ae60;
+	color: #27ae60;
+}
+
+.changePass {
+	background-color: #2980b9;
+	color: #2980b9;
+}
+
+.paragraph-message {
+	margin-top: 2.5%;
+	font-size: 16px;
+
+	min-height: 100px;
+	text-indent: 50px;
+	text-align: justify;
+	margin-bottom:2.5%;
+	font-family: verdana,helvetica,sans-serif;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container-fluid" ng-controller="ProfileController">
+	
+	<div class="row " style="margin-bottom:20px;">
+
+	<div class="col-md-offset-1 col-sm-7 panel panel-default"  
+		style="padding:0px 0px;" 
+		ng-cloak>
+		<div class="text-center panel-heading" 
+			ng-class="{'overview' : current_tab == 'Overview' , 'edit' : current_tab =='Edit' , 'changePass' : curent_tab == 'ChangePass'}">
+			<!-- style="background-color:#16A085;color:#FBFBFB;" -->
+			<h3> {{username}} : Profile </h3>
+		</div>
+	
+		<div class="tab-content">
+		
+			<div role="tabpanel" id="overview" class="tab-pane fade in active " 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
+				<ul style="list-style-type:none">
+					<h4><strong> Contact Information </strong></h4>
+					<li>
+						<div class="col-sm-2">Email:</div>
+						<div class="col-sm-7">{{email}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Phone:</div>
+						<div class="col-sm-7">{{phone}}</div>
+					</li>
+				</ul>
+				<br><ul style="list-style-type:none">
+					<h4><strong> Location Information </strong></h4>
+					<li>
+						<div class="col-sm-2">Country:</div>
+						<div class="col-sm-7">{{country}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">City:</div>
+						<div class="col-sm-7">{{city}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Address:</div>
+						<div class="col-sm-7">{{address}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Postal code:</div>
+						<div class="col-sm-7">{{postalCode}}</div>
+					</li>
+				</ul>
+				<br><ul style="list-style-type:none">
+					<h4><strong> General Information </strong></h4>
+					<li>
+						<div class="col-sm-2">First name:</div>
+						<div class="col-sm-7">{{name}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Last name:</div>
+						<div class="col-sm-7">{{surname}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">TRN:</div>
+						<div class="col-sm-7">{{trn}}</div>
+					</li><br>
+				</ul>
+			</div>
+			
+			<div role="tabpanel" id="edit" class="tab-pane fade" 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
+				<h5>Edit information</h5>
+			</div>
+			
+			<div role="tabpanel" id="changePass" class="tab-pane fade" 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
+				<h5>Change password</h5>
+			</div>
+			
+		</div>
+	</div>
+	
+	
+	
+ 	<div class="col-md-2 panel panel-default" style="padding:0px 0px; margin-left:5px">
+		<!-- <div class="text-center panel-heading">
+			<h3> {{name}} {{surname}} : Profile </h3>
+		</div> -->
+		<ul class="nav nav-tab nav-stacked panel-body" role="tablist">
+			<li class="text-center" role="presentation" >
+				<a  data-toggle="tab" class="active" data-target="#overview"
+					href="" ng-click ="set_active(1)" id="overview_tab">
+					<span class="glyphicon glyphicon-eye-open" style="margin-right: 3px;"></span>
+					Overview
+				</a>
+			</li>
+			<hr/>
+			<li class="text-center" role="presentation" >
+				<a ng-click="set_active(2)" id="edit_tab" data-toggle="tab" data-target="#edit" 
+				href="">
+	        	   	<span class="glyphicon glyphicon-pencil" ></span>
+	    	       	Edit profile
+				</a>
+			</li>
+			
+			
+			<hr/>
+			
+			<li class="text-center" role="presentation">
+				<a  data-toggle="tab" data-target="#changePass" href=""
+				ng-click="set_active(3)" id="changePass_tab"><span class="glyphicon glyphicon-lock" style="margin-right: 3px;"></span>
+					Change password
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	</div>
+	
+</body>
+</html>
