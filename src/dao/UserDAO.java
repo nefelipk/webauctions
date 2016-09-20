@@ -103,4 +103,18 @@ public class UserDAO {
 		em.close();
 		return user;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getTopUsers() {
+		EntityManager em = JPAResource.factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		Query q = em.createQuery("Select u.username from User u,Item i where i.user.idUser = u.idUser group by u.username having count(u.username) > 1 order by count(u.username) desc ");
+		List<String> topUser = q.setMaxResults(10).getResultList();
+	
+		tx.commit();
+		em.close();
+		return topUser;
+	}
 }

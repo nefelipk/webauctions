@@ -102,4 +102,13 @@ public class UserResource {
 		List<model.User> allUsers = UserWrapper.mapList(usersEntities);
 		return allUsers;
 	}
+	
+	@GET
+	@Path("/top/")
+	@Produces({"application/json"})
+	public List<String> getTopUsers() {
+		UserDAO userDAO = new UserDAO();
+		List<String> topUsers = userDAO.getTopUsers();
+		return topUsers;
+	}
 }

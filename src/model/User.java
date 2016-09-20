@@ -1,5 +1,19 @@
 package model;
 
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.SqlResultSetMapping;
+
+@SqlResultSetMapping(
+        name = "AuthorValueMapping",
+        classes = @ConstructorResult(
+                targetClass = User.class,
+                columns = {
+                    @ColumnResult(name = "firstname"),
+                    @ColumnResult(name = "lastname"),
+                    @ColumnResult(name = "username"),
+                    @ColumnResult()
+                }))
 public class User {
 
 	private String username;
