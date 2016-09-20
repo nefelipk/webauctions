@@ -86,43 +86,46 @@ a:hover{
 						</div>
 					</div>
 
-						<div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseFour">Locations</a>
-                </h4>
-              </div>
-              <div id="collapseFour" class="panel-collapse collapse">
+			<div class="panel panel-default">
+
+				<div class="panel-heading">
+					<a data-toggle="collapse" data-parent="#accordion"
+						data-target="#collapseFour">
+						<h4 class="panel-title">
+							<i class="fa fa fa-angle-right pull-left" aria-hidden="true"></i>
+							Locations
+						</h4>
+					</a>
+				</div>
+
+				<div id="collapseFour" class="panel-collapse collapse">
                 <div class="list-group">
-                	<li class="list-group-item"><span class="glyphicon glyphicon-flash text-success"></span><a href="http://fb.com/moinakbarali">News</a></li>
-                </div>
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="l in top_Location">
+							<a href="">{{l}}</a>
+						</li>
+					</ul>    
+				</div>
               </div>
             </div>
             <div class="panel panel-default">
+              
               <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive">Sellers</a>
-                </h4>
+                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive">
+					<i class="fa fa fa-angle-right pull-left" aria-hidden="true"></i>
+    	              Sellers
+	                </h4>
+                </a>
               </div>
+              
               <div id="collapseFive" class="panel-collapse collapse">
                 <div class="list-group">
-                  <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">List group item heading</h4>
-                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  </a>
-                </div>
-                <div class="list-group">
-                  <a href="#" class="list-group-item active">
-                    <h4 class="list-group-item-heading">List group item heading</h4>
-                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  </a>
-                </div>
-                <div class="list-group">
-                  <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">List group item heading</h4>
-                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  </a>
-                </div>
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="l in top_Location">
+							<a href="">{{l}}</a>
+						</li>
+					</ul>    
+				</div>
               </div>
             </div>
           </div>
