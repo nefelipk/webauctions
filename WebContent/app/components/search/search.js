@@ -23,6 +23,10 @@ angular.module('auction_land').controller('SearchController',
 			$location.path('/');
 		};
 		
+		$scope.profile = function() {
+			$location.path('/profile');
+		};
+		
 		$scope.searching = false;
 		$scope.search = function(term) {
 			$scope.searching = true;
