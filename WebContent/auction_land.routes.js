@@ -6,5 +6,6 @@ angular.module('auction_land').config(['$routeProvider',function($routeProvider)
 		.when('/search', {templateUrl : 'app/components/search/search_tmpl.html', })
 		.when('/item', {templateUrl : 'app/components/auction/item_tmpl.html', })
 		.when('/no_results/:term', {templateUrl : 'app/shared/no_results_tmpl.html', })
-		.when('/profile', {templateUrl : 'app/components/profile/profile.html', });
+		.when('/profile', {templateUrl : 'app/components/users/profile.html', })
+		.when('/manage_users', {templateUrl : 'app/components/users/manage_users.html', });
 }]);

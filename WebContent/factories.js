@@ -7,6 +7,10 @@ angular.module('auction_land').factory('UserLogin', [ '$resource', function($res
 	return $resource('http://localhost:8080/WebAuctions/services/users/login/');
 } ]);
 
+angular.module('auction_land').factory('AllUsers', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/users/allusers/');
+} ]);
+
 angular.module('auction_land').factory('Item', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/:term');
 } ]);
