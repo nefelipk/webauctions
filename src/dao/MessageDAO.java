@@ -9,6 +9,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion.User;
+
 import db.JPAResource;
 
 public class MessageDAO {

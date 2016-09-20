@@ -1,9 +1,19 @@
 package model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Category {
 	private String name;
+	private List<model.Item> items;
+	
+	public List<model.Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<model.Item> items) {
+		this.items = items;
+	}
 
 	public String getName() {
 		return name;

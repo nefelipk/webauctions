@@ -7,6 +7,7 @@ public class CategoryWrapper {
 	public static model.Category map(entities.Category c) {
 		model.Category category = new model.Category();
 		category.setName(c.getName());
+		category.setItems(ItemWrapper.mapList(c.getItems()));
 		return category;
 	}
 	

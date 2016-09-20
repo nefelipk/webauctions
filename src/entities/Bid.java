@@ -29,7 +29,7 @@ public class Bid implements Serializable {
 	private Item item;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="idBidder")
 	private User user;
 
