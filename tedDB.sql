@@ -131,7 +131,7 @@ CREATE TABLE `Location` (
   `postal_code` int(11) DEFAULT NULL,
   `latitude` float DEFAULT NULL,
   `longitude` float DEFAULT NULL,
-  `location` varchar(45) DEFAULT NULL,
+  `location` text DEFAULT NULL,
   PRIMARY KEY (`idLocation`),
   UNIQUE KEY `idLocation_UNIQUE` (`idLocation`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20064 DEFAULT CHARSET=utf8;
