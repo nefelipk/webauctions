@@ -94,6 +94,7 @@ public class UserResource {
 	}
 	
 	@GET
+	@Path("/allusers/")
 	@Produces({"application/json"})
 	public List<model.User> getAllUsers() {
 		UserDAO userDAO = new UserDAO();

@@ -1,8 +1,45 @@
 
-angular.module('auction_land').controller('ProfileController',
-		['$scope','$timeout','$cookies','UserLogin','$window',
-		 function($scope,$timeout,$cookies,UserLogin,$window) {
+angular.module('auction_land').controller('UserManagerController',
+		['$scope','$timeout','$cookies','AllUsers','$window',
+		 function($scope,$timeout,$cookies,AllUsers,$window) {
 
+			
+	$scope.allUsers = function() {
+		AllUsers.query().$promise.then(function(data) {
+			console.log(data);
+			console.log(data.length);
+			
+			for(i = 0; i < data.length; i++) {
+				console.log(data[i].username);
+			}
+			
+//			$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
+//			$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
+//	
+//			for(i = 0; i < $scope.inbox.length; i++) {
+//				$scope.inbox[i].pos = i+1;
+//				add_readable_date($scope.inbox[i]);
+//				fix_first_line($scope.inbox[i]);
+//			}
+//			for(i = 0; i < $scope.sent.length; i++) {
+//				$scope.sent[i].pos = i+1;
+//				add_readable_date($scope.sent[i]);
+//				fix_first_line($scope.sent[i]);
+//			}
+//			
+//			$scope.presented_messages = $scope.inbox;
+//			$scope.fix_pages();
+//			$scope.current_items = $scope.get_items();
+//			//console.log($scope.presented_messages.length);
+//			console.log($scope.inbox);
+//			console.log($scope.sent);
+
+		});
+	};
+	$scope.allUsers();		
+			
+	
+			
 	$scope.username = $cookies.getObject('user').username;
 	$scope.name = $cookies.getObject('user').firstName;
 	$scope.surname = $cookies.getObject('user').lastName;
@@ -13,7 +50,6 @@ angular.module('auction_land').controller('ProfileController',
 	$scope.city = $cookies.getObject('user').location.city;
 	$scope.address = $cookies.getObject('user').location.address;
 	$scope.postalCode = $cookies.getObject('user').location.postalCode;
-	console.log($cookies.getObject('user'));
 	
 	$scope.current_tab = "Overview";
 	$scope.set_active = function(tab) {
@@ -27,8 +63,6 @@ angular.module('auction_land').controller('ProfileController',
 		if(tab == 1) {
 			$scope.current_tab = "Overview";
 			overview_tab.addClass('active');
-			$scope.presented_messages = $scope.overview;
-			$scope.fix_pages();
 		}
 		else if(tab == 2) {
 			edit_tab.addClass('active');
@@ -37,8 +71,6 @@ angular.module('auction_land').controller('ProfileController',
 		else if(tab == 3) {
 			$scope.current_tab = "ChangePass";
 			changePass_tab.addClass('active');
-			$scope.presented_messages = $scope.changePass;
-			$scope.fix_pages();
 		}
 		$scope.reading_sent = false;
 		$scope.reading = false

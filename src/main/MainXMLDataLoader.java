@@ -17,9 +17,11 @@ public class MainXMLDataLoader {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		
 		for(int i = 0; i < 40; i++) {
-			String fullPathName = "/home/dimitris/Desktop/ted/ebay-data/items-"+i+".xml";
+			//String fullPathName = "/home/dimitris/Desktop/ted/ebay-data/items-"+i+".xml";
+			String pathName = "./ebay-data/items-"+i+".xml";
 			System.out.println("file "+i);
-			Items items = (Items) unmarshaller.unmarshal(new FileReader(fullPathName));
+			//Items items = (Items) unmarshaller.unmarshal(new FileReader(fullPathName));
+			Items items = (Items) unmarshaller.unmarshal(new FileReader(pathName));
 			for (Item crawl : items.getItem()) {
 				if (crawl.getBids().getBid().size() > 0) {
 					if (crawl.getCurrently()  != null) {

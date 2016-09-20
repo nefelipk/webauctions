@@ -4,6 +4,7 @@ angular.module('auction_land').controller('SearchController',
 		
 		$scope.logged_in = $cookies.get('logged-in');
 		$scope.username = $cookies.get('username');
+		$scope.admin = $cookies.get('admin');
 		
 		$scope.$watch(function(){
 			return $cookies.get('logged-in');
@@ -25,6 +26,10 @@ angular.module('auction_land').controller('SearchController',
 		
 		$scope.profile = function() {
 			$location.path('/profile');
+		};
+		
+		$scope.userManager = function() {
+			$location.path('/manage_users');
 		};
 		
 		$scope.searching = false;
