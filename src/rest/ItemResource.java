@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import dao.ItemDAO;
+import model.wrappers.CategoryWrapper;
 import model.wrappers.ItemWrapper;
 
 @Path("/items")
@@ -18,7 +20,7 @@ public class ItemResource {
 
 	@GET
 	@Path("/{term}")
-	@Produces({ "application/json" })
+	@Produces({"application/json"})
 	public List<model.Item> generalSearch(@PathParam("term") final String term) {
 		ItemDAO itemDAO = new ItemDAO();
 		List<entities.Item> i = itemDAO.generalSearch(term);
@@ -36,5 +38,13 @@ public class ItemResource {
 		items.add(allCategoriesWrapper);
 		return items;
 	}
-
+	
+	@GET
+	@Path("/top/categories/")
+	@Produces({"application/json"})
+	public List<String> getTopCategories() {
+		ItemDAO itemDAO = new ItemDAO();
+		List<String> topCategories = itemDAO.getTopCategories();
+		return topCategories;
+	}
 }

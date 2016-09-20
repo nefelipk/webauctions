@@ -4,13 +4,45 @@
 <title>index</title>
 
 <style>
-.item.list-group-item  {
+.thumbnail  {
 	border-radius :0;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
-.item.list-group-item  {
+.thumbnail:hover  {
+ box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+ }
+h3 {
+	font-family: times, Times New Roman, times-roman, georgia, serif;
+	color: #444;
+	margin: 0;
+	padding: 10px 0px 6px 0px;
+	font-size: 24px;
+	letter-spacing: 0px;
+	font-weight: bold; 
+}
+
+.well {
+	background-color:white;
+	border-radius: 0;
+	margin-bottom : 2px;
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.panel-default {
+	border :0;
+}
+.panel-default>.panel-heading {
+	background:transparent;
+	border : 0;
+}
+
+a {
+	color : black;
+}
+a:hover{
+    text-decoration: none;
+    cursor : pointer;
 }
 
 </style>
@@ -28,16 +60,79 @@
 	</div>
 	
 	<div ng-show="searching == false">
-			<div class="container">
-				<div class="well well-sm">
-					<strong>Category Title</strong>
-					<div class="btn-group">
-						<a href="#" id="list" class="btn btn-default btn-sm"><span
-							class="glyphicon glyphicon-th-list"> </span>List</a> <a href="#"
-							id="grid" class="btn btn-default btn-sm"><span
-							class="glyphicon glyphicon-th"></span>Grid</a>
+		<div class="container-fluid">
+				
+			<div class="col-sm-offset-1 col-sm-2 ">
+			<h3 class="text-center">Top 10s</h3>
+				<div class="panel-group well" id="accordion">
+
+					<div class="panel panel-default">
+						
+						<div class="panel-heading">
+							<a data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
+								<h4 class="panel-title">
+									<i class="fa fa fa-angle-right pull-left" aria-hidden="true"></i>
+									Categories
+								</h4>
+							</a>
+						</div>
+						
+						<div id="collapseOne" class="panel-collapse collapse in">
+							<ul class="list-group">
+								<li class="list-group-item" ng-repeat="c in top_categories">
+									<a href="">{{c}}</a>
+								</li>
+							</ul>
+						</div>
 					</div>
-				</div>
+
+						<div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseFour">Locations</a>
+                </h4>
+              </div>
+              <div id="collapseFour" class="panel-collapse collapse">
+                <div class="list-group">
+                	<li class="list-group-item"><span class="glyphicon glyphicon-flash text-success"></span><a href="http://fb.com/moinakbarali">News</a></li>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive">Sellers</a>
+                </h4>
+              </div>
+              <div id="collapseFive" class="panel-collapse collapse">
+                <div class="list-group">
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                  </a>
+                </div>
+                <div class="list-group">
+                  <a href="#" class="list-group-item active">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                  </a>
+                </div>
+                <div class="list-group">
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">List group item heading</h4>
+                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+			
+			<!-- grid -->
+			<div class="col-sm-8">
+				<h3 class="text-center">
+					<strong>Hot Right Now</strong>
+				</h3>
 				<div id="products" class="row list-group">
 					<div class="item col-xs-4 col-lg-4">
 						<div class="thumbnail">
@@ -181,6 +276,7 @@
 			</div>
 
 		</div>
+		</div>	
 </div>
 
 </body>

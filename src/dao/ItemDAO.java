@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -118,4 +119,29 @@ public class ItemDAO {
 			entityManager.close();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getTopCategories() {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        try {	
+        	List<String> categories = null;
+        	Query q = entityManager.createQuery("select c.name from Category c group by c.name having count(c.name) > 1 ");		
+    		categories = q.setMaxResults(10).getResultList();
+        	transaction.commit();
+        	return categories;
+        }
+        catch(Exception e) {
+        	logger.LoggerWA.LOGGER.log(Level.SEVERE , "{0}", e.getMessage());
+			if (transaction.isActive())
+				transaction.rollback();
+			return null;
+		}
+        finally {
+			entityManager.close();
+		}
+	}
+	
+	
 }

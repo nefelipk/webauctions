@@ -1,6 +1,6 @@
 angular.module('auction_land').controller('SearchController',
-		['$scope','$route','$cookies','localStorageService','$location','Item','SearchService',
-		 function($scope,$route,$cookies,localStorageService,$location,Item,SearchService) {
+		['$scope','$route','$cookies','localStorageService','$location','Item','TopCategories','SearchService',
+		 function($scope,$route,$cookies,localStorageService,$location,Item,TopCategories,SearchService) {
 		
 		$scope.logged_in = $cookies.get('logged-in');
 		$scope.username = $cookies.get('username');
@@ -53,6 +53,11 @@ angular.module('auction_land').controller('SearchController',
 				$location.path("/no_results/"+term);
 			});	
 		};
+		
+		TopCategories.query().$promise.then(function(data) {
+			$scope.top_categories = data;
+			console.log($scope.top_categories);
+		});
 		
 		/*
 		if($location.path() != '/') {
