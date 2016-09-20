@@ -216,8 +216,9 @@ public class ItemDAO {
         transaction.begin();
         try {	
         	List<String> categories = null;
-        	Query q = entityManager.createQuery("select c.name from Category c group by c.name having count(c.name) > 1 order by count(c.name) desc");		
-    		categories = q.setMaxResults(10).getResultList();
+        	//Query q = entityManager.createQuery("select c.name from Category c group by c.name having count(c.name) > 1 order by count(c.name) desc");		
+        	Query q = entityManager.createQuery("select c.name from Category c,Item i where c member of i.categories group by c.name having count(c.name) > 1 order by count(c.name) desc");		
+        	categories = q.setMaxResults(10).getResultList();
         	transaction.commit();
         	return categories;
         }
