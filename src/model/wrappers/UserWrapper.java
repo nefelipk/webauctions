@@ -9,6 +9,7 @@ public class UserWrapper {
 			return null;
 		model.User user = new model.User();
 		user.setAdmin(entityUser.getAdmin());
+		user.setVerified(entityUser.getVerified());
 		user.setAfm(entityUser.getAfm());
 		user.setEmail(entityUser.getEmail());
 		user.setFirstName(entityUser.getName());

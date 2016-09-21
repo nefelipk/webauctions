@@ -13,6 +13,7 @@ public class User {
 	private float ratingSeller;
 	private Location location;
 	private boolean admin;
+	private boolean verified;
 	private String afm;
 	private int unreadMessages;
 	
@@ -102,6 +103,14 @@ public class User {
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+	
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
 	}
 
 	public String getAfm() {
