@@ -6,12 +6,70 @@ angular.module('auction_land').controller('UserManagerController',
 			
 	$scope.allUsers = function() {
 		AllUsers.query().$promise.then(function(data) {
-			console.log(data);
-			console.log(data.length);
+//			console.log(data);
+//			console.log(data.length);
+//			
+//			for(i = 0; i < data.length; i++) {
+//				console.log(data[i].username);
+//			}
 			
-			for(i = 0; i < data.length; i++) {
-				console.log(data[i].username);
-			}
+			$scope.users = data;
+			console.log($scope.users);
+			
+//			$scope.orderByField = 'username';
+//			$scope.descending = false;
+			
+			$scope.headers = {
+				fields: [{
+					orderByField: 'id',
+					name: 'Id',
+			    },{
+			    	orderByField: 'username',
+			    	name: 'Username',
+			    },{
+			    	orderByField: 'firstname',
+			    	name: 'First name',
+			    },{
+			    	orderByField: 'lastname',
+			    	name: 'Last name',
+			    },{
+			    	orderByField: 'email',
+			    	name: 'Email',
+			    },{
+			    	orderByField: 'phone',
+			    	name: 'Phone',
+			    },{
+			    	orderByField: 'afm',
+			    	name: 'TRN',
+			    },{
+			    	orderByField: 'ratingBidder',
+			    	name: 'Rating as bidder',
+			    },{
+			    	orderByField: 'ratingSeller',
+			    	name: 'Rating as seller',
+			    }]
+			};
+			$scope.orderByField = 'username';
+			$scope.descending = false;
+			console.log($scope.orderByField);
+		    console.log($scope.descending);
+//			$scope.sort = {
+//				orderByField: 'username',
+//				descending: false
+//			};
+			
+			$scope.changeSorting = function(field) {
+//			    var sort = $scope.sort;
+				console.log(field);
+			    if ($scope.orderByField == field) {
+			    	$scope.descending = !$scope.descending;
+			    } else {
+			    	$scope.orderByField = field;
+			    	$scope.descending = false;
+			    }
+			    console.log($scope.orderByField);
+			    console.log($scope.descending);
+			};
 			
 //			$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
 //			$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
@@ -40,7 +98,7 @@ angular.module('auction_land').controller('UserManagerController',
 			
 	
 			
-	$scope.username = $cookies.getObject('user').username;
+	/*$scope.username = $cookies.getObject('user').username;
 	$scope.name = $cookies.getObject('user').firstName;
 	$scope.surname = $cookies.getObject('user').lastName;
 	$scope.email = $cookies.getObject('user').email;
@@ -49,7 +107,7 @@ angular.module('auction_land').controller('UserManagerController',
 	$scope.country = $cookies.getObject('user').location.country;
 	$scope.city = $cookies.getObject('user').location.city;
 	$scope.address = $cookies.getObject('user').location.address;
-	$scope.postalCode = $cookies.getObject('user').location.postalCode;
+	$scope.postalCode = $cookies.getObject('user').location.postalCode;*/
 	
 	$scope.current_tab = "Overview";
 	$scope.set_active = function(tab) {

@@ -147,6 +147,18 @@ tr.unread {
 	font-family: verdana,helvetica,sans-serif;
 }
 
+table, th , td  {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
 </style>
 </head>
 <body>
@@ -155,82 +167,7 @@ tr.unread {
 	
 	<div class="row " style="margin-bottom:20px;">
 
-	<div class="col-md-offset-1 col-sm-7 panel panel-default"  
-		style="padding:0px 0px;" 
-		ng-cloak>
-		<div class="text-center panel-heading" 
-			ng-class="{'overview' : current_tab == 'Overview' , 'edit' : current_tab =='Edit' , 'changePass' : curent_tab == 'ChangePass'}">
-			<!-- style="background-color:#16A085;color:#FBFBFB;" -->
-			<h3> {{username}} : Profile </h3>
-		</div>
-	
-		<div class="tab-content">
-		
-			<div role="tabpanel" id="overview" class="tab-pane fade in active " 
-				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
-				<ul style="list-style-type:none">
-					<h4><strong> Contact Information </strong></h4>
-					<li>
-						<div class="col-sm-2">Email:</div>
-						<div class="col-sm-7">{{email}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Phone:</div>
-						<div class="col-sm-7">{{phone}}</div>
-					</li>
-				</ul>
-				<br><ul style="list-style-type:none">
-					<h4><strong> Location Information </strong></h4>
-					<li>
-						<div class="col-sm-2">Country:</div>
-						<div class="col-sm-7">{{country}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">City:</div>
-						<div class="col-sm-7">{{city}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Address:</div>
-						<div class="col-sm-7">{{address}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Postal code:</div>
-						<div class="col-sm-7">{{postalCode}}</div>
-					</li>
-				</ul>
-				<br><ul style="list-style-type:none">
-					<h4><strong> General Information </strong></h4>
-					<li>
-						<div class="col-sm-2">First name:</div>
-						<div class="col-sm-7">{{name}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Last name:</div>
-						<div class="col-sm-7">{{surname}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">TRN:</div>
-						<div class="col-sm-7">{{trn}}</div>
-					</li><br>
-				</ul>
-			</div>
-			
-			<div role="tabpanel" id="edit" class="tab-pane fade" 
-				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
-				<h5>Edit information</h5>
-			</div>
-			
-			<div role="tabpanel" id="changePass" class="tab-pane fade" 
-				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
-				<h5>Change password</h5>
-			</div>
-			
-		</div>
-	</div>
-	
-	
-	
- 	<div class="col-md-2 panel panel-default" style="padding:0px 0px; margin-left:5px">
+ 	<div class="col-md-offset-1 col-md-2 panel panel-default" style="padding:0px 0px;">
 		<!-- <div class="text-center panel-heading">
 			<h3> {{name}} {{surname}} : Profile </h3>
 		</div> -->
@@ -262,6 +199,52 @@ tr.unread {
 			</li>
 		</ul>
 	</div>
+
+
+	<div class="col-sm-7 panel panel-default"  
+		style="padding:0px 0px; margin-left:5px" 
+		ng-cloak>
+		<!-- <div class="text-center panel-heading" 
+			ng-class="{'overview' : current_tab == 'Overview' , 'edit' : current_tab =='Edit' , 'changePass' : curent_tab == 'ChangePass'}">
+			style="background-color:#16A085;color:#FBFBFB;"
+			<h3> {{username}} : Profile </h3>
+		</div> -->
+	
+		<div class="tab-content">
+		
+			<div role="tabpanel" id="overview" class="tab-pane fade in active " 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
+				<table class="table table-bordered table-hover specialCollapse" >
+					<th ng-repeat="h in headers.fields" ng:click="changeSorting(h.orderByField)">
+						<a> {{h.name}} </a>
+					</th>
+					<tr ng-repeat="u in users | orderBy:orderByField:descending">
+						<td>{{u.id}}</td>
+						<td>{{u.username}}</td>
+						<td>{{u.firstName}}</td>
+						<td>{{u.lastName}}</td>
+						<td>{{u.email}}</td>
+						<td>{{u.phone}}</td>
+						<td>{{u.afm}}</td>
+						<td>{{u.ratingBidder}}</td>
+						<td>{{u.ratingSeller}}</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div role="tabpanel" id="edit" class="tab-pane fade" 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
+				<h5>Edit information</h5>
+			</div>
+			
+			<div role="tabpanel" id="changePass" class="tab-pane fade" 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
+				<h5>Change password</h5>
+			</div>
+			
+		</div>
+	</div>
+	
 
 	</div>
 	

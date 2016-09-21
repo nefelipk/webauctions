@@ -155,8 +155,42 @@ tr.unread {
 	
 	<div class="row " style="margin-bottom:20px;">
 
-	<div class="col-md-offset-1 col-sm-7 panel panel-default"  
-		style="padding:0px 0px;" 
+	<div class="col-md-offset-1 col-md-2 panel panel-default" style="padding:0px 0px;">
+		<!-- <div class="text-center panel-heading">
+			<h3> {{name}} {{surname}} : Profile </h3>
+		</div> -->
+		<ul class="nav nav-tab nav-stacked panel-body" role="tablist">
+			<li class="text-center" role="presentation" >
+				<a  data-toggle="tab" class="active" data-target="#overview"
+					href="" ng-click ="set_active(1)" id="overview_tab">
+					<span class="glyphicon glyphicon-eye-open" style="margin-right: 3px;"></span>
+					Overview
+				</a>
+			</li>
+			<hr/>
+			<li class="text-center" role="presentation" >
+				<a ng-click="set_active(2)" id="edit_tab" data-toggle="tab" data-target="#edit" 
+				href="">
+	        	   	<span class="glyphicon glyphicon-pencil" ></span>
+	    	       	Edit profile
+				</a>
+			</li>
+			
+			
+			<hr/>
+			
+			<li class="text-center" role="presentation">
+				<a  data-toggle="tab" data-target="#changePass" href=""
+				ng-click="set_active(3)" id="changePass_tab"><span class="glyphicon glyphicon-lock" style="margin-right: 3px;"></span>
+					Change password
+				</a>
+			</li>
+		</ul>
+	</div>
+
+
+	<div class="col-sm-7 panel panel-default"  
+		style="padding:0px 0px; margin-left:5px;" 
 		ng-cloak>
 		<div class="text-center panel-heading" 
 			ng-class="{'overview' : current_tab == 'Overview' , 'edit' : current_tab =='Edit' , 'changePass' : curent_tab == 'ChangePass'}">
@@ -230,38 +264,7 @@ tr.unread {
 	
 	
 	
- 	<div class="col-md-2 panel panel-default" style="padding:0px 0px; margin-left:5px">
-		<!-- <div class="text-center panel-heading">
-			<h3> {{name}} {{surname}} : Profile </h3>
-		</div> -->
-		<ul class="nav nav-tab nav-stacked panel-body" role="tablist">
-			<li class="text-center" role="presentation" >
-				<a  data-toggle="tab" class="active" data-target="#overview"
-					href="" ng-click ="set_active(1)" id="overview_tab">
-					<span class="glyphicon glyphicon-eye-open" style="margin-right: 3px;"></span>
-					Overview
-				</a>
-			</li>
-			<hr/>
-			<li class="text-center" role="presentation" >
-				<a ng-click="set_active(2)" id="edit_tab" data-toggle="tab" data-target="#edit" 
-				href="">
-	        	   	<span class="glyphicon glyphicon-pencil" ></span>
-	    	       	Edit profile
-				</a>
-			</li>
-			
-			
-			<hr/>
-			
-			<li class="text-center" role="presentation">
-				<a  data-toggle="tab" data-target="#changePass" href=""
-				ng-click="set_active(3)" id="changePass_tab"><span class="glyphicon glyphicon-lock" style="margin-right: 3px;"></span>
-					Change password
-				</a>
-			</li>
-		</ul>
-	</div>
+ 	
 
 	</div>
 	
