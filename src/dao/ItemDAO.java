@@ -233,5 +233,9 @@ public class ItemDAO {
 		}
 	}
 	
+	public List<entities.Item> getByCategory(String term) {
+		
+	}
+	
 	
 }

@@ -20,6 +20,11 @@ angular.module('auction_land').factory('Item', [ '$resource', function($resource
 	return $resource('http://localhost:8080/WebAuctions/services/items/:term');
 } ]);
 
+angular.module('auction_land').factory('ItemCategory', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/category/:term');
+} ]);
+
+
 angular.module('auction_land').factory('ItemLocation', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/location/:term');
 } ]);

@@ -47,4 +47,37 @@ public class ItemResource {
 		List<String> topCategories = itemDAO.getTopCategories();
 		return topCategories;
 	}
+	
+	@GET
+	@Path("/category/:term")
+	@Produces({"application/json"})
+	public List<model.Item> getByCategory(@PathParam("term") final String term) {
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Item> entitiesItems = itemDAO.getByCategory(term);
+		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		return items;
+		
+	}
+	
+	@GET
+	@Path("/location/:term")
+	@Produces({"application/json"})
+	public List<model.Item> getByLocation(@PathParam("term") final String term) {
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Item> entitiesItems = itemDAO.getByLocation(term);
+		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		return items;
+		
+	}
+	
+	@GET
+	@Path("/price/:term")
+	@Produces({"application/json"})
+	public List<model.Item> getByPrice(@PathParam("term") final String term) {
+		float price = Float.valueOf(term);
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Item> entitiesItems = itemDAO.getByPrice(price);
+		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		return items;
+	}
 }
