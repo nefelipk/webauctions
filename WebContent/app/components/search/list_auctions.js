@@ -8,7 +8,8 @@ angular.module('auction_land').controller('AuctionsController',
 		
 		$scope.items = localStorageService.get('auctions');
 		//console.log("refreshed items : ");
-		//console.log($scope.items);
+		$scope.items = SearchService.get_items();
+		console.log($scope.items);
 		$scope.current_page = 1;
 		$scope.items_per_page = 5;
 		
@@ -26,7 +27,7 @@ angular.module('auction_land').controller('AuctionsController',
 			var filters = angular.element(document.querySelector('#sidebar'));
 			filters.addClass('well');
 		}
-		
+		/*
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
 				$scope.items = data.slice();
@@ -43,8 +44,7 @@ angular.module('auction_land').controller('AuctionsController',
 				
 			});
 		};
-		
-		
+		*/		
 		
 		$scope.get_items = function() {
 			var from = ($scope.current_page - 1) * $scope.items_per_page;

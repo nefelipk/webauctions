@@ -49,16 +49,17 @@ public class ItemResource {
 	}
 	
 	@GET
-	@Path("/category/:term")
+	@Path("/category/{term}")
 	@Produces({"application/json"})
 	public List<model.Item> getByCategory(@PathParam("term") final String term) {
 		ItemDAO itemDAO = new ItemDAO();
 		List<entities.Item> entitiesItems = itemDAO.getByCategory(term);
 		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		logger.LoggerWA.LOGGER.log(Level.WARNING, "**************************************************\n**************************");
+		logger.LoggerWA.LOGGER.log(Level.WARNING, "{0}",items.size());
 		return items;
-		
 	}
-	
+	/*
 	@GET
 	@Path("/location/:term")
 	@Produces({"application/json"})
@@ -80,4 +81,5 @@ public class ItemResource {
 		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
 		return items;
 	}
+	*/
 }
