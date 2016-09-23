@@ -43,7 +43,7 @@ public class ItemDAO {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		Query q2 = entityManager.createQuery("select i from Item where i.user.username = :username and i.started = :started i.name = :name");
+		Query q2 = entityManager.createQuery("select i from Item i where i.user.username = :username and i.started = :started and i.name = :name");
 		q2.setParameter("username",item.getUser().getUsername());
 		q2.setParameter("started",item.getStarted());
 		q2.setParameter("name",item.getName());
@@ -275,6 +275,20 @@ public class ItemDAO {
 		try {
 			Query q = entityManager.createQuery("Select i from Item i where i.user.username = :term");
 			q.setParameter("term",term);
+			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
+	
+	public List<entities.Item> getByPrice(float amount) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			Query q = entityManager.createQuery("Select i from Item i where i.currently - :amount <= 0 order by i.currently desc");
+			q.setParameter("amount",amount);
 			List<entities.Item> items = q.setMaxResults(100).getResultList();
 			return items;
 		} finally {

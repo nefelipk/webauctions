@@ -91,9 +91,9 @@ public class ItemResource {
 		return items;
 		
 	}
-	/*
+
 	@GET
-	@Path("/price/:term")
+	@Path("/price/{term}")
 	@Produces({"application/json"})
 	public List<model.Item> getByPrice(@PathParam("term") final String term) {
 		float price = Float.valueOf(term);
@@ -102,5 +102,5 @@ public class ItemResource {
 		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
 		return items;
 	}
-	*/
+	
 }

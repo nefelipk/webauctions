@@ -39,7 +39,8 @@ public class ItemWrapper {
 		item.setIdItem(Integer.valueOf(i.getItemID()));
 		String currently = i.getCurrently();
 		currently = currently.replace("$","");
-		item.setCurrently(currently);
+		currently = currently.replace(",","");
+		item.setCurrently(Float.valueOf(currently));
 		if(i.getBuyPrice() == null) 
 			item.setBuyPrice("0");
 		else 

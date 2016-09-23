@@ -34,7 +34,7 @@ CREATE TABLE `Bid` (
   KEY `fk_Bid_User1_idx` (`idBidder`),
   CONSTRAINT `fk_Bid_Item` FOREIGN KEY (`idItem`) REFERENCES `Item` (`idItem`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Bid_User1` FOREIGN KEY (`idBidder`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12611 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22555 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `Category` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`idCategory`),
   UNIQUE KEY `idCategory_UNIQUE` (`idCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=20107 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20826 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `Item` (
   `name` varchar(45) NOT NULL,
   `buy_price` varchar(45) DEFAULT NULL,
   `first_bid` varchar(45) DEFAULT NULL,
-  `currently` varchar(45) DEFAULT NULL,
+  `currently` float DEFAULT NULL,
   `number_of_bids` int(11) NOT NULL,
   `idLocation` int(11) NOT NULL,
   `started` timestamp NULL DEFAULT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE `Item` (
   CONSTRAINT `fk_Item_Image1` FOREIGN KEY (`idImage`) REFERENCES `Image` (`idImage`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Item_Location1` FOREIGN KEY (`idLocation`) REFERENCES `Location` (`idLocation`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Item_User1` FOREIGN KEY (`idSeller`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4748 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8647 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `Location` (
   `location` text,
   PRIMARY KEY (`idLocation`),
   UNIQUE KEY `idLocation_UNIQUE` (`idLocation`)
-) ENGINE=InnoDB AUTO_INCREMENT=22077 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34627 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `Message` (
   KEY `fk_User_has_User_User1_idx` (`idSender`),
   CONSTRAINT `fk_User_has_User_User1` FOREIGN KEY (`idSender`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_User_User2` FOREIGN KEY (`idReceiver`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `User` (
   UNIQUE KEY `idUser_UNIQUE` (`idUser`),
   KEY `fk_User_Location1_idx` (`idLocation`),
   CONSTRAINT `fk_User_Location1` FOREIGN KEY (`idLocation`) REFERENCES `Location` (`idLocation`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17289 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25939 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -199,4 +199,4 @@ CREATE TABLE `User` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-20 18:40:50
+-- Dump completed on 2016-09-23 22:17:33

@@ -55,7 +55,7 @@ angular.module('auction_land').controller('SearchController',
 					console.log($scope.items);
 					localStorageService.set('auctions',$scope.items);
 					$location.path("/search");
-					$route.reload();
+					//$route.reload();
 					$scope.searching = false;
 				}, function() {
 					$location.path("/no_results/"+term);
@@ -69,7 +69,7 @@ angular.module('auction_land').controller('SearchController',
 					console.log($scope.items);
 					localStorageService.set('auctions',$scope.items);
 					$location.path("/search");
-					$route.reload();
+					//$route.reload();
 					$scope.searching = false;
 				}, function() {
 					$location.path("/no_results/"+term);
@@ -83,14 +83,25 @@ angular.module('auction_land').controller('SearchController',
 					console.log($scope.items);
 					localStorageService.set('auctions',$scope.items);
 					$location.path("/search");
-					$route.reload();
+					//$route.reload();
 					$scope.searching = false;
 				} , function() {
 					$location.path("/no_results/"+term);		
 				});
 			}
 			else if($scope.category == 'Price') {
-				
+				ItemPrice.query({term : term}).$promise.then(function(data) {
+					localStorageService.remove('auctions');
+					$scope.items = data.slice();
+					SearchService.add_items($scope.items);
+					console.log($scope.items);
+					localStorageService.set('auctions',$scope.items);
+					$location.path("/search");
+					//$route.reload();
+					$scope.searching = false;
+				} , function() {
+					$location.path("/no_results/"+term);		
+				});
 			}
 			else if($scope.category == 'Seller') {
 				ItemSeller.query({term : term}).$promise.then(function(data) {
