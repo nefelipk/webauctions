@@ -10,7 +10,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import db.JPAResource;
-import entities.*;
+import entities.Bid;
+import entities.Category;
+import entities.Item;
+import entities.User;
 
 public class ItemDAO {
 
@@ -39,8 +42,22 @@ public class ItemDAO {
 		EntityManager entityManager = JPAResource.factory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
+		
+		Query q2 = entityManager.createQuery("select i from Item where i.user.username = :username and i.started = :started i.name = :name");
+		q2.setParameter("username",item.getUser().getUsername());
+		q2.setParameter("started",item.getStarted());
+		q2.setParameter("name",item.getName());
 		try {
-
+			Item i = (Item) q2.getSingleResult();
+			if(i != null) {
+				return -1;
+			}
+		} catch (Exception e) {
+			
+		} 
+		
+		try {
+				
 			List<Category> safe_categories = new ArrayList<Category>();
 			for (Category crawl : item.getCategories()) {
 				if (crawl.getIdCategory() == 0) {

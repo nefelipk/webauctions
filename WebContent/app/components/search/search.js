@@ -103,7 +103,42 @@ angular.module('auction_land').controller('SearchController',
 		TopLocations.query().$promise.then(function(data) {
 			$scope.top_locations = data;
 			console.log($scope.top_locations);
-		});		/*
+		});		
+		
+    
+		$scope.rotate = function(div_num) {
+			var i_c = angular.element(document.querySelector('#topCategories'));		
+			var i_l = angular.element(document.querySelector('#topLocations'));
+			var i_s = angular.element(document.querySelector('#topSellers'));
+			
+			console.log("rotate " + div_num);
+
+			if(div_num == 0) {
+				if(i_c.hasClass('rotate-active'))
+					i_c.removeClass('rotate-active');
+				else
+					i_c.addClass('rotate-active');
+				i_l.removeClass('rotate-active');
+				i_s.removeClass('rotate-active');
+			}
+			else if(div_num == 1) {
+
+				if(i_l.hasClass('rotate-active'))
+					i_l.removeClass('rotate-active');
+				else
+					i_l.addClass('rotate-active');
+				i_c.removeClass('rotate-active');
+				i_s.removeClass('rotate-active');			}
+			else if(div_num == 2){
+
+				if(i_s.hasClass('rotate-active'))
+					i_s.removeClass('rotate-active');
+				else
+					i_s.addClass('rotate-active');
+				i_l.removeClass('rotate-active');
+				i_c.removeClass('rotate-active');			}
+		}
+		/*
 		if($location.path() != '/') {
 			console.log($location.path());
 			$scope.search_bar = "header";

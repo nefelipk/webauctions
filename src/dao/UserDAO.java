@@ -110,7 +110,8 @@ public class UserDAO {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-		Query q = em.createQuery("Select u.username from User u,Item i where i.user.idUser = u.idUser group by u.username having count(u.username) > 1 order by count(u.username) desc ");
+		Query q = em.createQuery("Select i.user.username from Item i group by i.user.username having count(i.user.username) > 1 order by count(i.user.username) desc");
+		//Query q = em.createQuery("Select u.username from User u,Item i where i.user.idUser = u.idUser group by u.username having count(u.username) > 1 order by count(u.username) desc ");
 		List<String> topUser = q.setMaxResults(10).getResultList();
 	
 		tx.commit();

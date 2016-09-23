@@ -45,6 +45,23 @@ a:hover{
     cursor : pointer;
 }
 
+ul > li > a {
+	font-size:12px;
+	font-weight: 200;
+	letter-spacing:2px;
+	color:#304FFE;
+	word-break: break-all;
+}
+
+.rotate {
+  -webkit-transition: -webkit-transform .5s ease-in-out;
+          transition:         transform .5s ease-in-out;
+}
+
+.rotate-active {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
 </style>
 
 </head>
@@ -68,10 +85,10 @@ a:hover{
 
 					<div class="panel panel-default">
 						
-						<div class="panel-heading">
-							<a data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
+						<div class="panel-heading" ng-click="rotate(0)" >
+							<a data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" >
 								<h4 class="panel-title">
-									<i class="fa fa fa-angle-right pull-left" aria-hidden="true"></i>
+									<i class="fa fa fa-angle-right pull-left rotate rotate-active" id="topCategories" aria-hidden="true"></i>
 									Categories
 								</h4>
 							</a>
@@ -79,7 +96,7 @@ a:hover{
 						
 						<div id="collapseOne" class="panel-collapse collapse in">
 							<ul class="list-group">
-								<li class="list-group-item" ng-repeat="c in top_categories">
+								<li class="list-group-item " ng-repeat="c in top_categories">
 									<a href="">{{c}}</a>
 								</li>
 							</ul>
@@ -88,11 +105,11 @@ a:hover{
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading">
-					<a data-toggle="collapse" data-parent="#accordion"
-						data-target="#collapseFour">
+				<div class="panel-heading" >
+					<a data-toggle="collapse" data-parent="#accordion" ng-click="rotate(1)"
+						data-target="#collapseFour" >
 						<h4 class="panel-title">
-							<i class="fa fa fa-angle-right pull-left" aria-hidden="true"></i>
+							<i class="fa fa fa-angle-right pull-left rotate" id="topLocations"  aria-hidden="true"></i>
 							Locations
 						</h4>
 					</a>
@@ -101,18 +118,18 @@ a:hover{
 				<div id="collapseFour" class="panel-collapse collapse">
                 <div class="list-group">
 					<ul class="list-group">
-						<li class="list-group-item" ng-repeat="l in top_locations">
+						<li class="list-group-item " ng-repeat="l in top_locations">
 							<a href="">{{l}}</a>
 						</li>
 					</ul>    
 				</div>
               </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default" >
               
               <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive">
-					<i class="fa fa fa-angle-right pull-left" aria-hidden="true"></i>
+                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive" ng-click="rotate(2)">
+					<i class="fa fa fa-angle-right pull-left rotate" id="topSellers" aria-hidden="true"></i>
     	              Sellers
 	                </h4>
                 </a>
