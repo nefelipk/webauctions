@@ -54,8 +54,8 @@ a:hover{
 }
 
 .rotate {
-  -webkit-transition: -webkit-transform .5s ease-in-out;
-          transition:         transform .5s ease-in-out;
+  -webkit-transition: -webkit-transform .25s ease-in-out;
+          transition:         transform .25s ease-in-out;
 }
 
 .rotate-active {
@@ -66,6 +66,8 @@ a:hover{
 .panel-title {
 	color:#546E7A;
 }
+
+
 </style>
 
 </head>
@@ -82,10 +84,16 @@ a:hover{
 	
 	<div ng-show="searching == false">
 		<div class="container-fluid">
-				
-			<div class="col-sm-offset-1 col-sm-2 ">
+			<div class="row">
+				<div class="col-sm-offset-3" >
+				<h3 style="margin-left:25px;">
+					<strong>Hot Right Now</strong>
+				</h3>
+				</div>
+			</div>	
+			<div class="col-sm-offset-1 col-sm-2 well">
 			<h3 class="text-center">Top 10s</h3>
-				<div class="panel-group well" id="accordion">
+				<div class="panel-group " id="accordion">
 
 					<div class="panel panel-default">
 						
@@ -156,9 +164,7 @@ a:hover{
 			
 			<!-- grid -->
 			<div class="col-sm-8">
-				<h3>
-					<strong>Hot Right Now</strong>
-				</h3>
+				
 				<div id="products" class="row list-group">
 					<div class="item col-xs-4 col-lg-4">
 						<div class="thumbnail">

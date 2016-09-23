@@ -27,6 +27,8 @@ angular.module('auction_land').controller('AuctionsController',
 			var filters = angular.element(document.querySelector('#sidebar'));
 			filters.addClass('well');
 		}
+		
+		console.log($scope.term);
 		/*
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {
