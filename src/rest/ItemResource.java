@@ -12,7 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import dao.ItemDAO;
-import model.wrappers.CategoryWrapper;
+import dao.LocationDAO;
 import model.wrappers.ItemWrapper;
 
 @Path("/items")
@@ -49,6 +49,16 @@ public class ItemResource {
 	}
 	
 	@GET
+	@Path("/top/locations/")
+	@Produces({"application/json"})
+	public List<String> getTopLocations() {
+		LocationDAO locationDAO = new LocationDAO();
+		List<String> topLocations = locationDAO.getTopLocations();
+		return topLocations;
+	}
+	
+	
+	@GET
 	@Path("/category/{term}")
 	@Produces({"application/json"})
 	public List<model.Item> getByCategory(@PathParam("term") final String term) {
@@ -59,9 +69,9 @@ public class ItemResource {
 		logger.LoggerWA.LOGGER.log(Level.WARNING, "{0}",items.size());
 		return items;
 	}
-	/*
+	
 	@GET
-	@Path("/location/:term")
+	@Path("/location/{term}")
 	@Produces({"application/json"})
 	public List<model.Item> getByLocation(@PathParam("term") final String term) {
 		ItemDAO itemDAO = new ItemDAO();
@@ -70,7 +80,7 @@ public class ItemResource {
 		return items;
 		
 	}
-	
+	/*
 	@GET
 	@Path("/price/:term")
 	@Produces({"application/json"})

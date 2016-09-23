@@ -222,11 +222,29 @@ public class ItemDAO {
 		transaction.begin();
 
 		try {
-			
-			//Query q = entityManager.createQuery("Select i from Item i , i.categories c where i.categories.idCategory in (select c1.idCategory from Category c1 where c1.name like :term");
-			Query q = entityManager.createQuery("Select i from Item i inner join i.categories c where c.name in (Select c.name from Category c where c.name like :term) order by i.ends desc");
-			q.setParameter("term","%" + term + "%");
+
+			// Query q = entityManager.createQuery("Select i from Item i ,
+			// i.categories c where i.categories.idCategory in (select
+			// c1.idCategory from Category c1 where c1.name like :term");
+			Query q = entityManager.createQuery(
+					"Select i from Item i inner join i.categories c where c.name in (Select c.name from Category c where c.name like :term) order by i.ends desc");
+			q.setParameter("term", "%" + term + "%");
 			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
+
+	public List<entities.Item> getByLocation(String term) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			Query q = entityManager.createQuery(
+					"Select i from Item i where i.location.country LIKE :term or i.location.city like :term or i.location.location like :term");
+			q.setParameter("term", "%" + term + "%");
+			List<entities.Item> items = q.getResultList();
 			return items;
 		} finally {
 			entityManager.close();

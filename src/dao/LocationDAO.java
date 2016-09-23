@@ -1,8 +1,11 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import db.JPAResource;
 import entities.Location;
@@ -42,5 +45,19 @@ public class LocationDAO {
 		tx.commit();
 		em.close();
 		return location;
+	}
+	
+	public List<String> getTopLocations() {
+		 EntityManager entityManager = JPAResource.factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        
+        try {
+        	Query q = entityManager.createQuery("Select i.location.country from Item i group by i.location.country having count(i.location.country) > 1 order by count(i.location.country) desc");
+        	List<String> locations = q.setMaxResults(10).getResultList();
+        	return locations;
+        } finally {
+        	entityManager.close();
+        }
 	}
 }

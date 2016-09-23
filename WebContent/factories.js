@@ -47,3 +47,8 @@ angular.module('auction_land').factory('Bid', [ '$resource', function($resource)
 angular.module('auction_land').factory('TopCategories', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/top/categories/');
 } ]);
+
+angular.module('auction_land').factory('TopLocations', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/top/locations/');
+} ]);
+
