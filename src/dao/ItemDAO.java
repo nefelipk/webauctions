@@ -244,7 +244,7 @@ public class ItemDAO {
 			Query q = entityManager.createQuery(
 					"Select i from Item i where i.location.country LIKE :term or i.location.city like :term or i.location.location like :term");
 			q.setParameter("term", "%" + term + "%");
-			List<entities.Item> items = q.getResultList();
+			List<entities.Item> items = q.setMaxResults(100).getResultList();
 			return items;
 		} finally {
 			entityManager.close();
