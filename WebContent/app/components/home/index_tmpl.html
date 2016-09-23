@@ -144,8 +144,8 @@ a:hover{
               <div id="collapseFive" class="panel-collapse collapse">
                 <div class="list-group">
 					<ul class="list-group">
-						<li class="list-group-item" ng-repeat="l in top_sellers">
-							<a href="">{{l}}</a>
+						<li class="list-group-item" ng-repeat="s in top_sellers">
+							<a href="" ng-click="set_category_term('Seller',s);search(s);">{{s}}</a>
 						</li>
 					</ul>    
 				</div>

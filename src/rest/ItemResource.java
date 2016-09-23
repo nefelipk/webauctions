@@ -80,6 +80,17 @@ public class ItemResource {
 		return items;
 		
 	}
+	
+	@GET
+	@Path("/seller/{term}")
+	@Produces({"application/json"})
+	public List<model.Item> getBySeller(@PathParam("term") final String term) {
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Item> entitiesItems = itemDAO.getBySeller(term);
+		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		return items;
+		
+	}
 	/*
 	@GET
 	@Path("/price/:term")

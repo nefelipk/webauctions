@@ -267,5 +267,19 @@ public class ItemDAO {
 			entityManager.close();
 		}
 	}
-
+	
+	public List<entities.Item> getBySeller(String term) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			Query q = entityManager.createQuery("Select i from Item i where i.user.username = :term");
+			q.setParameter("term",term);
+			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
+		
 }
