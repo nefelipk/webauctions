@@ -38,6 +38,11 @@ angular.module('auction_land').controller('SearchController',
 			console.log($scope.category);
 		}
 		
+		$scope.set_category_term = function(category,term) {
+			$scope.category = category;
+			$scope.term = term;
+		}
+		
 		$scope.searching = false;
 		$scope.search = function(term) {
 			$scope.searching = true;
@@ -51,7 +56,7 @@ angular.module('auction_land').controller('SearchController',
 					localStorageService.set('auctions',$scope.items);
 					$location.path("/search");
 					$route.reload();
-					
+					$scope.searching = false;
 				}, function() {
 					$location.path("/no_results/"+term);
 				});
@@ -65,7 +70,7 @@ angular.module('auction_land').controller('SearchController',
 					localStorageService.set('auctions',$scope.items);
 					$location.path("/search");
 					$route.reload();
-					//$scope.searching = false;
+					$scope.searching = false;
 				}, function() {
 					$location.path("/no_results/"+term);
 				});	
@@ -79,7 +84,7 @@ angular.module('auction_land').controller('SearchController',
 					localStorageService.set('auctions',$scope.items);
 					$location.path("/search");
 					$route.reload();
-					//$scope.searching = false;
+					$scope.searching = false;
 				} , function() {
 					$location.path("/no_results/"+term);		
 				});

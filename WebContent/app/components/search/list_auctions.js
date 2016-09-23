@@ -5,7 +5,7 @@ angular.module('auction_land').controller('AuctionsController',
 		  function($window, $scope,$timeout,$location,
 				  localStorageService,AuctionService,
 				  Item,SearchService ) {
-		
+	    
 		$scope.items = localStorageService.get('auctions');
 		//console.log("refreshed items : ");
 		$scope.items = SearchService.get_items();
