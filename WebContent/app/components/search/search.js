@@ -1,7 +1,10 @@
 angular.module('auction_land').controller('SearchController',
 		['$scope','$route','$cookies','localStorageService','$location',
-		 'Item','TopCategories','TopUsers','TopLocations','SearchService','ItemPrice','ItemLocation','ItemCategory','ItemSeller',
-		 function($scope,$route,$cookies,localStorageService,$location,Item,TopCategories,TopUsers,TopLocations,SearchService,ItemPrice,ItemLocation,ItemCategory,ItemSeller) {
+		 'Item','TopCategories','TopUsers','TopLocations','SearchService','AuctionService',
+		 'ItemPrice','ItemLocation','ItemCategory','ItemSeller','HotRightNow',
+		 function($scope,$route,$cookies,localStorageService,$location,Item,
+				 TopCategories,TopUsers,TopLocations,SearchService,AuctionService,ItemPrice,
+				 ItemLocation,ItemCategory,ItemSeller,HotRightNow) {
 		
 		$scope.logged_in = $cookies.get('logged-in');
 		$scope.username = $cookies.get('username');
@@ -158,7 +161,11 @@ angular.module('auction_land').controller('SearchController',
 			console.log($scope.top_locations);
 		});		
 		
-    
+		HotRightNow.query().$promise.then(function(data) {
+			$scope.hot_right_now = data;
+			console.log($scope.hot_right_now);
+		});
+		
 		$scope.rotate = function(div_num) {
 			var i_c = angular.element(document.querySelector('#topCategories'));		
 			var i_l = angular.element(document.querySelector('#topLocations'));
@@ -181,17 +188,25 @@ angular.module('auction_land').controller('SearchController',
 				else
 					i_l.addClass('rotate-active');
 				i_c.removeClass('rotate-active');
-				i_s.removeClass('rotate-active');			}
-			else if(div_num == 2){
+				i_s.removeClass('rotate-active');
+			}
+			else if(div_num == 2) {
 
 				if(i_s.hasClass('rotate-active'))
 					i_s.removeClass('rotate-active');
 				else
 					i_s.addClass('rotate-active');
 				i_l.removeClass('rotate-active');
-				i_c.removeClass('rotate-active');			}
+				i_c.removeClass('rotate-active');			
+			}
 		}
 		
+		var marker_key = 100000;
+		$scope.set_current = function(item) {
+			item.mkey = marker_key++;
+			AuctionService.set_current_auction(item);
+			$location.path('/item/');
+		};
 		
 		
 		/*

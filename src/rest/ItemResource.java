@@ -103,4 +103,13 @@ public class ItemResource {
 		return items;
 	}
 	
+	@GET
+	@Path("/hot/")
+	@Produces({"application/json"})
+	public List<model.Item> getHotRigthNow() {
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Item> entitiesItems = itemDAO.getHot();
+		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		return items;
+	}
 }

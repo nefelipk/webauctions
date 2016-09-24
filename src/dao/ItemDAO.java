@@ -295,5 +295,18 @@ public class ItemDAO {
 			entityManager.close();
 		}
 	}
-		
+	
+	public List<entities.Item> getHot() {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			/*where i.ends > now()*/
+			Query q = entityManager.createQuery("Select i from Item i group by i.idItem having size(i.bids) >= 1 order by size(i.bids) desc,i.ends asc ");
+			List<entities.Item> items = q.setMaxResults(9).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
 }

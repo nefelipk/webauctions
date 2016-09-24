@@ -41,6 +41,7 @@ public class Item implements Serializable {
 
 	//bi-directional many-to-one association to Bid
 	@OneToMany(mappedBy="item",cascade=CascadeType.PERSIST)
+	@OrderBy("amount asc")
 	private List<Bid> bids;
 
 	//bi-directional many-to-many association to Category

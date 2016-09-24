@@ -10,8 +10,10 @@
 	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 .thumbnail:hover  {
- box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
- }
+ //box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+ box-shadow: 0 14px 28px  rgba(0,0,0,0.16), 0 10px 10px  rgba(0,0,0,0.25);
+ cursor : pointer;
+}
 
 h3 {
 	font-family: times, Times New Roman, times-roman, georgia, serif;
@@ -28,6 +30,7 @@ h3 {
 	margin-bottom : 2px;
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+
 
 .panel-default {
 	border :0;
@@ -67,7 +70,54 @@ a:hover{
 	color:#546E7A;
 }
 
+.caption > h4 { 
+	font-weight : bold;
+}
 
+.md-button {
+  padding: 0 6px 0 6px;
+  margin: 6px 8px 6px 8px;
+  min-width: 88px;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration:none;
+  border: none;
+  outline: none;
+}
+
+.md-button.md-fab {
+  line-height: 5.6rem;
+  min-width: 0;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+//background-color : #00B8D4;
+  background-color : #0091EA;
+  color : white;
+  box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.26);
+}
+
+.price {
+	font-family: Impact, Charcoal, sans-serif;
+	font-weight : 700;
+	letter-spacing : 1px;
+	color: #00C853;
+} 
+
+h4,h5 {
+	letter-spacing : 2px;
+}
+
+.lighter {
+	color:
+}
+
+hr {
+	margin-top:15px;
+	margin-bottom:15px;
+}
 </style>
 
 </head>
@@ -87,7 +137,7 @@ a:hover{
 			<div class="row">
 				<div class="col-sm-offset-3" >
 				<h3 style="margin-left:25px;">
-					<strong>Hot Right Now</strong>
+					<strong>The 9 Hottest auctions Right Now </strong>
 				</h3>
 				</div>
 			</div>	
@@ -166,145 +216,34 @@ a:hover{
 			<div class="col-sm-8">
 				
 				<div id="products" class="row list-group">
-					<div class="item col-xs-4 col-lg-4">
-						<div class="thumbnail">
+				
+					<div class="item col-xs-4 col-lg-4" ng-repeat="hrn in hot_right_now">
+						<div class="thumbnail" ng-click="set_current(hrn)">
 							<img class="group list-group-image"
 								src="http://placehold.it/400x250/000/fff" alt="" />
 							<div class="caption">
-								<h4 class="group inner list-group-item-heading">Product
-									title</h4>
-								<p class="group inner list-group-item-text">Product
-									description... Lorem ipsum dolor sit amet, consectetuer
-									adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-									laoreet dolore magna aliquam erat volutpat.</p>
+								<h4 class="group inner list-group-item-heading" style="font-family: ‘Lucida Console’, Monaco, monospace;">{{hrn.name}}</h4>
+								<hr/>
+								<div>
+										<h5>Ending in : <span class="pull-right"> {{hrn.ends}}</span><h5>
+										<hr/>
+										<h5>Bids : <span class="pull-right"> {{hrn.bids.length}}</span> <h5>
+										<hr/>
+										<h4 class="price">Current :  <span class="pull-right"> {{hrn.bids[hrn.bids.length-1].amount}} &euro;</span></h4>
+								</div>
 								<div class="row">
-									<div class="col-xs-12 col-md-6">
-										<p class="lead">$21.000</p>
-									</div>
-									<div class="col-xs-12 col-md-6">
-										<a class="btn btn-success" href="">Add
-											to cart</a>
+									<div class="text-center">
+										<button class="md-button md-fab" ng-click="set_current(hrn)">
+											<i class="fa fa-arrow-right" aria-hidden="true"></i>
+										</button>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="item col-xs-4 col-lg-4">
-						<div class="thumbnail">
-							<img class="group list-group-image"
-								src="http://placehold.it/400x250/000/fff" alt="" />
-							<div class="caption">
-								<h4 class="group inner list-group-item-heading">Product
-									title</h4>
-								<p class="group inner list-group-item-text">Product
-									description... Lorem ipsum dolor sit amet, consectetuer
-									adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-									laoreet dolore magna aliquam erat volutpat.</p>
-								<div class="row">
-									<div class="col-xs-12 col-md-6">
-										<p class="lead">$21.000</p>
-									</div>
-									<div class="col-xs-12 col-md-6">
-										<a class="btn btn-success" href="">Add
-											to cart</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item col-xs-4 col-lg-4">
-						<div class="thumbnail">
-							<img class="group list-group-image"
-								src="http://placehold.it/400x250/000/fff" alt="" />
-							<div class="caption">
-								<h4 class="group inner list-group-item-heading">Product
-									title</h4>
-								<p class="group inner list-group-item-text">Product
-									description... Lorem ipsum dolor sit amet, consectetuer
-									adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-									laoreet dolore magna aliquam erat volutpat.</p>
-								<div class="row">
-									<div class="col-xs-12 col-md-6">
-										<p class="lead">$21.000</p>
-									</div>
-									<div class="col-xs-12 col-md-6">
-										<a class="btn btn-success" href="">Add
-											to cart</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item col-xs-4 col-lg-4">
-						<div class="thumbnail">
-							<img class="group list-group-image"
-								src="http://placehold.it/400x250/000/fff" alt="" />
-							<div class="caption">
-								<h4 class="group inner list-group-item-heading">Product
-									title</h4>
-								<p class="group inner list-group-item-text">Product
-									description... Lorem ipsum dolor sit amet, consectetuer
-									adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-									laoreet dolore magna aliquam erat volutpat.</p>
-								<div class="row">
-									<div class="col-xs-12 col-md-6">
-										<p class="lead">$21.000</p>
-									</div>
-									<div class="col-xs-12 col-md-6">
-										<a class="btn btn-success" href="">Add
-											to cart</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item col-xs-4 col-lg-4">
-						<div class="thumbnail">
-							<img class="group list-group-image"
-								src="http://placehold.it/400x250/000/fff" alt="" />
-							<div class="caption">
-								<h4 class="group inner list-group-item-heading">Product
-									title</h4>
-								<p class="group inner list-group-item-text">Product
-									description... Lorem ipsum dolor sit amet, consectetuer
-									adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-									laoreet dolore magna aliquam erat volutpat.</p>
-								<div class="row">
-									<div class="col-xs-12 col-md-6">
-										<p class="lead">$21.000</p>
-									</div>
-									<div class="col-xs-12 col-md-6">
-										<a class="btn btn-success" href="">Add
-											to cart</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item col-xs-4 col-lg-4">
-						<div class="thumbnail">
-							<img class="group list-group-image"
-								src="http://placehold.it/400x250/000/fff" alt="" />
-							<div class="caption">
-								<h4 class="group inner list-group-item-heading">Product
-									title</h4>
-								<p class="group inner list-group-item-text">Product
-									description... Lorem ipsum dolor sit amet, consectetuer
-									adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-									laoreet dolore magna aliquam erat volutpat.</p>
-								<div class="row">
-									<div class="col-xs-12 col-md-6">
-										<p class="lead">$21.000</p>
-									</div>
-									<div class="col-xs-12 col-md-6">
-										<a class="btn btn-success" href="">Add
-											to cart</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				
 				</div>
+
 			</div>
 
 		</div>
