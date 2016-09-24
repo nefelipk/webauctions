@@ -14,6 +14,7 @@ angular.module('auction_land').controller('LoginController',
 				input_elem.removeClass("has-error");
 				input_elem.addClass("has-succcess");
 				$scope.show_welcome = true;
+				$scope.user = {};
 				$timeout(function() {
 					$scope.show_welcome = false;
 					$('#login_modal').modal('hide');
