@@ -15,10 +15,6 @@ angular.module('auction_land').factory('UserVerify', [ '$resource', function($re
 	return $resource('http://localhost:8080/WebAuctions/services/users/verify/');
 } ]);
 
-angular.module('auction_land').factory('TopUsers', [ '$resource', function($resource) {
-	return $resource('http://localhost:8080/WebAuctions/services/users/top/');
-} ]);
-
 
 angular.module('auction_land').factory('Item', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/:term');
@@ -37,6 +33,10 @@ angular.module('auction_land').factory('ItemPrice', [ '$resource', function($res
 	return $resource('http://localhost:8080/WebAuctions/services/items/price/:term');
 } ]);
 
+angular.module('auction_land').factory('ItemSeller', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/seller/:term');
+} ]);
+
 
 angular.module('auction_land').factory('Message', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/messages/:username/:id',null,{
@@ -50,4 +50,16 @@ angular.module('auction_land').factory('Bid', [ '$resource', function($resource)
 
 angular.module('auction_land').factory('TopCategories', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/top/categories/');
+} ]);
+
+angular.module('auction_land').factory('TopLocations', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/top/locations/');
+} ]);
+
+angular.module('auction_land').factory('TopUsers', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/users/top/');
+} ]);
+
+angular.module('auction_land').factory('HotRightNow', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/hot/');
 } ]);

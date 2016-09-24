@@ -5,7 +5,7 @@ angular.module('auction_land').controller('AuctionsController',
 		  function($window, $scope,$timeout,$location,
 				  localStorageService,AuctionService,
 				  Item,SearchService ) {
-		
+	    
 		$scope.items = localStorageService.get('auctions');
 		//console.log("refreshed items : ");
 		$scope.items = SearchService.get_items();
@@ -27,6 +27,8 @@ angular.module('auction_land').controller('AuctionsController',
 			var filters = angular.element(document.querySelector('#sidebar'));
 			filters.addClass('well');
 		}
+		
+		console.log($scope.term);
 		/*
 		$scope.search = function(term) {
 			Item.query({term : term}).$promise.then(function (data) {

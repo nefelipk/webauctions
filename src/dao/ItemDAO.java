@@ -10,7 +10,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import db.JPAResource;
-import entities.*;
+import entities.Bid;
+import entities.Category;
+import entities.Item;
+import entities.User;
 
 public class ItemDAO {
 
@@ -39,8 +42,22 @@ public class ItemDAO {
 		EntityManager entityManager = JPAResource.factory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
+		
+		Query q2 = entityManager.createQuery("select i from Item i where i.user.username = :username and i.started = :started and i.name = :name");
+		q2.setParameter("username",item.getUser().getUsername());
+		q2.setParameter("started",item.getStarted());
+		q2.setParameter("name",item.getName());
 		try {
-
+			Item i = (Item) q2.getSingleResult();
+			if(i != null) {
+				return -1;
+			}
+		} catch (Exception e) {
+			
+		} 
+		
+		try {
+				
 			List<Category> safe_categories = new ArrayList<Category>();
 			for (Category crawl : item.getCategories()) {
 				if (crawl.getIdCategory() == 0) {
@@ -222,10 +239,13 @@ public class ItemDAO {
 		transaction.begin();
 
 		try {
-			
-			//Query q = entityManager.createQuery("Select i from Item i , i.categories c where i.categories.idCategory in (select c1.idCategory from Category c1 where c1.name like :term");
-			Query q = entityManager.createQuery("Select i from Item i inner join i.categories c where c.name in (Select c.name from Category c where c.name like :term) order by i.ends desc");
-			q.setParameter("term","%" + term + "%");
+
+			// Query q = entityManager.createQuery("Select i from Item i ,
+			// i.categories c where i.categories.idCategory in (select
+			// c1.idCategory from Category c1 where c1.name like :term");
+			Query q = entityManager.createQuery(
+					"Select i from Item i inner join i.categories c where c.name in (Select c.name from Category c where c.name like :term) order by i.ends desc");
+			q.setParameter("term", "%" + term + "%");
 			List<entities.Item> items = q.setMaxResults(100).getResultList();
 			return items;
 		} finally {
@@ -233,4 +253,60 @@ public class ItemDAO {
 		}
 	}
 
+	public List<entities.Item> getByLocation(String term) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			Query q = entityManager.createQuery(
+					"Select i from Item i where i.location.country LIKE :term or i.location.city like :term or i.location.location like :term");
+			q.setParameter("term", "%" + term + "%");
+			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
+	
+	public List<entities.Item> getBySeller(String term) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			Query q = entityManager.createQuery("Select i from Item i where i.user.username = :term");
+			q.setParameter("term",term);
+			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
+	
+	public List<entities.Item> getByPrice(float amount) {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			Query q = entityManager.createQuery("Select i from Item i where i.currently - :amount <= 0 order by i.currently desc");
+			q.setParameter("amount",amount);
+			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
+	
+	public List<entities.Item> getHot() {
+		EntityManager entityManager = JPAResource.factory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		try {
+			/*where i.ends > now()*/
+			Query q = entityManager.createQuery("Select i from Item i group by i.idItem having size(i.bids) >= 1 order by size(i.bids) desc,i.ends asc ");
+			List<entities.Item> items = q.setMaxResults(9).getResultList();
+			return items;
+		} finally {
+			entityManager.close();
+		}
+	}
 }

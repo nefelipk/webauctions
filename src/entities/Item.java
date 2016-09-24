@@ -23,7 +23,7 @@ public class Item implements Serializable {
 	@Column(name="buy_price")
 	private String buyPrice;
 
-	private String currently;
+	private float currently;
 
 	private String description;
 
@@ -41,6 +41,7 @@ public class Item implements Serializable {
 
 	//bi-directional many-to-one association to Bid
 	@OneToMany(mappedBy="item",cascade=CascadeType.PERSIST)
+	@OrderBy("amount asc")
 	private List<Bid> bids;
 
 	//bi-directional many-to-many association to Category
@@ -90,11 +91,11 @@ public class Item implements Serializable {
 		this.buyPrice = buyPrice;
 	}
 
-	public String getCurrently() {
+	public float getCurrently() {
 		return this.currently;
 	}
 
-	public void setCurrently(String currently) {
+	public void setCurrently(float currently) {
 		this.currently = currently;
 	}
 

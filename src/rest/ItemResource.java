@@ -12,7 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import dao.ItemDAO;
-import model.wrappers.CategoryWrapper;
+import dao.LocationDAO;
 import model.wrappers.ItemWrapper;
 
 @Path("/items")
@@ -49,6 +49,16 @@ public class ItemResource {
 	}
 	
 	@GET
+	@Path("/top/locations/")
+	@Produces({"application/json"})
+	public List<String> getTopLocations() {
+		LocationDAO locationDAO = new LocationDAO();
+		List<String> topLocations = locationDAO.getTopLocations();
+		return topLocations;
+	}
+	
+	
+	@GET
 	@Path("/category/{term}")
 	@Produces({"application/json"})
 	public List<model.Item> getByCategory(@PathParam("term") final String term) {
@@ -59,9 +69,9 @@ public class ItemResource {
 		logger.LoggerWA.LOGGER.log(Level.WARNING, "{0}",items.size());
 		return items;
 	}
-	/*
+	
 	@GET
-	@Path("/location/:term")
+	@Path("/location/{term}")
 	@Produces({"application/json"})
 	public List<model.Item> getByLocation(@PathParam("term") final String term) {
 		ItemDAO itemDAO = new ItemDAO();
@@ -72,7 +82,18 @@ public class ItemResource {
 	}
 	
 	@GET
-	@Path("/price/:term")
+	@Path("/seller/{term}")
+	@Produces({"application/json"})
+	public List<model.Item> getBySeller(@PathParam("term") final String term) {
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Item> entitiesItems = itemDAO.getBySeller(term);
+		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		return items;
+		
+	}
+
+	@GET
+	@Path("/price/{term}")
 	@Produces({"application/json"})
 	public List<model.Item> getByPrice(@PathParam("term") final String term) {
 		float price = Float.valueOf(term);
@@ -81,5 +102,14 @@ public class ItemResource {
 		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
 		return items;
 	}
-	*/
+	
+	@GET
+	@Path("/hot/")
+	@Produces({"application/json"})
+	public List<model.Item> getHotRigthNow() {
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Item> entitiesItems = itemDAO.getHot();
+		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
+		return items;
+	}
 }

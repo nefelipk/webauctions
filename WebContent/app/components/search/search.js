@@ -1,7 +1,10 @@
 angular.module('auction_land').controller('SearchController',
 		['$scope','$route','$cookies','localStorageService','$location',
-		 'Item','TopCategories','TopUsers','SearchService','ItemPrice','ItemLocation','ItemCategory',
-		 function($scope,$route,$cookies,localStorageService,$location,Item,TopCategories,TopUsers,SearchService,ItemPrice,ItemLocation,ItemCategory) {
+		 'Item','TopCategories','TopUsers','TopLocations','SearchService','AuctionService',
+		 'ItemPrice','ItemLocation','ItemCategory','ItemSeller','HotRightNow',
+		 function($scope,$route,$cookies,localStorageService,$location,Item,
+				 TopCategories,TopUsers,TopLocations,SearchService,AuctionService,ItemPrice,
+				 ItemLocation,ItemCategory,ItemSeller,HotRightNow) {
 		
 		$scope.logged_in = $cookies.get('logged-in');
 		$scope.username = $cookies.get('username');
@@ -38,10 +41,15 @@ angular.module('auction_land').controller('SearchController',
 			console.log($scope.category);
 		}
 		
+		$scope.set_category_term = function(category,term) {
+			$scope.category = category;
+			$scope.term = term;
+		}
+		
 		$scope.searching = false;
 		$scope.search = function(term) {
 			$scope.searching = true;
-			console.log($scope.category);
+			$scope.searched_for = term;
 			if($scope.category == 'Category') {
 				ItemCategory.query({term : term}).$promise.then(function(data) {
 					localStorageService.remove('auctions');
@@ -49,11 +57,16 @@ angular.module('auction_land').controller('SearchController',
 					SearchService.add_items($scope.items);
 					console.log($scope.items);
 					localStorageService.set('auctions',$scope.items);
-					$location.path("/search");
-					$route.reload();
+					
+					$scope.searching = false;
+					if($location.path() == "/search")
+						$route.reload();
+					else
+						$location.path("/search");
 					
 				}, function() {
 					$location.path("/no_results/"+term);
+					
 				});
 			}
 			else if($scope.category == 'General') {
@@ -63,18 +76,72 @@ angular.module('auction_land').controller('SearchController',
 					SearchService.add_items($scope.items);
 					console.log($scope.items);
 					localStorageService.set('auctions',$scope.items);
-					$location.path("/search");
-					$route.reload();
-					//$scope.searching = false;
+					if($location.path() == "/search")
+						$route.reload();
+					else
+						$location.path("/search");
+					$scope.searching = false;
+					
+
 				}, function() {
 					$location.path("/no_results/"+term);
+					
 				});	
 			}
 			else if($scope.category == 'Location') {
-				
+				ItemLocation.query({term : term}).$promise.then(function(data) {
+					localStorageService.remove('auctions');
+					$scope.items = data.slice();
+					SearchService.add_items($scope.items);
+					console.log($scope.items);
+					localStorageService.set('auctions',$scope.items);
+					$location.path("/search");
+					if($location.path() == "/search")
+						$route.reload();
+					else
+						$location.path("/search");
+					$scope.searching = false;
+					
+				} , function() {
+					$location.path("/no_results/"+term);		
+					
+				});
 			}
 			else if($scope.category == 'Price') {
-				
+				ItemPrice.query({term : term}).$promise.then(function(data) {
+					localStorageService.remove('auctions');
+					$scope.items = data.slice();
+					SearchService.add_items($scope.items);
+					console.log($scope.items);
+					localStorageService.set('auctions',$scope.items);
+					if($location.path() == "/search")
+						$route.reload();
+					else
+						$location.path("/search");
+					$scope.searching = false;
+					
+				} , function() {
+					$location.path("/no_results/"+term);		
+					
+				});
+			}
+			else if($scope.category == 'Seller') {
+				ItemSeller.query({term : term}).$promise.then(function(data) {
+					localStorageService.remove('auctions');
+					$scope.items = data.slice();
+					SearchService.add_items($scope.items);
+					console.log($scope.items);
+					localStorageService.set('auctions',$scope.items);
+					if($location.path() == "/search")
+						$route.reload();
+					else
+						$location.path("/search");
+					$scope.searching = false;
+					
+				} , function() {
+					$location.path("/no_results/"+term);		
+					
+				});
 			}
 		};
 		
@@ -88,6 +155,59 @@ angular.module('auction_land').controller('SearchController',
 			$scope.top_sellers = data;
 			console.log($scope.top_sellers);
 		});
+		
+		TopLocations.query().$promise.then(function(data) {
+			$scope.top_locations = data;
+			console.log($scope.top_locations);
+		});		
+		
+		HotRightNow.query().$promise.then(function(data) {
+			$scope.hot_right_now = data;
+			console.log($scope.hot_right_now);
+		});
+		
+		$scope.rotate = function(div_num) {
+			var i_c = angular.element(document.querySelector('#topCategories'));		
+			var i_l = angular.element(document.querySelector('#topLocations'));
+			var i_s = angular.element(document.querySelector('#topSellers'));
+			
+			console.log("rotate " + div_num);
+
+			if(div_num == 0) {
+				if(i_c.hasClass('rotate-active'))
+					i_c.removeClass('rotate-active');
+				else
+					i_c.addClass('rotate-active');
+				i_l.removeClass('rotate-active');
+				i_s.removeClass('rotate-active');
+			}
+			else if(div_num == 1) {
+
+				if(i_l.hasClass('rotate-active'))
+					i_l.removeClass('rotate-active');
+				else
+					i_l.addClass('rotate-active');
+				i_c.removeClass('rotate-active');
+				i_s.removeClass('rotate-active');
+			}
+			else if(div_num == 2) {
+
+				if(i_s.hasClass('rotate-active'))
+					i_s.removeClass('rotate-active');
+				else
+					i_s.addClass('rotate-active');
+				i_l.removeClass('rotate-active');
+				i_c.removeClass('rotate-active');			
+			}
+		}
+		
+		var marker_key = 100000;
+		$scope.set_current = function(item) {
+			item.mkey = marker_key++;
+			AuctionService.set_current_auction(item);
+			$location.path('/item/');
+		};
+		
 		
 		/*
 		if($location.path() != '/') {
