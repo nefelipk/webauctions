@@ -71,10 +71,11 @@ angular.module('auction_land').controller('UserManagerController',
 		user.verified = !user.verified;
 		console.log(user.verified);
 		
-		UserVerify.save(user).$promise.then(function(user) {
-
+		UserVerify.save(user).$promise.then(function() {
+			console.log(user);
 		}, function() {
-			
+			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
+			console.log("error");
 		});
 	};
 	
