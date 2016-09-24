@@ -24,9 +24,12 @@
 					<div class="alert alert-success text-center" ng-if="show_welcome">
 			  			<strong>Welcome {{user.username}}</strong>
 					</div>
+					<div class="alert alert-danger text-center" ng-if="not_verified">
+			  			<strong>Oops! </strong>Verification from admin is pending...<br/>
+					</div>
 					
-					<form class="form-horizontal" role="form" name="form" ng-if="!show_welcome"
-						ng-submit="form.$valid && check_user_pass()" novalidate>
+					<form class="form-horizontal" role="form" name="form" ng-if="!show_welcome && !not_verified"
+						ng-submit="form.$valid && login()" novalidate>
 						
 						<div class="form-group">
 							<div id="username_div" class="has-feedback"  role="alert" 

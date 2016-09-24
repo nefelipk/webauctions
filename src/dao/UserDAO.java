@@ -79,7 +79,7 @@ public class UserDAO {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         
-        Query q = em.createQuery("Select u from User u where u.username = ?1 and u.password = ?2 and u.verified = 1");
+        Query q = em.createQuery("Select u from User u where u.username = ?1 and u.password = ?2");
         q.setParameter(1,username);
         q.setParameter(2,password);
 		entities.User user = (User) q.getSingleResult();
