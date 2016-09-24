@@ -79,7 +79,7 @@ CREATE TABLE `Item` (
   `name` varchar(45) NOT NULL,
   `buy_price` varchar(45) DEFAULT NULL,
   `first_bid` varchar(45) DEFAULT NULL,
-  `currently` varchar(45) DEFAULT NULL,
+  `currently` float DEFAULT NULL,
   `number_of_bids` int(11) NOT NULL,
   `idLocation` int(11) NOT NULL,
   `started` timestamp NULL DEFAULT NULL,
