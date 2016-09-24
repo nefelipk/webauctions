@@ -117,4 +117,18 @@ public class UserDAO {
 		em.close();
 		return topUser;
 	}
+	
+	public void updateVerifiedUser(String username) {
+		EntityManager em = JPAResource.factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		Query q = em.createQuery("Update User u set u.verified = true where u.username = ?1");
+		q.setParameter(1, username);
+		q.executeUpdate();
+		em.flush();
+		
+		tx.commit();
+		em.close();
+	}
 }

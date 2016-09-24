@@ -1,6 +1,7 @@
 package rest;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import dao.MessageDAO;
 import dao.UserDAO;
+import entities.wrappers.UserMapper;
 import model.UsernameResponse;
 import model.wrappers.UserWrapper;
 
@@ -101,6 +103,19 @@ public class UserResource {
 		List<entities.User> usersEntities = userDAO.getAllUsers();
 		List<model.User> allUsers = UserWrapper.mapList(usersEntities);
 		return allUsers;
+	}
+	
+	@POST
+	@Path("/verify/")
+	@Consumes({"application/json"})
+	public Response updateUser(final model.User user) {				
+		entities.User userEntity = UserMapper.map(user);
+		UserDAO userDB = new UserDAO();
+		userDB.updateVerifiedUser(userEntity.getUsername());
+		return Response
+				.created(UriBuilder.fromResource(UserResource.class)
+						.build())
+				.build();
 	}
 	
 	@GET

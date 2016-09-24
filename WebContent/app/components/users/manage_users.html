@@ -191,7 +191,7 @@ thead {
 	<div class="row " style="margin-bottom:20px;">
 
 
-		<div class="col-md-offset-2 col-md-8 panel panel-default" style="padding:0px">
+		<div class="col-md-offset-1 col-md-10 panel panel-default" style="padding:0px">
 
 			<table class="table table-bordered">
 				<th style="background-color: #f1f1f1;" ng-repeat="h in headers.fields" 
@@ -210,7 +210,7 @@ thead {
 					<td>{{u.afm}}</td>
 					<td>{{u.ratingBidder}}</td>
 					<td>{{u.ratingSeller}}</td>
-					<td ng-if="u.verified == 0"><a>Confirm</a></td>
+					<td ng-if="u.verified == 0" ng-click="confirm(u)"><a>Confirm</a></td>
 					<td ng-if="u.verified == 1"><a>Edit</a></td>
 				</tr>
 			</table>

@@ -11,6 +11,10 @@ angular.module('auction_land').factory('AllUsers', [ '$resource', function($reso
 	return $resource('http://localhost:8080/WebAuctions/services/users/allusers/');
 } ]);
 
+angular.module('auction_land').factory('UserVerify', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/users/verify/');
+} ]);
+
 angular.module('auction_land').factory('TopUsers', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/users/top/');
 } ]);

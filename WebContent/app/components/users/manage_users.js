@@ -1,7 +1,7 @@
 
 angular.module('auction_land').controller('UserManagerController',
-		['$scope','$timeout','$cookies','AllUsers','$window',
-		 function($scope,$timeout,$cookies,AllUsers,$window) {
+		['$scope','$timeout','$cookies','AllUsers','UserVerify','$window',
+		 function($scope,$timeout,$cookies,AllUsers,UserVerify,$window) {
 
 			
 			
@@ -84,7 +84,7 @@ angular.module('auction_land').controller('UserManagerController',
 //				descending: false
 //			};
 			
-			$scope.changeSorting = function(field) {
+			/*$scope.changeSorting = function(field) {
 //			    var sort = $scope.sort;
 				console.log(field);
 //				if (field == 'verified') return;
@@ -96,7 +96,7 @@ angular.module('auction_land').controller('UserManagerController',
 			    }
 			    console.log($scope.orderByField);
 			    console.log($scope.descending);
-			};
+			};*/
 			
 //			$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
 //			$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
@@ -121,20 +121,66 @@ angular.module('auction_land').controller('UserManagerController',
 
 		});
 	};
-	$scope.allUsers();		
-			
+	$scope.allUsers();
 	
-			
-	/*$scope.username = $cookies.getObject('user').username;
-	$scope.name = $cookies.getObject('user').firstName;
-	$scope.surname = $cookies.getObject('user').lastName;
-	$scope.email = $cookies.getObject('user').email;
-	$scope.phone = $cookies.getObject('user').phone;
-	$scope.trn = $cookies.getObject('user').afm;
-	$scope.country = $cookies.getObject('user').location.country;
-	$scope.city = $cookies.getObject('user').location.city;
-	$scope.address = $cookies.getObject('user').location.address;
-	$scope.postalCode = $cookies.getObject('user').location.postalCode;*/
+	
+	$scope.changeSorting = function(field) {
+//	    var sort = $scope.sort;
+		console.log(field);
+//		if (field == 'verified') return;
+	    if ($scope.orderByField == field) {
+	    	$scope.descending = !$scope.descending;
+	    } else {
+	    	$scope.orderByField = field;
+	    	$scope.descending = false;
+	    }
+	    console.log($scope.orderByField);
+	    console.log($scope.descending);
+	};
+	
+	
+	$scope.confirm = function(user) {
+		console.log(">>>>>> Confirm <<<<<<<");
+		console.log(user.username);
+		console.log(user.verified);
+		user.verified = !user.verified;
+		console.log(user.verified);
+		
+		UserVerify.save(user).$promise.then(function(user) {
+
+			/*// bring form at initial
+			// state
+			$scope.user = {};
+			$scope.confirm2 = "";
+			$scope.match = false;
+			$scope.strong = false;
+			$scope.medium = false;
+			var input_elem = angular.element(document.querySelector('#username_div'));
+			input_elem.removeClass("has-succcess");
+			input_elem.removeClass("has-succcess");
+			$scope.form.$setPristine(true);
+			$scope.form.$setUntouched(true);
+
+			$scope.submitted = false;
+			//
+			$('#signup_modal').modal('hide');
+			$scope.success = true;
+			$scope.title = "Success";
+			$scope.message = "Your registration has been successfull! Please wait untill an admin verify your application.\nThank you.";
+			$('#signup_response').modal('show');*/
+			//console.log(data);
+		}, function() {
+			//console.log(data);
+			/*$('#signup_modal').modal('hide');
+			$scope.success = false;
+			$scope.title = "Error";
+			$scope.message = "We are terribly sorry.\nThere must have been a server error.";
+			$('#signup_response').modal('show');
+			console.log("error");
+			$scope.submitted = false;*/
+		});
+	};
+	
 	
 	/*********************************************************************/
 	/**********************************************************************
