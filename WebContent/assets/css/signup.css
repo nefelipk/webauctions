@@ -1,20 +1,22 @@
 .modal-content  {
-    -webkit-border-radius: 25px !important;
-    -moz-border-radius: 25px  !important;
-    border-radius: 25px !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px  !important;
+    border-radius: 0px !important;
 }
+
+
 
 .modal-header  {
-    -webkit-border-top-left-radius: 25px  !important;
-    -moz-border-top-left-radius: 25px  !important;
-    -webkit-border-top-right-radius: 25px  !important;
-    -moz-border-top-right-radius: 25px  !important;
-    border-top-left-radius: 25px !important;
-    border-top-right-radius: 25px !important;
+    -webkit-border-top-left-radius: 0px  !important;
+    -moz-border-top-left-radius: 0px  !important;
+    -webkit-border-top-right-radius: 0px  !important;
+    -moz-border-top-right-radius: 0px  !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
 }
 
 
-/* OPTIONAL : CENTERED MODAL 
+/* OPTIONAL : CENTERED MODAL */
 
 .modal {
   text-align: center;
@@ -35,4 +37,3 @@
   vertical-align: middle;
 }
 
-/****************************/
