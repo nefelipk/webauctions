@@ -63,20 +63,18 @@ angular.module('auction_land').controller('UserController', [ '$scope', 'User', 
 					console.log(input_elem);
 
 				}, function() {
-					alert("OOOPS:We are very sorry, server could not be reached.Please try again later.");
+					console.log("username check service error");
 				});
 			}
 		};
 
 		$scope.submit = function() {
-			console.log(">>>>>> SUBMIT <<<<<<<");
 			console.log($scope.user.firstName);
 			console.log($scope.user.password);
 			$scope.user.location.country = $scope.user.country.name;
 			delete $scope.user.country;
 			User.save($scope.user).$promise.then(function(data) {
-				// bring form at initial
-				// state
+
 				$scope.user = {};
 				$scope.confirm = "";
 				$scope.match = false;
@@ -93,14 +91,18 @@ angular.module('auction_land').controller('UserController', [ '$scope', 'User', 
 				$('#signup_modal').modal('hide');
 				$scope.success = true;
 				$scope.title = "Success";
-				$scope.message = "Your registration has been successfull! Please wait untill an admin verify your application.\nThank you.";
+				$scope.line1 = "Your registration has been successfull!";
+				$scope.line2 = "Please wait untill an admin verify your application.";
+				$scope.line3 = "Thank you.";
 				$('#signup_response').modal('show');
 				console.log(data);
 			}, function() {
 				$('#signup_modal').modal('hide');
 				$scope.success = false;
 				$scope.title = "Error";
-				$scope.message = "We are terribly sorry.\nThere must have been a server error.";
+				$scope.message = "We are terribly sorry.";
+				$scope.line2 = "There must have been a server error.";
+				$scope.line3 = "";
 				$('#signup_response').modal('show');
 				console.log("error");
 				$scope.submitted = false;

@@ -193,7 +193,7 @@ body {
 						<a href="" class="dropdown-toggle" 
 							data-toggle="dropdown">
 							<span ng-class="{'badge1' : user.unreadMessages >= 1}" data-badge="{{user.unreadMessages}}">
-								{{user.username}} 
+								{{user.username}}<span ng-if="user.admin == true"> (admin)</span> 
 							</span>
 							<span ng-if="user.unreadMessages < 1" class="caret"></span>
 						</a>

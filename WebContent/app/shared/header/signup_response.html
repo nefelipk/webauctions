@@ -3,6 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <title>sign up response</title>
+<style>
+
+.material {
+  padding: 0 6px 0 6px;
+  margin: 6px 8px 6px 8px;
+  min-width: 88px;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration:none;
+  border: none;
+  outline: none;
+}
+
+.material.material-fab {
+	line-height: 5.6rem;
+	min-width: 0;
+	width: 5.6rem;
+	height: 5.6rem;
+	border-radius: 50%;
+	background-color:#00C853;
+	color: #ECF0F1;
+}
+
+.material.material-fab:hover {
+	background-color: #27AE60; 
+	box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.26);	
+}
+
+.alert {
+	margin-bottom:0px;
+}
+
+</style>
 </head>
 
 <body>
@@ -16,8 +51,21 @@
 					</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert fade in" ng-class="{'alert-success' : success , 'alert-danger' : !success}">
-					<strong>{{title}}!</strong>{{message}}.
+				<div class="alert fade in text-center" ng-class="{'alert-success' : success , 'alert-danger' : !success}">
+					<strong>{{title}}!</strong>
+					<br/>
+					{{line1}}
+					<br/>
+					{{line2}}
+					<br/>
+					{{line3}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="text-center">
+					<button class="material material-fab" data-dismiss="modal">
+						<i class="fa fa-check" aria-hidden="true"></i>
+					</button>
 				</div>
 			</div>
 		</div>
