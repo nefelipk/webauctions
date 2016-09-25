@@ -243,8 +243,8 @@ tr.unread {
 						<a style="cursor:default" class="nohover"> {{current_page}} of {{pages.length}} </a>
 					<li>
 					<li><a href="" 
-						ng-class="{'disabled' : current_page == 1}"
-						ng-hide="current_page == 1" ng-disabled="current_page == 1"
+						ng-class="{'disabled' : (current_page == 1 )}"
+						ng-hide="(current_page == 1 || current_page == 0)" ng-disabled="current_page == 1"
 						ng-click="get_page(current_page-1)"><</a></li>
 					<li><a href="javascript:undefined" ng-hide="current_page == last_page"
 						ng-click="get_page(current_page+1)"
@@ -255,22 +255,28 @@ tr.unread {
 			
 		<div role="tabpanel" id="inbox" class="tab-pane fade in active " 
 			style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
-			<div ng-show="reading == false" class="inbox-body">
-				<table class="table table-inbox table-hover">
-					<tbody>
-						<tr id="row{[m.id}}" ng-class="{'unread' : m.read == false , 'read' : m.read == true}" 
-						ng-repeat="m in current_items" 
-						ng-hide="m.deleted">
-							<td style="width:5%">
-								<input type="checkbox" ng-click="select($index)" ng-checked="check_all">
-							</td>
-							<td  ng-click="read_message(m)">
-								{{m.senderUsername}}</td>
-							<td ng-click="read_message(m)">{{m.first_line}}</td>
-							<td class="text-right" ng-click="read_message(m)">{{m.readable_date}}</td>
-						</tr>
-					</tbody>
-				</table>
+			<div ng-if="no_inbox != true">
+				<div ng-show="reading == false" class="inbox-body">
+					<table class="table table-inbox table-hover">
+						<tbody>
+							<tr id="row{[m.id}}" ng-class="{'unread' : m.read == false , 'read' : m.read == true}" 
+							ng-repeat="m in current_items" 
+							ng-hide="m.deleted">
+								<td style="width:5%">
+									<input type="checkbox" ng-click="select($index)" ng-checked="check_all">
+								</td>
+								<td  ng-click="read_message(m)">
+									{{m.senderUsername}}</td>
+								<td ng-click="read_message(m)">{{m.first_line}}</td>
+								<td class="text-right" ng-click="read_message(m)">{{m.readable_date}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<div ng-if="no_inbox == true;">
+				<h3>No messages</h3>
 			</div>
 			
 			<div ng-show="reading == true" >
@@ -306,22 +312,28 @@ tr.unread {
 
 		<div role="tabpanel" id="sent" class="tab-pane fade" 
 			style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
-			<div ng-show="reading_sent == false" class="inbox-body">
-				<table class="table table-inbox table-hover">
-					<tbody>
-							<tr ng-repeat="s in sent" ng-click="read_sent_message(s)"
-							class="read">
-							<td class="inbox-small-cells">
-								<input type="checkbox"
-								class="mail-checkbox">
-							</td>
-							<td class="view-message  dont-show">
-								{{s.receiverUsername}}</td>
-							<td class="view-message ">{{s.first_line}}</td>
-							<td class="view-message  text-right">{{s.readable_date}}</td>
-						</tr>
-					</tbody>
-				</table>
+			<div ng-if="no_sent != true">
+				<div ng-show="reading_sent == false" class="inbox-body">
+					<table class="table table-inbox table-hover">
+						<tbody>
+								<tr ng-repeat="s in sent" ng-click="read_sent_message(s)"
+								class="read">
+								<td class="inbox-small-cells">
+									<input type="checkbox"
+									class="mail-checkbox">
+								</td>
+								<td class="view-message  dont-show">
+									{{s.receiverUsername}}</td>
+								<td class="view-message ">{{s.first_line}}</td>
+								<td class="view-message  text-right">{{s.readable_date}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<div ng-if="no_sent == true;">
+				<h3>No messages</h3>
 			</div>
 			
 			<div ng-show="reading_sent == true">

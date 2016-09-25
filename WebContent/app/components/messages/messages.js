@@ -33,32 +33,54 @@ angular.module('auction_land').controller('MessagesController',
 							CONSUME SERVICES 
 	*********************************************************************/
 	/********************************************************************/
+	Object.size = function(obj) {
+	    var size = 0, key;
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) size++;
+	    }
+	    return size;
+	};
+
 	
 	$scope.presented_messages = [];
 	$scope.current_items = [];
 	$scope.refresh = function() {
 		Message.query({username : $cookies.getObject('user').username}).$promise.then(function(data) {
-			$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
-			$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
-	
-			for(i = 0; i < $scope.inbox.length; i++) {
-				$scope.inbox[i].pos = i+1;
-				add_readable_date($scope.inbox[i]);
-				fix_first_line($scope.inbox[i]);
+			console.log(data);
+			if(data != null) {
+				$scope.inbox =  Object.keys(data[0]).map(function(k) { return data[0][k] });
+				if($scope.inbox.length > 0) {
+					for(i = 0; i < $scope.inbox.length; i++) {
+						$scope.inbox[i].pos = i+1;
+						add_readable_date($scope.inbox[i]);
+						fix_first_line($scope.inbox[i]);
+					}
+				}
+				else {
+					$scope.no_inbox = true;	
+					$scope.inbox = [];
+				}
+				$scope.sent =  Object.keys(data[1]).map(function(k) { return data[1][k] });
+				if($scope.sent.length > 0) {
+					for(i = 0; i < $scope.sent.length; i++) {
+						$scope.sent[i].pos = i+1;
+						add_readable_date($scope.sent[i]);
+						fix_first_line($scope.sent[i]);
+					}	
+				}
+				else {
+					console.log(data[0]);
+					console.log(data[1]);
+					$scope.no_sent = true;
+					$scope.sent = [];
+				}
 			}
-			for(i = 0; i < $scope.sent.length; i++) {
-				$scope.sent[i].pos = i+1;
-				add_readable_date($scope.sent[i]);
-				fix_first_line($scope.sent[i]);
-			}
-			
 			$scope.presented_messages = $scope.inbox;
 			$scope.fix_pages();
 			$scope.current_items = $scope.get_items();
-			//console.log($scope.presented_messages.length);
-			console.log($scope.inbox);
-			console.log($scope.sent);
 
+		},function() {
+			alert("Server Error.\nPlease try again in a minute!");
 		});
 	};
 	$scope.refresh();
@@ -92,11 +114,11 @@ angular.module('auction_land').controller('MessagesController',
 		Message.save($scope.new_message).$promise.then(function(data) {
 			$scope.new_message_sent = true;
 			$scope.new_message = {};
-			$timeout(function() { 
-				$scope.new_message_sent = false; 
-				//$('#inbox_tab').tab('show')
-				//$scope.set_active(2);
-			}, 3000);	
+			$scope.refresh();
+			$('#sent_tab').tab('show')
+			$scope.set_active(3);
+			//$timeout(function() { 
+			//}, 3000);	
 			return;
 		});
 	};
@@ -146,11 +168,18 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.current_page = 1;
 	
 	$scope.fix_pages = function() {
-		$scope.pages = [];
-		for(i = 0; i < $scope.presented_messages.length/messages_per_page; i++)
-			$scope.pages.push(i+1);
-		$scope.last_page = $scope.pages[$scope.pages.length-1];
-		$scope.current_page = 1;
+		if($scope.presented_messages.length > 0) {
+			$scope.pages = [];
+			for(i = 0; i < $scope.presented_messages.length/messages_per_page; i++)
+				$scope.pages.push(i+1);
+			$scope.last_page = $scope.pages[$scope.pages.length-1];
+			$scope.current_page = 1;
+		}
+		else {
+			$scope.current_page = 0;
+			$scope.pages = [];
+			$scope.last_page = 0;
+		}
 	};
 	
 	$scope.get_items = function() {
@@ -217,9 +246,7 @@ angular.module('auction_land').controller('MessagesController',
 	$scope.select_all = function() {
 	
 	}
-	
-	
-	
+
 	$scope.select = function(index) {
 		if(index == null) {
 			$scope.check_all = !$scope.check_all;

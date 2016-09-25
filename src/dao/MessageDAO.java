@@ -1,15 +1,12 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-
-import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 
 import db.JPAResource;
 
@@ -62,7 +59,7 @@ public class MessageDAO {
 		} catch (PersistenceException e) {
 			if (transaction.isActive())
 				transaction.rollback();
-			return null;
+			return new ArrayList<entities.Message>();
 		} finally {
 			entityManager.close();
 		}
@@ -119,6 +116,7 @@ public class MessageDAO {
 			Query q = entityManager.createQuery("Select m from Message m where m.user2.idUser = ?1 AND m.read = 0 and m.deleted_by_receiver = 0");
 			q.setParameter(1, userID);
 			List<entities.Message> unreadMessages = q.getResultList();
+			transaction.commit();
 			return unreadMessages.size();
 		} catch (Exception e) {
 			return 0;

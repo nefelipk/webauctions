@@ -239,14 +239,11 @@ public class ItemDAO {
 		transaction.begin();
 
 		try {
-
-			// Query q = entityManager.createQuery("Select i from Item i ,
-			// i.categories c where i.categories.idCategory in (select
-			// c1.idCategory from Category c1 where c1.name like :term");
 			Query q = entityManager.createQuery(
 					"Select i from Item i inner join i.categories c where c.name in (Select c.name from Category c where c.name like :term) order by i.ends desc");
 			q.setParameter("term", "%" + term + "%");
 			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			transaction.commit();
 			return items;
 		} finally {
 			entityManager.close();
@@ -262,6 +259,7 @@ public class ItemDAO {
 					"Select i from Item i where i.location.country LIKE :term or i.location.city like :term or i.location.location like :term");
 			q.setParameter("term", "%" + term + "%");
 			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			transaction.commit();
 			return items;
 		} finally {
 			entityManager.close();
@@ -276,6 +274,7 @@ public class ItemDAO {
 			Query q = entityManager.createQuery("Select i from Item i where i.user.username = :term");
 			q.setParameter("term",term);
 			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			transaction.commit();
 			return items;
 		} finally {
 			entityManager.close();
@@ -290,6 +289,7 @@ public class ItemDAO {
 			Query q = entityManager.createQuery("Select i from Item i where i.currently - :amount <= 0 order by i.currently desc");
 			q.setParameter("amount",amount);
 			List<entities.Item> items = q.setMaxResults(100).getResultList();
+			transaction.commit();
 			return items;
 		} finally {
 			entityManager.close();
@@ -304,6 +304,7 @@ public class ItemDAO {
 			/*where i.ends > now()*/
 			Query q = entityManager.createQuery("Select i from Item i group by i.idItem having size(i.bids) >= 1 order by size(i.bids) desc,i.ends asc ");
 			List<entities.Item> items = q.setMaxResults(9).getResultList();
+			transaction.commit();
 			return items;
 		} finally {
 			entityManager.close();

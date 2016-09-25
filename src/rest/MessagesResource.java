@@ -60,12 +60,14 @@ public class MessagesResource {
 		List<List<model.Message>> allMessages = new ArrayList<List<model.Message>>();
 		List<model.Message> inbox = new ArrayList<model.Message>();
 		List<model.Message> sent = new ArrayList<model.Message>();
-
-		for(model.Message crawl : messages) {
-			if(crawl.getReceiverUsername().equals(username))
-				inbox.add(crawl);
-			else
-				sent.add(crawl);
+		
+		if(messages.size() > 0) {
+			for(model.Message crawl : messages) {
+				if(crawl.getReceiverUsername().equals(username))
+					inbox.add(crawl);
+				else
+					sent.add(crawl);
+			}
 		}
 		allMessages.add(inbox);
 		allMessages.add(sent);
