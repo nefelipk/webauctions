@@ -15,6 +15,12 @@ angular.module('auction_land').controller('ProfileController',
 	$scope.postalCode = $cookies.getObject('user').location.postalCode;
 	console.log($cookies.getObject('user'));
 	
+	/*********************************************************************/
+	/**********************************************************************
+									TABS
+	**********************************************************************/
+	/*********************************************************************/
+	
 	$scope.current_tab = "Overview";
 	$scope.set_active = function(tab) {
 		var overview_tab = angular.element(document.querySelector('#overview_tab'));
@@ -39,5 +45,10 @@ angular.module('auction_land').controller('ProfileController',
 		$scope.reading_sent = false;
 		$scope.reading = false
 	};
+	
+	/*********************************************************************/
+	/*********************************************************************/
+	/*********************************************************************/
+	/*********************************************************************/
 	
 }]);

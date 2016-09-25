@@ -86,6 +86,7 @@ public class ItemResource {
 		List<model.Item> items = ItemWrapper.mapList(i);
 
 		Set<model.Category> categories = new HashSet<model.Category>();
+		if (items == null) return null;
 		for (model.Item crawl : items)
 			for (model.Category c : crawl.getCategories())
 				categories.add(c);
