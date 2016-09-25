@@ -206,15 +206,17 @@ body {
 								</li>
 								
 								<li class="divider"></li>
-								<li>
-									<a href="">My Auctions
-									<span class="fa fa-gavel pull-right" aria-hidden="true"></span>
+								<li ng-click="auctionManager()">
+									<a href="">
+										My Auctions
+										<span class="fa fa-gavel pull-right" aria-hidden="true"></span>
 									</a>
 								</li>
 
 								<li class="divider"></li>
 								<li>
-									<a href="#/messages" ng-click="user.unreadMessages = 0;">Messages 
+									<a href="#/messages" ng-click="user.unreadMessages = 0;">
+										Messages 
 										<span class="badge pull-right">{{user.unreadMessages}}</span>
 									</a>
 								</li>
@@ -223,7 +225,7 @@ body {
 								<li ng-click="logout()">
 									<a href="" >
 										Sign Out 
-									<span class="glyphicon glyphicon-log-out pull-right"></span>
+										<span class="glyphicon glyphicon-log-out pull-right"></span>
 									</a>
 								</li>
 							</ul>
@@ -240,7 +242,7 @@ body {
 								<li ng-click="logout()">
 									<a href="" >
 										Sign Out 
-									<span class="glyphicon glyphicon-log-out pull-right"></span>
+										<span class="glyphicon glyphicon-log-out pull-right"></span>
 									</a>
 								</li>
 							</ul>
