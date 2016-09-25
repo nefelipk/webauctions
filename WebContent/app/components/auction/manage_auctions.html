@@ -1,0 +1,368 @@
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+
+<title>AuctionManager</title>
+
+<style>
+#wrapper {
+	min-height: 100%;
+	position: relative;
+}
+
+#header {
+	background: #ededed;
+	padding: 10px;
+}
+
+#content {
+	padding-bottom: 110px; /* Height of the footer element */
+}
+
+.pagination>li>a {
+	border: 0px;
+	color: black;
+}
+
+.pagination>li.active>a {
+	font-weight: 900;
+	color: black;
+	background: transparent;
+	margin-top: 0px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	font-size: 16px;
+}
+
+.pagination>li.active>a:hover, .pagination>li>a:hover {
+	background-color: #ecf0f1;
+}
+
+.nohover:hover {
+	background-color: white;
+}
+
+h3 {
+	font-family: times, Times New Roman, times-roman, georgia, serif;
+	/*color: #444;
+	*/
+	margin: 0;
+	padding: 10px 0px 6px 0px;
+	font-size: 20px;
+	letter-spacing: 0px;
+	font-weight: bold;
+	border-radius: 0;
+}
+
+.side_borders {
+	border-left: 1px dashed #333;
+	border-right: 1px dashed #333;
+}
+
+.right_border {
+	border-right: 1px solid #333;
+}
+
+ul>li>a {
+	color: #333;
+}
+
+ul>li>a  : hover {
+	
+}
+
+ul>li>a.active {
+	font-weight: 600;
+	color: red;
+}
+
+.ng-hide-add, .ng-hide-remove {
+	/* ensure visibility during the transition */
+	display: block !important; /* yes, important */
+}
+
+.slideUp {
+	transition: .5s linear all; //
+	height: 80px;
+	overflow: hidden;
+}
+
+.slideUp.ng-hide {
+	height: 0;
+}
+
+.table-inbox tr td:hover {
+	cursor: pointer;
+}
+
+.panel, .panel-body, .panel-heading
+.panel-deafult {
+	background-color: transparent;
+	border-radius: 0;
+	margin-bottom: 2px; //
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+	box-shadow: 0 3px 0px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.panel-default>.panel-heading {
+	background-color: transparent;
+}
+
+.btn {
+	border-radius: 0;
+}
+
+tr.read {
+	background-color: rgba(243, 243, 243, .85);
+}
+
+tr.unread {
+	background-color: white;
+	font-weight: bold;
+}
+
+.create {
+	background-color: #e74c3c;
+	color: #e74c3c;
+}
+
+.overview {
+	background-color: #27ae60;
+	color: #27ae60;
+}
+
+.paragraph-message {
+	margin-top: 2.5%;
+	font-size: 16px;
+
+	min-height: 100px;
+	text-indent: 50px;
+	text-align: justify;
+	margin-bottom:2.5%;
+	font-family: verdana,helvetica,sans-serif;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container-fluid" ng-controller="AuctionManagerController">
+	
+	<div class="row " style="margin-bottom:20px;">
+
+	<div class="col-md-offset-1 col-md-2 panel panel-default" style="padding:0px 0px;">
+		<!-- <div class="text-center panel-heading">
+			<h3> {{name}} {{surname}} : Profile </h3>
+		</div> -->
+		<ul class="nav nav-tab nav-stacked panel-body" role="tablist">
+			<li class="text-center" role="presentation" >
+				<a  data-toggle="tab" class="active" data-target="#overview"
+					href="" ng-click ="set_active(1)" id="overview_tab">
+					<span class="glyphicon glyphicon-eye-open" style="margin-right: 3px;"></span>
+					All Auctions
+				</a>
+			</li>
+			<hr/>
+			<li class="text-center" role="presentation" >
+				<a ng-click="set_active(2)" id="create_tab" data-toggle="tab" data-target="#create" 
+				href="">
+	        	   	<span class="glyphicon glyphicon-pencil" ></span>
+	    	       	Create New Auction
+				</a>
+			</li>
+		</ul>
+	</div>
+
+
+	<div class="col-sm-7 panel panel-default"  
+		style="padding:0px 0px; margin-left:5px;" 
+		ng-cloak>
+		<div class="text-center panel-heading" 
+			ng-class="{'overview' : current_tab == 'All Auctions' , 'create' : current_tab =='New Auction'}">
+			<!-- style="background-color:#16A085;color:#FBFBFB;" -->
+			<h3> {{current_tab}} </h3>
+		</div>
+	
+		<div class="tab-content">
+		
+			<div role="tabpanel" id="overview" class="tab-pane fade in active " 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
+				<ul style="list-style-type:none">
+					<h4><strong> Contact Information </strong></h4>
+					<li>
+						<div class="col-sm-2">Email:</div>
+						<div class="col-sm-7">{{email}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Phone:</div>
+						<div class="col-sm-7">{{phone}}</div>
+					</li>
+				</ul>
+				<br><ul style="list-style-type:none">
+					<h4><strong> Location Information </strong></h4>
+					<li>
+						<div class="col-sm-2">Country:</div>
+						<div class="col-sm-7">{{country}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">City:</div>
+						<div class="col-sm-7">{{city}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Address:</div>
+						<div class="col-sm-7">{{address}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Postal code:</div>
+						<div class="col-sm-7">{{postalCode}}</div>
+					</li>
+				</ul>
+				<br><ul style="list-style-type:none">
+					<h4><strong> General Information </strong></h4>
+					<li>
+						<div class="col-sm-2">First name:</div>
+						<div class="col-sm-7">{{name}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">Last name:</div>
+						<div class="col-sm-7">{{surname}}</div>
+					</li>
+					<br><li>
+						<div class="col-sm-2">TRN:</div>
+						<div class="col-sm-7">{{trn}}</div>
+					</li><br>
+				</ul>
+			</div>
+			
+			<div role="tabpanel" id="create" class="tab-pane fade" 
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
+				<form class="form-horizontal" role="form" name="form"
+					ng-submit="form.$valid && submit() " novalidate>
+
+					<div class="form-group">
+						<div class="col-xs-6 has-feedback" ng-messages="form.name.$error"
+						ng-class="{'has-error' : ((submitted || form.name.$touched) && form.name.$invalid) , 
+						'has-success': form.name.$valid }">
+							<label class="control-label" for="name">Name:</label>
+							<input type="text" class="form-control" name="name"
+								ng-model="user.name" placeholder="Name or small description of item" ng-required="true">
+							<i class="glyphicon glyphicon-tag form-control-feedback"></i>
+							<div ng-show="form.name.$touched || submitted" ng-message="required">You must fill this field.</div>
+						</div>
+					
+					
+						<div class="col-xs-12 has-feedback" ng-messages="form.description.$error"
+						ng-class="{'has-error' : ((submitted || form.description.$touched) && form.description.$invalid) , 
+						'has-success': form.description.$valid }">
+							<label class="control-label" for="description">Description:</label>
+							<input type="text" class="form-control" name="description"
+								ng-model="user.description" placeholder="Description of item" ng-required="true">
+							<i class="glyphicon glyphicon-tags form-control-feedback"></i>
+							<div ng-show="form.description.$touched || submitted" ng-message="required">You must fill this field.</div>
+						</div>
+					</div>
+					
+					<hr>
+					
+					<div class="form-group">
+						<div class="col-xs-6 has-feedback" ng-messages="form.buyPrice.$error"
+						ng-class="{'has-error' : ((submitted || form.buyPrice.$touched) && form.buyPrice.$invalid) , 
+						'has-success': form.buyPrice.$valid }">
+							<label class="control-label" for="buyPrice">Buy price:</label>
+							<input type="text" class="form-control" name="buyPrice"
+								ng-model="user.buyPrice" placeholder="Price to win auction immediately" ng-required="true">
+							<i class="glyphicon glyphicon-euro form-control-feedback"></i>
+							<div ng-show="form.buyPrice.$touched || submitted" ng-message="required">You must fill this field.</div>
+						</div>
+					
+						<div class="col-xs-6 has-feedback" ng-messages="form.firstBid.$error"
+						ng-class="{'has-error' : ((submitted || form.firstBid.$touched) && form.firstBid.$invalid) , 
+						'has-success': form.firstBid.$valid }">
+							<label class="control-label" for="firstBid">First bid:</label>
+							<input type="text" class="form-control" name="firstBid" 
+								ng-model="user.firstBid" ng-required="true" placeholder="Minimum amount of first bid">
+							<i class="glyphicon glyphicon-euro form-control-feedback"></i>
+							<div ng-show="form.firstBid.$touched || submitted" ng-message="required">You must fill this field.</div>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="form-group">
+						<div class="col-xs-6 has-feedback" ng-messages="form.started.$error"
+						ng-class="{'has-error' : ((submitted || form.started.$touched) && startTime == null) , 
+						'has-success': startTime != null}">
+							<label class="control-label" for="started">Start time:</label>
+							<div class='input-group date' id='dateTimeStartPicker'>
+								<input type="text" class="form-control" name="started" 
+									ng-model="user.started" ng-required="true" placeholder="Start time">
+								<span class="input-group-addon" ng-click="pickDateTime()">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+		                    </div>
+							<div ng-show="(form.started.$touched || submitted) && startTime == null" ng-message="required">You must fill this field.</div>
+						</div>
+						
+						<div class="col-xs-6 has-feedback" ng-messages="form.ends.$error"
+						ng-class="{'has-error' : ((submitted || form.ends.$touched) && endTime == null) , 
+						'has-success': endTime != null}">
+							<label class="control-label" for="ends">End time:</label>
+							<div class='input-group date' id='dateTimeEndPicker'>
+								<input type="text" class="form-control" name="ends" 
+									ng-model="user.ends" ng-required="true" placeholder="End time">
+								<span class="input-group-addon" ng-click="pickDateTime()">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+		                    </div>
+							<div ng-show="(form.ends.$touched || submitted) && endTime == null" ng-message="required">You must fill this field.</div>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="form-group">
+						<div class="col-xs-6" ng-messages="form.country.$error"
+						ng-class="{'has-error' : ((submitted || form.country.$touched) && form.country.$invalid) , 
+						'has-success': form.country.$valid }">
+							<label class="control-label" for="country">Country:</label>
+							<select class="form-control" ng-model="user.country" ng-required="true" name="country"
+								ng-options="country.name for country in countries track by country.code">
+								<option value="">Country</option>
+							</select>
+							<div ng-show="form.country.$touched || submitted" ng-message="required">You must select an option.</div>
+						</div>
+
+						<div class="col-xs-6 has-feedback" ng-messages="form.location.$error"
+						ng-class="{'has-error' : ((submitted || form.location.$touched) && form.location.$invalid) , 
+						'has-success': form.location.$valid }">
+							<label class="control-label" for="location">Location:</label>
+							<input type="text" class="form-control" name="location"
+								ng-model="user.location.location" ng-required="true" placeholder="Location">
+							<i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+							<div ng-show="form.location.$touched || submitted" ng-message="required">You must fill this field.</div>
+						</div>
+					</div>
+
+					<hr>
+					
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-6">
+							<button class="btn btn-success btn-block" type="submit" ng-click="submitted = true"
+								style="background-color: #27AE60; color: #ECF0F1;"><strong>Create</strong></button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+	
+	
+	
+ 	
+
+	</div>
+	
+</body>
+</html>

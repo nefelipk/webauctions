@@ -36,6 +36,10 @@ angular.module('auction_land').controller('SearchController',
 			$location.path('/manage_users');
 		};
 		
+		$scope.auctionManager = function() {
+			$location.path('/manage_auctions');
+		};
+		
 		$scope.select_cat = function(name) {
 			$scope.category = name;
 			console.log($scope.category);
