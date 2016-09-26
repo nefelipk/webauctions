@@ -215,10 +215,12 @@ tr.unread {
 			<div class="">
 				<button class="btn btn-default" ng-click="back()">
 					<i class="fa fa-arrow-left" aria-hidden="true"></i>
-				</button> 
+				</button>
+				<!-- 
 				<button class="btn btn-default" ng-click="select(null)">
 					<i class="fa fa-check-square-o" aria-hidden="true" > </i>
 				</button>
+				 --> 
 				<button class="btn btn-default" ng-click="refresh()">
 					<i class="fa fa-refresh"> </i>
 				</button>
@@ -316,16 +318,16 @@ tr.unread {
 				<div ng-show="reading_sent == false" class="inbox-body">
 					<table class="table table-inbox table-hover">
 						<tbody>
-								<tr ng-repeat="s in sent" ng-click="read_sent_message(s)"
+								<tr ng-repeat="s in current_items" 
 								class="read">
 								<td class="inbox-small-cells">
-									<input type="checkbox"
+									<input type="checkbox" ng-click="select($index)"
 									class="mail-checkbox">
 								</td>
-								<td class="view-message  dont-show">
+								<td class="view-message  dont-show" ng-click="read_sent_message(s)">
 									{{s.receiverUsername}}</td>
-								<td class="view-message ">{{s.first_line}}</td>
-								<td class="view-message  text-right">{{s.readable_date}}</td>
+								<td class="view-message " ng-click="read_sent_message(s)">{{s.first_line}}</td>
+								<td class="view-message  text-right" ng-click="read_sent_message(s)">{{s.readable_date}}</td>
 							</tr>
 						</tbody>
 					</table>

@@ -1,17 +1,26 @@
 angular.module('auction_land').controller('AuctionsController', 
 		[ '$window', '$scope','$timeout','$location',
 		  'localStorageService','AuctionService',
-		  'Item','SearchService',
+		  'Item','SearchService','$routeParams',
 		  function($window, $scope,$timeout,$location,
 				  localStorageService,AuctionService,
-				  Item,SearchService ) {
+				  Item,SearchService,$routeParams) {
 	    
-		$scope.items = localStorageService.get('auctions');
+		//$scope.items = localStorageService.get('auctions');
 		//console.log("refreshed items : ");
 		$scope.items = SearchService.get_items();
+		if($scope.items.length == 0) {
+			var category = $routeParams.category;
+			var term = $routeParams.term;
+			$scope.set_category_term(category,term);
+			$scope.search($scope.term);
+			return;
+		}
+			
 		console.log($scope.items);
 		$scope.current_page = 1;
 		$scope.items_per_page = 5;
+		
 		
 		$scope.fix_pages = function() {
 			$scope.pages = [];
@@ -22,6 +31,7 @@ angular.module('auction_land').controller('AuctionsController',
 			$scope.last_page = $scope.pages[$scope.pages.length-1];
 			$scope.current_page = 1;
 		};
+		
 		
 		$scope.finishLoading = function() {
 			var filters = angular.element(document.querySelector('#sidebar'));

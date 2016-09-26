@@ -58,4 +58,5 @@ public class ItemWrapper {
 		item.setBids(BidWrapper.mapList(i.getBids()));
 		return item;
 	}
+	
 }

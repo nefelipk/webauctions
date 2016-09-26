@@ -33,8 +33,8 @@ angular.module('auction_land').service('AuctionService',function() {
 }); 
 
 angular.module('auction_land').controller('AuctionController',
-		['$scope','$route','$timeout','$cookies','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi',
-		 function($scope,$route,$timeout,$cookies,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi) {
+		['$scope','$route','$timeout','$cookies','$window','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi','DownloadXML',
+		 function($scope,$route,$timeout,$cookies,$window,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi,DownloadXML) {
 	
 			
 	$scope.logged_in = $cookies.get('logged-in');		
@@ -187,4 +187,18 @@ angular.module('auction_land').controller('AuctionController',
 		}
 	});
 	
+	$scope.user = $cookies.getObject('user');
+	if($scope.user != null)
+		$scope.admin = $scope.user.admin;
+	else 
+		$scope.admin = false;
+	$scope.filename = "auction_"+$scope.current.idItem+".xml";
+	$scope.url = "http://localhost:8080/WebAuctions/services/items/download/"+$scope.current.idItem;
+	console.log($scope.url);
 }]);
+
+angular.module('auction_land').config( ['$compileProvider',function( $compileProvider ) {   
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+// Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+    }
+]);

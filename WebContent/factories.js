@@ -2,11 +2,20 @@
 angular.module('auction_land').factory('User', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/users/:username');
 } ]);
-
+/*
+angular.module('auction_land').factory('User', [ '$resource', function($resource) {
+	return $resource('https://localhost:8443/WebAuctions/services/users/:username');
+} ]);
+*/
 angular.module('auction_land').factory('UserLogin', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/users/login/');
 } ]);
 
+/*
+angular.module('auction_land').factory('UserLogin', [ '$resource', function($resource) {
+	return $resource('https://localhost:8443/WebAuctions/services/users/login/');
+} ]);
+*/
 angular.module('auction_land').factory('AllUsers', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/users/allusers/');
 } ]);
@@ -62,4 +71,8 @@ angular.module('auction_land').factory('TopUsers', [ '$resource', function($reso
 
 angular.module('auction_land').factory('HotRightNow', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/hot/');
+} ]);
+
+angular.module('auction_land').factory('DownloadXML', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/download/:id');
 } ]);
