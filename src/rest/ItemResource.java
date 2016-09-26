@@ -37,9 +37,7 @@ public class ItemResource {
 		itemEntity.setName(item.getName());
 		itemEntity.setBuyPrice(item.getBuyPrice());
 		itemEntity.setFirstBid(item.getFirstBid());
-		
-		//itemEntity.setCurrently(item.getFirstBid());
-/******************* TO DO: Change buyPrice and firstBid from String to float *******************/
+		itemEntity.setCurrently(Float.parseFloat(item.getFirstBid()));
 
 		itemEntity.setStarted(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getStarted()));
 		itemEntity.setEnds(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getEnds()));
