@@ -33,8 +33,8 @@ angular.module('auction_land').service('AuctionService',function() {
 }); 
 
 angular.module('auction_land').controller('AuctionController',
-		['$scope','$route','$timeout','$cookies','$window','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi','DownloadXML',
-		 function($scope,$route,$timeout,$cookies,$window,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi,DownloadXML) {
+		['$scope','$route','$timeout','$cookies','$window','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi','DownloadXML','$routeParams','ItemById',
+		 function($scope,$route,$timeout,$cookies,$window,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi,DownloadXML,$routeParams,ItemById) {
 	
 			
 	$scope.logged_in = $cookies.get('logged-in');		
@@ -52,23 +52,71 @@ angular.module('auction_land').controller('AuctionController',
 			$scope.message = "";
 	});	
 	
-	
+	var marker_key = 9998;
 	$scope.current = AuctionService.get_current_auction();
-	if($scope.current == null)
-		$scope.current = localStorageService.get('current_item');
-	localStorageService.set('current_item',$scope.current);
-	  
-	$scope.get_first_bid = function(auction) {
-		auction.firstBid = auction.firstBid.replace('$','');
-		return auction.firstBid;
+	if($scope.current == null) {
+		var id = $routeParams.id;
+		ItemById.get({id:id},function(data) {
+			$scope.current = data;
+			$scope.filename = "auction_"+$scope.current.idItem+".xml";
+			$scope.url = "http://localhost:8080/WebAuctions/services/items/download/"+$scope.current.idItem;
+			$scope.get_ending_time($scope.current);
+			$scope.markers = [];	
+			console.log($scope.current);
+			AuctionService.set_current_auction($scope.current);
+			$scope.current.mkey = marker_key++;
+			$route.reload();
+		}); 
+	}
+	else {
+		$scope.filename = "auction_"+$scope.current.idItem+".xml";
+		$scope.url = "http://localhost:8080/WebAuctions/services/items/download/"+$scope.current.idItem;
+	}
+	
+	$scope.get_ending_time = function(item) {
+		if($scope.current == null)
+			return "Loading";
+		if(item.ends == null) { 
+			var last_bid = $scope.get_max_bid_object(item)
+			if(last_bid != null) {
+				var ends = Date.parse(last_bid.time);
+				if(ends < Date.now()) {
+					item.ended = true;
+					return "Ended";
+				}
+			}
+			else {
+				item.ended = true;
+				return "Ended";
+			}
+		}
+		else {
+			var ends = Date.parse(item.ends);
+			var now = Date.now();
+			if(ends < Date.now()) {
+				item.ended = true;
+				return "Ended";
+			}
+			else {
+				item.ended = false;
+				var time_left = (ends - now)/1000;
+				return time_left;
+			}
+		}
 	};
 	
-	$scope.get_ending_time = function(auction) {
-		if(auction.ended)
-			return "Ended";
-		else
-			return auction.ends;
+	//$scope.current = localStorageService.get('current_item');
+	//localStorageService.set('current_item',$scope.current);
+	  
+	$scope.get_first_bid = function() {
+		if($scope.current == null)
+			return "Loading";
+		$scope.current.firstBid = $scope.current.firstBid.replace('$','');
+		//auction.firstBid = auction.firstBid.replace('$','');
+		return $scope.current.firstBid;
 	};
+	
+	
 	
 	$scope.check_amount = function() {
 		if($scope.bid.amount > $scope.current.max)
@@ -192,8 +240,7 @@ angular.module('auction_land').controller('AuctionController',
 		$scope.admin = $scope.user.admin;
 	else 
 		$scope.admin = false;
-	$scope.filename = "auction_"+$scope.current.idItem+".xml";
-	$scope.url = "http://localhost:8080/WebAuctions/services/items/download/"+$scope.current.idItem;
+
 	console.log($scope.url);
 }]);
 

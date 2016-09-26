@@ -229,7 +229,7 @@ angular.module('auction_land').controller('SearchController',
 		$scope.set_current = function(item) {
 			item.mkey = marker_key++;
 			AuctionService.set_current_auction(item);
-			$location.path('/item/');
+			$location.path('/item/id/'+item.idItem);
 		};
 		
 		

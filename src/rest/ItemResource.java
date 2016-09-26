@@ -183,4 +183,14 @@ public class ItemResource {
 		main.XMLMapping.Item itemXML = model.wrappers.toXML.ItemWrapper.map(modelItem);
 		return itemXML;
 	}
+
+	@GET
+	@Path("/id/{id}")
+	@Produces({"application/json"})
+	public model.Item getById(@PathParam("id") int id) {
+		ItemDAO itemDAO = new ItemDAO();
+		entities.Item entityItem = itemDAO.getById(id);
+		model.Item modelItem = model.wrappers.ItemWrapper.map(entityItem);
+		return modelItem;
+	}
 }

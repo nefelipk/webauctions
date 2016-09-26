@@ -103,7 +103,7 @@ a.list-group-item.glowing-live:focus {
 <body>
 		<div class="list-group " >
 			<a ng-repeat="i in current_items" ng-cloak  on-finish-render="ngRepeatFinished"
-					href="#/item" class="list-group-item" 
+					href="" class="list-group-item" 
 					class="item"
 					ng-class="{'glowing-live' : i.ended == false, 'glowing-ended' : i.ended == true}"
 					ng-click="set_current(i)">

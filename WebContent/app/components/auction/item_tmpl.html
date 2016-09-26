@@ -85,7 +85,7 @@ a>.button-download:hover {
 </head>
 <body>
 
-<div ng-controller="AuctionController" class="container-fluid" style="margin-bottom:10%;">
+<div ng-controller="AuctionController" class="container-fluid" style="margin-bottom:10%;" ng-cloak>
 			
 	<div class="row">
 		<div class="col-xs-offset-1  col-sm-4 well">
@@ -109,10 +109,10 @@ a>.button-download:hover {
 						<div><h5><strong>Starting bid : {{get_first_bid(current)}} &euro;</strong></h5></div>
 						<span ng-switch="current.ended">
 							<span ng-switch-when="true">
-							<h5><strong>Sold for: {{current.max}} &euro;</strong></h5>
+							<h5><strong>Sold for: {{current.bids[current.bids.length-1].amount}} &euro;</strong></h5>
 							</span>
 							<span ng-switch-when="false">
-								<h5><strong>Current bid : {{current.max}} &euro;</strong></h5>
+								<h5><strong>Current bid : {{current.bids[current.bids.length-1].amount}} <!-- {{current.currently}} --> &euro;</strong></h5>
 							</span>
 						</span>
 						<div > <h5>{{current.bids.length}} bids</h5></div>

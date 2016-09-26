@@ -88,9 +88,10 @@ angular.module('auction_land').controller('AuctionsController',
 		$scope.get_max_bid = function(item) {
 			if(item != null) {
 				if(item.bids != null) {
-					var bids = item.bids.slice();
-					var max = Math.max.apply(Math,bids.map(function(o){return o.amount;}));
-					return max;
+					//var bids = item.bids.slice();
+					//var max = Math.max.apply(Math,bids.map(function(o){return o.amount;}));
+					//return max;
+					return item.bids[item.bids.length-1].amount;
 				}
 			}
 			return null;
@@ -154,6 +155,7 @@ angular.module('auction_land').controller('AuctionsController',
 		$scope.set_current = function(item) {
 			item.mkey = marker_key++;
 			AuctionService.set_current_auction(item);
+			$location.path("/item/id/"+item.idItem);
 		};
 		
 		$scope.location_continent = false;
