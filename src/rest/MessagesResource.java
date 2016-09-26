@@ -54,14 +54,18 @@ public class MessagesResource {
 	public List<List<model.Message>> getMessageByUsername(@PathParam("username") String username) {
 		MessageDAO messageDAO = new MessageDAO();
 		List<entities.Message> m = messageDAO.getMessageByUsername(username);
-		
-		List<model.Message> messages = MessageWrapper.mapList(m);
 
+		List<model.Message> messages = new ArrayList<model.Message>();
+		if(m == null)
+			messages = new ArrayList<model.Message>();
+		else
+			messages = MessageWrapper.mapList(m);
+	
 		List<List<model.Message>> allMessages = new ArrayList<List<model.Message>>();
 		List<model.Message> inbox = new ArrayList<model.Message>();
 		List<model.Message> sent = new ArrayList<model.Message>();
 		
-		if(messages.size() > 0) {
+		if(messages != null) {
 			for(model.Message crawl : messages) {
 				if(crawl.getReceiverUsername().equals(username))
 					inbox.add(crawl);

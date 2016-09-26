@@ -54,7 +54,7 @@ public class MessageDAO {
 			q.setParameter(1, user.getIdUser());
 
 			transaction.commit();
-			messages = (List<entities.Message>) q.getResultList();
+			messages = q.getResultList();
 			return messages;
 		} catch (PersistenceException e) {
 			if (transaction.isActive())

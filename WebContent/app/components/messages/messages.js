@@ -91,14 +91,36 @@ angular.module('auction_land').controller('MessagesController',
 		var length = $scope.selected_messages.length-1
 		$scope.selected = false;
 		$scope.check_all = false;
-		for(i = length; i >= 0; i--) {
-			console.log($scope.current_items[$scope.selected_messages[i]]);
-			var response = Message.remove({username : $cookies.getObject('user').username,id : $scope.current_items[$scope.selected_messages[i]].id})
-			.$promise.then(function() {
-				$scope.current_items.splice($scope.selected_messages[i],1);
-				$scope.selected_messages.pop();
-				$scope.fix_pages();
-				$scope.current_items = $scope.get_items();
+		
+		
+		var ids = [];
+		for(i = 0; i < $scope.selected_messages.length; i++) {
+			ids[i] = $scope.presented_messages[$scope.selected_messages[i]].id
+		}
+		console.log(ids);
+		$scope.presented_messages = $.grep($scope.presented_messages, function(n, i) {
+		    return $.inArray(i, $scope.selected_messages) ==-1;
+		});
+		
+		if($scope.current_tab = "Inbox") {
+			$scope.inbox = $.grep($scope.inbox, function(n, i) {
+			    return $.inArray(i, $scope.selected_messages) ==-1;
+			});		
+		}
+		else if($scope.current_tab = "Sent") {
+			$scope.sent = $.grep($scope.sent, function(n, i) {
+			    return $.inArray(i, $scope.selected_messages) ==-1;
+			});
+		}
+
+		$scope.fix_pages();
+		$scope.current_items = $scope.get_items();
+		$scope.selected_messages = [];
+		
+		for(i = 0; i < ids.length ; i++) {
+			console.log("message id : " + ids[i]);
+			var response = Message.remove({username : $cookies.getObject('user').username,id : ids[i]}).$promise.then(function() { 
+				console.log("deleted message");
 			});
 		}
 	};
@@ -262,15 +284,18 @@ angular.module('auction_land').controller('MessagesController',
 			}
 		}
 		else {
+			if($scope.current_page != 1) {
+				index = ($scope.current_page-1) * messages_per_page + index;
+			}
 			//console.log($scope.selected_messages);	
 			//console.log(message);
 			var pos = $scope.selected_messages.indexOf(index);
 			if(pos != -1) {
 				$scope.selected_messages.splice(pos,1);
-				console.log("found");
+				//console.log("found");
 			}
 			else {
-				console.log("not found");
+				//console.log("not found");
 				$scope.selected_messages.push(index);
 			}
 			console.log("selected_messages : ");
@@ -310,18 +335,23 @@ angular.module('auction_land').controller('MessagesController',
 		if(tab == 1) {
 			compose_tab.addClass('active');
 			$scope.current_tab = "Compose";
+			$scope.selected_messages = [];
 		}
 		else if(tab == 2) {
 			$scope.current_tab = "Inbox";
 			inbox_tab.addClass('active');
 			$scope.presented_messages = $scope.inbox;
 			$scope.fix_pages();
+			$scope.current_items = $scope.get_items();
+			$scope.selected_messages = [];
 		}
 		else if(tab == 3) {
 			$scope.current_tab = "Sent";
 			sent_tab.addClass('active');
 			$scope.presented_messages = $scope.sent;
 			$scope.fix_pages();
+			$scope.current_items = $scope.get_items();
+			$scope.selected_messages = [];
 		}
 		$scope.reading_sent = false;
 		$scope.reading = false
