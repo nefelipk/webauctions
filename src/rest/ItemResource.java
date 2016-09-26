@@ -1,25 +1,25 @@
 package rest;
 
-import java.sql.Timestamp;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import dao.ItemDAO;
 import dao.LocationDAO;
-import dao.UserDAO;
 import model.wrappers.ItemWrapper;
 
 @Path("/items")
@@ -171,5 +171,16 @@ public class ItemResource {
 		List<entities.Item> entitiesItems = itemDAO.getHot();
 		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
 		return items;
+	}
+	
+	@GET
+	@Path("/download/{id}")
+	@Produces({"text/xml"})
+	public main.XMLMapping.Item downloadAuctionXML(@PathParam("id") int id) {
+		ItemDAO itemDAO = new ItemDAO();
+		entities.Item entityItem = itemDAO.getById(id);
+		model.Item modelItem = model.wrappers.ItemWrapper.map(entityItem);
+		main.XMLMapping.Item itemXML = model.wrappers.toXML.ItemWrapper.map(modelItem);
+		return itemXML;
 	}
 }

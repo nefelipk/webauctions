@@ -63,3 +63,7 @@ angular.module('auction_land').factory('TopUsers', [ '$resource', function($reso
 angular.module('auction_land').factory('HotRightNow', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/hot/');
 } ]);
+
+angular.module('auction_land').factory('DownloadXML', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/download/:id');
+} ]);
