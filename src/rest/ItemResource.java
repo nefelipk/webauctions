@@ -7,13 +7,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.UriBuilder;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -21,23 +25,22 @@ import javax.xml.bind.Marshaller;
 import dao.ItemDAO;
 import dao.LocationDAO;
 import model.wrappers.ItemWrapper;
+import entities.wrappers.UserMapper;
 
 @Path("/items")
 public class ItemResource {
 
-	/*@POST
+	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.Item item) {
 		entities.Item itemEntity = new entities.Item();
 		itemEntity.setName(item.getName());
 		itemEntity.setBuyPrice(item.getBuyPrice());
 		itemEntity.setFirstBid(item.getFirstBid());
-		
-		//itemEntity.setCurrently(item.getFirstBid());
-*//******************* TO DO: Change buyPrice and firstBid from String to float *******************//*
-		
-		itemEntity.setStarted(new Timestamp(Long.valueOf(item.getStarted())));
-		itemEntity.setEnds(new Timestamp(Long.valueOf(item.getEnds())));
+		itemEntity.setCurrently(Float.parseFloat(item.getFirstBid()));
+
+		itemEntity.setStarted(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getStarted()));
+		itemEntity.setEnds(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getEnds()));
 		itemEntity.setDescription(item.getDescription());
 		
 		entities.Location locationEntity = new entities.Location();
@@ -49,33 +52,33 @@ public class ItemResource {
 		locationEntity.setLatitude(location.getLatitude());
 		locationEntity.setLongitude(location.getLongitude());
 		locationEntity.setPostalCode(location.getPostalCode());
-		locationEntity.setLocation(null);
+		locationEntity.setLocation(location.getLocation());
 		itemEntity.setLocation(locationEntity);
 		
-//		entities.Image imageEntity = new entities.Image();
-//		model.Image image = item.getImage();
+		entities.Image imageEntity = new entities.Image();
+		model.Image image = item.getImage();
 //		imageEntity.setIdImage(image.getImage());
-//		
-//		entities.User userEntity = new entities.User();
-//		model.User user = item.getUser();
+		imageEntity.setIdImage(0);
+		
+		entities.User userEntity = UserMapper.map(item.getUser());
+		itemEntity.setUser(userEntity);
 		
 		itemEntity.setBids(null);
 		itemEntity.setNumberOfBids(0);
 		
-//		UserDAO userDB = new UserDAO();
-//		int id = userDB.insert(userEntity2);	
-//		if(id > 0) {
-//			return Response
-//				.created(UriBuilder.fromResource(UserResource.class)
-//						.path(String.valueOf(id))
-//						.build())
-//				.build();
-//		}
-//		else {
-//			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-//		}
-		return null;
-	}*/
+		ItemDAO itemDB = new ItemDAO();
+		int id = itemDB.insert(itemEntity);
+		if (id > 0) {
+			return Response
+				.created(UriBuilder.fromResource(UserResource.class)
+						.path(String.valueOf(id))
+						.build())
+				.build();
+		}
+		else {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 	
 	@GET
 	@Path("/{term}")

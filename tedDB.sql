@@ -176,7 +176,7 @@ CREATE TABLE `User` (
   `name` varchar(45) NOT NULL,
   `surname` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `phone` int(11) NOT NULL,
+  `phone` varchar(45) NOT NULL,
   `afm` varchar(45) NOT NULL,
   `rating_bidder` float DEFAULT NULL,
   `rating_seller` float DEFAULT NULL,

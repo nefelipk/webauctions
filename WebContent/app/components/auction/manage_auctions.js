@@ -16,24 +16,35 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.allItems();
 	
 	
-//	$scope.username = $cookies.getObject('user').username;
-//	$scope.name = $cookies.getObject('user').firstName;
-//	$scope.surname = $cookies.getObject('user').lastName;
-//	$scope.email = $cookies.getObject('user').email;
-//	$scope.phone = $cookies.getObject('user').phone;
-//	$scope.trn = $cookies.getObject('user').afm;
-//	$scope.country = $cookies.getObject('user').location.country;
-//	$scope.city = $cookies.getObject('user').location.city;
-//	$scope.address = $cookies.getObject('user').location.address;
-//	$scope.postalCode = $cookies.getObject('user').location.postalCode;
-//	console.log($cookies.getObject('user'));
+	/*********************************************************************/
+	/**********************************************************************
+							CREATE NEW AUCTION
+	**********************************************************************/
+	/*********************************************************************/
 	
-	$scope.submit = function() {
+	$scope.createAuction = function() {
 		console.log(">>>>>> CREATE <<<<<<<");
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
-//		$scope.user.location.country = $scope.user.country.name;
-//		delete $scope.user.country;
+		$scope.item.location.country = $scope.item.country.name;
+		delete $scope.item.country;
+		$scope.item.user = $scope.user;
+		console.log($scope.item);
+		
+		Item.save($scope.item).$promise.then(function(data) {
+			console.log("NAI");
+			console.log(data);
+			$scope.item = {};
+			$scope.form.$setPristine(true);
+			$scope.form.$setUntouched(true);
+			$scope.submitted = false;
+			$scope.success = true;
+		}, function() {
+			console.log("OXI");
+			$scope.submitted = false;
+			$scope.success = false;
+		});
+		
 //		User.save($scope.user).$promise.then(function(data) {
 //			// bring form at initial
 //			// state
@@ -72,10 +83,10 @@ angular.module('auction_land').controller('AuctionManagerController',
 							DATE-TIME PICKER
 	**********************************************************************/
 	/*********************************************************************/
-	
+/*	
 	$scope.startTime = null;
 	$scope.endTime = null;
-	
+		
 	$scope.pickDateTime = function() {
 		console.log(">>> DateTimePicker <<<");
 		$('#dateTimeStartPicker').datetimepicker({
@@ -84,7 +95,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$('#dateTimeEndPicker').datetimepicker({
 			useCurrent: false //Important! See issue #1075
 		});
-		$("#dateTimeStartPicker").on("dp.change", function (e) {
+		$("#dateTimeStartPicker").on("dp.change dp.show", function (e) {
 			console.log(new Date(e.date));
 			$('#dateTimeEndPicker').data("DateTimePicker").minDate(e.date);
 			if (new Date(e.date) < new Date()) {
@@ -93,8 +104,9 @@ angular.module('auction_land').controller('AuctionManagerController',
 			else {
 				$scope.startTime = new Date(e.date);
 			}
+			$('#newAuctionForm').formValidation('revalidateField', 'started');
 		});
-		$("#dateTimeEndPicker").on("dp.change", function (e) {
+		$("#dateTimeEndPicker").on("dp.change dp.show", function (e) {
 			$('#dateTimeStartPicker').data("DateTimePicker").maxDate(e.date);
 			console.log(new Date(e.date));
 			if (new Date(e.date) < new Date()) {
@@ -103,11 +115,29 @@ angular.module('auction_land').controller('AuctionManagerController',
 			else {
 				$scope.endTime = new Date(e.date);
 			}
+			$('#newAuctionForm').formValidation('revalidateField', 'ends');
 		});
 		
+		$('#newAuctionForm').formValidation({
+	        framework: 'bootstrap',
+	        fields: {
+	        	started: {
+	                validators: {
+	                    date: {
+	                        format: 'MM/DD/YYYY h:m A',
+	                        message: 'The value is not a valid date'
+	                    },
+					    notEmpty: {
+				            message: 'The field can not be empty'
+				        }
+	                }
+	            }
+	        }
+	    });
+		
 	};
-	$scope.pickDateTime();
-	
+	//$scope.pickDateTime();
+*/	
 	
 	/*********************************************************************/
 	/**********************************************************************
