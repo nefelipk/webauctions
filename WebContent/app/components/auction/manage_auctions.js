@@ -16,22 +16,19 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.allItems();
 	
 	
-//	$scope.username = $cookies.getObject('user').username;
-//	$scope.name = $cookies.getObject('user').firstName;
-//	$scope.surname = $cookies.getObject('user').lastName;
-//	$scope.email = $cookies.getObject('user').email;
-//	$scope.phone = $cookies.getObject('user').phone;
-//	$scope.trn = $cookies.getObject('user').afm;
-//	$scope.country = $cookies.getObject('user').location.country;
-//	$scope.city = $cookies.getObject('user').location.city;
-//	$scope.address = $cookies.getObject('user').location.address;
-//	$scope.postalCode = $cookies.getObject('user').location.postalCode;
-//	console.log($cookies.getObject('user'));
+	/*********************************************************************/
+	/**********************************************************************
+							CREATE NEW AUCTION
+	**********************************************************************/
+	/*********************************************************************/
 	
 	$scope.createAuction = function() {
 		console.log(">>>>>> CREATE <<<<<<<");
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
+		$scope.item.location.country = $scope.item.country.name;
+		$scope.item.user = $scope.user;
+		console.log($scope.item);
 //		$scope.user.location.country = $scope.user.country.name;
 //		delete $scope.user.country;
 //		User.save($scope.user).$promise.then(function(data) {
