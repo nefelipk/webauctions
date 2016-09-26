@@ -72,7 +72,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 							DATE-TIME PICKER
 	**********************************************************************/
 	/*********************************************************************/
-	
+/*	
 	$scope.startTime = null;
 	$scope.endTime = null;
 		
@@ -126,7 +126,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 		
 	};
 	//$scope.pickDateTime();
-	
+*/	
 	
 	/*********************************************************************/
 	/**********************************************************************

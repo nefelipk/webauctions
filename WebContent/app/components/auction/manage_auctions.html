@@ -297,35 +297,19 @@ tr.unread {
 							<div class='input-group date' id='dateTimeStartPicker'>
 								<input type="text" class="form-control" name="started" placeholder="MM/DD/YYYY h:m A"
 									ng-model="user.started" ng-required="true">
-								<span class="input-group-addon" ng-click="pickDateTime()">
-			                        <span class="glyphicon glyphicon-calendar"></span>
-			                    </span>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 		                    </div>
 							<div ng-show="(form.started.$touched || submitted) && startTime == null" ng-message="required">You must fill this field.</div>
 						</div>
-						
-						<!-- 
-						<div class="col-xs-6">
-							<label class="control-label" for="started">Start time:</label>
-							<div class='input-group date' id='dateTimeStartPicker'>
-								<input type="text" class="form-control" name="started" placeholder="MM/DD/YYYY h:m A">
-								<span class="input-group-addon" ng-click="pick()">
-			                        <span class="glyphicon glyphicon-calendar"></span>
-			                    </span>
-		                    </div>
-						</div>
-						-->
 						
 						<div class="col-xs-6 has-feedback" ng-messages="form.ends.$error"
 						ng-class="{'has-error' : ((submitted || form.ends.$touched) && endTime == null) , 
 						'has-success': endTime != null}">
 							<label class="control-label" for="ends">End time:</label>
 							<div class='input-group date' id='dateTimeEndPicker'>
-								<input type="text" class="form-control" name="ends" 
-									ng-model="user.ends" ng-required="true" placeholder="End time">
-								<span class="input-group-addon" ng-click="pickDateTime()">
-			                        <span class="glyphicon glyphicon-calendar"></span>
-			                    </span>
+								<input type="text" class="form-control" name="ends" placeholder="MM/DD/YYYY h:m A
+									ng-model="user.ends" ng-required="true">
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 		                    </div>
 							<div ng-show="(form.ends.$touched || submitted) && endTime == null" ng-message="required">You must fill this field.</div>
 						</div>
