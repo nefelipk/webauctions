@@ -27,10 +27,24 @@ angular.module('auction_land').controller('AuctionManagerController',
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
 		$scope.item.location.country = $scope.item.country.name;
+		delete $scope.item.country;
 		$scope.item.user = $scope.user;
 		console.log($scope.item);
-//		$scope.user.location.country = $scope.user.country.name;
-//		delete $scope.user.country;
+		
+		Item.save($scope.item).$promise.then(function(data) {
+			console.log("NAI");
+			console.log(data);
+			$scope.item = {};
+			$scope.form.$setPristine(true);
+			$scope.form.$setUntouched(true);
+			$scope.submitted = false;
+			$scope.success = true;
+		}, function() {
+			console.log("OXI");
+			$scope.submitted = false;
+			$scope.success = false;
+		});
+		
 //		User.save($scope.user).$promise.then(function(data) {
 //			// bring form at initial
 //			// state

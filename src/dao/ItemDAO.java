@@ -59,28 +59,34 @@ public class ItemDAO {
 		try {
 				
 			List<Category> safe_categories = new ArrayList<Category>();
-			for (Category crawl : item.getCategories()) {
-				if (crawl.getIdCategory() == 0) {
-					Query q = entityManager.createQuery("Select c from Category c where c.name = ?1");
-					q.setParameter(1, crawl.getName());
-					Category existing_category = null;
-					try {
-						existing_category = (Category) q.getSingleResult();
-					} catch (Exception e) {
-						existing_category = null;
-					}
-					if (existing_category == null) {
-						entityManager.persist(crawl);
-						safe_categories.add(crawl);
-					} else {
-						safe_categories.add(existing_category);
-					}
-				} else {
-					entityManager.merge(crawl);
-					safe_categories.add(crawl);
-				}
+			if (item.getCategories() == null) {
+				System.out.println("There are no categories!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				item.setCategories(null);
 			}
-			item.setCategories(safe_categories);
+			else {
+				for (Category crawl : item.getCategories()) {
+					if (crawl.getIdCategory() == 0) {
+						Query q = entityManager.createQuery("Select c from Category c where c.name = ?1");
+						q.setParameter(1, crawl.getName());
+						Category existing_category = null;
+						try {
+							existing_category = (Category) q.getSingleResult();
+						} catch (Exception e) {
+							existing_category = null;
+						}
+						if (existing_category == null) {
+							entityManager.persist(crawl);
+							safe_categories.add(crawl);
+						} else {
+							safe_categories.add(existing_category);
+						}
+					} else {
+						entityManager.merge(crawl);
+						safe_categories.add(crawl);
+					}
+				}
+				item.setCategories(safe_categories);
+			}
 			/*
 			 * List<Bid> safe_bids = new ArrayList<Bid>(); for(Bid crawl :
 			 * item.getBids()) { if(crawl.getIdBid() == 0) { Query q =
@@ -115,30 +121,36 @@ public class ItemDAO {
 			}
 
 			List<Bid> safe_bids = new ArrayList<Bid>();
-			for (Bid crawl : item.getBids()) {
-				User user = entityManager.find(User.class, crawl.getUser().getIdUser());
-				if (user == null) {
-					User bidUser = crawl.getUser();
-					Query q = entityManager.createQuery("Select u from User u where u.username = ?1");
-					q.setParameter(1, bidUser.getUsername());
-					User existing_user = null;
-					try {
-						existing_user = (User) q.getSingleResult();
-					} catch (Exception e) {
-						existing_user = null;
-					}
-					if (existing_user == null) {
-						entityManager.persist(bidUser);
-						crawl.setUser(bidUser);
-					} else {
-						// entityManager.merge(existing_user);
-						crawl.setUser(existing_user);
-					}
-				}
-				// entityManager.persist(crawl);
-				safe_bids.add(crawl);
+			if (item.getBids() == null) {
+				System.out.println("There are no bids!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				item.setBids(null);
 			}
-			item.setBids(safe_bids);
+			else {
+				for (Bid crawl : item.getBids()) {
+					User user = entityManager.find(User.class, crawl.getUser().getIdUser());
+					if (user == null) {
+						User bidUser = crawl.getUser();
+						Query q = entityManager.createQuery("Select u from User u where u.username = ?1");
+						q.setParameter(1, bidUser.getUsername());
+						User existing_user = null;
+						try {
+							existing_user = (User) q.getSingleResult();
+						} catch (Exception e) {
+							existing_user = null;
+						}
+						if (existing_user == null) {
+							entityManager.persist(bidUser);
+							crawl.setUser(bidUser);
+						} else {
+							// entityManager.merge(existing_user);
+							crawl.setUser(existing_user);
+						}
+					}
+					// entityManager.persist(crawl);
+					safe_bids.add(crawl);
+				}
+				item.setBids(safe_bids);
+			}
 
 			entityManager.persist(item);
 			id = item.getIdItem();

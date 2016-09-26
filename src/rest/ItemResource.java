@@ -1,6 +1,5 @@
 package rest;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,13 +18,13 @@ import javax.ws.rs.core.Response.Status;
 
 import dao.ItemDAO;
 import dao.LocationDAO;
-import dao.UserDAO;
 import model.wrappers.ItemWrapper;
+import entities.wrappers.UserMapper;
 
 @Path("/items")
 public class ItemResource {
 
-	/*@POST
+	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.Item item) {
 		entities.Item itemEntity = new entities.Item();
@@ -34,10 +33,10 @@ public class ItemResource {
 		itemEntity.setFirstBid(item.getFirstBid());
 		
 		//itemEntity.setCurrently(item.getFirstBid());
-*//******************* TO DO: Change buyPrice and firstBid from String to float *******************//*
-		
-		itemEntity.setStarted(new Timestamp(Long.valueOf(item.getStarted())));
-		itemEntity.setEnds(new Timestamp(Long.valueOf(item.getEnds())));
+/******************* TO DO: Change buyPrice and firstBid from String to float *******************/
+
+		itemEntity.setStarted(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getStarted()));
+		itemEntity.setEnds(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getEnds()));
 		itemEntity.setDescription(item.getDescription());
 		
 		entities.Location locationEntity = new entities.Location();
@@ -49,33 +48,33 @@ public class ItemResource {
 		locationEntity.setLatitude(location.getLatitude());
 		locationEntity.setLongitude(location.getLongitude());
 		locationEntity.setPostalCode(location.getPostalCode());
-		locationEntity.setLocation(null);
+		locationEntity.setLocation(location.getLocation());
 		itemEntity.setLocation(locationEntity);
 		
-//		entities.Image imageEntity = new entities.Image();
-//		model.Image image = item.getImage();
+		entities.Image imageEntity = new entities.Image();
+		model.Image image = item.getImage();
 //		imageEntity.setIdImage(image.getImage());
-//		
-//		entities.User userEntity = new entities.User();
-//		model.User user = item.getUser();
+		imageEntity.setIdImage(0);
+		
+		entities.User userEntity = UserMapper.map(item.getUser());
+		itemEntity.setUser(userEntity);
 		
 		itemEntity.setBids(null);
 		itemEntity.setNumberOfBids(0);
 		
-//		UserDAO userDB = new UserDAO();
-//		int id = userDB.insert(userEntity2);	
-//		if(id > 0) {
-//			return Response
-//				.created(UriBuilder.fromResource(UserResource.class)
-//						.path(String.valueOf(id))
-//						.build())
-//				.build();
-//		}
-//		else {
-//			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-//		}
-		return null;
-	}*/
+		ItemDAO itemDB = new ItemDAO();
+		int id = itemDB.insert(itemEntity);
+		if (id > 0) {
+			return Response
+				.created(UriBuilder.fromResource(UserResource.class)
+						.path(String.valueOf(id))
+						.build())
+				.build();
+		}
+		else {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 	
 	@GET
 	@Path("/{term}")
