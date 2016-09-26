@@ -18,7 +18,7 @@ public class UserWrapper {
 	public static entities.User mapSeller(Seller seller) {
 		entities.User user = RandomUserGenerator.createRandomUser();
 		user.setUsername(seller.getUserID());
-		user.setRatingBidder(Float.valueOf(seller.getRating()));
+		user.setRatingSeller(Float.valueOf(seller.getRating()));
 		user.setLocation(LocationWrapper.map(null,"USA"));
 		return user;
 	}

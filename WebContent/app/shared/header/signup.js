@@ -14,29 +14,32 @@ angular.module('auction_land').controller('UserController', [ '$scope', 'User', 
 				$scope.strong = true;
 				$scope.medium = false;
 				$scope.progress_width = "100%";
+				$scope.form.$setValidity("strength",true);
 			} else if (medium_regex.test(pass)) {
 				$scope.pass_class = 2;
 				$scope.pass_message = "medium (accepted)";
 				$scope.medium = true;
 				$scope.strong = false;
 				$scope.progress_width = "50%";
+				$scope.form.$setValidity("strength",true);
 			} else {
 				$scope.pass_class = 3;
 				$scope.strong = false;
 				$scope.medium = false;
 				$scope.progress_width = "1%";
 				$scope.pass_message = "invalid";
+				$scope.form.$setValidity("strength",false);
 			}
 		};
 		$scope.match = false;
 		$scope.confirm_pass = function() {
 			var confirm_div = angular.element(document.querySelector('#confirm-div'));
 			if ($scope.user.password == $scope.form.confirm.$viewValue) {
-				$scope.form.confirm.$error.match = false;
+				$scope.form.$setValidity("match",true);
 				confirm_div.removeClass("has-error");
 				$scope.match = true;
 			} else {
-				$scope.form.confirm.$error.match = true;
+				$scope.form.$setValidity("match",false);
 				$scope.match = false;
 				confirm_div.addClass("has-error");
 			}
@@ -73,6 +76,8 @@ angular.module('auction_land').controller('UserController', [ '$scope', 'User', 
 			console.log($scope.user.password);
 			$scope.user.location.country = $scope.user.country.name;
 			delete $scope.user.country;
+			if($scope.form.$invalid)
+				return;
 			User.save($scope.user).$promise.then(function(data) {
 
 				$scope.user = {};
