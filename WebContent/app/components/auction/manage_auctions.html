@@ -237,8 +237,8 @@ tr.unread {
 			
 			<div role="tabpanel" id="create" class="tab-pane fade" 
 				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
-				<form class="form-horizontal" role="form" name="form"
-					ng-submit="form.$valid && submit() " novalidate>
+				<form id="newAuctionForm" class="form-horizontal" role="form" name="form"
+					ng-submit="form.$valid && createAuction() " novalidate>
 
 					<div class="form-group">
 						<div class="col-xs-6 has-feedback" ng-messages="form.name.$error"
@@ -295,14 +295,26 @@ tr.unread {
 						'has-success': startTime != null}">
 							<label class="control-label" for="started">Start time:</label>
 							<div class='input-group date' id='dateTimeStartPicker'>
-								<input type="text" class="form-control" name="started" 
-									ng-model="user.started" ng-required="true" placeholder="Start time">
+								<input type="text" class="form-control" name="started" placeholder="MM/DD/YYYY h:m A"
+									ng-model="user.started" ng-required="true">
 								<span class="input-group-addon" ng-click="pickDateTime()">
 			                        <span class="glyphicon glyphicon-calendar"></span>
 			                    </span>
 		                    </div>
 							<div ng-show="(form.started.$touched || submitted) && startTime == null" ng-message="required">You must fill this field.</div>
 						</div>
+						
+						<!-- 
+						<div class="col-xs-6">
+							<label class="control-label" for="started">Start time:</label>
+							<div class='input-group date' id='dateTimeStartPicker'>
+								<input type="text" class="form-control" name="started" placeholder="MM/DD/YYYY h:m A">
+								<span class="input-group-addon" ng-click="pick()">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+		                    </div>
+						</div>
+						-->
 						
 						<div class="col-xs-6 has-feedback" ng-messages="form.ends.$error"
 						ng-class="{'has-error' : ((submitted || form.ends.$touched) && endTime == null) , 
@@ -320,7 +332,7 @@ tr.unread {
 					</div>
 
 					<hr>
-
+					
 					<div class="form-group">
 						<div class="col-xs-6" ng-messages="form.country.$error"
 						ng-class="{'has-error' : ((submitted || form.country.$touched) && form.country.$invalid) , 
@@ -345,7 +357,7 @@ tr.unread {
 					</div>
 
 					<hr>
-					
+								
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-6">
 							<button class="btn btn-success btn-block" type="submit" ng-click="submitted = true"
