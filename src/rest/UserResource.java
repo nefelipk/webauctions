@@ -39,6 +39,8 @@ public class UserResource {
 	public model.User login(final model.User user) {
 		UserDAO userDAO = new UserDAO();
 		entities.User eUser = userDAO.getSpecificUser(user.getUsername(), user.getPassword());
+		if (eUser == null)
+			return null;
 		model.User mUser = model.wrappers.UserWrapper.map(eUser);
 		MessageDAO messageDAO = new MessageDAO();
 		mUser.setUnreadMessages(messageDAO.getNumberOfUnreadMessages(eUser.getIdUser()));

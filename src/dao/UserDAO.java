@@ -45,9 +45,13 @@ public class UserDAO {
         tx.begin();
         
         Query q = em.createQuery("Select u from User u");
-       // Query q = em.createNamedQuery("User.findAll");
-        users =  q.getResultList();
-		
+        //users =  q.getResultList();
+        try {
+        	users = q.getResultList();
+        } catch(NoResultException noRes) {
+        	users = null;
+        }
+        
         tx.commit();
         em.close();
         return users;
@@ -82,8 +86,14 @@ public class UserDAO {
         Query q = em.createQuery("Select u from User u where u.username = ?1 and u.password = ?2");
         q.setParameter(1,username);
         q.setParameter(2,password);
-		entities.User user = (User) q.getSingleResult();
-		       
+        
+        entities.User user;
+        try {
+        	user = (User) q.getSingleResult();
+        } catch(NoResultException noRes) {
+        	user = null;
+        }
+        
         tx.commit();
         em.close();
         return user;
