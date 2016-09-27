@@ -237,6 +237,17 @@ tr.unread {
 			
 			<div role="tabpanel" id="create" class="tab-pane fade" 
 				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
+				
+				<div class="alert alert-danger text-center" ng-if="error_server && !form_touched">
+			  			<strong>Error!</strong><br/>We are terribly sorry.<br/>There must have been a server error.<br/>
+				</div>
+				<div class="alert alert-success text-center" ng-if="successful_creation && !form_touched">
+		  			<strong>Success!</strong><br/>New auction created.<br/>
+				</div>
+				<div class="alert alert-danger text-center" ng-if="error_prices">
+		  			<strong>Warning!</strong><br/>Buy-price cannot be lower than first-bid-price.<br/>
+				</div>
+				
 				<form id="newAuctionForm" class="form-horizontal" role="form" name="form"
 					ng-submit="form.$valid && createAuction() " novalidate>
 
@@ -246,7 +257,8 @@ tr.unread {
 						'has-success': form.name.$valid }">
 							<label class="control-label" for="name">Name:</label>
 							<input type="text" class="form-control" name="name"
-								ng-model="item.name" placeholder="Name or small description of item" ng-required="true">
+								ng-model="item.name" placeholder="Name or small description of item" 
+								ng-required="true" ng-click="form_touched = true">
 							<i class="glyphicon glyphicon-tag form-control-feedback"></i>
 							<div ng-show="form.name.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>
@@ -257,7 +269,8 @@ tr.unread {
 						'has-success': form.description.$valid }">
 							<label class="control-label" for="description">Description:</label>
 							<input type="text" class="form-control" name="description"
-								ng-model="item.description" placeholder="Description of item" ng-required="true">
+								ng-model="item.description" placeholder="Description of item" 
+								ng-required="true" ng-click="form_touched = true">
 							<i class="glyphicon glyphicon-tags form-control-feedback"></i>
 							<div ng-show="form.description.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>
@@ -271,7 +284,8 @@ tr.unread {
 						'has-success': form.buyPrice.$valid }">
 							<label class="control-label" for="buyPrice">Buy price:</label>
 							<input type="text" class="form-control" name="buyPrice"
-								ng-model="item.buyPrice" placeholder="Price to win auction immediately" ng-required="true">
+								ng-model="item.buyPrice" placeholder="Price to win auction immediately" 
+								ng-required="true" ng-pattern="price_pattern" ng-click="form_touched = true">
 							<i class="glyphicon glyphicon-euro form-control-feedback"></i>
 							<div ng-show="form.buyPrice.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>
@@ -281,7 +295,8 @@ tr.unread {
 						'has-success': form.firstBid.$valid }">
 							<label class="control-label" for="firstBid">First bid:</label>
 							<input type="text" class="form-control" name="firstBid" 
-								ng-model="item.firstBid" ng-required="true" placeholder="Minimum amount of first bid">
+								ng-model="item.firstBid" placeholder="Minimum amount of first bid"
+								ng-required="true" ng-pattern="price_pattern" ng-click="form_touched = true">
 							<i class="glyphicon glyphicon-euro form-control-feedback"></i>
 							<div ng-show="form.firstBid.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>
@@ -294,7 +309,7 @@ tr.unread {
 							<label class="control-label" for="started">Start time:</label>
 							<div class='input-group date' id='dateTimeStartPicker'>
 								<input type="text" class="form-control" name="started" placeholder="MMM-dd-yy HH:mm:ss"
-									ng-model="item.started" ng-required="true">
+									ng-model="item.started" ng-required="true" ng-click="form_touched = true">
 								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 		                    </div>
 		                    <div ng-show="form.started.$touched || submitted" ng-message="required">You must fill this field.</div>
@@ -306,7 +321,7 @@ tr.unread {
 							<label class="control-label" for="ends">End time:</label>
 							<div class='input-group date' id='dateTimeEndPicker'>
 								<input type="text" class="form-control" name="ends" placeholder="MMM-dd-yy HH:mm:ss"
-									ng-model="item.ends" ng-required="true">
+									ng-model="item.ends" ng-required="true" ng-click="form_touched = true">
 								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 		                    </div>
 							<div ng-show="form.ends.$touched || submitted" ng-message="required">You must fill this field.</div>
@@ -321,7 +336,8 @@ tr.unread {
 						'has-success': form.country.$valid }">
 							<label class="control-label" for="country">Country:</label>
 							<select class="form-control" ng-model="item.country" ng-required="true" name="country"
-								ng-options="country.name for country in countries track by country.code">
+								ng-options="country.name for country in countries track by country.code" 
+								ng-click="form_touched = true">
 								<option value="">Country</option>
 							</select>
 							<div ng-show="form.country.$touched || submitted" ng-message="required">You must select an option.</div>
@@ -332,7 +348,8 @@ tr.unread {
 						'has-success': form.location.$valid }">
 							<label class="control-label" for="location">Location:</label>
 							<input type="text" class="form-control" name="location"
-								ng-model="item.location.location" ng-required="true" placeholder="Location">
+								ng-model="item.location.location" ng-required="true" placeholder="Location" 
+								ng-click="form_touched = true">
 							<i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
 							<div ng-show="form.location.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>
@@ -342,19 +359,16 @@ tr.unread {
 								
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-6">
-							<button class="btn btn-success btn-block" type="submit" ng-click="submitted = true"
+							<button class="btn btn-success btn-block" type="submit" ng-click="submitted = true; form_touched = true"
 								style="background-color: #27AE60; color: #ECF0F1;"><strong>Create</strong></button>
 						</div>
 					</div>
 				</form>
+								
 			</div>
 			
 		</div>
-	</div>
-	
-	
-	
- 	
+	</div> 	
 
 	</div>
 	

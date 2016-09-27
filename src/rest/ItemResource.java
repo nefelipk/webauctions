@@ -1,6 +1,5 @@
 package rest;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,19 +12,14 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriBuilder;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import dao.ItemDAO;
 import dao.LocationDAO;
-import model.wrappers.ItemWrapper;
 import entities.wrappers.UserMapper;
+import model.wrappers.ItemWrapper;
 
 @Path("/items")
 public class ItemResource {
@@ -56,7 +50,7 @@ public class ItemResource {
 		itemEntity.setLocation(locationEntity);
 		
 		entities.Image imageEntity = new entities.Image();
-		model.Image image = item.getImage();
+//		model.Image image = item.getImage();
 //		imageEntity.setIdImage(image.getImage());
 		imageEntity.setIdImage(0);
 		
@@ -68,7 +62,7 @@ public class ItemResource {
 		
 		ItemDAO itemDB = new ItemDAO();
 		int id = itemDB.insert(itemEntity);
-		if (id > 0) {
+		if (id >= 0) {
 			return Response
 				.created(UriBuilder.fromResource(UserResource.class)
 						.path(String.valueOf(id))
