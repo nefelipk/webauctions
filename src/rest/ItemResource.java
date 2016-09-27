@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import dao.ItemDAO;
 import dao.LocationDAO;
+import dao.UserDAO;
 import entities.wrappers.UserMapper;
 import model.wrappers.ItemWrapper;
 
@@ -88,6 +90,18 @@ public class ItemResource {
 		else {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
+	}
+	
+	@DELETE
+	@Path("/delete/{term}")
+	@Consumes({"application/json"})
+	public Response deleteItem(@PathParam("term") final String term) {
+		ItemDAO itemDB = new ItemDAO();
+		itemDB.deleteItem(Integer.parseInt(term));
+		return Response
+			.created(UriBuilder.fromResource(UserResource.class)
+					.build())
+			.build();
 	}
 	
 	@GET

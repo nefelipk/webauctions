@@ -166,6 +166,20 @@ public class ItemDAO {
 			entityManager.close();
 		}
 	}
+	
+	public void deleteItem(int itemId) {
+		EntityManager em = JPAResource.factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		Query q = em.createQuery("Delete from Item i where i.idItem = ?1");
+		q.setParameter(1, itemId);
+		q.executeUpdate();
+		em.flush();
+		
+		tx.commit();
+		em.close();
+	}
 
 	public entities.Item getById(int id) {
 		EntityManager entityManager = JPAResource.factory.createEntityManager();

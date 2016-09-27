@@ -51,6 +51,10 @@ angular.module('auction_land').factory('ItemSeller', [ '$resource', function($re
 	return $resource('http://localhost:8080/WebAuctions/services/items/seller/:term');
 } ]);
 
+angular.module('auction_land').factory('ItemDelete', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/delete/:term');
+} ]);
+
 
 angular.module('auction_land').factory('Message', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/messages/:username/:id',null,{

@@ -1,7 +1,7 @@
 
 angular.module('auction_land').controller('AuctionManagerController',
-		['$scope','$timeout','$cookies','ItemSeller','Item','$window',
-		 function($scope,$timeout,$cookies,ItemSeller,Item,$window) {
+		['$scope','$timeout','$cookies','ItemSeller','Item','ItemDelete','$window',
+		 function($scope,$timeout,$cookies,ItemSeller,Item,ItemDelete,$window) {
 	
 	$scope.countries = countries;
 //	$scope.today = new Date();
@@ -39,6 +39,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 //	document.getElementById("datefield").setAttribute("min", $scope.today);
 //	console.log(document.getElementById("datefield").min);
 
+	
 	
 		
 	/*********************************************************************/
@@ -165,6 +166,39 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.success = false;
 		});
 	};
+	
+	/*********************************************************************/
+	/**********************************************************************
+							EDIT AND DELETE ITEM
+	**********************************************************************/
+	/*********************************************************************/
+	
+	$scope.deleteItem = function(item) {
+		console.log(">>>>>> Delete <<<<<<<");
+		console.log(item.idItem);
+		term = item.idItem;
+		ItemDelete.remove({term : term}).$promise.then(function() {
+			console.log(term);
+		}, function() {
+			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
+			console.log("error");
+		});
+	};
+	
+//	$scope.editItem = function(item) {
+//		console.log(">>>>>> Edit <<<<<<<");
+//		console.log(item.idItem);
+//		console.log(item.name);
+//		user.verified = !user.verified;
+//		console.log(user.verified);
+//		
+//		UserVerify.save(user).$promise.then(function() {
+//			console.log(user);
+//		}, function() {
+//			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
+//			console.log("error");
+//		});
+//	};
 	
 	/*********************************************************************/
 	/**********************************************************************
