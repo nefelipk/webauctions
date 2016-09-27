@@ -206,8 +206,10 @@ tr.unread {
 						<td>{{i.buyPrice}}</td>
 						<td>{{i.currently}}</td>
 						<td>{{i.numberOfBids}}</td>
-						<td><a>Edit</a></td>
-						<td><a>Delete</a></td>
+						<td><a ng-if="i.numberOfBids == 0">Edit</a>
+							<em style="color:gray;" ng-if="i.numberOfBids > 0">Edit</em></td>
+						<td><a ng-if="i.numberOfBids == 0">Delete</a>
+							<em style="color:gray;" ng-if="i.numberOfBids > 0">Delete</em></td>
 					</tr>
 				</table>
 				
