@@ -146,7 +146,6 @@ public class ItemResource {
 		List<entities.Item> entitiesItems = itemDAO.getBySeller(term);
 		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
 		return items;
-		
 	}
 
 	@GET

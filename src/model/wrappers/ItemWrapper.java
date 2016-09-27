@@ -12,6 +12,7 @@ public class ItemWrapper {
 		item.setBids(BidWrapper.mapList(i.getBids()));
 		item.setFirstBid(i.getFirstBid());
 		item.setBuyPrice(i.getBuyPrice());
+		item.setCurrently(i.getCurrently());
 		
 		item.setCategories(CategoryWrapper.mapList(i.getCategories()));
 		item.setDescription(i.getDescription());

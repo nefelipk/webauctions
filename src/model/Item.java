@@ -14,6 +14,7 @@ public class Item {
 	private String description;
 	private String ends;
 	private String firstBid;
+	private float currently;
 	private String name;
 	private int numberOfBids;
 	private String started;
@@ -62,6 +63,14 @@ public class Item {
 
 	public void setFirstBid(String firstBid) {
 		this.firstBid = firstBid;
+	}
+	
+	public float getCurrently() {
+		return currently;
+	}
+
+	public void setCurrently(float currently) {
+		this.currently = currently;
 	}
 
 	public String getName() {

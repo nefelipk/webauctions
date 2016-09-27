@@ -195,8 +195,7 @@ thead {
 
 			<table class="table table-bordered">
 				<th style="background-color: #f1f1f1;" ng-repeat="h in headers.fields" 
-					ng-click="changeSorting(h.orderByField)"
-					>
+					ng-click="changeSorting(h.orderByField)">
 					<a> {{h.name}} </a>
 				</th>
 				<tr ng-repeat="u in users | orderBy:orderByField:descending"

@@ -188,51 +188,33 @@ tr.unread {
 		
 			<div role="tabpanel" id="overview" class="tab-pane fade in active " 
 				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
-				<ul style="list-style-type:none">
-					<h4><strong> Contact Information </strong></h4>
-					<li>
-						<div class="col-sm-2">Email:</div>
-						<div class="col-sm-7">{{email}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Phone:</div>
-						<div class="col-sm-7">{{phone}}</div>
-					</li>
-				</ul>
-				<br><ul style="list-style-type:none">
-					<h4><strong> Location Information </strong></h4>
-					<li>
-						<div class="col-sm-2">Country:</div>
-						<div class="col-sm-7">{{country}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">City:</div>
-						<div class="col-sm-7">{{city}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Address:</div>
-						<div class="col-sm-7">{{address}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Postal code:</div>
-						<div class="col-sm-7">{{postalCode}}</div>
-					</li>
-				</ul>
-				<br><ul style="list-style-type:none">
-					<h4><strong> General Information </strong></h4>
-					<li>
-						<div class="col-sm-2">First name:</div>
-						<div class="col-sm-7">{{name}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">Last name:</div>
-						<div class="col-sm-7">{{surname}}</div>
-					</li>
-					<br><li>
-						<div class="col-sm-2">TRN:</div>
-						<div class="col-sm-7">{{trn}}</div>
-					</li><br>
-				</ul>
+				
+				
+				
+				
+				<table class="table table-bordered">
+					<th style="background-color: #f1f1f1;" ng-repeat="h in headers.fields" 
+						ng-click="changeSorting(h.orderByField)">
+						<a> {{h.name}} </a>
+					</th>
+					<tr ng-repeat="i in items | orderBy:orderByField:descending">
+						<td>{{i.idItem}}</td>
+						<td>{{i.name}}</td>
+						<td>{{i.started}}</td>
+						<td>{{i.ends}}</td>
+						<td>{{i.firstBid}}</td>
+						<td>{{i.buyPrice}}</td>
+						<td>{{i.currently}}</td>
+						<td>{{i.numberOfBids}}</td>
+						<td><a>Edit</a></td>
+						<td><a>Delete</a></td>
+					</tr>
+				</table>
+				
+				
+				
+				
+				
 			</div>
 			
 			<div role="tabpanel" id="create" class="tab-pane fade" 
@@ -359,7 +341,8 @@ tr.unread {
 								
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-6">
-							<button class="btn btn-success btn-block" type="submit" ng-click="submitted = true; form_touched = true"
+							<button class="btn btn-success btn-block" type="submit" 
+							ng-click="submitted = true; form_touched = true"
 								style="background-color: #27AE60; color: #ECF0F1;"><strong>Create</strong></button>
 						</div>
 					</div>

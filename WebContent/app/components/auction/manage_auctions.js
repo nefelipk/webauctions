@@ -4,16 +4,77 @@ angular.module('auction_land').controller('AuctionManagerController',
 		 function($scope,$timeout,$cookies,ItemSeller,Item,$window) {
 	
 	$scope.countries = countries;
-	
-	console.log($cookies.getObject('user'));
+		
+	/*********************************************************************/
+	/**********************************************************************
+							ALL USER'S AUCTIONS
+	**********************************************************************/
+	/*********************************************************************/
 	
 	$scope.allItems = function() {
-		ItemSeller.query().$promise.then(function(data) {
+		term = $scope.user.username;
+		ItemSeller.query({term : term}).$promise.then(function(data) {
+			console.log(data);
 			$scope.items = data;
-			console.log($scope.items);
+			
+			$scope.headers = {
+				fields: [{
+					orderByField: 'idItem',
+					name: 'Id',
+			    },{
+			    	orderByField: 'name',
+			    	name: 'Name',
+			    },{
+			    	orderByField: 'started',
+			    	name: 'Starts',
+			    },{
+			    	orderByField: 'ends',
+			    	name: 'Ends',
+			    },{
+			    	orderByField: 'firstBid',
+			    	name: 'First Bid',
+			    },{
+			    	orderByField: 'buyPrice',
+			    	name: 'Buy Price',
+			    },{
+			    	orderByField: 'currently',
+			    	name: 'Current Price',
+			    },{
+			    	orderByField: 'numberOfBids',
+			    	name: 'Number of Bids',
+			    },{
+			    	orderByField: 'noOrder',
+			    	name: '',
+			    },{
+			    	orderByField: 'noOrder',
+			    	name: '',
+			    }]
+			};
+			
+			$scope.orderByField = 'started';
+			$scope.descending = false;
+			console.log($scope.orderByField);
+		    console.log($scope.descending);
+			
 		});
 	};
 	$scope.allItems();
+	
+	
+	$scope.changeSorting = function(field) {
+		console.log(field);
+		if (field == "noOrder") {
+			return;
+		}
+	    if ($scope.orderByField == field) {
+	    	$scope.descending = !$scope.descending;
+	    } else {
+	    	$scope.orderByField = field;
+	    	$scope.descending = false;
+	    }
+	    console.log($scope.orderByField);
+	    console.log($scope.descending);
+	};
 	
 	
 	/*********************************************************************/
