@@ -4,6 +4,42 @@ angular.module('auction_land').controller('AuctionManagerController',
 		 function($scope,$timeout,$cookies,ItemSeller,Item,$window) {
 	
 	$scope.countries = countries;
+//	$scope.today = new Date();
+//	console.log($scope.today);
+//	
+//	var today = new Date();
+//	var dd = today.getDate();
+//	var mm = today.getMonth() + 1; //January is 0
+//	var yyyy = today.getFullYear();
+//	var h = today.getHours();
+//	var min = today.getMinutes();
+//	var a = "AM";
+//	
+//	if (dd < 10) {
+//		dd = '0' + dd;
+//	} 
+//	if (mm < 10) {
+//		mm = '0' + mm;
+//	}
+//	if (h > 12) {
+//		h = h - 12;
+//		a = "PM";
+//	}
+//	if (h < 10) {
+//		h = '0' + h;
+//	}
+//	if (min < 10) {
+//		min = '0' + min;
+//	}
+//	
+//	
+//	$scope.today = mm + '/' + dd + '/' + yyyy + ', ' + h + ':' + min + " " + a;
+//	console.log($scope.today);
+//	
+//	document.getElementById("datefield").setAttribute("min", $scope.today);
+//	console.log(document.getElementById("datefield").min);
+
+	
 		
 	/*********************************************************************/
 	/**********************************************************************
@@ -42,6 +78,9 @@ angular.module('auction_land').controller('AuctionManagerController',
 			    },{
 			    	orderByField: 'numberOfBids',
 			    	name: 'Number of Bids',
+			    },{
+			    	orderByField: 'noOrder',
+			    	name: '',
 			    },{
 			    	orderByField: 'noOrder',
 			    	name: '',
@@ -93,7 +132,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 		console.log(">>>>>> CREATE <<<<<<<");
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
-		if($scope.item.buyPrice < $scope.item.firstBid) {
+		if(1 * $scope.item.buyPrice < 1 * $scope.item.firstBid) {
 			$scope.error_prices = true;
 			return;
 		}
@@ -126,67 +165,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.success = false;
 		});
 	};
-	
-	/*********************************************************************/
-	/**********************************************************************
-							DATE-TIME PICKER
-	**********************************************************************/
-	/*********************************************************************/
-/*	
-	$scope.startTime = null;
-	$scope.endTime = null;
-		
-	$scope.pickDateTime = function() {
-		console.log(">>> DateTimePicker <<<");
-		$('#dateTimeStartPicker').datetimepicker({
-			minDate : new Date()
-		});
-		$('#dateTimeEndPicker').datetimepicker({
-			useCurrent: false //Important! See issue #1075
-		});
-		$("#dateTimeStartPicker").on("dp.change dp.show", function (e) {
-			console.log(new Date(e.date));
-			$('#dateTimeEndPicker').data("DateTimePicker").minDate(e.date);
-			if (new Date(e.date) < new Date()) {
-				$scope.startTime = null;
-			}
-			else {
-				$scope.startTime = new Date(e.date);
-			}
-			$('#newAuctionForm').formValidation('revalidateField', 'started');
-		});
-		$("#dateTimeEndPicker").on("dp.change dp.show", function (e) {
-			$('#dateTimeStartPicker').data("DateTimePicker").maxDate(e.date);
-			console.log(new Date(e.date));
-			if (new Date(e.date) < new Date()) {
-				$scope.endTime = null;
-			}
-			else {
-				$scope.endTime = new Date(e.date);
-			}
-			$('#newAuctionForm').formValidation('revalidateField', 'ends');
-		});
-		
-		$('#newAuctionForm').formValidation({
-	        framework: 'bootstrap',
-	        fields: {
-	        	started: {
-	                validators: {
-	                    date: {
-	                        format: 'MM/DD/YYYY h:m A',
-	                        message: 'The value is not a valid date'
-	                    },
-					    notEmpty: {
-				            message: 'The field can not be empty'
-				        }
-	                }
-	            }
-	        }
-	    });
-		
-	};
-	//$scope.pickDateTime();
-*/	
 	
 	/*********************************************************************/
 	/**********************************************************************

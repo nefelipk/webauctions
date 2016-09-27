@@ -1,6 +1,10 @@
 package rest;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +28,18 @@ import model.wrappers.ItemWrapper;
 @Path("/items")
 public class ItemResource {
 
+	public static Timestamp convertToTimestamp(String dateTime) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		try {
+			Date date = (Date) dateFormat.parse(dateTime);
+			Timestamp stamp = new Timestamp(date.getTime());
+			return stamp;
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.Item item) {
@@ -33,8 +49,8 @@ public class ItemResource {
 		itemEntity.setFirstBid(item.getFirstBid());
 		itemEntity.setCurrently(Float.parseFloat(item.getFirstBid()));
 
-		itemEntity.setStarted(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getStarted()));
-		itemEntity.setEnds(main.XMLMappingWrappers.ItemWrapper.convertToTimestamp(item.getEnds()));
+		itemEntity.setStarted(convertToTimestamp(item.getStarted()));
+		itemEntity.setEnds(convertToTimestamp(item.getEnds()));
 		itemEntity.setDescription(item.getDescription());
 		
 		entities.Location locationEntity = new entities.Location();
