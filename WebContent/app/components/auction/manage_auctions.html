@@ -225,6 +225,12 @@ tr.unread {
 				<div class="alert alert-danger text-center" ng-if="error_prices">
 		  			<strong>Warning!</strong><br/>Buy-price cannot be lower than first-bid-price.<br/>
 				</div>
+				<div class="alert alert-danger text-center" ng-if="error_current_time">
+		  			<strong>Warning!</strong><br/>Start and end time cannot be before current time.<br/>
+				</div>
+				<div class="alert alert-danger text-center" ng-if="error_startEnd_time">
+		  			<strong>Warning!</strong><br/>End time cannot be before start time.<br/>
+				</div>
 				
 				<form id="newAuctionForm" class="form-horizontal" role="form" name="form"
 					ng-submit="form.$valid && createAuction() " novalidate>
