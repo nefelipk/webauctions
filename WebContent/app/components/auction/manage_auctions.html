@@ -157,8 +157,8 @@ tr.unread {
 		</div> -->
 		<ul class="nav nav-tab nav-stacked panel-body" role="tablist">
 			<li class="text-center" role="presentation" >
-				<a  data-toggle="tab" class="active" data-target="#overview"
-					href="" ng-click ="set_active(1)" id="overview_tab">
+				<a ng-click ="set_active(1)" id="overview_tab" data-toggle="tab" data-target="#overview"
+					href="" class="active">
 					<span class="glyphicon glyphicon-eye-open" style="margin-right: 3px;"></span>
 					All Auctions
 				</a>
@@ -179,7 +179,8 @@ tr.unread {
 		style="padding:0px 0px; margin-left:5px;" 
 		ng-cloak>
 		<div class="text-center panel-heading" 
-			ng-class="{'overview' : current_tab == 'All Auctions' , 'create' : current_tab =='New Auction'}">
+			ng-class="{'overview' : current_tab == 'All Auctions' , 'create' : current_tab =='New Auction', 
+			'edit' : current_tab =='Edit Auction'}">
 			<!-- style="background-color:#16A085;color:#FBFBFB;" -->
 			<h3> {{current_tab}} </h3>
 		</div>
@@ -204,7 +205,8 @@ tr.unread {
 						<td>{{i.currently}}</td>
 						<td>{{i.numberOfBids}}</td>
 						<td><a ng-click="viewItem(i)">View</a></td>
-						<td><a ng-if="i.numberOfBids == 0" ng-click="editItem(i)">Edit</a>
+						<td><a ng-if="i.numberOfBids == 0" ng-click="editItem(i)" 
+							data-toggle="tab" data-target="#create">Edit</a>
 							<em style="color:gray;" ng-if="i.numberOfBids > 0">Edit</em></td>
 						<td><a ng-if="i.numberOfBids == 0" ng-click="deleteItem(i)">Delete</a>
 							<em style="color:gray;" ng-if="i.numberOfBids > 0">Delete</em></td>
@@ -214,10 +216,10 @@ tr.unread {
 			</div>
 			
 			<div role="tabpanel" id="create" class="tab-pane fade" 
-				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;">
+				style="margin-top:10px;margin-left:2.5%;margin-right:2.5%;" ng-cloak>
 				
 				<div class="alert alert-danger text-center" ng-if="error_server && !form_touched">
-			  			<strong>Error!</strong><br/>We are terribly sorry.<br/>There must have been a server error.<br/>
+			  		<strong>Error!</strong><br/>We are terribly sorry.<br/>There must have been a server error.<br/>
 				</div>
 				<div class="alert alert-success text-center" ng-if="successful_creation && !form_touched">
 		  			<strong>Success!</strong><br/>New auction created.<br/>
@@ -233,7 +235,7 @@ tr.unread {
 				</div>
 				
 				<form id="newAuctionForm" class="form-horizontal" role="form" name="form"
-					ng-submit="form.$valid && createAuction() " novalidate>
+					ng-submit="form.$valid && createAuction()" novalidate>
 
 					<div class="form-group">
 						<div class="col-xs-12 has-feedback" ng-messages="form.name.$error"
@@ -252,7 +254,7 @@ tr.unread {
 						ng-class="{'has-error' : ((submitted || form.description.$touched) && form.description.$invalid) , 
 						'has-success': form.description.$valid }">
 							<label class="control-label" for="description">Description:<br></label>
-							<textarea name="description" rows="4" cols="115"
+							<textarea name="description" rows="4" cols="115" class="form-control"
 								ng-model="item.description" placeholder="Description of item" 
 								ng-required="true" ng-click="form_touched = true"
 								style="height:inherit; width:inherit; resize:none"></textarea>
@@ -319,7 +321,7 @@ tr.unread {
 							<select class="form-control" ng-model="item.country" ng-required="true" name="country"
 								ng-options="country.name for country in countries track by country.code" 
 								ng-click="form_touched = true">
-								<option value="">Country</option>
+								<option value="">{{default_country_option}}</option>
 							</select>
 							<div ng-show="form.country.$touched || submitted" ng-message="required">You must select an option.</div>
 						</div>
@@ -352,13 +354,21 @@ tr.unread {
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-6">
 							<button class="btn btn-success btn-block" type="submit" 
-							ng-click="submitted = true; form_touched = true"
-								style="background-color: #27AE60; color: #ECF0F1;"><strong>Create</strong></button>
+								ng-click="submitted = true; form_touched = true"
+								style="background-color: #27AE60; color: #ECF0F1;"
+								ng-if="current_tab == 'New Auction'">
+								<strong>Create</strong></button>
+							<button class="btn btn-success btn-block" type="submit" 
+								ng-click="submitted = true; form_touched = true"
+								style="background-color: #27AE60; color: #ECF0F1;"
+								ng-if="current_tab == 'Edit Auction'">
+								<strong>Update</strong></button>
 						</div>
 					</div>
 				</form>
 								
 			</div>
+			
 			
 		</div>
 	</div> 	

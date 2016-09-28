@@ -95,6 +95,11 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.error_startEnd_time = false;
 	
 	$scope.createAuction = function() {
+		if ($scope.current_tab == "Edit Auction") {
+			$scope.updateAuction();
+			console.log("return after updating auction");
+			return;
+		}
 		console.log(">>>>>> CREATE <<<<<<<");
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
@@ -170,10 +175,22 @@ angular.module('auction_land').controller('AuctionManagerController',
 		});
 	};
 	
-//	$scope.editItem = function(item) {
-//		console.log(">>>>>> Edit <<<<<<<");
-//		console.log(item.idItem);
-//		console.log(item.name);
+	$scope.default_country_option = "Country";
+	
+	$scope.editItem = function(item) {
+		console.log(">>>>>> Edit <<<<<<<");
+		console.log(item.idItem);
+		console.log(item.name);
+		$scope.item = item;
+		$scope.item.started = new Date(item.started);
+		$scope.item.ends = new Date(item.ends);
+		$scope.item.country = item.location.country;
+		$scope.default_country_option = item.location.country;
+		console.log($scope.item.country);
+		console.log($scope.item.country.name);
+		console.log($scope.item);
+		$scope.set_active(3);
+		
 //		user.verified = !user.verified;
 //		console.log(user.verified);
 //		
@@ -183,7 +200,13 @@ angular.module('auction_land').controller('AuctionManagerController',
 //			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
 //			console.log("error");
 //		});
-//	};
+	};
+	
+	$scope.updateAuction = function() {
+		console.log($scope.item);
+		$scope.default_country_option = "Country";
+	}
+	
 	
 	/*********************************************************************/
 	/**********************************************************************
@@ -195,19 +218,30 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.set_active = function(tab) {
 		var overview_tab = angular.element(document.querySelector('#overview_tab'));
 		var create_tab = angular.element(document.querySelector('#create_tab'));
+		var edit_tab = angular.element(document.querySelector('#edit_tab'));
 		overview_tab.removeClass('active');
 		create_tab.removeClass('active');
+		edit_tab.removeClass('active');
 		
 		if(tab == 1) {
 			$scope.current_tab = "All Auctions";
 			overview_tab.addClass('active');
+			$window.location.reload();
+			$scope.default_country_option = "Country";
 		}
 		else if(tab == 2) {
 			$scope.current_tab = "New Auction";
 			create_tab.addClass('active');
+			$scope.default_country_option = "Country";
+			$scope.item = null;
 		}
+		else if(tab == 3) {
+			$scope.current_tab = "Edit Auction";
+			edit_tab.addClass('active');
+		}
+		console.log($scope.current_tab);
 		$scope.reading_sent = false;
-		$scope.reading = false
+		$scope.reading = false;
 	};
 	
 	/*********************************************************************/
