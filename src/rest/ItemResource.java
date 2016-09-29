@@ -25,7 +25,9 @@ import dao.ItemDAO;
 import dao.LocationDAO;
 import dao.UserDAO;
 import entities.wrappers.UserMapper;
+import model.wrappers.CategoryWrapper;
 import model.wrappers.ItemWrapper;
+import model.wrappers.UserWrapper;
 
 @Path("/items")
 public class ItemResource {
@@ -124,6 +126,16 @@ public class ItemResource {
 		
 		items.add(allCategoriesWrapper);
 		return items;
+	}
+	
+	@GET
+	@Path("/allcategories/")
+	@Produces({"application/json"})
+	public List<model.Category> getAllCategories() {
+		ItemDAO itemDAO = new ItemDAO();
+		List<entities.Category> categoriesEntities = itemDAO.getAllCategories();
+		List<model.Category> allCategories = CategoryWrapper.mapList(categoriesEntities);
+		return allCategories;
 	}
 	
 	@GET

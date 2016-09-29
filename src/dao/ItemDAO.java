@@ -6,6 +6,7 @@ import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
@@ -234,6 +235,26 @@ public class ItemDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<entities.Category> getAllCategories() {
+        List<entities.Category> categories = null;
+        EntityManager em = JPAResource.factory.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        
+        Query q = em.createQuery("Select c from Category c");
+        //users =  q.getResultList();
+        try {
+        	categories = q.getResultList();
+        } catch(NoResultException noRes) {
+        	categories = null;
+        }
+        
+        tx.commit();
+        em.close();
+        return categories;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<String> getTopCategories() {
 		EntityManager entityManager = JPAResource.factory.createEntityManager();

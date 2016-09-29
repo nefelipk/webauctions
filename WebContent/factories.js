@@ -66,6 +66,10 @@ angular.module('auction_land').factory('Bid', [ '$resource', function($resource)
 	return $resource('http://localhost:8080/WebAuctions/services/bid/:id');
 } ]);
 
+angular.module('auction_land').factory('AllCategories', [ '$resource', function($resource) {
+	return $resource('http://localhost:8080/WebAuctions/services/items/allcategories/');
+} ]);
+
 angular.module('auction_land').factory('TopCategories', [ '$resource', function($resource) {
 	return $resource('http://localhost:8080/WebAuctions/services/items/top/categories/');
 } ]);

@@ -1,27 +1,41 @@
 
 angular.module('auction_land').controller('AuctionManagerController',
-		['$scope','$timeout','$cookies','ItemSeller','Item','ItemDelete','$window',
-		 function($scope,$timeout,$cookies,ItemSeller,Item,ItemDelete,$window) {
+		['$scope','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','$window',
+		 function($scope,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,$window) {
 	
 	$scope.countries = countries;
 	
+	/*********************************************************************/
+	/**********************************************************************
+							GET ALL CATEGORIES
+	**********************************************************************/
+	/*********************************************************************/
 	
-	var categories = [ {
-		"name" : 'Collectibles',
-	}, {
-		"name" : 'Åland Islands',
-	}, {
-		"name" : 'Decorative & Holiday',
-	}, {
-		"name" : 'Algeria',
-	}, {
-		"name" : 'Zambia',
-	}, {
-		"name" : 'Zimbabwe',
-	} ];
+	$scope.allCategories = function() {
+		AllCategories.query().$promise.then(function(data) {
+			console.log(data);
+			$scope.categories = data;
+		});
+	};
+	$scope.allCategories();
 	
-		
-	$scope.categories = categories;
+	
+//	var categories = [ {
+//		"name" : 'Collectibles',
+//	}, {
+//		"name" : 'Åland Islands',
+//	}, {
+//		"name" : 'Decorative & Holiday',
+//	}, {
+//		"name" : 'Algeria',
+//	}, {
+//		"name" : 'Zambia',
+//	}, {
+//		"name" : 'Zimbabwe',
+//	} ];
+//	
+//		
+//	$scope.categories = categories;
 		
 	/*********************************************************************/
 	/**********************************************************************
