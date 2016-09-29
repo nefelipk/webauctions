@@ -7,19 +7,20 @@ angular.module('auction_land').controller('AuctionManagerController',
 	
 	
 	var categories = [ {
-		name : 'Collectibles',
+		"name" : 'Collectibles',
 	}, {
-		name : 'Åland Islands',
+		"name" : 'Åland Islands',
 	}, {
-		name : 'Decorative & Holiday',
+		"name" : 'Decorative & Holiday',
 	}, {
-		name : 'Algeria',
+		"name" : 'Algeria',
 	}, {
-		name : 'Zambia',
+		"name" : 'Zambia',
 	}, {
-		name : 'Zimbabwe',
+		"name" : 'Zimbabwe',
 	} ];
 	
+		
 	$scope.categories = categories;
 		
 	/*********************************************************************/
@@ -112,11 +113,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.error_startEnd_time = false;
 	
 	$scope.createAuction = function() {
-		if ($scope.current_tab == "Edit Auction") {
-			$scope.updateAuction();
-			console.log("return after updating auction");
-			return;
-		}
 		console.log(">>>>>> CREATE <<<<<<<");
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
@@ -167,7 +163,17 @@ angular.module('auction_land').controller('AuctionManagerController',
 		}
 		$scope.item.user = $scope.user;
 		console.log($scope.item);
-		return;
+		
+		if ($scope.current_tab == "Edit Auction") {
+			$scope.updateAuction();
+			console.log("return after updating auction");
+			return;
+		}
+		
+/////////////////////////////////////////////////////////////////////////////////////////////////
+return;			///TEMPORARY --> gia dokimes!!!!!!!!!!!
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 		Item.save($scope.item).$promise.then(function(data) {
 			console.log(data);
 			$scope.item = {};
@@ -217,9 +223,20 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$scope.item.ends = new Date(item.ends);
 		$scope.curItem = {};
 		$scope.curItem.country = item.location.country;
-		$scope.curItem.category = item.categories;
 		$scope.default_country_option = item.location.country;
 		console.log($scope.curItem.country);
+		
+		var temp = new Array(item.categories.length);
+		for (i = 0; i < item.categories.length; i++) {
+			console.log(item.categories[i].name);
+			var index = ($scope.categories).map(function(d) { return d["name"]; }).indexOf(item.categories[i].name);
+			console.log(index);
+			temp[i] = $scope.categories[index];
+			console.log(temp[i]);
+		}
+		$scope.curItem.category = temp;		
+		console.log($scope.curItem.category);
+		
 		console.log($scope.item);
 		$scope.set_active(3);
 		
