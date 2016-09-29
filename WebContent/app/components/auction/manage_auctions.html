@@ -237,7 +237,7 @@ tr.unread {
 				<form id="newAuctionForm" class="form-horizontal" role="form" name="form"
 					ng-submit="form.$valid && createAuction()" novalidate>
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<div class="col-xs-12 has-feedback" ng-messages="form.name.$error"
 						ng-class="{'has-error' : ((submitted || form.name.$touched) && form.name.$invalid) , 
 						'has-success': form.name.$valid }">
@@ -309,7 +309,36 @@ tr.unread {
 							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 							<div ng-show="form.ends.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>
+					</div> -->
+
+
+
+
+
+
+					<div class="form-group">
+						<div class="col-xs-6" ng-messages="form.category.$error"
+						ng-class="{'has-error' : ((submitted || form.category.$touched) && form.category.$invalid) , 
+						'has-success': form.category.$valid }">
+							<label class="control-label" for="category">Categories:</label>
+							<select class="form-control" ng-model="curItem.category" ng-required="true" name="category"
+								ng-options="category.name for category in categories" 
+								ng-click="form_touched = true" size="5" multiple="multiple" tabindex="1">
+							</select>
+							<div ng-show="form.category.$touched || submitted" ng-message="required">You must select an option.</div>
+						</div>
+						
+						<div class="col-xs-6 has-feedback">
+							<br><em><strong><p>Note:</p></strong>
+							<p>Select one or more categories that the item belongs to.</p>
+							<p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p></em>
+						</div>
 					</div>
+
+
+
+
+
 
 					<hr>
 					
@@ -318,7 +347,7 @@ tr.unread {
 						ng-class="{'has-error' : ((submitted || form.country.$touched) && form.country.$invalid) , 
 						'has-success': form.country.$valid }">
 							<label class="control-label" for="country">Country:</label>
-							<select class="form-control" ng-model="item.country" ng-required="true" name="country"
+							<select class="form-control" ng-model="curItem.country" ng-required="true" name="country"
 								ng-options="country.name for country in countries track by country.code" 
 								ng-click="form_touched = true">
 								<option value="">{{default_country_option}}</option>

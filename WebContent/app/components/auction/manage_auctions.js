@@ -4,6 +4,23 @@ angular.module('auction_land').controller('AuctionManagerController',
 		 function($scope,$timeout,$cookies,ItemSeller,Item,ItemDelete,$window) {
 	
 	$scope.countries = countries;
+	
+	
+	var categories = [ {
+		name : 'Collectibles',
+	}, {
+		name : 'Åland Islands',
+	}, {
+		name : 'Decorative & Holiday',
+	}, {
+		name : 'Algeria',
+	}, {
+		name : 'Zambia',
+	}, {
+		name : 'Zimbabwe',
+	} ];
+	
+	$scope.categories = categories;
 		
 	/*********************************************************************/
 	/**********************************************************************
@@ -103,6 +120,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 		console.log(">>>>>> CREATE <<<<<<<");
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
+		console.log($scope.item);
 		$scope.error_current_time = false;
 		$scope.error_startEnd_time = false;
 		
@@ -130,13 +148,26 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.error_startEnd_time = false;
 		}
 		
-		$scope.item.location.country = $scope.item.country.name;
-		delete $scope.item.country;
-		if($scope.form.$invalid)
+		$scope.item.location.country = $scope.curItem.country.name;
+		//delete $scope.item.country;
+
+		var i = 0;
+		$scope.item.categories = new Array($scope.curItem.category.length);
+		while (i < $scope.curItem.category.length) {
+			$scope.item.categories[i] = {};
+			$scope.item.categories[i].name = $scope.curItem.category[i].name;
+			i++;
+		}
+		console.log($scope.curItem.category);
+		console.log($scope.item.categories);
+		
+		if($scope.form.$invalid) {
+			console.log("form ----> invalid");
 			return;
+		}
 		$scope.item.user = $scope.user;
 		console.log($scope.item);
-		
+		return;
 		Item.save($scope.item).$promise.then(function(data) {
 			console.log(data);
 			$scope.item = {};
@@ -184,10 +215,11 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$scope.item = item;
 		$scope.item.started = new Date(item.started);
 		$scope.item.ends = new Date(item.ends);
-		$scope.item.country = item.location.country;
+		$scope.curItem = {};
+		$scope.curItem.country = item.location.country;
+		$scope.curItem.category = item.categories;
 		$scope.default_country_option = item.location.country;
-		console.log($scope.item.country);
-		console.log($scope.item.country.name);
+		console.log($scope.curItem.country);
 		console.log($scope.item);
 		$scope.set_active(3);
 		
