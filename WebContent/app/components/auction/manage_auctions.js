@@ -5,6 +5,71 @@ angular.module('auction_land').controller('AuctionManagerController',
 	
 	/*********************************************************************/
 	/**********************************************************************
+							FIX DATES TO STRING
+	**********************************************************************/
+	/*********************************************************************/
+	
+	$scope.fixDates = function(date) {
+		date = new Date(date);
+		var dd = date.getDate();
+		var MM = date.getMonth() + 1;
+		var yyyy = date.getFullYear();
+		var HH = date.getHours();
+		var mm = date.getMinutes();
+		
+		if (dd < 10) {
+			dd = '0' + dd;
+		}
+		if (MM < 10) {
+			MM = '0' + MM;
+		}
+		if (HH < 10) {
+			HH = '0' + HH;
+		}
+		if (mm < 10) {
+			mm = '0' + mm;
+		}
+		
+		date = yyyy + "-" + MM + "-" + dd + "T" + HH + ":" + mm + ":00.000Z";
+		console.log(date);
+		return date;
+	};
+			
+//	var today = new Date();
+//	var dd = today.getDate();
+//	var mm = today.getMonth() + 1; //January is 0
+//	var yyyy = today.getFullYear();
+//	var h = today.getHours();
+//	var min = today.getMinutes();
+//	var a = "AM";
+		//	
+//			if (dd < 10) {
+//				dd = '0' + dd;
+//			} 
+//			if (mm < 10) {
+//				mm = '0' + mm;
+//			}
+//			if (h > 12) {
+//				h = h - 12;
+//				a = "PM";
+//			}
+//			if (h < 10) {
+//				h = '0' + h;
+//			}
+//			if (min < 10) {
+//				min = '0' + min;
+//			}
+		//	
+		//	
+//			$scope.today = mm + '/' + dd + '/' + yyyy + ', ' + h + ':' + min + " " + a;
+//			console.log($scope.today);
+		//	
+//			document.getElementById("datefield").setAttribute("min", $scope.today);
+//			console.log(document.getElementById("datefield").min);
+			
+			
+	/*********************************************************************/
+	/**********************************************************************
 						ALL COUNTIES AND CATEGORIES
 	**********************************************************************/
 	/*********************************************************************/
@@ -126,7 +191,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.error_prices = false;
 		}
 		
-		if ($scope.item.started < new Date() || $scope.item.ends < new Date()) {
+		if ($scope.curItem.started < new Date() || $scope.curItem.ends < new Date()) {
 			$scope.error_current_time = true;
 			return;
 		}
@@ -134,7 +199,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.error_current_time = false;
 		}
 		
-		if ($scope.item.started > $scope.item.ends) {
+		if ($scope.curItem.started > $scope.curItem.ends) {
 			$scope.error_startEnd_time = true;
 			return;
 		}
@@ -161,6 +226,12 @@ angular.module('auction_land').controller('AuctionManagerController',
 			console.log("form ----> invalid");
 			return;
 		}
+		
+		$scope.item.started = $scope.fixDates($scope.curItem.started);
+		$scope.item.ends = $scope.fixDates($scope.curItem.ends);
+		console.log($scope.item.started);
+		console.log($scope.item.ends);
+		
 		$scope.item.user = $scope.user;
 		console.log("---------------> ");
 		console.log($scope.item);
@@ -208,15 +279,15 @@ angular.module('auction_land').controller('AuctionManagerController',
 		console.log(">>>>>> Edit <<<<<<<");
 		console.log(item.idItem);
 		console.log(item.name);
+		$scope.curItem = {};
 		$scope.item = item;
-		$scope.item.started = new Date(item.started);
-		$scope.item.ends = new Date(item.ends);
+		$scope.curItem.started = new Date(item.started);
+		$scope.curItem.ends = new Date(item.ends);
 //		$scope.curItem.country = item.location.country;
 //		$scope.curItem.country.name = item.location.country;
 		$scope.default_country_option = item.location.country;
 //		console.log($scope.curItem.country);
 		
-		$scope.curItem = {};
 		var index = ($scope.countries).map(function(d) { return d["name"]; }).indexOf(item.location.country);
 		$scope.curItem.country = $scope.countries[index];
 		console.log("--------------" + $scope.curItem.country);
@@ -263,10 +334,8 @@ angular.module('auction_land').controller('AuctionManagerController',
 		console.log($scope.item);
 		$scope.default_country_option = "Country";
 		//$window.location.reload();
-		var term = $scope.item;
-		console.log(term);
 		
-		ItemUpdate.save({term : term}).$promise.then(function() {
+		ItemUpdate.save($scope.item).$promise.then(function() {
 			console.log($scope.item);
 		}, function() {
 			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");

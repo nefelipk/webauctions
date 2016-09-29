@@ -295,7 +295,7 @@ tr.unread {
 						'has-success': form.started.$valid }">
 							<label class="control-label" for="started">Start time:</label>
 							<input id="datefield" type="datetime-local" class="form-control" name="started"
-								ng-model="item.started" ng-required="true" ng-click="form_touched = true">
+								ng-model="curItem.started" ng-required="true" ng-click="form_touched = true">
 							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 		                    <div ng-show="form.started.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>
@@ -305,7 +305,7 @@ tr.unread {
 						'has-success': form.ends.$valid }">
 							<label class="control-label" for="ends">End time:</label>
 							<input id="datefield" type="datetime-local" class="form-control" name="ends" 
-								ng-model="item.ends" ng-required="true" ng-click="form_touched = true">
+								ng-model="curItem.ends" ng-required="true" ng-click="form_touched = true">
 							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 							<div ng-show="form.ends.$touched || submitted" ng-message="required">You must fill this field.</div>
 						</div>

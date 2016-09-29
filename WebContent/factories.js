@@ -56,7 +56,7 @@ angular.module('auction_land').factory('ItemDelete', [ '$resource', function($re
 } ]);
 
 angular.module('auction_land').factory('ItemUpdate', [ '$resource', function($resource) {
-	return $resource('http://localhost:8080/WebAuctions/services/items/update/:term');
+	return $resource('http://localhost:8080/WebAuctions/services/items/update');
 } ]);
 
 

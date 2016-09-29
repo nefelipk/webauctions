@@ -106,9 +106,9 @@ public class ItemResource {
 	}
 	
 	@POST
-	@Path("/update/{term}")
+	@Path("/update/")
 	@Consumes({"application/json"})
-	public Response updateItem(@PathParam("term") final model.Item item) {
+	public Response updateItem(final model.Item item) {
 		System.out.println("update start time: " + item.getStarted());
 		System.out.println("update end time: " + item.getEnds());
 		entities.Item itemEntity = ItemMapper.map(item);
