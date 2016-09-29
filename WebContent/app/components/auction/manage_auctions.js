@@ -1,7 +1,7 @@
 
 angular.module('auction_land').controller('AuctionManagerController',
-		['$scope','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','$window',
-		 function($scope,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,$window) {
+		['$scope','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','ItemUpdate','$window',
+		 function($scope,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,ItemUpdate,$window) {
 	
 	/*********************************************************************/
 	/**********************************************************************
@@ -111,7 +111,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.error_startEnd_time = false;
 	
 	$scope.createAuction = function() {
-		console.log(">>>>>> CREATE <<<<<<<");
+		console.log(">>>>>> button pressed <<<<<<<");
 		console.log($cookies.getObject('user'));
 		console.log($scope.user);
 		console.log($scope.item);
@@ -142,8 +142,10 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.error_startEnd_time = false;
 		}
 		
+		console.log("!!!!!!!!!!!!!!!" + $scope.item.location.country);
 		$scope.item.location.country = $scope.curItem.country.name;
 		//delete $scope.item.country;
+		console.log("!!!!!!!!!!!!!!!" + $scope.item.location.country);
 
 		var i = 0;
 		$scope.item.categories = new Array($scope.curItem.category.length);
@@ -160,6 +162,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 			return;
 		}
 		$scope.item.user = $scope.user;
+		console.log("---------------> ");
 		console.log($scope.item);
 		
 		if ($scope.current_tab == "Edit Auction") {
@@ -173,7 +176,9 @@ angular.module('auction_land').controller('AuctionManagerController',
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 		Item.save($scope.item).$promise.then(function(data) {
+			console.log(">>>>>> CREATE <<<<<<<");
 			console.log(data);
+			console.log($scope.item);
 			$scope.item = {};
 			$scope.curItem = {};
 			$scope.form.$setPristine(true);
@@ -206,20 +211,35 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$scope.item = item;
 		$scope.item.started = new Date(item.started);
 		$scope.item.ends = new Date(item.ends);
-		$scope.curItem = {};
-		$scope.curItem.country = item.location.country;
+//		$scope.curItem.country = item.location.country;
+//		$scope.curItem.country.name = item.location.country;
 		$scope.default_country_option = item.location.country;
-		console.log($scope.curItem.country);
+//		console.log($scope.curItem.country);
 		
-		var temp = new Array(item.categories.length);
+		$scope.curItem = {};
+		var index = ($scope.countries).map(function(d) { return d["name"]; }).indexOf(item.location.country);
+		$scope.curItem.country = $scope.countries[index];
+		console.log("--------------" + $scope.curItem.country);
+		
+//		var temp = new Array(item.categories.length);
+//		for (i = 0; i < item.categories.length; i++) {
+//			console.log(item.categories[i].name);
+//			var index = ($scope.categories).map(function(d) { return d["name"]; }).indexOf(item.categories[i].name);
+//			console.log(index);
+//			temp[i] = $scope.categories[index];
+//			console.log(temp[i]);
+//		}
+//		$scope.curItem.category = temp;		
+//		console.log($scope.curItem.category);
+		
+		$scope.curItem.category = new Array(item.categories.length);
 		for (i = 0; i < item.categories.length; i++) {
 			console.log(item.categories[i].name);
 			var index = ($scope.categories).map(function(d) { return d["name"]; }).indexOf(item.categories[i].name);
 			console.log(index);
-			temp[i] = $scope.categories[index];
-			console.log(temp[i]);
+			$scope.curItem.category[i] = $scope.categories[index];
+			console.log($scope.curItem.category[i]);
 		}
-		$scope.curItem.category = temp;		
 		console.log($scope.curItem.category);
 		
 		console.log($scope.item);
@@ -234,11 +254,24 @@ angular.module('auction_land').controller('AuctionManagerController',
 //			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
 //			console.log("error");
 //		});
+		
+		
 	};
 	
 	$scope.updateAuction = function() {
+		console.log(">>>>>> UPDATE <<<<<<<");
 		console.log($scope.item);
 		$scope.default_country_option = "Country";
+		//$window.location.reload();
+		var term = $scope.item;
+		console.log(term);
+		
+		ItemUpdate.save({term : term}).$promise.then(function() {
+			console.log($scope.item);
+		}, function() {
+			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
+			console.log("error");
+		});
 	}
 	
 	

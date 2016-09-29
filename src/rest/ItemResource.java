@@ -23,36 +23,27 @@ import javax.ws.rs.core.UriBuilder;
 
 import dao.ItemDAO;
 import dao.LocationDAO;
+import entities.wrappers.ItemMapper;
 import entities.wrappers.UserMapper;
 import model.wrappers.CategoryWrapper;
 import model.wrappers.ItemWrapper;
 
 @Path("/items")
 public class ItemResource {
-
-	public static Timestamp convertToTimestamp(String dateTime) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-		try {
-			Date date = (Date) dateFormat.parse(dateTime);
-			Timestamp stamp = new Timestamp(date.getTime());
-			return stamp;
-		} catch (ParseException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
 	
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.Item item) {
+		System.out.println("start time: " + item.getStarted());
+		System.out.println("end time: " + item.getEnds());
 		entities.Item itemEntity = new entities.Item();
 		itemEntity.setName(item.getName());
 		itemEntity.setBuyPrice(item.getBuyPrice());
 		itemEntity.setFirstBid(item.getFirstBid());
 		itemEntity.setCurrently(Float.parseFloat(item.getFirstBid()));
 
-		itemEntity.setStarted(convertToTimestamp(item.getStarted()));
-		itemEntity.setEnds(convertToTimestamp(item.getEnds()));
+		itemEntity.setStarted(entities.wrappers.ItemMapper.convertToTimestamp(item.getStarted()));
+		itemEntity.setEnds(entities.wrappers.ItemMapper.convertToTimestamp(item.getEnds()));
 		itemEntity.setDescription(item.getDescription());
 		
 		entities.Location locationEntity = new entities.Location();
@@ -68,12 +59,10 @@ public class ItemResource {
 		itemEntity.setLocation(locationEntity);
 		
 		List<entities.Category> categoriesEntity = new ArrayList<entities.Category>();
-//		entities.Category categoryEntity = new entities.Category();
 		List<model.Category> categories = item.getCategories();
 		for(model.Category category: categories) {
 			entities.Category categoryEntity = new entities.Category();
 			categoryEntity.setName(category.getName());
-			System.out.println("stin katigoria: " + categoryEntity.getName());
 			categoryEntity.setItems(null);
 			categoriesEntity.add(categoryEntity);
 		}
@@ -114,6 +103,21 @@ public class ItemResource {
 			.created(UriBuilder.fromResource(UserResource.class)
 					.build())
 			.build();
+	}
+	
+	@POST
+	@Path("/update/{term}")
+	@Consumes({"application/json"})
+	public Response updateItem(@PathParam("term") final model.Item item) {
+		System.out.println("update start time: " + item.getStarted());
+		System.out.println("update end time: " + item.getEnds());
+		entities.Item itemEntity = ItemMapper.map(item);
+		ItemDAO itemDB = new ItemDAO();
+		itemDB.updateItem(itemEntity);
+		return Response
+				.created(UriBuilder.fromResource(UserResource.class)
+						.build())
+				.build();
 	}
 	
 	@GET
