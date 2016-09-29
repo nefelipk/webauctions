@@ -23,11 +23,9 @@ import javax.ws.rs.core.UriBuilder;
 
 import dao.ItemDAO;
 import dao.LocationDAO;
-import dao.UserDAO;
 import entities.wrappers.UserMapper;
 import model.wrappers.CategoryWrapper;
 import model.wrappers.ItemWrapper;
-import model.wrappers.UserWrapper;
 
 @Path("/items")
 public class ItemResource {
@@ -68,6 +66,18 @@ public class ItemResource {
 		locationEntity.setPostalCode(location.getPostalCode());
 		locationEntity.setLocation(location.getLocation());
 		itemEntity.setLocation(locationEntity);
+		
+		List<entities.Category> categoriesEntity = new ArrayList<entities.Category>();
+//		entities.Category categoryEntity = new entities.Category();
+		List<model.Category> categories = item.getCategories();
+		for(model.Category category: categories) {
+			entities.Category categoryEntity = new entities.Category();
+			categoryEntity.setName(category.getName());
+			System.out.println("stin katigoria: " + categoryEntity.getName());
+			categoryEntity.setItems(null);
+			categoriesEntity.add(categoryEntity);
+		}
+		itemEntity.setCategories(categoriesEntity);
 		
 		entities.Image imageEntity = new entities.Image();
 //		model.Image image = item.getImage();

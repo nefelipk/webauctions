@@ -3,13 +3,14 @@ angular.module('auction_land').controller('AuctionManagerController',
 		['$scope','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','$window',
 		 function($scope,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,$window) {
 	
-	$scope.countries = countries;
-	
 	/*********************************************************************/
 	/**********************************************************************
-							GET ALL CATEGORIES
+						ALL COUNTIES AND CATEGORIES
 	**********************************************************************/
 	/*********************************************************************/
+	
+	$scope.countries = countries;
+	$scope.default_country_option = "Country";
 	
 	$scope.allCategories = function() {
 		AllCategories.query().$promise.then(function(data) {
@@ -20,23 +21,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.allCategories();
 	
 	
-//	var categories = [ {
-//		"name" : 'Collectibles',
-//	}, {
-//		"name" : 'Åland Islands',
-//	}, {
-//		"name" : 'Decorative & Holiday',
-//	}, {
-//		"name" : 'Algeria',
-//	}, {
-//		"name" : 'Zambia',
-//	}, {
-//		"name" : 'Zimbabwe',
-//	} ];
-//	
-//		
-//	$scope.categories = categories;
-		
 	/*********************************************************************/
 	/**********************************************************************
 							ALL USER'S AUCTIONS
@@ -185,12 +169,13 @@ angular.module('auction_land').controller('AuctionManagerController',
 		}
 		
 /////////////////////////////////////////////////////////////////////////////////////////////////
-return;			///TEMPORARY --> gia dokimes!!!!!!!!!!!
+//return;			///TEMPORARY --> gia dokimes!!!!!!!!!!!
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 		Item.save($scope.item).$promise.then(function(data) {
 			console.log(data);
 			$scope.item = {};
+			$scope.curItem = {};
 			$scope.form.$setPristine(true);
 			$scope.form.$setUntouched(true);
 			$scope.submitted = false;
@@ -210,23 +195,9 @@ return;			///TEMPORARY --> gia dokimes!!!!!!!!!!!
 	
 	/*********************************************************************/
 	/**********************************************************************
-							EDIT AND DELETE ITEM
+								EDIT ITEM
 	**********************************************************************/
 	/*********************************************************************/
-	
-	$scope.deleteItem = function(item) {
-		console.log(">>>>>> Delete <<<<<<<");
-		console.log(item.idItem);
-		term = item.idItem;
-		ItemDelete.remove({term : term}).$promise.then(function() {
-			console.log(term);
-		}, function() {
-			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
-			console.log("error");
-		});
-	};
-	
-	$scope.default_country_option = "Country";
 	
 	$scope.editItem = function(item) {
 		console.log(">>>>>> Edit <<<<<<<");
@@ -273,6 +244,26 @@ return;			///TEMPORARY --> gia dokimes!!!!!!!!!!!
 	
 	/*********************************************************************/
 	/**********************************************************************
+								DELETE ITEM
+	**********************************************************************/
+	/*********************************************************************/
+	
+	$scope.deleteItem = function(item) {
+		console.log(">>>>>> Delete <<<<<<<");
+		console.log(item.idItem);
+		term = item.idItem;
+		ItemDelete.remove({term : term}).$promise.then(function() {
+			console.log(term);
+			$window.location.reload();
+		}, function() {
+			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
+			console.log("error");
+		});
+	};
+	
+	
+	/*********************************************************************/
+	/**********************************************************************
 									TABS
 	**********************************************************************/
 	/*********************************************************************/
@@ -291,11 +282,14 @@ return;			///TEMPORARY --> gia dokimes!!!!!!!!!!!
 			overview_tab.addClass('active');
 			$window.location.reload();
 			$scope.default_country_option = "Country";
+			$scope.curItem = {};
+			
 		}
 		else if(tab == 2) {
 			$scope.current_tab = "New Auction";
 			create_tab.addClass('active');
 			$scope.default_country_option = "Country";
+			$scope.curItem = {};
 			$scope.item = null;
 		}
 		else if(tab == 3) {

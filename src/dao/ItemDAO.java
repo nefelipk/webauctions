@@ -60,34 +60,31 @@ public class ItemDAO {
 		try {
 				
 			List<Category> safe_categories = new ArrayList<Category>();
-			if (item.getCategories() == null) {
-				System.out.println("There are no categories!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				item.setCategories(null);
-			}
-			else {
-				for (Category crawl : item.getCategories()) {
-					if (crawl.getIdCategory() == 0) {
-						Query q = entityManager.createQuery("Select c from Category c where c.name = ?1");
-						q.setParameter(1, crawl.getName());
-						Category existing_category = null;
-						try {
-							existing_category = (Category) q.getSingleResult();
-						} catch (Exception e) {
-							existing_category = null;
-						}
-						if (existing_category == null) {
-							entityManager.persist(crawl);
-							safe_categories.add(crawl);
-						} else {
-							safe_categories.add(existing_category);
-						}
-					} else {
-						entityManager.merge(crawl);
-						safe_categories.add(crawl);
+			for (Category crawl : item.getCategories()) {
+				if (crawl.getIdCategory() == 0) {
+					System.out.println("Category -> " + crawl.getName());
+					Query q = entityManager.createQuery("Select c from Category c where c.name = ?1");
+					q.setParameter(1, crawl.getName());
+					Category existing_category = null;
+					try {
+						existing_category = (Category) q.getSingleResult();
+					} catch (Exception e) {
+						existing_category = null;
 					}
+					if (existing_category == null) {
+						System.out.println("Den yparhei????");
+						entityManager.persist(crawl);
+						safe_categories.add(crawl);
+					} else {
+						safe_categories.add(existing_category);
+					}
+				} else {
+					entityManager.merge(crawl);
+					safe_categories.add(crawl);
 				}
-				item.setCategories(safe_categories);
 			}
+			item.setCategories(safe_categories);
+				
 			/*
 			 * List<Bid> safe_bids = new ArrayList<Bid>(); for(Bid crawl :
 			 * item.getBids()) { if(crawl.getIdBid() == 0) { Query q =
@@ -123,7 +120,6 @@ public class ItemDAO {
 
 			List<Bid> safe_bids = new ArrayList<Bid>();
 			if (item.getBids() == null) {
-				System.out.println("There are no bids!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				item.setBids(null);
 			}
 			else {
