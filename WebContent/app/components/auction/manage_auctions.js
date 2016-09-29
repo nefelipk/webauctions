@@ -35,38 +35,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 		return date;
 	};
 			
-//	var today = new Date();
-//	var dd = today.getDate();
-//	var mm = today.getMonth() + 1; //January is 0
-//	var yyyy = today.getFullYear();
-//	var h = today.getHours();
-//	var min = today.getMinutes();
-//	var a = "AM";
-		//	
-//			if (dd < 10) {
-//				dd = '0' + dd;
-//			} 
-//			if (mm < 10) {
-//				mm = '0' + mm;
-//			}
-//			if (h > 12) {
-//				h = h - 12;
-//				a = "PM";
-//			}
-//			if (h < 10) {
-//				h = '0' + h;
-//			}
-//			if (min < 10) {
-//				min = '0' + min;
-//			}
-		//	
-		//	
-//			$scope.today = mm + '/' + dd + '/' + yyyy + ', ' + h + ':' + min + " " + a;
-//			console.log($scope.today);
-		//	
-//			document.getElementById("datefield").setAttribute("min", $scope.today);
-//			console.log(document.getElementById("datefield").min);
-			
 			
 	/*********************************************************************/
 	/**********************************************************************
@@ -207,10 +175,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.error_startEnd_time = false;
 		}
 		
-		console.log("!!!!!!!!!!!!!!!" + $scope.item.location.country);
 		$scope.item.location.country = $scope.curItem.country.name;
-		//delete $scope.item.country;
-		console.log("!!!!!!!!!!!!!!!" + $scope.item.location.country);
 
 		var i = 0;
 		$scope.item.categories = new Array($scope.curItem.category.length);
@@ -233,7 +198,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 		console.log($scope.item.ends);
 		
 		$scope.item.user = $scope.user;
-		console.log("---------------> ");
 		console.log($scope.item);
 		
 		if ($scope.current_tab == "Edit Auction") {
@@ -261,6 +225,8 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.form_touched = false;
 			
 		}, function() {
+			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
+			console.log("error");
 			$scope.error_server = true;
 			$scope.successful_creation = false;
 			$scope.form_touched = false;
@@ -283,25 +249,11 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$scope.item = item;
 		$scope.curItem.started = new Date(item.started);
 		$scope.curItem.ends = new Date(item.ends);
-//		$scope.curItem.country = item.location.country;
-//		$scope.curItem.country.name = item.location.country;
 		$scope.default_country_option = item.location.country;
-//		console.log($scope.curItem.country);
 		
 		var index = ($scope.countries).map(function(d) { return d["name"]; }).indexOf(item.location.country);
 		$scope.curItem.country = $scope.countries[index];
 		console.log("--------------" + $scope.curItem.country);
-		
-//		var temp = new Array(item.categories.length);
-//		for (i = 0; i < item.categories.length; i++) {
-//			console.log(item.categories[i].name);
-//			var index = ($scope.categories).map(function(d) { return d["name"]; }).indexOf(item.categories[i].name);
-//			console.log(index);
-//			temp[i] = $scope.categories[index];
-//			console.log(temp[i]);
-//		}
-//		$scope.curItem.category = temp;		
-//		console.log($scope.curItem.category);
 		
 		$scope.curItem.category = new Array(item.categories.length);
 		for (i = 0; i < item.categories.length; i++) {
@@ -315,18 +267,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 		
 		console.log($scope.item);
 		$scope.set_active(3);
-		
-//		user.verified = !user.verified;
-//		console.log(user.verified);
-//		
-//		UserVerify.save(user).$promise.then(function() {
-//			console.log(user);
-//		}, function() {
-//			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
-//			console.log("error");
-//		});
-		
-		
 	};
 	
 	$scope.updateAuction = function() {
@@ -337,9 +277,25 @@ angular.module('auction_land').controller('AuctionManagerController',
 		
 		ItemUpdate.save($scope.item).$promise.then(function() {
 			console.log($scope.item);
+			alert("Item updated successfully!");
+			$window.location.reload();
+			$scope.item = {};
+			$scope.curItem = {};
+			$scope.form.$setPristine(true);
+			$scope.form.$setUntouched(true);
+			$scope.submitted = false;
+			$scope.success = true;
+			$scope.successful_creation = true;
+			$scope.error_server = false;
+			$scope.form_touched = false;
 		}, function() {
 			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
 			console.log("error");
+			$scope.error_server = true;
+			$scope.successful_creation = false;
+			$scope.form_touched = false;
+			$scope.submitted = false;
+			$scope.success = false;
 		});
 	}
 	

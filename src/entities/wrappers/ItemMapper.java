@@ -10,7 +10,6 @@ public class ItemMapper {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		try {
 			Date date = (Date) dateFormat.parse(dateTime);
-			System.out.println("date: " + date);
 			Timestamp stamp = new Timestamp(date.getTime());
 			return stamp;
 		} catch (ParseException e) {

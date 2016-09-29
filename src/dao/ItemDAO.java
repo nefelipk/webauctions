@@ -178,31 +178,8 @@ public class ItemDAO {
 	}
 	
 	public void updateItem(Item item) {
-		System.out.println("ftasame sto update");
 		deleteItem(item.getIdItem());
-		System.out.println("meta ti diagrafi ok");
 		insert(item);
-		System.out.println("meta tin eisagogi ok");
-		
-//		EntityManager em = JPAResource.factory.createEntityManager();
-//		EntityTransaction tx = em.getTransaction();
-//		tx.begin();
-//		
-//		Query q = em.createQuery("Update Item i set i.name = ?1, i.description = ?2, i.buy_price = ?3, i.first_bid = ?4, i.currently = ?5, i.started = ?6, i.ends = ?7, i.idLocation = ?8 where i.idItem = ?9");
-//		q.setParameter(1, item.getName());
-//		q.setParameter(2, item.getDescription());
-//		q.setParameter(3, item.getBuyPrice());
-//		q.setParameter(4, item.getFirstBid());
-//		q.setParameter(5, item.getCurrently());
-//		q.setParameter(6, item.getStarted());
-//		q.setParameter(7, item.getEnds());
-//		q.setParameter(8, );
-//		q.setParameter(9, item.getIdItem());
-//		q.executeUpdate();
-//		em.flush();
-//		
-//		tx.commit();
-//		em.close();
 	}
 
 	public entities.Item getById(int id) {

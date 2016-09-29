@@ -34,8 +34,6 @@ public class ItemResource {
 	@POST
 	@Consumes({"application/json"})
 	public Response create(final model.Item item) {
-		System.out.println("start time: " + item.getStarted());
-		System.out.println("end time: " + item.getEnds());
 		entities.Item itemEntity = new entities.Item();
 		itemEntity.setName(item.getName());
 		itemEntity.setBuyPrice(item.getBuyPrice());
@@ -109,8 +107,6 @@ public class ItemResource {
 	@Path("/update/")
 	@Consumes({"application/json"})
 	public Response updateItem(final model.Item item) {
-		System.out.println("update start time: " + item.getStarted());
-		System.out.println("update end time: " + item.getEnds());
 		entities.Item itemEntity = ItemMapper.map(item);
 		ItemDAO itemDB = new ItemDAO();
 		itemDB.updateItem(itemEntity);
