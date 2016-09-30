@@ -1,7 +1,7 @@
 
 angular.module('auction_land').controller('AuctionManagerController',
-		['$scope','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','ItemUpdate','$window',
-		 function($scope,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,ItemUpdate,$window) {
+		['$scope','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','ItemUpdate','AuctionService','uiGmapGoogleMapApi','$window',
+		 function($scope,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,ItemUpdate,AuctionService,uiGmapGoogleMapApi,$window) {
 	
 	/*********************************************************************/
 	/**********************************************************************
@@ -135,11 +135,82 @@ angular.module('auction_land').controller('AuctionManagerController',
 	**********************************************************************/
 	/*********************************************************************/
 	
-//	$scope.map = { center: { latitude: 37.968459261473726, longitude: 23.76688241958618 }, zoom: 5 };
-//	$scope.mymap = function() {
-//		
-//	}
+	$scope.map = { control:{}, center: { latitude: 44.5278427984555, longitude: 13.623046875 }, zoom: 5 };
 	
+	$scope.marker = { mkey: "9998", coords: { latitude: 37.968459261473726, longitude: 23.76688241958618 }, options: {} };
+	
+	current_item_location = function() {
+//		if(($scope.current.location.latitude != 0) && ($scope.current.location.longitude != 0)) {
+//			var coords = { latitude : $scope.current.location.latitude, longitude : $scope.current.location.longitude};
+//			$scope.current.coords = coords;
+//			$scope.map.center.latitude = $scope.current.location.latitude;
+//			$scope.map.center.longitude = $scope.current.location.longitude;
+//			
+//			var loc = { lat: coords.latitude, lng: coords.longitude};
+//	        $scope.geocoder.geocode({'location': loc}, function(results, status) {
+//	        	if(status == google.maps.GeocoderStatus.OK) {
+//	                if(results[1])
+//	                	$scope.current.final_location = results[1].formatted_address;	
+//	                else 
+//	                	alert('No results found');
+//	        	}
+//	        	else {
+//	        		alert('Geocoder failed due to: ' + status);
+//	        	}
+//	        });
+//		}
+//		
+//		else {
+//			/*
+//			 * country + if(city == null) -> location -> if(location ==
+//			 * null) -> address
+//			 * 
+//			 * else (plain)country
+//			 */
+//			
+//			$scope.geocoder.geocode( { 'address': $scope.current.location.country }, function(results, status) {
+//				if(status == google.maps.GeocoderStatus.OK) {
+//					var coords = {latitude :  results[0].geometry.location.lat(), longitude : results[0].geometry.location.lng()};
+//					$scope.map.center.latitude = coords.latitude;
+//					$scope.map.center.longitude = coords.longitude;
+//		        	$scope.current.coords = coords;
+//		        	
+//					$scope.current.final_location = $scope.current.location.country
+//
+//		        } 
+//				else {
+//		          alert("Geocode was not successful for the following reason: " + status);
+//		        }
+//		    });
+//		}
+		AuctionService.set_map($scope.map);
+		
+	};
+	
+	//$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 5 };
+
+	uiGmapGoogleMapApi.then(function(maps) {
+		$scope.markers = [];	
+		$scope.google = google;
+		$scope.geocoder = new google.maps.Geocoder();
+		AuctionService.set_google_api($scope.google);
+		AuctionService.set_map($scope.map);
+	});
+	
+	/* when using a google map inside a bootstrap tab it is 
+	 * almost necessary to use 'resize' event because the
+	 * map does not load properly.
+	 */
+	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+		var activeTab = $(".tab-content").find(".active");
+		var id = activeTab.attr('id');
+		if(id == "create") {
+			var google = AuctionService.get_google_api();
+			var map = AuctionService.get_map();
+			current_item_location();
+			$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
+		}
+	});
 	
 	/*********************************************************************/
 	/**********************************************************************
