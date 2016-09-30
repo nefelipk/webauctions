@@ -15,6 +15,7 @@ import entities.Bid;
 import entities.Category;
 import entities.Item;
 import entities.User;
+import entities.Location;
 
 public class ItemDAO {
 
@@ -114,6 +115,28 @@ public class ItemDAO {
 				} else {
 					entityManager.merge(existing_user);
 					item.setUser(existing_user);
+				}
+			}
+			
+			Location location = entityManager.find(Location.class, item.getLocation().getIdLocation());
+			if (location == null) {
+				Location itemLocation = item.getLocation();
+				Query q = entityManager.createQuery("Select l from Location l where l.country = ?1 and l.latitude = ?2 and l.longitude = ?3");
+				q.setParameter(1, item.getLocation().getCountry());
+				q.setParameter(2, item.getLocation().getLatitude());
+				q.setParameter(3, item.getLocation().getLongitude());
+				Location existing_location = null;
+				try {
+					existing_location = (Location) q.getSingleResult();
+				} catch (Exception e) {
+					existing_location = null;
+				}
+				if (existing_location == null) {
+					entityManager.persist(itemLocation);
+					item.setLocation(itemLocation);
+				} else {
+					entityManager.merge(existing_location);
+					item.setLocation(existing_location);
 				}
 			}
 

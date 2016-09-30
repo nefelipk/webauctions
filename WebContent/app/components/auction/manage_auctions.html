@@ -245,6 +245,9 @@ tr.unread {
 				<div class="alert alert-danger text-center" ng-if="error_startEnd_time">
 		  			<strong>Warning!</strong><br/>End time cannot be before start time.<br/>
 				</div>
+				<div class="alert alert-danger text-center" ng-if="error_map">
+		  			<strong>Warning!</strong><br/>You have to move the pin the desirable coordinates.<br/>
+				</div>
 				
 				<form id="newAuctionForm" class="form-horizontal" role="form" name="form"
 					ng-submit="form.$valid && createAuction()" novalidate>

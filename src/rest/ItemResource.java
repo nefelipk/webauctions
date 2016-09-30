@@ -50,6 +50,8 @@ public class ItemResource {
 		locationEntity.setCity(location.getCity());
 		locationEntity.setCountry(location.getCountry());
 		locationEntity.setUsers(null);
+		System.out.println("lat: " + location.getLatitude());
+		System.out.println("long: " + location.getLongitude());
 		locationEntity.setLatitude(location.getLatitude());
 		locationEntity.setLongitude(location.getLongitude());
 		locationEntity.setPostalCode(location.getPostalCode());
