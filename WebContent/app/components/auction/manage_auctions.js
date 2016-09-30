@@ -131,7 +131,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 	
 	/*********************************************************************/
 	/**********************************************************************
-								ADD MAP
+								HANDLE MAP
 	**********************************************************************/
 	/*********************************************************************/
 	
@@ -180,56 +180,22 @@ angular.module('auction_land').controller('AuctionManagerController',
 	};
 	
 	current_item_location = function(data) {
-		
 		if (data == "1") {
 			AuctionService.set_map($scope.map);
 		}
-		
 		else if (data == "2") {
 			$scope.item.location.latitude = $scope.marker.coords.latitude;
 			$scope.item.location.longitude = $scope.marker.coords.longitude;
 		}
-		
 		else {
-//			$scope.item.location.country
-//			$scope.marker.coords.latitude
-//			$scope.marker.coords.longitude
-//			$scope.item.location.latitude
-//			$scope.item.location.longitude
-			
 			$scope.marker.coords.latitude = data.location.latitude;
 			$scope.marker.coords.longitude = data.location.longitude;
 			$scope.marker.options.labelContent = "lat: " + data.location.latitude + " lon: " + data.location.longitude;
 			$scope.marker.options.labelAnchor = "100 0";
 			$scope.marker.options.labelClass = "marker-labels";
-			
-			
-//			console.log("lat: " + parseFloat(data.location.latitude));
-//			console.log("lng: " + data.location.longitude);
-//			var coords = { latitude : data.location.latitude, longitude : data.location.longitude};
-//			$scope.marker.coords = coords;
-			
-//			$scope.map.center.latitude = $scope.current.location.latitude;
-//			$scope.map.center.longitude = $scope.current.location.longitude;
-			
-//			var loc = { lat: coords.latitude, lng: coords.longitude};
-//	        $scope.geocoder.geocode({'location': loc}, function(results, status) {
-//	        	if(status == google.maps.GeocoderStatus.OK) {
-//	                if(results[1])
-//	                	$scope.current.final_location = results[1].formatted_address;	
-//	                else 
-//	                	alert('No results found');
-//	        	}
-//	        	else {
-//	        		alert('Geocoder failed due to: ' + status);
-//	        	}
-//	        });
 		}
-		
 	};
 	
-	//$scope.map = { control:{}, center: { latitude: 45, longitude: -73 }, zoom: 5 };
-
 	uiGmapGoogleMapApi.then(function(maps) {
 		$scope.markers = [];	
 		$scope.google = google;
@@ -325,9 +291,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$scope.item.user = $scope.user;
 		console.log($scope.item);
 		
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////	
-////////////////////////////////////////////////////////////
 		if ($scope.marker.options.labelContent != null) {
 			current_item_location("2");
 		}
@@ -335,16 +298,12 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.error_map = true;
 			return;
 		}
-		
 		$scope.marker.coords.latitude = dit_location.latitude;
 		$scope.marker.coords.longitude = dit_location.longitude;
 		$scope.marker.options.labelContent = null;
 		$scope.marker.options.labelAnchor = null;
 		$scope.marker.options.labelClass = null;
 		console.log($scope.item);
-////////////////////////////////////////////////////////////		
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
 		
 		
 		if ($scope.current_tab == "Edit Auction") {
