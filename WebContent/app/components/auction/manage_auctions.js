@@ -1,7 +1,7 @@
 
 angular.module('auction_land').controller('AuctionManagerController',
-		['$scope','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','ItemUpdate','AuctionService','uiGmapGoogleMapApi','$window',
-		 function($scope,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,ItemUpdate,AuctionService,uiGmapGoogleMapApi,$window) {
+		['$scope','$log','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','ItemUpdate','AuctionService','uiGmapGoogleMapApi','$window',
+		 function($scope,$log,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,ItemUpdate,AuctionService,uiGmapGoogleMapApi,$window) {
 	
 	/*********************************************************************/
 	/**********************************************************************
@@ -135,9 +135,42 @@ angular.module('auction_land').controller('AuctionManagerController',
 	**********************************************************************/
 	/*********************************************************************/
 	
-	$scope.map = { control:{}, center: { latitude: 44.5278427984555, longitude: 13.623046875 }, zoom: 5 };
+	$scope.map = { 
+		control: {}, 
+		center: { 
+			latitude: 44.5278427984555, 
+			longitude: 13.623046875 
+		}, 
+		zoom: 5, 
+		options: {}
+	};
 	
-	$scope.marker = { mkey: "9998", coords: { latitude: 37.968459261473726, longitude: 23.76688241958618 }, options: {} };
+	$scope.marker = { 
+		id: "1", 
+		coords: { 
+			latitude: 37.968459261473726, 
+			longitude: 23.76688241958618 
+		}, 
+		options: {
+			draggable: true
+		}, 
+		events: {
+			dragend: function (marker, eventName, args) {
+				$log.log('marker dragend');
+				var lat = marker.getPosition().lat();
+				var lon = marker.getPosition().lng();
+				$log.log(lat);
+				$log.log(lon);
+				
+				$scope.marker.options = {
+					draggable: true,
+					labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+					labelAnchor: "100 0",
+					labelClass: "marker-labels"
+				};
+			}
+		}
+	};
 	
 	current_item_location = function() {
 //		if(($scope.current.location.latitude != 0) && ($scope.current.location.longitude != 0)) {
