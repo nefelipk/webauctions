@@ -170,7 +170,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 				
 				$scope.marker.options = {
 					draggable: true,
-					labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+					labelContent: "lat: " + $scope.marker.coords.latitude + " lon: " + $scope.marker.coords.longitude,
 					labelAnchor: "100 0",
 					labelClass: "marker-labels"
 				};
@@ -179,41 +179,51 @@ angular.module('auction_land').controller('AuctionManagerController',
 		}
 	};
 	
-	current_item_location = function(code) {
+	current_item_location = function(data) {
 		
-		if (code == "1") {
+		if (data == "1") {
 			AuctionService.set_map($scope.map);
 		}
 		
-		else if (code == "2") {
-//			if ($scope.marker.options.labelContent != null) {				
-				$scope.item.location.latitude = $scope.marker.coords.latitude;
-				$scope.item.location.longitude = $scope.marker.coords.longitude;
-				console.log("NEW COORDINATES!!!!!!!!!!!!!!!!!!!!!!!!");
-//			}
-//			else {
-//				$scope.geocoder.geocode( { 'address': $scope.item.location.country }, function(results, status) {
-//					if(status == google.maps.GeocoderStatus.OK) {
-//						var coords = {latitude :  results[0].geometry.location.lat(), longitude : results[0].geometry.location.lng()};
-//						$scope.item.location.latitude = coords.latitude;
-//						console.log($scope.item.location.latitude);
-//						$scope.item.location.longitude = coords.longitude;
-//						console.log($scope.item.location.longitude);
-//			        } 
-//					else {
-//			          alert("Geocode was not successful for the following reason: " + status);
-//			        }
-//			    });
-//				console.log("COORDINATES BY COUNTRY	!!!!!!!!!!!!!!!!!!!!!!!!");
-//			}
+		else if (data == "2") {
+			$scope.item.location.latitude = $scope.marker.coords.latitude;
+			$scope.item.location.longitude = $scope.marker.coords.longitude;
 		}
 		
-		else if (code == "3") {
+		else {
 //			$scope.item.location.country
 //			$scope.marker.coords.latitude
 //			$scope.marker.coords.longitude
 //			$scope.item.location.latitude
 //			$scope.item.location.longitude
+			
+			$scope.marker.coords.latitude = data.location.latitude;
+			$scope.marker.coords.longitude = data.location.longitude;
+			$scope.marker.options.labelContent = "lat: " + data.location.latitude + " lon: " + data.location.longitude;
+			$scope.marker.options.labelAnchor = "100 0";
+			$scope.marker.options.labelClass = "marker-labels";
+			
+			
+//			console.log("lat: " + parseFloat(data.location.latitude));
+//			console.log("lng: " + data.location.longitude);
+//			var coords = { latitude : data.location.latitude, longitude : data.location.longitude};
+//			$scope.marker.coords = coords;
+			
+//			$scope.map.center.latitude = $scope.current.location.latitude;
+//			$scope.map.center.longitude = $scope.current.location.longitude;
+			
+//			var loc = { lat: coords.latitude, lng: coords.longitude};
+//	        $scope.geocoder.geocode({'location': loc}, function(results, status) {
+//	        	if(status == google.maps.GeocoderStatus.OK) {
+//	                if(results[1])
+//	                	$scope.current.final_location = results[1].formatted_address;	
+//	                else 
+//	                	alert('No results found');
+//	        	}
+//	        	else {
+//	        		alert('Geocoder failed due to: ' + status);
+//	        	}
+//	        });
 		}
 		
 	};
@@ -402,6 +412,8 @@ angular.module('auction_land').controller('AuctionManagerController',
 		}
 		console.log($scope.curItem.category);
 		
+		current_item_location(item);
+		
 		console.log($scope.item);
 		$scope.set_active(3);
 	};
@@ -477,6 +489,11 @@ angular.module('auction_land').controller('AuctionManagerController',
 			overview_tab.addClass('active');
 			$window.location.reload();
 			$scope.default_country_option = "Country";
+			$scope.marker.coords.latitude = dit_location.latitude;
+			$scope.marker.coords.longitude = dit_location.longitude;
+			$scope.marker.options.labelContent = null;
+			$scope.marker.options.labelAnchor = null;
+			$scope.marker.options.labelClass = null;
 			$scope.curItem = {};
 			
 		}
@@ -484,6 +501,11 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.current_tab = "New Auction";
 			create_tab.addClass('active');
 			$scope.default_country_option = "Country";
+			$scope.marker.coords.latitude = dit_location.latitude;
+			$scope.marker.coords.longitude = dit_location.longitude;
+			$scope.marker.options.labelContent = null;
+			$scope.marker.options.labelAnchor = null;
+			$scope.marker.options.labelClass = null;
 			$scope.curItem = {};
 			$scope.item = null;
 		}
