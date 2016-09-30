@@ -413,14 +413,10 @@ function myMap() {
 						<div class="col-sm-offset-3 col-sm-6">
 							<button class="btn btn-success btn-block" type="submit" 
 								ng-click="submitted = true; form_touched = true"
-								style="background-color: #27AE60; color: #ECF0F1;"
-								ng-if="current_tab == 'New Auction'">
-								<strong>Create</strong></button>
-							<button class="btn btn-success btn-block" type="submit" 
-								ng-click="submitted = true; form_touched = true"
-								style="background-color: #27AE60; color: #ECF0F1;"
-								ng-if="current_tab == 'Edit Auction'">
-								<strong>Update</strong></button>
+								style="background-color: #27AE60; color: #ECF0F1;">
+								<strong ng-if="current_tab == 'New Auction'">Create</strong>
+								<strong ng-if="current_tab == 'Edit Auction'">Update</strong>
+							</button>
 						</div>
 					</div>
 				</form>
