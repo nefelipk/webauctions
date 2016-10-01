@@ -216,7 +216,6 @@ tr.unread {
 						<td>{{i.buyPrice}}</td>
 						<td>{{i.currently}}</td>
 						<td>{{i.numberOfBids}}</td>
-						<td><a ng-click="viewItem(i)">View</a></td>
 						<td><a ng-if="i.numberOfBids == 0" ng-click="editItem(i)" 
 							data-toggle="tab" data-target="#create">Edit</a>
 							<em style="color:gray;" ng-if="i.numberOfBids > 0">Edit</em></td>
@@ -394,16 +393,8 @@ tr.unread {
 							<br><button ng-click="imageAdded = true; uploadImage()">Upload</button>
 							<p style="color:green">{{imageMessage}}</p>
 							<img src="{{imageIcon}}" width="200" height="200" alt="">	
-							
-							<img src="data:image/gif;base64,R0lGODlhEAAOALMAAOazToeHh0tLS/7LZv/0jvb29t/f3//Ub/
-/ge8WSLf/rhf/3kdbW1mxsbP//mf///yH5BAAAAAAALAAAAAAQAA4AAARe8L1Ekyky67QZ1hLnjM5UUde0ECwLJoExKcpp
-V0aCcGCmTIHEIUEqjgaORCMxIC6e0CcguWw6aFjsVMkkIr7g77ZKPJjPZqIyd7sJAgVGoEGv2xsBxqNgYPj/gAwXEQA7" 
-width="16" height="14" alt="embedded folder icon">
 						</div>
 					</div>
-					
-					
-					
 					
 					<hr>
 								

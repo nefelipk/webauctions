@@ -99,9 +99,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 			    },{
 			    	orderByField: 'noOrder',
 			    	name: '',
-			    },{
-			    	orderByField: 'noOrder',
-			    	name: '',
 			    }]
 			};
 			
@@ -143,7 +140,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 		var f = document.getElementById('img').files[0];
 		var r = new FileReader();
 		r.onloadend = function(e){
-			console.log("perase!!!!!!!!!!!!!!!!")
 			$scope.imageData = e.target.result;			
 		}
 		if (f != null) {
@@ -258,6 +254,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 	$scope.error_startEnd_time = false;
 	$scope.error_map = false;
 	$scope.imageAdded = false;
+	$scope.imageIcon = null;
 	
 	$scope.createAuction = function() {
 		console.log(">>>>>> button pressed <<<<<<<");
@@ -327,18 +324,11 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.error_map = true;
 			return;
 		}
-//		$scope.marker.coords.latitude = dit_location.latitude;
-//		$scope.marker.coords.longitude = dit_location.longitude;
-//		$scope.marker.options.labelContent = null;
-//		$scope.marker.options.labelAnchor = null;
-//		$scope.marker.options.labelClass = null;
 		console.log($scope.item);
 		
-//		$scope.item = {};
 		if ($scope.imageData != null) {
 			$scope.item.image = {};
 			$scope.item.image.image = $window.btoa($scope.imageData);
-			//$scope.item.image.image = $window.btoa(unescape(encodeURIComponent($scope.imageData)));
 		}
 		$scope.imageData = null;
 		$scope.imageMessage = null;
@@ -350,10 +340,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 			console.log("return after updating auction");
 			return;
 		}
-		
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//return;			///TEMPORARY --> gia dokimes!!!!!!!!!!!
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
 		Item.save($scope.item).$promise.then(function(data) {
 			console.log(">>>>>> CREATE <<<<<<<");
@@ -382,6 +368,12 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.form_touched = false;
 			$scope.submitted = false;
 			$scope.success = false;
+			
+			$scope.marker.coords.latitude = dit_location.latitude;
+			$scope.marker.coords.longitude = dit_location.longitude;
+			$scope.marker.options.labelContent = null;
+			$scope.marker.options.labelAnchor = null;
+			$scope.marker.options.labelClass = null;
 		});
 	};
 	
@@ -418,9 +410,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 		current_item_location(item);
 		
 		if ($scope.item.image != null) {
-			//$scope.imageIcon = "data:image/jpg;base64," + $window.atob($scope.item.image.image);
 			$scope.imageIcon = "data:image/jpg;base64," + $scope.item.image.image;
-			//$scope.imageIcon = "data:image/jpeg;base64," + decodeURIComponent(escape($window.atob($scope.item.image.image)));
 		}
 		
 		console.log($scope.item);
@@ -452,6 +442,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.marker.options.labelContent = null;
 			$scope.marker.options.labelAnchor = null;
 			$scope.marker.options.labelClass = null;
+			$scope.imageIcon = null;
 		}, function() {
 			alert("OOOPS: We are very sorry, server could not be reached. Please try again later.");
 			console.log("error");
@@ -460,6 +451,13 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.form_touched = false;
 			$scope.submitted = false;
 			$scope.success = false;
+			
+			$scope.marker.coords.latitude = dit_location.latitude;
+			$scope.marker.coords.longitude = dit_location.longitude;
+			$scope.marker.options.labelContent = null;
+			$scope.marker.options.labelAnchor = null;
+			$scope.marker.options.labelClass = null;
+			$scope.imageIcon = null;
 		});
 	}
 	
@@ -512,6 +510,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.curItem = {};
 			$scope.imageData = null;
 			$scope.imageMessage = null;
+			$scope.imageIcon = null;
 		}
 		else if(tab == 2) {
 			$scope.current_tab = "New Auction";
@@ -526,6 +525,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 			$scope.item = null;
 			$scope.imageData = null;
 			$scope.imageMessage = null;
+			$scope.imageIcon = null;
 		}
 		else if(tab == 3) {
 			$scope.current_tab = "Edit Auction";
