@@ -416,6 +416,13 @@ angular.module('auction_land').controller('AuctionManagerController',
 		
 		current_item_location(item);
 		
+		console.log($scope.image);
+		if ($scope.image != null) {
+			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			//$scope.imageIcon = "data:image/jpeg;base64," + window.atob($scope.image.image);
+			$scope.imageIcon = "data:image/jpeg;base64," + decodeURIComponent(escape(window.atob($scope.image.image)));
+		}
+		
 		console.log($scope.item);
 		$scope.set_active(3);
 	};

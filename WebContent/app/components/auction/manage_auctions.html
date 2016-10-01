@@ -393,32 +393,16 @@ tr.unread {
 								ng-required="false" ng-click="form_touched = true">
 							<br><button ng-click="imageAdded = true; uploadImage()">Upload</button>
 							<p style="color:green">{{imageMessage}}</p>
+							<img src="{{imageIcon}}" class="img-responsive" width="200" height="200" alt="embedded folder icon">	
+							
+							<img src="data:image/gif;base64,R0lGODlhEAAOALMAAOazToeHh0tLS/7LZv/0jvb29t/f3//Ub/
+/ge8WSLf/rhf/3kdbW1mxsbP//mf///yH5BAAAAAAALAAAAAAQAA4AAARe8L1Ekyky67QZ1hLnjM5UUde0ECwLJoExKcpp
+V0aCcGCmTIHEIUEqjgaORCMxIC6e0CcguWw6aFjsVMkkIr7g77ZKPJjPZqIyd7sJAgVGoEGv2xsBxqNgYPj/gAwXEQA7" 
+width="16" height="14" alt="embedded folder icon">
 						</div>
 					</div>
 					
-					<!-- <div class="form-group">
-						<div class="col-xs-6" ng-messages="form.img.$error"
-						ng-class="{'has-error' : ((submitted || form.img.$touched) && form.img.$invalid) , 
-						'has-success': form.img.$valid }">
-							<label class="control-label" for="img">Choose image:</label>
-							<input type="file" name="img" id="img" ng-model="item.image" 
-								ng-required="false" ng-click="form_touched = true">
-							<input type="file" ng-model-instant id="fileToUpload" 
-								onchange="angular.element(this).scope().setFiles(this)" 
-								ng-model="item.image" 
-								ng-required="false" ng-click="form_touched = true">
-							<button ng-click="add()">Add image</button>
-							<input type="button" ng-click="uploadFile()" value="Upload" />
-							<div ng-show="progressVisible">
-					            <div class="percent">{{progress}}%</div>
-					            <div class="progress-bar">
-					                <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-					            </div>
-					        </div>
-							<p>{{imageMessage}}</p>
-							<p>{{imageMessageBlob}}</p>
-						</div>
-					</div> -->
+					
 					
 					
 					<hr>
