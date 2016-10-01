@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
+import java.sql.Blob;
+
 
 /**
  * The persistent class for the Image database table.
@@ -18,8 +20,9 @@ public class Image implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idImage;
-
-	private byte[] image;
+	
+	@Lob
+	private Blob image;
 
 	//bi-directional many-to-one association to Item
 	@OneToMany(mappedBy="image")
@@ -36,11 +39,11 @@ public class Image implements Serializable {
 		this.idImage = idImage;
 	}
 
-	public byte[] getImage() {
+	public Blob getImage() {
 		return this.image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(Blob image) {
 		this.image = image;
 	}
 

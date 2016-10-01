@@ -3,6 +3,8 @@ angular.module('auction_land').controller('AuctionManagerController',
 		['$scope','$log','$timeout','$cookies','AllCategories','ItemSeller','Item','ItemDelete','ItemUpdate','AuctionService','uiGmapGoogleMapApi','$window',
 		 function($scope,$log,$timeout,$cookies,AllCategories,ItemSeller,Item,ItemDelete,ItemUpdate,AuctionService,uiGmapGoogleMapApi,$window) {
 	
+	$scope.item = {};		
+			
 	/*********************************************************************/
 	/**********************************************************************
 							FIX DATES TO STRING
@@ -127,6 +129,30 @@ angular.module('auction_land').controller('AuctionManagerController',
 	    console.log($scope.orderByField);
 	    console.log($scope.descending);
 	};
+	
+	
+	/*********************************************************************/
+	/**********************************************************************
+								IMPORT IMAGE
+	**********************************************************************/
+	/*********************************************************************/
+	
+	$scope.imageData = null;
+	$scope.imageBlob = null;
+	$scope.imageMessage = null;
+	$scope.imageMessageBlob = null;
+	$scope.add = function(){
+		var f = document.getElementById('img').files[0];
+		var r = new FileReader();
+		r.onloadend = function(e){
+			$scope.imageData = e.target.result;
+			$scope.imageMessage = "Image uploaded successfully";
+		}
+		r.readAsBinaryString(f);
+		$scope.imageBlob = f;
+		$scope.imageMessageBlob = "Image ADDED successfully";
+	}
+	
 	
 	
 	/*********************************************************************/
@@ -303,6 +329,10 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$scope.marker.options.labelContent = null;
 		$scope.marker.options.labelAnchor = null;
 		$scope.marker.options.labelClass = null;
+		console.log($scope.item);
+		
+		$scope.item.image = {};
+		$scope.item.image.image = $scope.imageBlob;
 		console.log($scope.item);
 		
 		

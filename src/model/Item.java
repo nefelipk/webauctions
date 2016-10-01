@@ -1,6 +1,9 @@
 package model;
 
 import java.util.List;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import model.Bid;
 import model.Category;
 import model.Image;
@@ -21,6 +24,7 @@ public class Item {
 	private List<Bid> bids;
 	private Bid bid;
 	private Location location;
+	//@JsonDeserialize(as = java.sql.Blob.class)
 	private Image image;
 	private User user;
 	private List<Category> categories;
@@ -120,7 +124,7 @@ public class Item {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-
+	
 	public Image getImage() {
 		return image;
 	}

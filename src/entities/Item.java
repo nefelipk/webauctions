@@ -2,6 +2,9 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class Item implements Serializable {
 	//bi-directional many-to-one association to Image
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idImage")
+	//@JsonDeserialize(as = java.sql.Blob.class)
 	private Image image;
 
 	//bi-directional many-to-one association to Location

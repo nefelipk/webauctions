@@ -17,6 +17,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
@@ -32,8 +33,9 @@ import model.wrappers.ItemWrapper;
 public class ItemResource {
 	
 	@POST
-	@Consumes({"application/json"})
+	@Consumes({"application/json", MediaType.MULTIPART_FORM_DATA})
 	public Response create(final model.Item item) {
+		System.err.println("create new item");
 		entities.Item itemEntity = new entities.Item();
 		itemEntity.setName(item.getName());
 		itemEntity.setBuyPrice(item.getBuyPrice());
@@ -50,8 +52,8 @@ public class ItemResource {
 		locationEntity.setCity(location.getCity());
 		locationEntity.setCountry(location.getCountry());
 		locationEntity.setUsers(null);
-		System.out.println("lat: " + location.getLatitude());
-		System.out.println("long: " + location.getLongitude());
+		System.err.println("lat: " + location.getLatitude());
+		System.err.println("long: " + location.getLongitude());
 		locationEntity.setLatitude(location.getLatitude());
 		locationEntity.setLongitude(location.getLongitude());
 		locationEntity.setPostalCode(location.getPostalCode());
@@ -68,6 +70,7 @@ public class ItemResource {
 		}
 		itemEntity.setCategories(categoriesEntity);
 		
+		System.err.println("PRIN TIN EIKONA");
 		entities.Image imageEntity = new entities.Image();
 //		model.Image image = item.getImage();
 //		imageEntity.setIdImage(image.getImage());

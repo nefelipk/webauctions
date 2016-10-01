@@ -1,13 +1,15 @@
 package model;
 
-public class Image {
-	private byte[] image;
+import java.sql.Blob;
 
-	public byte[] getImage() {
+public class Image {
+	private Blob image;
+
+	public Blob getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(Blob image) {
 		this.image = image;
 	}
 
