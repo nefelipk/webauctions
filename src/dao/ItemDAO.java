@@ -141,23 +141,25 @@ public class ItemDAO {
 				}
 			}
 			
-			Image image = entityManager.find(Image.class, item.getImage().getIdImage());
-			if (image == null) {
-				Image itemImage = item.getImage();
-				Query q = entityManager.createQuery("Select i from Image i where i.image = ?1");
-				q.setParameter(1, item.getImage().getImage());
-				Image existing_image = null;
-				try {
-					existing_image = (Image) q.getSingleResult();
-				} catch (Exception e) {
-					existing_image = null;
-				}
-				if (existing_image == null) {
-					entityManager.persist(itemImage);
-					item.setImage(itemImage);
-				} else {
-					entityManager.merge(existing_image);
-					item.setImage(existing_image);
+			if (item.getImage() != null) { 
+				Image image = entityManager.find(Image.class, item.getImage().getIdImage());
+				if (image == null) {
+					Image itemImage = item.getImage();
+					Query q = entityManager.createQuery("Select i from Image i where i.image = ?1");
+					q.setParameter(1, item.getImage().getImage());
+					Image existing_image = null;
+					try {
+						existing_image = (Image) q.getSingleResult();
+					} catch (Exception e) {
+						existing_image = null;
+					}
+					if (existing_image == null) {
+						entityManager.persist(itemImage);
+						item.setImage(itemImage);
+					} else {
+						entityManager.merge(existing_image);
+						item.setImage(existing_image);
+					}
 				}
 			}
 

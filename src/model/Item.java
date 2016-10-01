@@ -24,7 +24,6 @@ public class Item {
 	private List<Bid> bids;
 	private Bid bid;
 	private Location location;
-	//@JsonDeserialize(as = java.sql.Blob.class)
 	private Image image;
 	private User user;
 	private List<Category> categories;

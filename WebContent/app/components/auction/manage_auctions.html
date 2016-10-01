@@ -386,14 +386,13 @@ tr.unread {
 					
 					<div class="form-group">
 						<div class="col-xs-6" ng-messages="form.img.$error"
-						ng-class="{'has-error' : ((submitted || form.img.$touched) && form.img.$invalid) , 
-						'has-success': form.img.$valid }">
-							<label class="control-label" for="img">Choose image:</label>
+							ng-class="{'has-error' : ((submitted || form.img.$touched) && form.img.$invalid) , 
+							'has-success': form.img.$valid }">
+							<!-- <label class="control-label" for="img">Choose image:</label> -->
 							<input type="file" name="img" id="img" ng-model="item.image" 
 								ng-required="false" ng-click="form_touched = true">
-							<button ng-click="add()">Upload image</button>
-							<p>{{imageMessage}}</p>
-							<p>{{imageMessageBlob}}</p>
+							<br><button ng-click="imageAdded = true; uploadImage()">Upload</button>
+							<p style="color:green">{{imageMessage}}</p>
 						</div>
 					</div>
 					

@@ -71,8 +71,10 @@ public class ItemResource {
 		
 		entities.Image imageEntity = new entities.Image();
 		model.Image image = item.getImage();
-		imageEntity.setImage(image.getImage());
-		itemEntity.setImage(imageEntity);
+		if (image != null) {
+			imageEntity.setImage(image.getImage());
+			itemEntity.setImage(imageEntity);
+		}
 		
 		entities.User userEntity = UserMapper.map(item.getUser());
 		itemEntity.setUser(userEntity);

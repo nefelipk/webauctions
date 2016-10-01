@@ -63,7 +63,6 @@ public class Item implements Serializable {
 	//bi-directional many-to-one association to Image
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idImage")
-	//@JsonDeserialize(as = java.sql.Blob.class)
 	private Image image;
 
 	//bi-directional many-to-one association to Location
