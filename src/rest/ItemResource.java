@@ -35,7 +35,6 @@ public class ItemResource {
 	@POST
 	@Consumes({"application/json", MediaType.MULTIPART_FORM_DATA})
 	public Response create(final model.Item item) {
-		System.err.println("create new item");
 		entities.Item itemEntity = new entities.Item();
 		itemEntity.setName(item.getName());
 		itemEntity.setBuyPrice(item.getBuyPrice());
@@ -70,11 +69,10 @@ public class ItemResource {
 		}
 		itemEntity.setCategories(categoriesEntity);
 		
-		System.err.println("PRIN TIN EIKONA");
 		entities.Image imageEntity = new entities.Image();
-//		model.Image image = item.getImage();
-//		imageEntity.setIdImage(image.getImage());
-		imageEntity.setIdImage(0);
+		model.Image image = item.getImage();
+		imageEntity.setImage(image.getImage());
+		itemEntity.setImage(imageEntity);
 		
 		entities.User userEntity = UserMapper.map(item.getUser());
 		itemEntity.setUser(userEntity);

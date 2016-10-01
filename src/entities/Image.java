@@ -1,10 +1,16 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
-import java.sql.Blob;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -22,7 +28,7 @@ public class Image implements Serializable {
 	private int idImage;
 	
 	@Lob
-	private Blob image;
+	private byte[] image;
 
 	//bi-directional many-to-one association to Item
 	@OneToMany(mappedBy="image")
@@ -39,11 +45,11 @@ public class Image implements Serializable {
 		this.idImage = idImage;
 	}
 
-	public Blob getImage() {
+	public byte[] getImage() {
 		return this.image;
 	}
 
-	public void setImage(Blob image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 

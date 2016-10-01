@@ -251,7 +251,7 @@ tr.unread {
 				
 				<form id="newAuctionForm" class="form-horizontal" role="form" name="form"
 					ng-submit="form.$valid && createAuction()" novalidate>
-<!--
+
 					<div class="form-group">
 						<div class="col-xs-12 has-feedback" ng-messages="form.name.$error"
 						ng-class="{'has-error' : ((submitted || form.name.$touched) && form.name.$invalid) , 
@@ -381,7 +381,7 @@ tr.unread {
 							</ui-gmap-google-map>
 						</div>
 					</div>
- -->
+ 
 					<hr>
 					
 					<div class="form-group">
@@ -391,7 +391,7 @@ tr.unread {
 							<label class="control-label" for="img">Choose image:</label>
 							<input type="file" name="img" id="img" ng-model="item.image" 
 								ng-required="false" ng-click="form_touched = true">
-							<button ng-click="add()">Add image</button>
+							<button ng-click="add()">Upload image</button>
 							<p>{{imageMessage}}</p>
 							<p>{{imageMessageBlob}}</p>
 						</div>

@@ -155,7 +155,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 	}
 	
 	
-	
 	/*********************************************************************/
 	/**********************************************************************
 								HANDLE MAP
@@ -235,16 +234,16 @@ angular.module('auction_land').controller('AuctionManagerController',
 	 * almost necessary to use 'resize' event because the
 	 * map does not load properly.
 	 */
-//	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-//		var activeTab = $(".tab-content").find(".active");
-//		var id = activeTab.attr('id');
-//		if(id == "create") {
-//			var google = AuctionService.get_google_api();
-//			var map = AuctionService.get_map();
-//			current_item_location("1");
-//			$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
-//		}
-//	});
+	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+		var activeTab = $(".tab-content").find(".active");
+		var id = activeTab.attr('id');
+		if(id == "create") {
+			var google = AuctionService.get_google_api();
+			var map = AuctionService.get_map();
+			current_item_location("1");
+			$scope.google.maps.event.trigger($scope.map.control.getGMap(), 'resize'); 
+		}
+	});
 	
 	/*********************************************************************/
 	/**********************************************************************
@@ -269,72 +268,72 @@ angular.module('auction_land').controller('AuctionManagerController',
 		$scope.error_current_time = false;
 		$scope.error_startEnd_time = false;
 		
-//		if (1 * $scope.item.buyPrice < 1 * $scope.item.firstBid) {
-//			$scope.error_prices = true;
-//			return;
-//		}
-//		else {
-//			$scope.error_prices = false;
-//		}
-//		
-//		if ($scope.curItem.started < new Date() || $scope.curItem.ends < new Date()) {
-//			$scope.error_current_time = true;
-//			return;
-//		}
-//		else {
-//			$scope.error_current_time = false;
-//		}
-//		
-//		if ($scope.curItem.started > $scope.curItem.ends) {
-//			$scope.error_startEnd_time = true;
-//			return;
-//		}
-//		else {
-//			$scope.error_startEnd_time = false;
-//		}
-//		
-//		$scope.item.location.country = $scope.curItem.country.name;
-//
-//		var i = 0;
-//		$scope.item.categories = new Array($scope.curItem.category.length);
-//		while (i < $scope.curItem.category.length) {
-//			$scope.item.categories[i] = {};
-//			$scope.item.categories[i].name = $scope.curItem.category[i].name;
-//			i++;
-//		}
-//		console.log($scope.curItem.category);
-//		console.log($scope.item.categories);
-//		
-//		if($scope.form.$invalid) {
-//			console.log("form ----> invalid");
-//			return;
-//		}
-//		
-//		$scope.item.started = $scope.fixDates($scope.curItem.started);
-//		$scope.item.ends = $scope.fixDates($scope.curItem.ends);
-//		console.log($scope.item.started);
-//		console.log($scope.item.ends);
-//		
-//		$scope.item.user = $scope.user;
-//		console.log($scope.item);
-//		
-//		if ($scope.marker.options.labelContent != null) {
-//			current_item_location("2");
-//		}
-//		else {
-//			$scope.error_map = true;
-//			return;
-//		}
-//		$scope.marker.coords.latitude = dit_location.latitude;
-//		$scope.marker.coords.longitude = dit_location.longitude;
-//		$scope.marker.options.labelContent = null;
-//		$scope.marker.options.labelAnchor = null;
-//		$scope.marker.options.labelClass = null;
-//		console.log($scope.item);
+		if (1 * $scope.item.buyPrice < 1 * $scope.item.firstBid) {
+			$scope.error_prices = true;
+			return;
+		}
+		else {
+			$scope.error_prices = false;
+		}
 		
-		$scope.item = {};
+		if ($scope.curItem.started < new Date() || $scope.curItem.ends < new Date()) {
+			$scope.error_current_time = true;
+			return;
+		}
+		else {
+			$scope.error_current_time = false;
+		}
+		
+		if ($scope.curItem.started > $scope.curItem.ends) {
+			$scope.error_startEnd_time = true;
+			return;
+		}
+		else {
+			$scope.error_startEnd_time = false;
+		}
+		
+		$scope.item.location.country = $scope.curItem.country.name;
+
+		var i = 0;
+		$scope.item.categories = new Array($scope.curItem.category.length);
+		while (i < $scope.curItem.category.length) {
+			$scope.item.categories[i] = {};
+			$scope.item.categories[i].name = $scope.curItem.category[i].name;
+			i++;
+		}
+		console.log($scope.curItem.category);
+		console.log($scope.item.categories);
+		
+		if($scope.form.$invalid) {
+			console.log("form ----> invalid");
+			return;
+		}
+		
+		$scope.item.started = $scope.fixDates($scope.curItem.started);
+		$scope.item.ends = $scope.fixDates($scope.curItem.ends);
+		console.log($scope.item.started);
+		console.log($scope.item.ends);
+		
+		$scope.item.user = $scope.user;
+		console.log($scope.item);
+		
+		if ($scope.marker.options.labelContent != null) {
+			current_item_location("2");
+		}
+		else {
+			$scope.error_map = true;
+			return;
+		}
+		$scope.marker.coords.latitude = dit_location.latitude;
+		$scope.marker.coords.longitude = dit_location.longitude;
+		$scope.marker.options.labelContent = null;
+		$scope.marker.options.labelAnchor = null;
+		$scope.marker.options.labelClass = null;
+		console.log($scope.item);
+		
+//		$scope.item = {};
 		$scope.item.image = {};
-		$scope.item.image.image = $scope.imageData;
+		$scope.item.image.image = $window.btoa($scope.imageData);
 		console.log($scope.item);
 		
 		
