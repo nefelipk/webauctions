@@ -338,6 +338,7 @@ angular.module('auction_land').controller('AuctionManagerController',
 		if ($scope.imageData != null) {
 			$scope.item.image = {};
 			$scope.item.image.image = $window.btoa($scope.imageData);
+			//$scope.item.image.image = $window.btoa(unescape(encodeURIComponent($scope.imageData)));
 		}
 		$scope.imageData = null;
 		$scope.imageMessage = null;
@@ -417,8 +418,9 @@ angular.module('auction_land').controller('AuctionManagerController',
 		current_item_location(item);
 		
 		if ($scope.item.image != null) {
-			//$scope.imageIcon = "data:image/jpeg;base64," + window.atob($scope.image.image);
-			$scope.imageIcon = "data:image/jpeg;base64," + decodeURIComponent(escape(window.atob($scope.item.image.image)));
+			//$scope.imageIcon = "data:image/jpg;base64," + $window.atob($scope.item.image.image);
+			$scope.imageIcon = "data:image/jpg;base64," + $scope.item.image.image;
+			//$scope.imageIcon = "data:image/jpeg;base64," + decodeURIComponent(escape($window.atob($scope.item.image.image)));
 		}
 		
 		console.log($scope.item);
