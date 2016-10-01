@@ -19,7 +19,10 @@
 				</div>
 				<div class="modal-body" id="login_div">
 					<div class="alert alert-danger text-center" ng-if="error_login">
-			  			<strong>Error!</strong>The username or password that you've entered is incorrect<br/>
+			  			<strong>Error! </strong>We are terribly sorry. There must have been a server error.<br/>
+					</div>
+					<div class="alert alert-danger text-center" ng-if="wrong_data">
+			  			<strong>Error! </strong>The username or password that you've entered is incorrect.<br/>
 					</div>
 					<div class="alert alert-success text-center" ng-if="show_welcome">
 			  			<strong>Welcome {{user.username}}</strong>
@@ -28,7 +31,7 @@
 			  			<strong>Oops! </strong>Verification from admin is pending...<br/>
 					</div>
 					
-					<form class="form-horizontal" role="form" name="form" ng-if="!show_welcome && !not_verified"
+					<br/><form class="form-horizontal" role="form" name="form" ng-if="!show_welcome && !not_verified"
 						ng-submit="form.$valid && login()" novalidate>
 						
 						<div class="form-group">
