@@ -421,7 +421,6 @@ angular.module('auction_land').controller('AuctionManagerController',
 		console.log(">>>>>> UPDATE <<<<<<<");
 		console.log($scope.item);
 		$scope.default_country_option = "Country";
-		//$window.location.reload();
 		
 		ItemUpdate.save($scope.item).$promise.then(function() {
 			console.log($scope.item);
