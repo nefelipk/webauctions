@@ -177,8 +177,6 @@ public class ItemResource {
 		ItemDAO itemDAO = new ItemDAO();
 		List<entities.Item> entitiesItems = itemDAO.getByCategory(term);
 		List<model.Item> items = ItemWrapper.mapList(entitiesItems);
-		logger.LoggerWA.LOGGER.log(Level.WARNING, "**************************************************\n**************************");
-		logger.LoggerWA.LOGGER.log(Level.WARNING, "{0}",items.size());
 		return items;
 	}
 	

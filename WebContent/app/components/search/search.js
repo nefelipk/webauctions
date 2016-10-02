@@ -1,8 +1,8 @@
 angular.module('auction_land').controller('SearchController',
-		['$scope','$route','$cookies','localStorageService','$location',
+		['$scope','$route','$cookies','$location',
 		 'Item','TopCategories','TopUsers','TopLocations','SearchService','AuctionService',
 		 'ItemPrice','ItemLocation','ItemCategory','ItemSeller','HotRightNow',
-		 function($scope,$route,$cookies,localStorageService,$location,Item,
+		 function($scope,$route,$cookies,$location,Item,
 				 TopCategories,TopUsers,TopLocations,SearchService,AuctionService,ItemPrice,
 				 ItemLocation,ItemCategory,ItemSeller,HotRightNow) {
 		
@@ -57,11 +57,9 @@ angular.module('auction_land').controller('SearchController',
 
 			if($scope.category == 'Category') {
 				ItemCategory.query({term : term}).$promise.then(function(data) {
-					//localStorageService.remove('auctions');
 					$scope.items = data.slice();
 					SearchService.add_items($scope.items);
 					console.log($scope.items);
-					//localStorageService.set('auctions',$scope.items);
 					
 					$scope.searching = false;
 					if($scope.items.length == 0) 
@@ -79,11 +77,9 @@ angular.module('auction_land').controller('SearchController',
 			}
 			else if($scope.category == 'General') {
 				Item.query({term : term}).$promise.then(function (data) {
-					//localStorageService.remove('auctions');
 					$scope.items = data.slice();
 					SearchService.add_items($scope.items);
 					console.log($scope.items);
-					//localStorageService.set('auctions',$scope.items);
 					
 					if($scope.items.length == 0) 
 						$location.path("/no_results/"+term);
@@ -103,11 +99,9 @@ angular.module('auction_land').controller('SearchController',
 			}
 			else if($scope.category == 'Location') {
 				ItemLocation.query({term : term}).$promise.then(function(data) {
-					//localStorageService.remove('auctions');
 					$scope.items = data.slice();
 					SearchService.add_items($scope.items);
 					console.log($scope.items);
-					//localStorageService.set('auctions',$scope.items);
 					if($scope.items.length == 0) 
 						$location.path("/no_results/"+term);
 					else {
@@ -125,11 +119,9 @@ angular.module('auction_land').controller('SearchController',
 			}
 			else if($scope.category == 'Price') {
 				ItemPrice.query({term : term}).$promise.then(function(data) {
-					//localStorageService.remove('auctions');
 					$scope.items = data.slice();
 					SearchService.add_items($scope.items);
 					console.log($scope.items);
-					//localStorageService.set('auctions',$scope.items);
 					if($scope.items.length == 0) 
 						$location.path("/no_results/"+term);
 					else {
@@ -147,11 +139,9 @@ angular.module('auction_land').controller('SearchController',
 			}
 			else if($scope.category == 'Seller') {
 				ItemSeller.query({term : term}).$promise.then(function(data) {
-				//	localStorageService.remove('auctions');
 					$scope.items = data.slice();
 					SearchService.add_items($scope.items);
 					console.log($scope.items);
-				//	localStorageService.set('auctions',$scope.items);
 					if($scope.items.length == 0) 
 						$location.path("/no_results/"+term);
 					else {

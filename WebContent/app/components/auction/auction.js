@@ -33,8 +33,8 @@ angular.module('auction_land').service('AuctionService',function() {
 }); 
 
 angular.module('auction_land').controller('AuctionController',
-		['$scope','$route','$timeout','$cookies','$window','localStorageService','Bid','AuctionService','uiGmapGoogleMapApi','DownloadXML','$routeParams','ItemById',
-		 function($scope,$route,$timeout,$cookies,$window,localStorageService,Bid,AuctionService,uiGmapGoogleMapApi,DownloadXML,$routeParams,ItemById) {
+		['$scope','$route','$timeout','$cookies','$window','Bid','AuctionService','uiGmapGoogleMapApi','DownloadXML','$routeParams','ItemById',
+		 function($scope,$route,$timeout,$cookies,$window,Bid,AuctionService,uiGmapGoogleMapApi,DownloadXML,$routeParams,ItemById) {
 	
 			
 	$scope.logged_in = $cookies.get('logged-in');		
@@ -99,15 +99,12 @@ angular.module('auction_land').controller('AuctionController',
 			}
 			else {
 				item.ended = false;
-				var time_left = (ends - now)/1000;
-				return time_left;
+				//var time_left = (ends - now)/1000;
+				return item.ends;
 			}
 		}
 	};
-	
-	//$scope.current = localStorageService.get('current_item');
-	//localStorageService.set('current_item',$scope.current);
-	  
+	 
 	$scope.get_first_bid = function() {
 		if($scope.current == null)
 			return "Loading";

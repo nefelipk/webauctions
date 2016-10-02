@@ -1,4 +1,4 @@
-angular.module('auction_land').controller('UserController', [ '$scope', 'User', function($scope, User) {
+angular.module('auction_land').controller('UserController', [ '$scope', 'User','UserSignUp', function($scope, User,UserSignUp) {
 
 		$scope.username_pattern = "([a-z]|[A-Z]|[0-9])*";
 		/*
@@ -78,7 +78,7 @@ angular.module('auction_land').controller('UserController', [ '$scope', 'User', 
 			delete $scope.user.country;
 			if($scope.form.$invalid)
 				return;
-			User.save($scope.user).$promise.then(function(data) {
+			UserSignUp.save($scope.user).$promise.then(function(data) {
 
 				$scope.user = {};
 				$scope.confirm = "";

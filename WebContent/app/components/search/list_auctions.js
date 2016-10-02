@@ -1,12 +1,8 @@
 angular.module('auction_land').controller('AuctionsController', 
-		[ '$window', '$scope','$timeout','$location',
-		  'localStorageService','AuctionService',
+		[ '$window', '$scope','$timeout','$location','AuctionService',
 		  'Item','SearchService','$routeParams',
-		  function($window, $scope,$timeout,$location,
-				  localStorageService,AuctionService,
-				  Item,SearchService,$routeParams) {
+		  function($window, $scope,$timeout,$location,AuctionService,Item,SearchService,$routeParams) {
 	    
-		//$scope.items = localStorageService.get('auctions');
 		//console.log("refreshed items : ");
 		$scope.items = SearchService.get_items();
 		if($scope.items.length == 0) {

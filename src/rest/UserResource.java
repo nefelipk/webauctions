@@ -48,6 +48,7 @@ public class UserResource {
 	}
 	
 	@POST
+	@Path("/signup/")
 	@Consumes({"application/json"})
 	public Response create(final model.User user) {
 		entities.User userEntity = new entities.User();

@@ -1,7 +1,6 @@
 angular.module('auction_land', 
 		[ 'ngResource', 
-		  'ngAnimate',
-		  'LocalStorageModule', 
+		  'ngAnimate', 
 		  'ngRoute',
 		  'ngMessages', 
 		  'ngCookies',

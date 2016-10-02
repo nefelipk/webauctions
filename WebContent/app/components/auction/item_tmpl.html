@@ -5,7 +5,7 @@
 <style>
 .angular-google-map-container { height: 400px; }
 .err { color: #e74c3c; }
-
+.succ { color : #27AE60} 
 .table-striped > tbody > tr:nth-child(odd)  {
     background-color: #ecf0f1;
 }
@@ -98,13 +98,14 @@ a>.button-download:hover {
 		<div class="col-sm-offset-1 col-sm-4" >
 			
 			<div class="row well" >
+				<h4>Time left : 
+					<span ng-class="{'err' : current.ended == true , 'succ' : current.ended != true}"> 
+						{{get_ending_time(current)}} 
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col-sm-6 " >
-							<h4>Time left : 
-								<span ng-class="{'err' : current.ended == true}"> 
-									{{get_ending_time(current)}} 
-								</span>
-							</h4>
+							
 						
 						<div><h5><strong>Starting bid : {{get_first_bid(current)}} &euro;</strong></h5></div>
 						<span ng-switch="current.ended">
@@ -155,8 +156,8 @@ a>.button-download:hover {
 					</div>	
 				</div>
 			</div>
-			<div class="row well" >
-					<button type="button" class="btn btn-lg btn-info">
+			<div class="row well text-center" >
+					<button type="button" class="btn btn-lg btn-info" ng-disabled="(current.buyPrice == '0' && (logged_in == 'true')) || logged_in != 'true'">
 	    					<span class="glyphicon glyphicon-shopping-cart"></span> BUY NOW
  					</button>
  					
